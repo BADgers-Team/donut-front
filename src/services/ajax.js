@@ -9,7 +9,6 @@ export default class AjaxModule {
             mode: 'cors',
             body: null
         }).then((response) => response.json());
-    }
 
     static post(path = '/', body, contentType = null) {
         const url = `${backendUrl}${path}`;
