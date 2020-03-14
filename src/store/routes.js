@@ -5,6 +5,7 @@ export default {
         posts: {
             new: '/posts',
         },
+        me: '/me',
     },
     pages: {
         main: '/',

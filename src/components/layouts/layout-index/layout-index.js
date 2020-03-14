@@ -7,7 +7,9 @@ class LayoutIndex extends Component {
 
     render() {
         return (
-            <div>Главная страница</div>
+            <>
+                <div>Index</div>
+            </>
         );
     }
 }
