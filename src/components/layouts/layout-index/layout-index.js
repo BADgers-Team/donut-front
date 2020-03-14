@@ -9,12 +9,13 @@ class LayoutIndex extends Component {
             posts: [],
         };
         AjaxModule.get(RouterStore.api.posts.all).then((data) => {
-            const posts = data ? data.data : [];
+            const posts = data ? data : [];
             this.setState({ posts });
         });
     }
 
     render() {
+        console.log(this.state);
         const postsNode = this.state.posts.map((post, index) => {
             return <div key={index}>{post.title}</div>;
         });

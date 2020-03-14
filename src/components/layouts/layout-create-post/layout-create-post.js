@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import BlockHeader from 'components/blocks/block-header/block-header';
 import RouterStore from 'store/routes';
 import AjaxModule from '../../../services/ajax';
 
@@ -42,7 +41,6 @@ class LayoutCreatePost extends Component {
     render() {
         return (
             <>
-            <BlockHeader/>
             <div className="container">
                 <h3>Новый пост</h3>
                 <form id="post_form">
