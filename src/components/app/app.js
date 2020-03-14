@@ -5,6 +5,8 @@ import RouterStore from 'store/routes';
 import LayoutIndex from 'components/layouts/layout-index/layout-index';
 import LayoutCreatePost from 'components/layouts/layout-create-post/layout-create-post';
 
+import './app.scss';
+
 class App extends Component {
     render() {
         const pages = RouterStore.pages;
