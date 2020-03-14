@@ -12,7 +12,6 @@ class App extends Component {
         const pages = RouterStore.pages;
         return (
             <BrowserRouter>
-                <div className="header">Шапка</div>
                 <div className="content">
                     <Switch>
                         <Route path={pages.main} exact render={(props) => <LayoutIndex {...props}/>}/>

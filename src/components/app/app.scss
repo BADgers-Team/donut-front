@@ -1,3 +1,14 @@
-.content {
-  background-color: aliceblue;
+html {
+  height: 100%;
 }
+body {
+  margin: 0px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.content, #app {
+  height: 100%;
+}
+
