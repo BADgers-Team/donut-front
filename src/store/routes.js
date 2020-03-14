@@ -3,8 +3,10 @@ export default {
     api: {
         login: '/login',
         posts: {
+            all: '/posts',
             new: '/posts',
         },
+        me: '/me',
     },
     pages: {
         main: '/',

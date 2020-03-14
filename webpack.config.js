@@ -18,6 +18,7 @@ module.exports = {
         alias: {
             'components': path.join(src, 'components'),
             'store': path.join(src, 'store'),
+            'assets': path.join(src, 'assets'),
         },
         extensions: ['.js']
     },
@@ -37,6 +38,17 @@ module.exports = {
                     'css-loader',
                     'sass-loader'
                 ]
+            },
+            {
+                test: /\.(jpg|png|gif|svg|pdf|ttf)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[path][name]-[hash:8].[ext]',
+                        },
+                    },
+                ],
             },
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
             {

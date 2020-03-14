@@ -1,5 +1,6 @@
-// temp header style
+@import '../../app/consts';
+
 .header {
-    height: 100px;
-    background-color: mediumpurple;
+  height: 60px;
+  background-color: $color-purple;
 }
