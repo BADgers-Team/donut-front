@@ -8,6 +8,7 @@ Frontend repo for project Donating
 - [RoadMap](https://miro.com/welcomeonboard/aOeOpUF6JGmCrk0bvfZtKc2rBcYXIAlqgJ4zSUyksQ3ahCqhdZwt72D6hY539utF)
 - [UserFlow](https://app.flowmapp.com/projects/119316/userflow/75183/)
 - Опрос и результаты (To be continued...)
+- Трекер (To be continued...)
 ### Установка и запуск  
 - `npm i`
 - `npm start` запуск проекта в режиме разработки (поднимается на http://localhost:3001)
