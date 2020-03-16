@@ -27,7 +27,7 @@ class LayoutCreatePost extends Component {
 
         reqBody.title = form.title.value;
         reqBody.description = form.description.value;
-        //TODO
+        //TODO take norm values
         reqBody.subscription_category_id = 1;
         reqBody.visible_type_id = 1;
         // reqBody.category_id = 1;
@@ -65,7 +65,6 @@ class LayoutCreatePost extends Component {
                             <div className="form-control control-select-visible">
                                 <label>Кто может просматривать пост</label>
                                 <select onChange={this.showSubscriptionCategory}>
-                                    {/* <option selected disabled hidden>Кому видно пост</option>  */}
                                     <option value="For all">Открыт для всех</option>
                                     <option value="Subscribers" data-subscription="true">Только по подписке</option>
                                     <option value="Subscribers and one time" data-subscription="true">Для подписчиков и разовая оплата</option>    
@@ -75,7 +74,6 @@ class LayoutCreatePost extends Component {
                             <div className="form-control control-subscription-category">
                                 <label>Выберите подписку</label>
                                 <select>
-                                    {/* <option selected disabled hidden >Choose Tagging</option> */}
                                     <option>Подписка 1</option>
                                     <option>Подписка 2</option> 
                                 </select>
@@ -83,7 +81,6 @@ class LayoutCreatePost extends Component {
                             <div className="form-control control-select-activity">
                                 <label>Категория деятельности</label>
                                 <select>
-                                    {/* <option selected disabled hidden >Choose Tagging</option> */}
                                     <option value="Art">Живопись</option>
                                     <option value="Photography">Фотография</option>
                                     <option value="Music">Музыка</option>  
