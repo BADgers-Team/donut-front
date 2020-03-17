@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
+import RouterStore from 'store/routes';
 
 import BlockHeader from 'components/blocks/block-header/block-header';
-import RouterStore from 'store/routes';
-import AjaxModule from '../../../services/ajax';
+import Button from 'components/fragments/button/button';
+
+import AjaxModule from 'services/ajax';
 
 import './create-post.scss';
 
 class LayoutCreatePost extends Component {
-    showSubscriptionCategory() {
-        const selectVisible = document.getElementsByClassName('control-select-visible')[0].getElementsByTagName('select')[0];
-
-        const selectSubscription = document.getElementsByClassName('control-subscription-category')[0].getElementsByTagName('select')[0];
-        if (selectVisible[selectVisible.selectedIndex].dataset.subscription === "true") {
-            selectSubscription.closest('div').style.display = "block";
+    showSubscriptionCategory(event) {
+        const selectSubscription = document.getElementsByClassName('control-subscription-category')[0];
+        if (event.target[event.target.selectedIndex].dataset.subscription === "true") {
+            selectSubscription.style.display = "block";
         } else {
-            selectSubscription.closest('div').style.display = "none";
+            selectSubscription.style.display = "none";
         }
     }
 
