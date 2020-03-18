@@ -59,10 +59,9 @@ class LayoutCreatePost extends Component {
                         </div>
 
                         <div className="form__controls">
-                            <Button text="Опубликовать" type="type:block" onAction={this.createPost} className="form-control control-button"/>
-                            {/* <div className="form-control control-button">
-                                <button onClick={this.createPost} type="button">Опубликовать</button>
-                            </div> */}
+                            <div className="form-control control-button">    
+                                <Button text="Опубликовать" type="type:submit" onAction={this.createPost}/>
+                            </div>
                             <div className="form-control control-select-visible">
                                 <label>Кто может просматривать пост</label>
                                 <select onChange={this.showSubscriptionCategory}>
