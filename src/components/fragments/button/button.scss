@@ -1,5 +1,29 @@
 @import '../../app/app';
 
 .button {
-  color: $color-grey-active;
+  color: $color-grey;
+  text-decoration: none;
+
+  &__active {
+    color: $color-grey-active;
+  }
+
+  &:after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    content: " ";
+    border-bottom: 4px solid transparent;
+    transition: border-color .3s;
+  }
+
+  &:hover {
+    color: $color-white-purple;
+    transition: .3s;
+  }
+}
+
+.header .button__active:after {
+  border-bottom-color: pink;
 }

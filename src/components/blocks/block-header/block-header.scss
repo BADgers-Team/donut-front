@@ -3,4 +3,7 @@
 .header {
   height: 60px;
   background-color: $color-purple;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }

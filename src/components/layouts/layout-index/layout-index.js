@@ -8,9 +8,11 @@ class LayoutIndex extends Component {
         this.state = {
             posts: [],
         };
+    }
+
+    componentDidMount() {
         AjaxModule.get(RouterStore.api.posts.all).then((data) => {
-            const posts = data ? data.data : [];
-            this.setState({ posts });
+            this.setState({ posts: data || [] });
         });
     }
 

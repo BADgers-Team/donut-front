@@ -9,9 +9,21 @@ export default {
         me: '/me',
     },
     pages: {
+        user: {
+            login: '/login',
+            register: '/registration',
+            profile: '/profile'
+        },
         main: '/',
         posts: {
             new: '/posts/new',
+            my: '/posts/my',
         },
+        subscriptions: {
+            my: '/subscriptions/my'
+        },
+        podcasts: {
+            all: '/podcasts'
+        }
     }
 };

@@ -71,8 +71,5 @@ module.exports = {
         contentBase: '/',
         hot: true,
         historyApiFallback: true
-    },
-    optimization: {
-        minimize: true,
     }
 };

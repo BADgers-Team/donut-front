@@ -19,14 +19,14 @@ class App extends Component {
     }
 
     componentDidMount() {
-        // AjaxModule.get(RouterStore.api.me).then(({ data }) => {
-        //     this.setState({ user: data });
-        // });
+        AjaxModule.get(RouterStore.api.me).then((data) => {
+            this.setState({ user: data });
+        });
     }
 
     render() {
         const pages = RouterStore.pages;
-        const user = AjaxModule.get(RouterStore.api.me).data;
+        const { user } = this.state;
 
         return (
             <BrowserRouter>

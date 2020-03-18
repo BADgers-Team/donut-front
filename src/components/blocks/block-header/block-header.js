@@ -9,28 +9,37 @@ class BlockHeader extends Component {
     constructor(props) {
         super(props);
 
-        this.handleClick = this.handleClick.bind(this);
     }
 
     render() {
-        const { user } = this.props;
+        const tabs = this.getHeaderTabs();
         return (
             <div className="header">
-                <Button text="Главная" type="type:block" onAction={this.handleClick}/>
-                { !!user && <Button text={user.name} type="type:block" onAction={() => {}}/>}
-                { !user && <Button text="Войти" type="type:block" onAction={this.handleLoginClick}/>}
+                <Button className="button__active" text="Главная" type={Button.types.link} to={RouteStore.pages.main}/>
+                { tabs }
             </div>
         );
     }
 
-    handleLoginClick(event) {
-        event.preventDefault;
-        window.location.href = RouteStore.pages.posts.new;
-    }
-
-    handleClick(event) {
-        event.preventDefault();
-        console.log('Нажали!');
+    getHeaderTabs() {
+        const { user } = this.props;
+        if (user) {
+            return (
+                <>
+                    <Button text="Мои посты" type={Button.types.link} to={RouteStore.pages.posts.my}/>
+                    <Button text="Мои подписки" type={Button.types.link} to={RouteStore.pages.subscriptions.my}/>
+                    <Button text="Подборка" type={Button.types.link} to={RouteStore.pages.podcasts.all}/>
+                    <Button text={`${user.name} ${user.surname}`} type={Button.types.link} to={RouteStore.pages.user.profile}/>
+                </>
+            );
+        } else {
+            return (
+                <>
+                    <Button text="Войти" type={Button.types.link} to={RouteStore.pages.user.login}/>
+                    <Button text="Зарегистрироваться" type={Button.types.link} to={RouteStore.pages.user.register}/>
+                </>
+            );
+        }
     }
 }
 
