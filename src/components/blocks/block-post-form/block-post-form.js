@@ -87,15 +87,14 @@ class BlockPostForm extends Component {
         event.preventDefault();
 
         const form = this._form.current;
-        let reqBody = {};
-
-        reqBody.title = form.title.value;
-        reqBody.description = form.description.value;
-        //TODO договориться с беком о значениях
-        reqBody.subscription_category_id = 1;
-        reqBody.visible_type_id = 1;
-        reqBody.category_id = 1;
-
+        let reqBody = {
+            title: form.title.value,
+            description: form.description.value,
+                    //TODO договориться с беком о значениях
+            subscription_category_id: 1,
+            visible_type_id: 1,
+            category_id: 1,
+        };
         // reqBody.file = form.file.value; //TODO отдельным запросом 
 
         AjaxModule.post(RouterStore.api.posts.new, reqBody)

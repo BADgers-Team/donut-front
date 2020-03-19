@@ -1,34 +1,3 @@
 .container {
     height: 100%;
 }
-
-#post_form {
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-}
-
-#post_form input, textarea, select, button {
-    padding: 10px;
-    margin: 10px;
-}
-
-.form {
-    &__inputs, &__controls {
-        width: 50%;
-    }
-    &-input, &-control {
-        display: flex;
-        flex-direction: column;
-    }
-    &-control {
-        width: 50%;
-    }
-}
-
-.control-button input {
-    color: black;
-}
-
-
-
