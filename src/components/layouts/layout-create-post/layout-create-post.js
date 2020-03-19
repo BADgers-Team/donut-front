@@ -3,37 +3,16 @@ import RouterStore from 'store/routes';
 
 import BlockHeader from 'components/blocks/block-header/block-header';
 import Button from 'components/fragments/button/button';
+import Input from 'components/fragments/input/input';
+import Textarea from 'components/fragments/textarea/textarea';
 
 import AjaxModule from 'services/ajax';
 
 import './create-post.scss';
 
 class LayoutCreatePost extends Component {
-    showSubscriptionCategory(event) {
-        const selectSubscription = document.getElementsByClassName('control-subscription-category')[0];
-        if (event.target[event.target.selectedIndex].dataset.subscription === "true") {
-            selectSubscription.style.display = "block";
-        } else {
-            selectSubscription.style.display = "none";
-        }
-    }
-
-    createPost(e) {
-        e.preventDefault();
-
-        const form = document.getElementById('post_form');
-
-        let reqBody = {};
-
-        reqBody.title = form.title.value;
-        reqBody.description = form.description.value;
-        //TODO take norm values
-        reqBody.subscription_category_id = 1;
-        reqBody.visible_type_id = 1;
-        // reqBody.category_id = 1;
-        // reqBody.file = form.file.value; //TODO отдельным запросом 
-
-        AjaxModule.post(RouterStore.api.posts.new, reqBody);
+    constructor(props) {
+        super(props);
     }
 
     render() {
@@ -45,22 +24,19 @@ class LayoutCreatePost extends Component {
                     <form id="post_form">
                         <div className="form__inputs">
                             <div className="form-input input-title">
-                                <label>Заголовок</label>
-                                <input type="text" name="title"/>
+                                <Input label="Заголовок" type={Input.types.text} name="title" placeholder="Мой крутой заголовок"/>
                             </div>
                             <div className="form-input input-description">
-                                <label>Содержание</label>
-                                <textarea type="text" name="description"/>
+                                <Textarea label="Содержание" name="description" placeholder="Мой крутой рассказ"/>
                             </div>
                             <div className="form-input input-file">
-                                <label>Прикрепить файл</label>
-                                <input type="file" name="file"/>
+                                <Input label="Прикрепить файл" type={Input.types.file} name="file"/>
                             </div>
                         </div>
 
                         <div className="form__controls">
                             <div className="form-control control-button">    
-                                <Button text="Опубликовать" type="type:submit" onAction={this.createPost}/>
+                                <Button text="Опубликовать" type={Button.types.submit} onAction={this.handleCreatePostClick}/>
                             </div>
                             <div className="form-control control-select-visible">
                                 <label>Кто может просматривать пост</label>
@@ -94,8 +70,34 @@ class LayoutCreatePost extends Component {
             </>
         );
     }
-}
 
+    showSubscriptionCategory(event) {
+        const selectSubscription = document.getElementsByClassName('control-subscription-category')[0];
+        if (event.target[event.target.selectedIndex].dataset.subscription === "true") {
+            selectSubscription.style.display = "block";
+        } else {
+            selectSubscription.style.display = "none";
+        }
+    }
+
+    handleCreatePostClick(event) {
+        event.preventDefault();
+
+        const form = document.getElementById('post_form');
+
+        let reqBody = {};
+
+        reqBody.title = form.title.value;
+        reqBody.description = form.description.value;
+        //TODO take norm values
+        reqBody.subscription_category_id = 1;
+        reqBody.visible_type_id = 1;
+        // reqBody.category_id = 1;
+        // reqBody.file = form.file.value; //TODO отдельным запросом 
+
+        AjaxModule.post(RouterStore.api.posts.new, reqBody);
+    }
+}
 
 export default LayoutCreatePost;
 
