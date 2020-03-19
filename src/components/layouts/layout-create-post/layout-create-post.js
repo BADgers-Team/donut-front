@@ -17,10 +17,10 @@ class LayoutCreatePost extends Component {
 
         this.state = { showSubscription: false };
         this.showSubscriptionCategory = this.showSubscriptionCategory.bind(this);
+        this.handleCreatePostClick = this.handleCreatePostClick.bind(this);
+        this._form = React.createRef();
     }
     
-                                
-
     render() {    
         const subscriptionSelect = {
             "For all": "Открыт для всех",
@@ -44,7 +44,7 @@ class LayoutCreatePost extends Component {
                 <BlockHeader/>
                 <div className="container">
                     <h3>Новый пост</h3>
-                    <form id="post_form">
+                    <form ref={this._form} id="post_form">
                         <div className="form__inputs">
                             <div className="form-input input-title">
                                 <Input label="Заголовок" type={Input.types.text} name="title" placeholder="Добавьте заголовок"/>
@@ -91,19 +91,20 @@ class LayoutCreatePost extends Component {
     handleCreatePostClick(event) {
         event.preventDefault();
 
-        const form = document.getElementById('post_form');
+        const form = this._form.current;
 
         let reqBody = {};
 
         reqBody.title = form.title.value;
         reqBody.description = form.description.value;
-        //TODO take norm values
+        //TODO договориться с беком о значениях
         reqBody.subscription_category_id = 1;
         reqBody.visible_type_id = 1;
-        // reqBody.category_id = 1;
+        reqBody.category_id = 1;
+
         // reqBody.file = form.file.value; //TODO отдельным запросом 
 
-        AjaxModule.post(RouterStore.api.posts.new, reqBody);
+        AjaxModule.post(RouterStore.api.posts.new, reqBody)
     }
 }
 
