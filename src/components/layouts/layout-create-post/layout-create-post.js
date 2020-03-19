@@ -5,6 +5,7 @@ import BlockHeader from 'components/blocks/block-header/block-header';
 import Button from 'components/fragments/button/button';
 import Input from 'components/fragments/input/input';
 import Textarea from 'components/fragments/textarea/textarea';
+import Select from 'components/fragments/select/select';
 
 import AjaxModule from 'services/ajax';
 
@@ -13,9 +14,31 @@ import './create-post.scss';
 class LayoutCreatePost extends Component {
     constructor(props) {
         super(props);
-    }
 
-    render() {
+        this.state = { showSubscription: false };
+        this.showSubscriptionCategory = this.showSubscriptionCategory.bind(this);
+    }
+    
+                                
+
+    render() {    
+        const subscriptionSelect = {
+            "For all": "Открыт для всех",
+            "Subscribers": "Только по подписке",
+            "Subscribers and one time": "Для подписчиков и разовая оплата",
+            "One time": "Только разовая оплата",
+        }; 
+        const subscriptionCategorySelect = {
+            "1": "Подписка 1",
+            "2": "Подписка 2",
+        }; 
+        const activitySelect = {
+            "Art": "Живопись",
+            "Photography": "Фотография",
+            "Music": "Музыка",
+            "Blog": "Блог",
+            "Writing": "Писательство",
+        };
         return (
             <>
                 <BlockHeader/>
@@ -24,10 +47,10 @@ class LayoutCreatePost extends Component {
                     <form id="post_form">
                         <div className="form__inputs">
                             <div className="form-input input-title">
-                                <Input label="Заголовок" type={Input.types.text} name="title" placeholder="Мой крутой заголовок"/>
+                                <Input label="Заголовок" type={Input.types.text} name="title" placeholder="Добавьте заголовок"/>
                             </div>
                             <div className="form-input input-description">
-                                <Textarea label="Содержание" name="description" placeholder="Мой крутой рассказ"/>
+                                <Textarea label="Содержание" name="description" placeholder="Напишите что-нибудь..."/>
                             </div>
                             <div className="form-input input-file">
                                 <Input label="Прикрепить файл" type={Input.types.file} name="file"/>
@@ -39,30 +62,13 @@ class LayoutCreatePost extends Component {
                                 <Button text="Опубликовать" type={Button.types.submit} onAction={this.handleCreatePostClick}/>
                             </div>
                             <div className="form-control control-select-visible">
-                                <label>Кто может просматривать пост</label>
-                                <select onChange={this.showSubscriptionCategory}>
-                                    <option value="For all">Открыт для всех</option>
-                                    <option value="Subscribers" data-subscription="true">Только по подписке</option>
-                                    <option value="Subscribers and one time" data-subscription="true">Для подписчиков и разовая оплата</option>    
-                                    <option value="One time">Только разовая оплата</option>
-                                </select>
+                                <Select label="Кто может просматривать пост" actionType={Select.events.change} onAction={this.showSubscriptionCategory} values={subscriptionSelect}/>
                             </div>
                             <div className="form-control control-subscription-category">
-                                <label>Выберите подписку</label>
-                                <select>
-                                    <option>Подписка 1</option>
-                                    <option>Подписка 2</option> 
-                                </select>
+                                {this.state.showSubscription && <Select label="Выберите подписку" values={subscriptionCategorySelect}/> }
                             </div>
                             <div className="form-control control-select-activity">
-                                <label>Категория деятельности</label>
-                                <select>
-                                    <option value="Art">Живопись</option>
-                                    <option value="Photography">Фотография</option>
-                                    <option value="Music">Музыка</option>  
-                                    <option value="Blog">Блог</option>  
-                                    <option value="Writing">Писательство</option>     
-                                </select>
+                                <Select label="Категория деятельности" values={activitySelect}/>
                             </div>
                         </div>
                     </form>
@@ -72,12 +78,14 @@ class LayoutCreatePost extends Component {
     }
 
     showSubscriptionCategory(event) {
-        const selectSubscription = document.getElementsByClassName('control-subscription-category')[0];
-        if (event.target[event.target.selectedIndex].dataset.subscription === "true") {
-            selectSubscription.style.display = "block";
+        const subscription = "Subscribers";
+        const optionValue = event.target[event.target.selectedIndex].value;
+        if (optionValue.indexOf(subscription) !== -1) {
+            this.setState({showSubscription: true});
         } else {
-            selectSubscription.style.display = "none";
+            this.setState({showSubscription: false});
         }
+        
     }
 
     handleCreatePostClick(event) {
