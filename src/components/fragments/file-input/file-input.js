@@ -21,7 +21,7 @@ class FileInput extends Component {
                         <div className="file-text">Прикрепить файл</div>
                     </div>
                 </label>
-                <input type="file" className={classes} name={name} id={id} onChange={onAction}/>
+                <input type="file" className={`${classes} file-input`} name={name} id={id} onChange={onAction}/>
             </>
         );
         return node;
