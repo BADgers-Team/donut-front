@@ -50,7 +50,7 @@ class BlockPostForm extends Component {
                             <Textarea label="Содержание" name="description" placeholder="Напишите что-нибудь..."/>
                         </div>
                         <div className="form-input input-file">
-                            <FileInput label="Загрузите файл" name="file"/>
+                            <FileInput label="Загрузите файл" name="file" id="file-input"/>
                         </div>
                     </div>
 
