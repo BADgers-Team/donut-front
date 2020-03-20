@@ -4,6 +4,9 @@ export default {
         login: '/login',
         posts: {
             new: '/posts',
+            file: {
+                new: '/posts/file',
+            },
         },
     },
     pages: {
