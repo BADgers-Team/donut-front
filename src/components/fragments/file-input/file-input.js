@@ -31,7 +31,7 @@ class FileInput extends Component {
                         <div className="file-text">Прикрепить файл</div>
                     </div>
                 </label>
-                <input ref={this._file} type="file" className={classes} name={name}/>
+                <input ref={this._file} type="file" className={classes} name={name} id={name}/>
             </>
         );
         return node;
