@@ -40,36 +40,34 @@ class BlockPostForm extends Component {
             "Writing": "Писательство",
         };
         return (
-            <>
-                <form ref={this._form} id="post_form">
-                    <div className="form__inputs">
-                        <div className="form-input input-title">
-                            <Input label="Заголовок" type={Input.types.text} name="title" placeholder="Добавьте заголовок"/>
-                        </div>
-                        <div className="form-input input-description">
-                            <Textarea label="Содержание" name="description" placeholder="Напишите что-нибудь..."/>
-                        </div>
-                        <div className="form-input input-file">
-                            <FileInput label="Загрузите файл" name="file" id="file-input"/>
-                        </div>
+            <form ref={this._form} id="post_form">
+                <div className="form__inputs">
+                    <div className="form-input input-title">
+                        <Input label="Заголовок" type={Input.types.text} name="title" placeholder="Добавьте заголовок"/>
                     </div>
+                    <div className="form-input input-description">
+                        <Textarea label="Содержание" name="description" placeholder="Напишите что-нибудь..."/>
+                    </div>
+                    <div className="form-input input-file">
+                        <FileInput label="Загрузите файл" name="file" id="file-input"/>
+                    </div>
+                </div>
 
-                    <div className="form__controls">
-                        <div className="form-control control-button">    
-                            <Button text="Опубликовать" type={Button.types.submit} onAction={this.handleCreatePostClick}/>
-                        </div>
-                        <div className="form-control control-select-visible">
-                            <Select label="Кто может просматривать пост" actionType={Select.events.change} onAction={this.showSubscriptionCategory} values={subscriptionSelect}/>
-                        </div>
-                        <div className="form-control control-subscription-category">
-                            {this.state.showSubscription && <Select label="Выберите подписку" values={subscriptionCategorySelect}/> }
-                        </div>
-                        <div className="form-control control-select-activity">
-                            <Select label="Категория деятельности" values={activitySelect}/>
-                        </div>
+                <div className="form__controls">
+                    <div className="form-control control-button">    
+                        <Button text="Опубликовать" type={Button.types.submit} onAction={this.handleCreatePostClick}/>
                     </div>
-                </form>
-            </>
+                    <div className="form-control control-select-visible">
+                        <Select label="Кто может просматривать пост" actionType={Select.events.change} onAction={this.showSubscriptionCategory} values={subscriptionSelect}/>
+                    </div>
+                    <div className="form-control control-subscription-category">
+                        {this.state.showSubscription && <Select label="Выберите подписку" values={subscriptionCategorySelect}/> }
+                    </div>
+                    <div className="form-control control-select-activity">
+                        <Select label="Категория деятельности" values={activitySelect}/>
+                    </div>
+                </div>
+            </form>
         );
     }
 
@@ -99,11 +97,11 @@ class BlockPostForm extends Component {
 
         AjaxModule.post(RouterStore.api.posts.new, reqBody);
 
-        reqBody = form.file.files[0];
-        if (reqBody) {
+        let fileBody = form.file.files[0];
+        if (fileBody) {
             const data = new FormData();
-            data.append('image', reqBody, reqBody.name);  
-            AjaxModule.post(RouterStore.api.posts.file.new, reqBody, 'multipart/form-data'); 
+            data.append('image', fileBody, fileBody.name);  
+            AjaxModule.post(RouterStore.api.posts.file.new, fileBody, 'multipart/form-data'); 
         }
     }
 }
