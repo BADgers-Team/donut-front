@@ -97,11 +97,11 @@ class BlockPostForm extends Component {
 
         AjaxModule.post(RouterStore.api.posts.new, reqBody);
 
-        let fileBody = form.file.files[0];
-        if (fileBody) {
+        reqBody = form.file.files[0];
+        if (reqBody) {
             const data = new FormData();
-            data.append('image', fileBody, fileBody.name);  
-            AjaxModule.post(RouterStore.api.posts.file.new, fileBody, 'multipart/form-data'); 
+            data.append('image', reqBody, reqBody.name);  
+            AjaxModule.post(RouterStore.api.posts.file.new, data, 'multipart/form-data'); 
         }
     }
 }
