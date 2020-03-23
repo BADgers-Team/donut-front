@@ -40,12 +40,23 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(jpg|png|gif|svg|pdf|ttf)$/,
+                test: /\.(jpg|png|gif|svg|pdf)$/,
                 use: [
                     {
                         loader: 'file-loader',
                         options: {
                             name: '[path][name]-[hash:8].[ext]',
+                        },
+                    },
+                ],
+            },
+            {
+                test: /\.(ttf)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[path][name].[ext]',
                         },
                     },
                 ],

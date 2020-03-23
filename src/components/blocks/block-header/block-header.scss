@@ -2,8 +2,57 @@
 
 .header {
   height: 60px;
-  background-color: $color-purple;
+  background-color: $color-dark-purple;
   display: flex;
   justify-content: space-around;
-  align-items: center;
+  font-size: 20px;
+
+  &-button {
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+    border-bottom: 4px solid transparent;
+    transition: .3s;
+
+    &__main {
+      border-radius: 10px;
+      border: 1px solid $color-pink;
+      margin: 8px 0;
+      height: auto;
+      padding: 0 5%;
+
+      & > * {
+        color: $color-pink;
+      }
+    }
+
+    &__active, &:hover {
+      border-bottom: 4px solid $color-pink;
+      box-sizing: border-box;
+      transition: .3s;
+      cursor: pointer;
+
+      & > * {
+        color: $color-pink;
+      }
+    }
+  }
+}
+
+.logo {
+  width: 140px;
+  height: 60px;
+}
+
+.user {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid $color-dark-white;
+  margin-left: 8px;
+}
+
+.exit {
+  width: 30px;
+  height: 30px;
 }

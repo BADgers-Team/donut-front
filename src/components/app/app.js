@@ -8,6 +8,7 @@ import LayoutCreatePost from 'components/layouts/layout-create-post/layout-creat
 import BlockHeader from 'components/blocks/block-header/block-header';
 
 import './app.scss';
+import 'assets/fonts/Avenir-Next.ttf';
 
 class App extends Component {
     constructor(props) {
@@ -20,6 +21,7 @@ class App extends Component {
 
     componentDidMount() {
         AjaxModule.get(RouterStore.api.me).then((data) => {
+            console.log(data);
             this.setState({ user: data });
         });
     }

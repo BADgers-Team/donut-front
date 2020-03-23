@@ -4,6 +4,9 @@ import RouteStore from 'store/routes';
 import Button from 'components/fragments/button/button';
 
 import './block-header.scss';
+import LogoImage from 'assets/img/logo.png';
+import AuthorAvatar from 'assets/img/michael.jpg';
+import ExitIcon from 'assets/img/exit.svg';
 
 class BlockHeader extends Component {
     constructor(props) {
@@ -15,7 +18,12 @@ class BlockHeader extends Component {
         const tabs = this.getHeaderTabs();
         return (
             <div className="header">
-                <Button className="button__active" text="Главная" type={Button.types.link} to={RouteStore.pages.main}/>
+                <div className="header-button">
+                    <img className="logo" src={LogoImage} alt="logo"/>
+                </div>
+                <div className="header-button header-button__active">
+                    <Button text="Главная" type={Button.types.link} to={RouteStore.pages.main}/>
+                </div>
                 { tabs }
             </div>
         );
@@ -26,10 +34,25 @@ class BlockHeader extends Component {
         if (user) {
             return (
                 <>
-                    <Button text="Мои посты" type={Button.types.link} to={RouteStore.pages.posts.my}/>
-                    <Button text="Мои подписки" type={Button.types.link} to={RouteStore.pages.subscriptions.my}/>
-                    <Button text="Подборка" type={Button.types.link} to={RouteStore.pages.podcasts.all}/>
-                    <Button text={`${user.name} ${user.surname}`} type={Button.types.link} to={RouteStore.pages.user.profile}/>
+                    <div className="header-button">
+                        <Button text="Мои посты" type={Button.types.link} to={RouteStore.pages.posts.my}/>
+                    </div>
+                    <div className="header-button">
+                        <Button text="Мои подписки" type={Button.types.link} to={RouteStore.pages.subscriptions.my}/>
+                    </div>
+                    <div className="header-button">
+                        <Button text="Подборка" type={Button.types.link} to={RouteStore.pages.podcasts.all}/>
+                    </div>
+                    <div className="header-button header-button__main">
+                        <Button text="Создать пост" type={Button.types.link} to={RouteStore.pages.posts.new}/>
+                    </div>
+                    <div className="header-button">
+                        <Button text={`${user.name} ${user.surname}`} type={Button.types.link} to={RouteStore.pages.user.profile}/>
+                        <img className="user" src={AuthorAvatar} alt="user"/>
+                    </div>
+                    <div className="header-button">
+                        <img className="exit" src={ExitIcon} alt="exit"/>
+                    </div>
                 </>
             );
         } else {

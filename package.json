@@ -22,6 +22,7 @@
   "homepage": "https://github.com/BADgers-Team/donut-front#readme",
   "devDependencies": {
     "@babel/core": "^7.8.7",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.8.7",
     "@babel/preset-react": "^7.8.3",
     "babel-eslint": "^10.1.0",

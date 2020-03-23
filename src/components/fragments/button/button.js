@@ -18,8 +18,9 @@ class Button extends Component {
     }
 
     render() {
-        const { text, type, onAction, to, className } = this.props;
-        const classes = className ? `button ${className}` : 'button';
+        const { text, type, onAction, to } = this.props;
+        // const classes = main ? 'button button-main' : 'button';
+        const classes = 'button';
 
         let node;
         switch(type) {
