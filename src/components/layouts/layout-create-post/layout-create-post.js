@@ -16,7 +16,7 @@ class LayoutCreatePost extends Component {
             <>
                 <BlockHeader/>
                 <div className="container">
-                    <h3>Новый пост</h3>
+                    <h3>Создание нового поста</h3>
                     <BlockPostForm />
                 </div>
             </>
@@ -25,4 +25,3 @@ class LayoutCreatePost extends Component {
 }
 
 export default LayoutCreatePost;
-

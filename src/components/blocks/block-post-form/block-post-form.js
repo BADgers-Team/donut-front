@@ -60,13 +60,13 @@ class BlockPostForm extends Component {
                         <Button text="Опубликовать" type={Button.types.submit} onAction={this.handleCreatePostClick}/>
                     </div>
                     <div className="form-control control-select-visible">
-                        <Select label="Уровень приватности поста" actionType={Select.events.change} onAction={this.handleSubscriptionCategory} values={subscriptionSelect}/>
+                        <Select label="Уровень приватности поста" name="visibleTypes" actionType={Select.events.change} onAction={this.handleSubscriptionCategory} values={subscriptionSelect}/>
                     </div>
                     {this.state.showSubscriptions && <div className="form-control control-subscription-category">
-                        <Select label="Выберите категорию подписки" values={subscriptionCategorySelect}/>
+                        <Select label="Выберите категорию подписки" name="subscriptionCategory" values={subscriptionCategorySelect}/>
                     </div>}
                     <div className="form-control control-select-activity">
-                        <Select label="Категория деятельности" values={activitySelect}/>
+                        <Select label="Категория деятельности" name="activity" values={activitySelect}/>
                     </div>
                 </div>
             </form>
@@ -75,18 +75,18 @@ class BlockPostForm extends Component {
 
     handleSubscriptionCategory(event) {
         const subscription = 'Subscribers';
-        const optionValue = event.target[event.target.selectedIndex].value;
-        if (optionValue.indexOf(subscription) !== -1) {
+        if (event.target[event.target.selectedIndex].value === undefined) return;
+        const selectedSubscription = event.target[event.target.selectedIndex].value;
+        if (selectedSubscription.indexOf(subscription) !== -1) {
             this.setState({showSubscriptions: true});
         } else {
             this.setState({showSubscriptions: false});
-        }
-        
+        } 
     }
 
     handleSendFile() {
         const form = this._form.current;
-        const reqBody = form.file.files[0];
+        const reqBody = form.file ? form.file.files[0] : null;
         if (reqBody) {
             const data = new FormData();
             data.append('image', reqBody, reqBody.name);  
@@ -101,11 +101,12 @@ class BlockPostForm extends Component {
         let reqBody = {
             title: form.title.value,
             description: form.description.value,
-            //TODO договориться с беком о значениях
-            subscription_category_id: 1,
-            visible_type_id: 1,
-            category_id: 1,
+            subscription_category_id: form.subscriptionCategory ? form.subscriptionCategory.value : null,
+            visible_type_id: form.visibleTypes.value,
+            category_id: form.activity.value,
         };
+
+        console.log(reqBody);
 
         AjaxModule.post(RouterStore.api.posts.new, reqBody);
     }

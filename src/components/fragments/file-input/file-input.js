@@ -3,11 +3,6 @@ import React, { Component } from 'react';
 import './file-input.scss';
 
 class FileInput extends Component {
-    constructor(props) {
-        super(props);
-        
-    }
-
     render() {
         const { name, id, label, onAction, className } = this.props;
         const classes = className ? `file ${className}` : 'file';

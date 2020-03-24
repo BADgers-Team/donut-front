@@ -21,19 +21,15 @@ class Input extends Component {
     static get events() {
         return {
             click: 'click',
-            change: 'change',
-            input: 'input',
         };
     }
 
     render() {
         const { name, type, placeholder, label } = this.props;
-        //const classes = className ? `input ${className}` : 'input';
-        const labelNode = label === null ? '' : <label className="input-label">{label}</label>;
 
-        let node = (
+        const node = (
             <>
-                {labelNode}
+                {label === null ? '' : <label className="input-label">{label}</label>}
                 <input ref={this._input} type={type} placeholder={placeholder} name={name} spellCheck="true"/>
             </>
         );

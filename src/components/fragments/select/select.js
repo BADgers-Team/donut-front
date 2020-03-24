@@ -14,28 +14,25 @@ class Select extends Component {
         return {
             click: 'click',
             change: 'change',
-            input: 'input',
         };
     }
 
     render() {
-        const { label, className, values } = this.props;
-        const classes = className ? `select ${className}` : 'select';
-        const labelNode = label === null ? '' : <label className="select-label">{label}</label>;
+        const { label, values, name } = this.props;
 
         const selectItems = [];
-        for (let [key, value] of Object.entries(values)) {
+        Object.entries(values).map(([key, value]) => {
             selectItems.push(
                 <option key={key} value={key}>
                     {value}
                 </option>
             );
-        }
+        });
 
-        let node = (
+        const node = (
             <>
-                {labelNode}
-                <select ref={this._select} className={classes}>
+                {label === null ? '' : <label className="select-label">{label}</label>}
+                <select ref={this._select} name={name}>
                     {selectItems}
                 </select>
             </>
@@ -45,10 +42,10 @@ class Select extends Component {
 
     componentDidMount() {
         const { actionType, onAction } = this.props;
+        if (!(actionType in this._events)) return;
         if (actionType && onAction) {
             this._select.current.addEventListener(actionType, onAction); 
         }
-        
     }
 }
 

@@ -1,4 +1,4 @@
-@import 'components/app/app';
+@import 'components/app/consts';
 
 #post_form {
     height: 100%;
@@ -6,6 +6,7 @@
     flex-direction: row;
 }
 
+//TODO view styles through :last-child
 #post_form input, textarea, select, button {
     padding: 10px;
     margin: 10px;
@@ -27,7 +28,3 @@
 .control-button input {
     color: $color-black;
 }
-
-
-
-
