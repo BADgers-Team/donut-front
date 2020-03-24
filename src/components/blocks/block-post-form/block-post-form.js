@@ -15,7 +15,7 @@ class BlockPostForm extends Component {
     constructor(props) {
         super(props);
         
-        this.state = { showSubscription: false };
+        this.state = { showSubscriptions: false };
         this.showSubscriptionCategory = this.handleSubscriptionCategory.bind(this);
         this.handleCreatePostClick = this.handleCreatePostClick.bind(this);
         this.handleSendFile = this.handleSendFile.bind(this);
@@ -23,6 +23,7 @@ class BlockPostForm extends Component {
     }
     
     render() {
+        //TODO get this data from back
         const subscriptionSelect = {
             "For all": "Открыт для всех",
             "Subscribers": "Только по подписке",
@@ -62,7 +63,7 @@ class BlockPostForm extends Component {
                         <Select label="Кто может просматривать пост" actionType={Select.events.change} onAction={this.handleSubscriptionCategory} values={subscriptionSelect}/>
                     </div>
                     <div className="form-control control-subscription-category">
-                        {this.state.showSubscription && <Select label="Выберите подписку" values={subscriptionCategorySelect}/> }
+                        {this.state.showSubscriptions && <Select label="Выберите подписку" values={subscriptionCategorySelect}/> }
                     </div>
                     <div className="form-control control-select-activity">
                         <Select label="Категория деятельности" values={activitySelect}/>
@@ -76,9 +77,9 @@ class BlockPostForm extends Component {
         const subscription = "Subscribers";
         const optionValue = event.target[event.target.selectedIndex].value;
         if (optionValue.indexOf(subscription) !== -1) {
-            this.setState({showSubscription: true});
+            this.setState({showSubscriptions: true});
         } else {
-            this.setState({showSubscription: false});
+            this.setState({showSubscriptions: false});
         }
         
     }
