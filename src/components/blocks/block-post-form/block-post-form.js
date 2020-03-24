@@ -16,8 +16,9 @@ class BlockPostForm extends Component {
         super(props);
         
         this.state = { showSubscription: false };
-        this.showSubscriptionCategory = this.showSubscriptionCategory.bind(this);
+        this.showSubscriptionCategory = this.handleSubscriptionCategory.bind(this);
         this.handleCreatePostClick = this.handleCreatePostClick.bind(this);
+        this.handleSendFile = this.handleSendFile.bind(this);
         this._form = React.createRef();
     }
     
@@ -49,7 +50,7 @@ class BlockPostForm extends Component {
                         <Textarea label="Содержание" name="description" placeholder="Напишите что-нибудь..."/>
                     </div>
                     <div className="form-input input-file">
-                        <FileInput label="Загрузите файл" name="file" id="file-input"/>
+                        <FileInput label="Загрузите файл" name="file" id="file-input" onAction={this.handleSendFile}/>
                     </div>
                 </div>
 
@@ -58,7 +59,7 @@ class BlockPostForm extends Component {
                         <Button text="Опубликовать" type={Button.types.submit} onAction={this.handleCreatePostClick}/>
                     </div>
                     <div className="form-control control-select-visible">
-                        <Select label="Кто может просматривать пост" actionType={Select.events.change} onAction={this.showSubscriptionCategory} values={subscriptionSelect}/>
+                        <Select label="Кто может просматривать пост" actionType={Select.events.change} onAction={this.handleSubscriptionCategory} values={subscriptionSelect}/>
                     </div>
                     <div className="form-control control-subscription-category">
                         {this.state.showSubscription && <Select label="Выберите подписку" values={subscriptionCategorySelect}/> }
@@ -71,7 +72,7 @@ class BlockPostForm extends Component {
         );
     }
 
-    showSubscriptionCategory(event) {
+    handleSubscriptionCategory(event) {
         const subscription = "Subscribers";
         const optionValue = event.target[event.target.selectedIndex].value;
         if (optionValue.indexOf(subscription) !== -1) {
@@ -80,6 +81,16 @@ class BlockPostForm extends Component {
             this.setState({showSubscription: false});
         }
         
+    }
+
+    handleSendFile() {
+        const form = this._form.current;
+        const reqBody = form.file.files[0];
+        if (reqBody) {
+            const data = new FormData();
+            data.append('image', reqBody, reqBody.name);  
+            AjaxModule.post(RouterStore.api.posts.file.new, data, 'multipart/form-data');
+        }
     }
 
     handleCreatePostClick(event) {
@@ -96,13 +107,6 @@ class BlockPostForm extends Component {
         };
 
         AjaxModule.post(RouterStore.api.posts.new, reqBody);
-
-        reqBody = form.file.files[0];
-        if (reqBody) {
-            const data = new FormData();
-            data.append('image', reqBody, reqBody.name);  
-            AjaxModule.post(RouterStore.api.posts.file.new, data, 'multipart/form-data'); 
-        }
     }
 }
 

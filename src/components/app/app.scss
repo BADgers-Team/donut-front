@@ -1,12 +1,8 @@
 @import 'consts';
 
 body {
-  overflow-x: hidden;
-  overflow-y: auto;
-  height: 100%;
   margin: 0;
   padding: 0;
-  font-family: $font-title, sans-serif;
 }
 
 .content, #app {

@@ -27,14 +27,14 @@ class Input extends Component {
     }
 
     render() {
-        const { name, type, placeholder, label, className } = this.props;
-        const classes = className ? `input ${className}` : 'input';
+        const { name, type, placeholder, label } = this.props;
+        //const classes = className ? `input ${className}` : 'input';
         const labelNode = label === null ? '' : <label className="input-label">{label}</label>;
 
         let node = (
             <>
                 {labelNode}
-                <input ref={this._input} className={classes} type={type} placeholder={placeholder} name={name} spellCheck="true"/>
+                <input ref={this._input} type={type} placeholder={placeholder} name={name} spellCheck="true"/>
             </>
         );
         return node;

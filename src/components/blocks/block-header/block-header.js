@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 
-import './block-header.scss';
-
 class BlockHeader extends Component {
     render() {
-        return <div className="header">Хэдер</div>;
+        return <div style={{height: "100px"}}>Хэдер</div>;
     }
 }
 
