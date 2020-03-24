@@ -3,8 +3,6 @@ import RouterStore from 'store/routes';
 
 import Button from 'components/fragments/button/button';
 import Input from 'components/fragments/input/input';
-import Textarea from 'components/fragments/textarea/textarea';
-import FileInput from 'components/fragments/file-input/file-input';
 import Select from 'components/fragments/select/select';
 
 import AjaxModule from 'services/ajax';
@@ -48,10 +46,10 @@ class BlockPostForm extends Component {
                         <Input label="Заголовок" type={Input.types.text} name="title" placeholder="Добавьте заголовок"/>
                     </div>
                     <div className="form-input input-description">
-                        <Textarea label="Содержание" name="description" placeholder="Напишите что-нибудь..."/>
+                        <Input label="Содержание" type={Input.types.textarea} name="description" placeholder="Напишите что-нибудь..."/>
                     </div>
                     <div className="form-input input-file">
-                        <FileInput label="Загрузите файл" name="file" id="file-input" onAction={this.handleSendFile}/>
+                        <Input label="Загрузите файл" type={Input.types.file} name="file" id="file-input" onAction={this.handleSendFile}/>
                     </div>
                 </div>
 
