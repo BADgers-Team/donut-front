@@ -1,8 +1,9 @@
 const backendUrl = 'http://localhost:8080/api';
+import { getUrlWithParams } from 'services/getUrlWithParams';
 
 export default class AjaxModule {
-    static get(path) {
-        const url = `${backendUrl}${path}`;
+    static get(path, params) {
+        const url = `${backendUrl}${getUrlWithParams(path, params)}`;
         return fetch(url, {
             method: 'GET',
             credentials: 'include',

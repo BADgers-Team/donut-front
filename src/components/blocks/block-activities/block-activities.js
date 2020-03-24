@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import AjaxModule from 'services/ajax';
+import RouteStore from 'store/routes';
 
 import './block-activities.scss';
 
@@ -12,56 +14,17 @@ class BlockActivities extends Component {
         };
     }
     componentDidMount() {
-        // TODO: запрос за тематиками
-        // AjaxModule.get(RouterStore.api.posts.all).then((data) => {
-        //     this.setState({ posts: data || [] });
-        // });
-        const activities = [
-            {
-                id: 0,
-                label: 'Все',
-                title: 'Любые категории, любые тематики',
-                subtitle: 'Любой опубликованный пост можно найти здесь!'
-            },
-            {
-                id: 1,
-                label: 'Живопись',
-                title: 'Изобразительное искусство',
-                subtitle: 'Лучшие шедевры живописи можно отыскать тут!'
-            },
-            {
-                id: 2,
-                label: 'Блог',
-                title: 'Блогерство',
-                subtitle: 'Посты от самых "залайканных" блогеров можно увидеть здесь!'
-            },
-            {
-                id: 3,
-                label: 'Фото',
-                title: 'Фотография',
-                subtitle: 'Невероятно крутые фото от невероятно талантливых фотографов - и все тут!'
-            },
-            {
-                id: 4,
-                label: 'Музыка',
-                title: 'Музыка',
-                subtitle: 'Музыканты, композиторы и певцы рады поделились своими лучшими произведениями здесь!'
-            },
-            {
-                id: 5,
-                label: 'Писательство',
-                title: 'Писательство',
-                subtitle: 'Рукописями лучших авторов современности можно вдохновиться именно тут!'
-            },
-        ];
-
-        this.setState({
-            activities: activities
+        AjaxModule.get(RouteStore.api.activities).then((data) => {
+            this.setState({ activities: data || [] });
+        }).catch((error) => {
+            console.error(error.message);
         });
     }
 
-    handleClick = (id) => {
-        this.setState({ selectedTab: id });
+    handleClick = (tab) => {
+        this.setState({ selectedTab: tab.id });
+        const { onChange } = this.props;
+        onChange && onChange(tab.label);
     };
 
     render() {
@@ -93,7 +56,7 @@ export default BlockActivities;
 class Tab extends Component {
     handleClick = () => {
         const { tab, onClick } = this.props;
-        onClick && onClick(tab.id);
+        onClick && onClick(tab);
     };
 
     render() {
