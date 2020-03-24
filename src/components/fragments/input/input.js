@@ -47,6 +47,7 @@ class Input extends Component {
                             <div className="file-text">Прикрепить файл</div>
                         </div>
                     </label>
+                    <label id="loader"></label>
                     <input ref={this._input} type="file" className='file-input' name={name} id={id} onChange={onAction}/>
                 </>
             );
@@ -71,7 +72,17 @@ class Input extends Component {
         return node;
     }
 
+    static startLoader() {
+        document.getElementById('loader').innerText = 'Файл загружается...';
+    }
+
+    static finishLoader() {
+        document.getElementById('loader').innerText = 'Файл загружен';
+    }
+
     componentDidMount() {
+        document.getElementById('loader').innerText = '';
+
         const { actionType, onAction } = this.props;
         if (!(actionType in this._events)) return;
         if (actionType && onAction) {

@@ -14,6 +14,7 @@ class BlockPostForm extends Component {
         super(props);
         
         this.state = { showSubscriptions: false };
+        this.state = { postIDs: [] };
         this.handleSubscriptionCategory = this.handleSubscriptionCategory.bind(this);
         this.handleCreatePostClick = this.handleCreatePostClick.bind(this);
         this.handleSendFile = this.handleSendFile.bind(this);
@@ -87,12 +88,16 @@ class BlockPostForm extends Component {
         const form = this._form.current;
         const reqBody = form.file ? form.file.files[0] : null;
         if (reqBody) {
-            //TODO start loader
+            Input.startLoader();
             const data = new FormData();
             data.append('image', reqBody, reqBody.name);  
             AjaxModule.post(RouterStore.api.posts.file.new, data, 'multipart/form-data')
-                .then(() => {
-                    //TODO finish loader
+                .then((response) => {
+                    this.setState((prevState => ({
+                        postIDs: [...prevState.postIDs, response]
+                      })));
+                    console.log(this.state.postIDs);
+                    Input.finishLoader();
                 });
         }
     }
@@ -106,6 +111,7 @@ class BlockPostForm extends Component {
             description: form.description.value,
             subscription_category_id: form.subscriptionCategory ? parseInt(form.subscriptionCategory.options[form.activity.selectedIndex].id, 10) : null,
             visible_type_id: parseInt(form.visibleTypes.options[form.activity.selectedIndex].id, 10),
+            file_ids: this.state.postIDs,
             //category_id: parseInt(form.activity.options[form.activity.selectedIndex].id, 10),
         };
 
