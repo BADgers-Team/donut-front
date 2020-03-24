@@ -46,7 +46,7 @@ class Select extends Component {
     componentDidMount() {
         const { actionType, onAction } = this.props;
         if (actionType && onAction) {
-           this._select.current.addEventListener(actionType, onAction); 
+            this._select.current.addEventListener(actionType, onAction); 
         }
         
     }

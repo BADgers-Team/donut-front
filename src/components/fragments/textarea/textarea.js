@@ -36,7 +36,7 @@ class Textarea extends Component {
     componentDidMount() {
         const { actionType, onAction } = this.props;
         if (actionType && onAction) {
-           this._input.current.addEventListener(actionType, onAction); 
+            this._input.current.addEventListener(actionType, onAction); 
         }
         
     }
