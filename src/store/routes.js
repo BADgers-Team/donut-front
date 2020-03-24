@@ -5,6 +5,10 @@ export default {
         posts: {
             all: '/posts',
             new: '/posts',
+            all: '/posts',
+            file: {
+                new: '/posts/file',
+            },
         },
         me: '/me',
         activities: '/activities',

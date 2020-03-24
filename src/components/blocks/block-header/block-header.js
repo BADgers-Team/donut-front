@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import RouteStore from 'store/routes';
 
 import Button from 'components/fragments/button/button';
-
 import './block-header.scss';
 import LogoImage from 'assets/img/logo.png';
 import AuthorAvatar from 'assets/img/michael.jpg';
@@ -19,13 +18,13 @@ class BlockHeader extends Component {
                 <div className="header-button header-button__active">
                     <Button text="Главная" type={Button.types.link} to={RouteStore.pages.main}/>
                 </div>
-                { tabs }
+                {tabs}
             </div>
         );
     }
 
     getHeaderTabs() {
-        const { user } = this.props;
+        const {user} = this.props;
         if (user) {
             return (
                 <>
