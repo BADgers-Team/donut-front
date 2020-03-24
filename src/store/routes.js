@@ -4,6 +4,7 @@ export default {
         login: '/login',
         posts: {
             new: '/posts',
+            all: '/posts',
             file: {
                 new: '/posts/file',
             },
