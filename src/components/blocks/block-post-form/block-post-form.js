@@ -13,8 +13,7 @@ class BlockPostForm extends Component {
     constructor(props) {
         super(props);
         
-        this.state = { showSubscriptions: false };
-        this.state = { postIDs: [] };
+        this.state = { postIDs: [], showSubscriptions: false, disabledButton: false };
         this.handleSubscriptionCategory = this.handleSubscriptionCategory.bind(this);
         this.handleCreatePostClick = this.handleCreatePostClick.bind(this);
         this.handleSendFile = this.handleSendFile.bind(this);
@@ -57,7 +56,7 @@ class BlockPostForm extends Component {
 
                 <div className="form__controls">
                     <div className="form-control control-button">    
-                        <Button text="Опубликовать" type={Button.types.submit} onAction={this.handleCreatePostClick}/>
+                        <Button text="Опубликовать" type={Button.types.submit} isDisabled={this.state.isDisabled} onAction={this.handleCreatePostClick}/>
                     </div>
                     <div className="form-control control-select-visible">
                         <Select label="Уровень приватности поста" name="visibleTypes" actionType={Select.events.change} onAction={this.handleSubscriptionCategory} values={subscriptionSelect}/>
@@ -88,7 +87,7 @@ class BlockPostForm extends Component {
         const form = this._form.current;
         const reqBody = form.file ? form.file.files[0] : null;
         if (reqBody) {
-            Input.startLoader();
+            this.setState({isDisabled: Input.startLoader()});
             const data = new FormData();
             data.append('image', reqBody, reqBody.name);  
             AjaxModule.post(RouterStore.api.posts.file.new, data, 'multipart/form-data')
@@ -97,7 +96,7 @@ class BlockPostForm extends Component {
                         postIDs: [...prevState.postIDs, response]
                       })));
                     console.log(this.state.postIDs);
-                    Input.finishLoader();
+                    this.setState({isDisabled: Input.finishLoader()});
                 });
         }
     }
@@ -115,14 +114,7 @@ class BlockPostForm extends Component {
             activity_id: parseInt(form.activity.options[form.activity.selectedIndex].id, 10),
         };
 
-        console.log(reqBody);
-
         AjaxModule.post(RouterStore.api.posts.new, reqBody);
-
-        AjaxModule.get(RouterStore.api.posts.all).then((data) => {
-            console.log("/posts");
-            console.log(data);
-        });
     }
 }
 

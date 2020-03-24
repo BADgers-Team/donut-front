@@ -74,10 +74,12 @@ class Input extends Component {
 
     static startLoader() {
         document.getElementById('loader').innerText = 'Файл загружается...';
+        return true;
     }
 
     static finishLoader() {
         document.getElementById('loader').innerText = 'Файл загружен';
+        return false;
     }
 
     componentDidMount() {
