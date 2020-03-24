@@ -24,7 +24,6 @@ class BlockCards extends Component {
             'subscription_category_id': 124,
             'title': 'My best post', 
             'description': 'My best description',
-            'visible_type_id': 125,
             'files': [
                 CardImage
             ],

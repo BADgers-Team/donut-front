@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import RouterStore from 'store/routes';
-import AjaxModule from '../../services/ajax';
+import AjaxModule from 'services/ajax';
 import LayoutIndex from 'components/layouts/layout-index/layout-index';
 import LayoutCreatePost from 'components/layouts/layout-create-post/layout-create-post';
 import BlockHeader from 'components/blocks/block-header/block-header';
@@ -21,7 +21,6 @@ class App extends Component {
 
     componentDidMount() {
         AjaxModule.get(RouterStore.api.me).then((data) => {
-            console.log(data);
             this.setState({ user: data });
         });
     }

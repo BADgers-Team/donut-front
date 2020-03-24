@@ -61,9 +61,7 @@ class BlockActivities extends Component {
     }
 
     handleClick = (id) => {
-        if (this.state.selectedTab !== id) {
-            this.setState({ selectedTab: id });
-        }
+        this.setState({ selectedTab: id });
     };
 
     render() {

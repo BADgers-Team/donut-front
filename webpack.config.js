@@ -19,6 +19,7 @@ module.exports = {
             'components': path.join(src, 'components'),
             'store': path.join(src, 'store'),
             'assets': path.join(src, 'assets'),
+            'services': path.join(src, 'services'),
         },
         extensions: ['.js']
     },

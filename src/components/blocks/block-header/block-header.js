@@ -9,11 +9,6 @@ import AuthorAvatar from 'assets/img/michael.jpg';
 import ExitIcon from 'assets/img/exit.svg';
 
 class BlockHeader extends Component {
-    constructor(props) {
-        super(props);
-
-    }
-
     render() {
         const tabs = this.getHeaderTabs();
         return (
