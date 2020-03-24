@@ -22,23 +22,24 @@ class BlockPostForm extends Component {
     
     render() {
         //TODO get this data from back
-        const subscriptionSelect = {
-            'For all': 'Открыт для всех',
-            'Subscribers': 'Только по подписке',
-            'Subscribers and one time': 'Для подписчиков и разовая оплата',
-            'One time': 'Только разовая оплата',
-        }; 
-        const subscriptionCategorySelect = {
-            '1': 'Подписка 1',
-            '2': 'Подписка 2',
-        }; 
-        const activitySelect = {
-            'Art': 'Живопись',
-            'Photography': 'Фотография',
-            'Music': 'Музыка',
-            'Blog': 'Блог',
-            'Writing': 'Писательство',
-        };
+        const subscriptionSelect = [
+            {id: 1, value:'For all', text:'Открыт для всех'},
+            {id: 2, value:'Subscribers', text: 'Только по подписке'},
+            {id: 3, value:'Subscribers and one time', text: 'Для подписчиков и разовая оплата'},
+            {id: 4, value:'One time', text: 'Только разовая оплата'},
+        ]; 
+        const subscriptionCategorySelect = [
+            {id: 1, value:'Подписка 1', text:'Подписка 1'},
+            {id: 2, value:'Подписка 2', text:'Подписка 2'},
+        ]; 
+        const activitySelect = [
+            {id: 1, value:'All', text: 'Все'},
+            {id: 2, value:'Art', text: 'Живопись'},
+            {id: 3, value:'Photography', text: 'Фотография'},
+            {id: 4, value:'Music', text: 'Музыка'},
+            {id: 5, value:'Blog', text: 'Блог'},
+            {id: 6, value:'Writing', text: 'Писательство'},
+        ];
         return (
             <form ref={this._form} id="post_form">
                 <div className="form__inputs">
@@ -99,9 +100,9 @@ class BlockPostForm extends Component {
         let reqBody = {
             title: form.title.value,
             description: form.description.value,
-            subscription_category_id: form.subscriptionCategory ? form.subscriptionCategory.value : null,
-            visible_type_id: form.visibleTypes.value,
-            category_id: form.activity.value,
+            subscription_category_id: form.subscriptionCategory ? parseInt(form.subscriptionCategory.options[form.activity.selectedIndex].id, 10) : null,
+            visible_type_id: parseInt(form.visibleTypes.options[form.activity.selectedIndex].id, 10),
+            //category_id: parseInt(form.activity.options[form.activity.selectedIndex].id, 10),
         };
 
         console.log(reqBody);

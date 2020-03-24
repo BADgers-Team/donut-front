@@ -20,14 +20,14 @@ class Select extends Component {
     render() {
         const { label, values, name } = this.props;
 
-        const selectItems = [];
-        Object.entries(values).map(([key, value]) => {
-            selectItems.push(
-                <option key={key} value={key}>
-                    {value}
+         
+        let selectItems = values.map((item) => {
+            return (
+                <option id={item.id} key={item.value} value={item.value}>
+                    {item.text}
                 </option>
             );
-        });
+        })
 
         const node = (
             <>
