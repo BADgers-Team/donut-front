@@ -13,7 +13,7 @@ class BlockPostForm extends Component {
     constructor(props) {
         super(props);
         
-        this.state = { postIDs: [], showSubscriptions: false, disabledButton: false };
+        this.state = { postIDs: [], showSubscriptions: true, disabledButton: false };
         this.handleSubscriptionCategory = this.handleSubscriptionCategory.bind(this);
         this.handleCreatePostClick = this.handleCreatePostClick.bind(this);
         this.handleSendFile = this.handleSendFile.bind(this);
@@ -29,8 +29,8 @@ class BlockPostForm extends Component {
             {id: 4, value:'One time', text: 'Только разовая оплата'},
         ]; 
         const subscriptionCategorySelect = [
-            {id: 1, value:'Подписка 1', text:'Подписка 1'},
-            {id: 2, value:'Подписка 2', text:'Подписка 2'},
+            {id: 1, value:'Без подписки', text:'Без подписки'},
+            {id: 2, value:'Подписка 1', text:'Подписка 1'},
         ]; 
         const activitySelect = [
             {id: 1, value:'All', text: 'Все'},
@@ -73,10 +73,7 @@ class BlockPostForm extends Component {
     }
 
     handleSubscriptionCategory(event) {
-        const subscription = 'Subscribers';
-        if (event.target[event.target.selectedIndex].value === undefined) return;
-        const selectedSubscription = event.target[event.target.selectedIndex].value;
-        if (selectedSubscription.indexOf(subscription) !== -1) {
+        if (event.target[event.target.selectedIndex].value !== "One time") {
             this.setState({showSubscriptions: true});
         } else {
             this.setState({showSubscriptions: false});
@@ -95,7 +92,6 @@ class BlockPostForm extends Component {
                     this.setState((prevState => ({
                         postIDs: [...prevState.postIDs, response]
                       })));
-                    console.log(this.state.postIDs);
                     this.setState({isDisabled: Input.finishLoader()});
                 });
         }
