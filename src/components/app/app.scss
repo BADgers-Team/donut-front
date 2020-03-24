@@ -1,3 +1,8 @@
-.content {
-  background-color: aliceblue;
+@import 'consts';
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $font-title, sans-serif;
+  background-color: $color-dark-white;
 }

@@ -3,13 +3,28 @@ export default {
     api: {
         login: '/login',
         posts: {
+            all: '/posts',
             new: '/posts',
         },
+        me: '/me',
+        activities: '/activities',
     },
     pages: {
+        user: {
+            login: '/login',
+            register: '/registration',
+            profile: '/profile'
+        },
         main: '/',
         posts: {
             new: '/posts/new',
+            my: '/posts/my',
         },
+        subscriptions: {
+            my: '/subscriptions/my'
+        },
+        podcasts: {
+            all: '/podcasts'
+        }
     }
 };
