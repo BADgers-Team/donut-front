@@ -5,7 +5,7 @@
  * @returns {string}
  */
 export const getUrlWithParams = (url, params = {}) => {
-    if (!Object.keys(params)) {
+    if (Object.keys(params).length === 0) {
         return url;
     }
 

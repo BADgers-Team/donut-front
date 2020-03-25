@@ -80,7 +80,7 @@ class BlockPostForm extends Component {
             this.setState({showSubscriptions: true});
         } else {
             this.setState({showSubscriptions: false});
-        } 
+        }
     }
 
     handleSendFile() {

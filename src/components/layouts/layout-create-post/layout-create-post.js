@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import BlockPostForm from 'components/blocks/block-post-form/block-post-form';
 
-import './create-post.scss';
-
 class LayoutCreatePost extends Component {
     constructor(props) {
         super(props);
