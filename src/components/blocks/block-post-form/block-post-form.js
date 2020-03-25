@@ -33,12 +33,12 @@ class BlockPostForm extends Component {
             {id: 2, value:'Подписка 2', text:'Подписка 2'},
         ]; 
         const activitySelect = [
-            {id: 1, value:'All', text: 'Все'},
-            {id: 2, value:'Art', text: 'Живопись'},
-            {id: 3, value:'Photography', text: 'Фотография'},
-            {id: 4, value:'Music', text: 'Музыка'},
-            {id: 5, value:'Blog', text: 'Блог'},
-            {id: 6, value:'Writing', text: 'Писательство'},
+            {id: 0, value:'All', text: 'Все'},
+            {id: 1, value:'Art', text: 'Живопись'},
+            {id: 2, value:'Photography', text: 'Фотография'},
+            {id: 3, value:'Music', text: 'Музыка'},
+            {id: 4, value:'Blog', text: 'Блог'},
+            {id: 5, value:'Writing', text: 'Писательство'},
         ];
         return (
             <form ref={this._form} id="post_form">
