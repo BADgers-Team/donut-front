@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import { getRouteWithID } from 'services/getRouteWithId';
+import RouteStore from 'store/routes';
 
 import './block-cards.scss';
 import SubscribersIcon from 'assets/img/subscribers.svg';
@@ -30,9 +33,10 @@ class Card extends Component {
         const cardPreview = card.files ? `${backendUrl}/${card.files[0]}` : CardImage;
         const cardAuthorAvatar = card.author.avatar ? card.author.avatar : Avatar;
         const cardSubscribers = card.subscribers ? card.subscribers : 120;
+        const cardRoute = getRouteWithID(RouteStore.api.posts.id, card.id);
 
         return (
-            <div className="card">
+            <Link className="card" to={cardRoute}>
                 <img className="card__preview" src={cardPreview} alt="preview"/>
                 <div className="card__info">
                     <div className="card__title">{card.title}</div>
@@ -47,7 +51,7 @@ class Card extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </Link>
         );
     }
 }
