@@ -48,7 +48,7 @@ class BlockHeader extends Component {
         const activeClass = 'header-button__active';
         const myPosts = activeTab === 'Мои посты' ? `${baseClass} ${activeClass}` : baseClass;
         const mySubscriptions = activeTab === 'Мои подписки' ? `${baseClass} ${activeClass}` : baseClass;
-        const podcast = activeTab === 'Подборка' ? `${baseClass} ${activeClass}` : baseClass;
+        const podcast = activeTab === 'Поиск' ? `${baseClass} ${activeClass}` : baseClass;
         const createPost = activeTab === 'Создать пост' ? `${baseClass} ${activeClass}` : baseClass;
         if (user) {
             return (
@@ -60,7 +60,7 @@ class BlockHeader extends Component {
                         <Button text="Мои подписки" type={Button.types.link} to={RouteStore.pages.subscriptions.my} onAction={this.handleChangeTab}/>
                     </div>
                     <div className={podcast}>
-                        <Button text="Подборка" type={Button.types.link} to={RouteStore.pages.podcasts.all} onAction={this.handleChangeTab}/>
+                        <Button text="Поиск" type={Button.types.link} to={RouteStore.pages.podcasts.all} onAction={this.handleChangeTab}/>
                     </div>
                     <div className={`${createPost} header-button__main`}>
                         <Button text="Создать пост" type={Button.types.link} to={RouteStore.pages.posts.new} onAction={this.handleChangeTab}/>

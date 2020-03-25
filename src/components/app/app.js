@@ -5,6 +5,7 @@ import RouterStore from 'store/routes';
 import AjaxModule from 'services/ajax';
 import LayoutIndex from 'components/layouts/layout-index/layout-index';
 import LayoutCreatePost from 'components/layouts/layout-create-post/layout-create-post';
+import LayoutSearch from 'components/layouts/layout-search/layout-search';
 import BlockHeader from 'components/blocks/block-header/block-header';
 
 import './app.scss';
@@ -36,6 +37,7 @@ class App extends Component {
                     <Switch>
                         <Route path={pages.main} exact render={(props) => <LayoutIndex {...props}/>}/>
                         <Route path={pages.posts.new} render={(props) => <LayoutCreatePost {...props}/>}/>
+                        <Route path={pages.podcasts.all} render={(props) => <LayoutSearch {...props}/>}/>
                     </Switch>
                 </div>
             </BrowserRouter>

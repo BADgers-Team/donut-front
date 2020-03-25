@@ -62,6 +62,7 @@ class BlockSearch extends Component {
                 chosenActivities += selectActivities[i].id + ',';
             }
         }
+        chosenActivities.substring(0, chosenActivities.length - 1);
         console.log(chosenActivities);
 
         //TODO временная проверка
@@ -88,7 +89,7 @@ class BlockSearch extends Component {
         const { activities } = this.state;
         const activitiesNodes = activities.map((activity, index) => {
             if (activity.label === 'Все') return;
-            return <Input type={Input.types.checkbox} name={activity} key={index} id={activity.id} label={activity.label} classValue="select__activities-items"/>
+            return <Input type={Input.types.checkbox} name={activity} key={index} id={index} label={activity.label} classValue="select__activities-items"/>
         });
         return (
             <div className='search'>

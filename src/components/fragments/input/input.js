@@ -73,7 +73,7 @@ class Input extends Component {
         case this._types.checkbox:
             node = (
                 <>
-                    <input ref={this._input} type="checkbox" className={classValue} name={name} id={name}/>
+                    <input ref={this._input} type="checkbox" className={classValue} name={name} id={id}/>
                     {label === null ? '' : <label  htmlFor={name}>{label}</label>}
                 </>
             );
