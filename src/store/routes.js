@@ -12,6 +12,7 @@ export default {
         },
         me: '/me',
         activities: '/activities',
+        search: '/search'
     },
     pages: {
         user: {

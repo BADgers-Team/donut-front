@@ -16,6 +16,8 @@ class Input extends Component {
             text: 'text',
             file: 'file',
             textarea: 'textarea',
+            number: 'number',
+            checkbox: 'checkbox',
         };
     }
 
@@ -26,7 +28,7 @@ class Input extends Component {
     }
 
     render() {
-        const { name, type, placeholder, label, id, onAction } = this.props;
+        const { name, type, placeholder, label, id, onAction, classValue } = this.props;
 
         let node;
         switch(type) {
@@ -60,6 +62,22 @@ class Input extends Component {
                 </>
             );
             break;
+        case this._types.number:
+            node = (
+                <>
+                    <input ref={this._input} type="number" min="0" max="1000000" name={name}/>
+                    {label === null ? '' : <label className="number">{label}</label>}
+                </>
+            );
+            break;   
+        case this._types.checkbox:
+            node = (
+                <>
+                    <input ref={this._input} type="checkbox" className={classValue} name={name} id={id}/>
+                    {label === null ? '' : <label  htmlFor={name}>{label}</label>}
+                </>
+            );
+            break;     
         default:
             node = (
                 <>
@@ -73,17 +91,20 @@ class Input extends Component {
     }
 
     static startLoader() {
+        if (!document.getElementById('loader')) return;
         document.getElementById('loader').innerText = 'Файл загружается...';
         return true;
     }
 
     static finishLoader() {
+        if (!document.getElementById('loader')) return;
         document.getElementById('loader').innerText = 'Файл загружен';
         return false;
     }
 
     componentDidMount() {
-        document.getElementById('loader').innerText = '';
+        if (document.getElementById('loader'))
+            document.getElementById('loader').innerText = '';
 
         const { actionType, onAction } = this.props;
         if (!(actionType in this._events)) return;

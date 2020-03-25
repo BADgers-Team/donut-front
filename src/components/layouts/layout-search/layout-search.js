@@ -33,11 +33,24 @@ class LayoutIndex extends Component {
             });
     };
 
+    //TODO запрос на поиск пойдет туть и тут же выборки, пришли посты или кто то еще
+    handleSubmitSearch = (keys) => {
+        AjaxModule.get(RouteStore.api.search, keys)
+            .then((data) => {
+                console.log(data);
+                this.setState({ posts: data.posts || [] });
+            })
+            .catch((error) => {
+                console.error(error.message);
+            });
+    };
+
     render() {
         const { posts } = this.state;
         return (
             <>
-                <BlockActivities onChange={this.handleChangeActivity}/>
+                {/* <BlockActivities onChange={this.handleChangeActivity}/> */}
+                <BlockSearch onSubmit={this.handleSubmitSearch}/>
                 <BlockCards cards={posts}/>
             </>
         );
