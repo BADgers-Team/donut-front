@@ -5,7 +5,7 @@ export default {
         posts: {
             all: '/posts',
             new: '/posts',
-            all: '/posts',
+            id: '/posts/:id',
             file: {
                 new: '/posts/file',
             },
