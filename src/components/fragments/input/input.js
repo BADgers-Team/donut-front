@@ -28,7 +28,7 @@ class Input extends Component {
     }
 
     render() {
-        const { name, type, placeholder, label, id, onAction } = this.props;
+        const { name, type, placeholder, label, id, onAction, classValue } = this.props;
 
         let node;
         switch(type) {
@@ -66,15 +66,15 @@ class Input extends Component {
             node = (
                 <>
                     <input ref={this._input} type="number" min="0" max="1000000" name={name}/>
-                    {label === null ? '' : <label className="file-label">{label}</label>}
+                    {label === null ? '' : <label className="number">{label}</label>}
                 </>
             );
             break;   
         case this._types.checkbox:
             node = (
                 <>
-                    <input ref={this._input} type="checkbox" name={name} id={name}/>
-                    {label === null ? '' : <label className="file-label" htmlFor={name}>{label}</label>}
+                    <input ref={this._input} type="checkbox" className={classValue} name={name} id={name}/>
+                    {label === null ? '' : <label  htmlFor={name}>{label}</label>}
                 </>
             );
             break;     

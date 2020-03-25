@@ -18,7 +18,9 @@ class BlockSearch extends Component {
             showАctivities: false
         };
         this._form = React.createRef();
+        this.handleActivityDisplay = this.handleActivityDisplay.bind(this);
     }
+
     componentDidMount() {
         AjaxModule.get(RouteStore.api.activities).then((data) => {
             this.setState({ activities: data || [] });
@@ -32,7 +34,6 @@ class BlockSearch extends Component {
         const form = this._form.current;
 
         let keys = {};
-        debugger
         if (form.subscritionNumberMin.value !== '') {
             if (!form.freeCheckbox.checked && form.subscritionCheckbox.checked) 
                 keys.min_price = form.subscritionNumberMin.value;
@@ -52,6 +53,16 @@ class BlockSearch extends Component {
             keys.max_price = 0;
         }
         //TODO activities
+        const selectActivities = document.getElementsByClassName('select__activities-items');
+        let chosenActivities = '';
+        //TODO плохой цикл, наверное можно лучше
+        debugger
+        for (let i=0; i< selectActivities.length; i++) {
+            if (selectActivities[i].checked) {
+                chosenActivities += selectActivities[i].id + ',';
+            }
+        }
+        console.log(chosenActivities);
 
         //TODO временная проверка
         if (keys.min_price > keys.max_price) {
@@ -63,6 +74,10 @@ class BlockSearch extends Component {
         onSubmit && onSubmit(keys);
     };
 
+    handleActivityDisplay() {
+        this.setState({showАctivities: !this.state.showАctivities});
+    }
+
     render() {
         const postTypes = [
             {id: 1, value:'all', text:'Везде'},
@@ -70,6 +85,11 @@ class BlockSearch extends Component {
             {id: 3, value:'subscriptions', text: 'По подпискам'},
             {id: 4, value:'authors', text: 'По авторам'},
         ]; 
+        const { activities } = this.state;
+        const activitiesNodes = activities.map((activity, index) => {
+            if (activity.label === 'Все') return;
+            return <Input type={Input.types.checkbox} name={activity} key={index} id={activity.id} label={activity.label} classValue="select__activities-items"/>
+        });
         return (
             <div className='search'>
                 <form ref={this._form} className="search-form">
@@ -96,8 +116,10 @@ class BlockSearch extends Component {
                             <Input type={Input.types.number} name="subscritionNumberMax" label="₽"/>
                         </div>
                         <div className='bottom__select-activity'>
-                            <div className='select-activity__default'>Тематики: ...</div>
-                            {this.state.showАctivities && <div className='select-activity__list'>Тематики:</div>}
+                            <div className='select-activity__default' onClick={this.handleActivityDisplay}>Тематики: ...</div>
+                            {this.state.showАctivities && <div className='select-activity__list' name="activities">
+                                {activitiesNodes}
+                            </div>}
                         </div>
                     </div>
                 </form>
