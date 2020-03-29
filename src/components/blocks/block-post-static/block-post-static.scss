@@ -6,6 +6,10 @@
   width: 30%;
   padding: 3vh 80px;
 
+  &__inner {
+    position: fixed;
+  }
+
   &__title {
     font-size: 32px;
     font-weight: bold;
