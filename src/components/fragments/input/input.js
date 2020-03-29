@@ -35,7 +35,7 @@ class Input extends Component {
             node = (
                 <>
                     {!label ? '' : <label className="input-label">{label}</label>}
-                    <input ref={this._input} className={classes} type="text" placeholder={placeholder} name={name} value={value} spellCheck="true"/>
+                    <input ref={this._input} className={classes} type="text" placeholder={placeholder} name={name} value={value} spellCheck="true" onChange={onAction}/>
                 </>
             );
             break;
