@@ -12,9 +12,9 @@ import './block-post-from.scss';
 class BlockPostForm extends Component {
     constructor(props) {
         super(props);
-        
+      
         this.state = { postIDs: [], showSubscriptions: true, disabledButton: false };
-        this.handleSubscriptionCategory = this.handleSubscriptionCategory.bind(this);
+        this.handleSubscription = this.handleSubscription.bind(this);
         this.handleCreatePostClick = this.handleCreatePostClick.bind(this);
         this.handleSendFile = this.handleSendFile.bind(this);
         this._form = React.createRef();
@@ -22,13 +22,13 @@ class BlockPostForm extends Component {
     
     render() {
         //TODO get this data from back
-        const subscriptionSelect = [
+        const visibleTypeSelect = [
             {id: 1, value:'For all', text:'Открыт для всех'},
             {id: 2, value:'Subscribers', text: 'Только по подписке'},
             {id: 3, value:'Subscribers and one time', text: 'Для подписчиков и разовая оплата'},
             {id: 4, value:'One time', text: 'Только разовая оплата'},
         ]; 
-        const subscriptionCategorySelect = [
+        const subscriptionSelect = [
             {id: 1, value:'Без подписки', text:'Без подписки'},
             {id: 2, value:'Подписка 1', text:'Подписка 1'},
         ]; 
@@ -59,10 +59,10 @@ class BlockPostForm extends Component {
                         <Button text="Опубликовать" type={Button.types.submit} isDisabled={this.state.isDisabled} onAction={this.handleCreatePostClick}/>
                     </div>
                     <div className="form-control control-select-visible">
-                        <Select label="Уровень приватности поста" name="visibleTypes" actionType={Select.events.change} onAction={this.handleSubscriptionCategory} values={subscriptionSelect}/>
+                        <Select label="Уровень приватности поста" name="visibleTypes" actionType={Select.events.change} onAction={this.handleSubscription} values={visibleTypeSelect}/>
                     </div>
-                    {this.state.showSubscriptions && <div className="form-control control-subscription-category">
-                        <Select label="Выберите категорию подписки" name="subscriptionCategory" values={subscriptionCategorySelect}/>
+                    {this.state.showSubscriptions && <div className="form-control control-subscription">
+                        <Select label="Выберите подпискy" name="subscription" values={subscriptionSelect}/>
                     </div>}
                     <div className="form-control control-select-activity">
                         <Select label="Категория деятельности" name="activity" values={activitySelect}/>
@@ -72,7 +72,7 @@ class BlockPostForm extends Component {
         );
     }
 
-    handleSubscriptionCategory(event) {
+    handleSubscription(event) {
         if (event.target[event.target.selectedIndex].value !== "One time") {
             this.setState({showSubscriptions: true});
         } else {
@@ -105,7 +105,7 @@ class BlockPostForm extends Component {
         let reqBody = {
             title: form.title.value,
             description: form.description.value,
-            subscription_category_id: form.subscriptionCategory ? parseInt(form.subscriptionCategory.options[form.subscriptionCategory.selectedIndex].id, 10) : null,
+            subscription_id: form.subscription ? parseInt(form.subscription.options[form.subscription.selectedIndex].id, 10) : null,
             visible_type_id: parseInt(form.visibleTypes.options[form.visibleTypes.selectedIndex].id, 10),
             file_ids: this.state.postIDs,
             activity_id: parseInt(form.activity.options[form.activity.selectedIndex].id, 10),
