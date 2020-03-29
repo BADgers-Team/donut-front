@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 
 import BlockActivities from 'components/blocks/block-activities/block-activities';
 import BlockCards from 'components/blocks/block-cards/block-cards';
-import AjaxModule from "services/ajax";
-import RouteStore from "store/routes";
+import AjaxModule from 'services/ajax';
+import RouteStore from 'store/routes';
+
+import './layout-index.scss';
 
 class LayoutIndex extends Component {
     constructor(props) {
@@ -35,10 +37,10 @@ class LayoutIndex extends Component {
     render() {
         const { posts } = this.state;
         return (
-            <>
+            <div className="layout-index">
                 <BlockActivities onChange={this.handleChangeActivity}/>
                 <BlockCards cards={posts}/>
-            </>
+            </div>
         );
     }
 }
