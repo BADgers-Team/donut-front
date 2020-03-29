@@ -23,12 +23,12 @@ class Button extends Component {
     };
 
     render() {
-        const { text, type, onAction, to, className, isDisabled } = this.props;
+        const { text, type, onAction, to, className, isDisabled, name } = this.props;
         const classes = className ? `button ${className}` : 'button';
         let node;
         switch(type) {
         case this._types.submit :
-            node = <input className={classes} type="submit" value={text} onClick={onAction} disabled={isDisabled}/>;
+            node = <input className={classes} type="submit" value={text} onClick={onAction} disabled={isDisabled} name={name}/>;
             break;
         case this._types.link:
             node = <Link className={classes} to={to} onClick={this.handleClickTab}>{text}</Link>;
