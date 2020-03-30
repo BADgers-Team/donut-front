@@ -19,7 +19,6 @@ class Select extends Component {
 
     render() {
         const { label, values, name } = this.props;
-
          
         let selectItems = values.map((item) => {
             return (
@@ -31,7 +30,7 @@ class Select extends Component {
 
         const node = (
             <>
-                {label === null ? '' : <label className="select-label">{label}</label>}
+                {label === null || label === undefined? '' : <label className="select-label">{label}</label>}
                 <select ref={this._select} name={name}>
                     {selectItems}
                 </select>

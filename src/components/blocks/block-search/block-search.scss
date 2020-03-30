@@ -17,8 +17,23 @@
     align-items: center;
   }
 
+  &__top {
+    &__type-selector {
+
+    }
+  }
+
   label {
     color: $color-dark-white;
+  }
+
+  select {
+    background-color: transparent;
+    outline: none;
+    border: transparent;
+    -moz-appearance: none;
+    appearance: none;
+    background: url('../../../assets/img/select-arrow.svg') 96% / 15% no-repeat;
   }
 }
 

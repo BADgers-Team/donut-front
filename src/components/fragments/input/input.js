@@ -35,7 +35,7 @@ class Input extends Component {
         case this._types.text:
             node = (
                 <>
-                    {label === null ? '' : <label className="input-label">{label}</label>}
+                    {label === null || label === undefined ? '' : <label className="input-label">{label}</label>}
                     <input ref={this._input} type="text" placeholder={placeholder} name={name} spellCheck="true"/>
                 </>
             );
@@ -43,7 +43,7 @@ class Input extends Component {
         case this._types.file:
             node = (
                 <>
-                    {label === null ? '' : <label className="file-label">{label}</label>}
+                    {label === null || label === undefined ? '' : <label className="file-label">{label}</label>}
                     <label htmlFor={id}>
                         <div className="file-button" type="button">
                             <div className="file-text">Прикрепить файл</div>
@@ -57,7 +57,7 @@ class Input extends Component {
         case this._types.textarea:
             node = (
                 <>
-                    {label === null ? '' : <label className="file-label">{label}</label>}
+                    {label === null || label === undefined? '' : <label className="file-label">{label}</label>}
                     <textarea ref={this._input} placeholder={placeholder} name={name} spellCheck="true"/>
                 </>
             );
@@ -66,7 +66,7 @@ class Input extends Component {
             node = (
                 <>
                     <input ref={this._input} type="number" min="0" max="1000000" name={name}/>
-                    {label === null ? '' : <label className="number">{label}</label>}
+                    {label === null || label === undefined? '' : <label className="number">{label}</label>}
                 </>
             );
             break;   
@@ -74,7 +74,7 @@ class Input extends Component {
             node = (
                 <>
                     <input ref={this._input} type="checkbox" className={classValue} name={name} id={id}/>
-                    {label === null ? '' : <label  htmlFor={name}>{label}</label>}
+                    {label === null || label === undefined? '' : <label  htmlFor={name}>{label}</label>}
                 </>
             );
             break;     

@@ -56,7 +56,6 @@ class BlockSearch extends Component {
         const selectActivities = document.getElementsByClassName('select__activities-items');
         let chosenActivities = '';
         //TODO плохой цикл, наверное можно лучше
-        debugger
         for (let i=0; i< selectActivities.length; i++) {
             if (selectActivities[i].checked) {
                 chosenActivities += selectActivities[i].id + ',';
