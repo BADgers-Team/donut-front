@@ -25,10 +25,20 @@ class BlockPaywall extends Component {
         const tizer = post.tizer || `Всегда незаметные вещи могут быть гораздо важнее чересчур привлекательных. 
                                      Этот пост о невероятной силе человеческого слова в описании природы`;
         const price = post.price || 150;
-        let controls;
-        switch (post.visible_type) {
+        const controls = this._getControls(price);
+
+        return (
+            <div className="paywall">
+                <div className="paywall__info">{tizer}</div>
+                {controls}
+            </div>
+        );
+    }
+
+    _getControls(price) {
+        switch (this.props.post.visible_type) {
         case (PRIVACY.SUBSCRIPTION):
-            controls = (
+            return (
                 <>
                     <div className="paywall__message__subscription">
                         {PRIVACY_MSG[0]}
@@ -38,9 +48,8 @@ class BlockPaywall extends Component {
                     </div>
                 </>
             );
-            break;
         case (PRIVACY.PRICE):
-            controls = (
+            return (
                 <>
                     <div className="paywall__message__price">
                         {PRIVACY_MSG[1]}
@@ -50,9 +59,8 @@ class BlockPaywall extends Component {
                     </div>
                 </>
             );
-            break;
         case (PRIVACY.SUBSCRIPTION_PRICE):
-            controls = (
+            return (
                 <>
                     <div className="paywall__message__price">
                         {PRIVACY_MSG[2]}
@@ -67,15 +75,9 @@ class BlockPaywall extends Component {
                     </div>
                 </>
             );
-            break;
+        default:
+            return null;
         }
-
-        return (
-            <div className="paywall">
-                <div className="paywall__info">{tizer}</div>
-                {controls}
-            </div>
-        );
     }
 }
 
