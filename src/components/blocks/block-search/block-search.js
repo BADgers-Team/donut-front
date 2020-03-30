@@ -7,6 +7,7 @@ import Button from 'components/fragments/button/button';
 import Input from 'components/fragments/input/input';
 import Select from 'components/fragments/select/select';
 
+
 import './block-search.scss';
 
 class BlockSearch extends Component {
@@ -90,12 +91,13 @@ class BlockSearch extends Component {
             if (activity.label === 'Все') return;
             return <Input type={Input.types.checkbox} name={activity} key={index} id={index} label={activity.label} classValue="select__activities-items"/>
         });
+
         return (
             <div className='search'>
                 <form ref={this._form} className="search-form">
                     <div className='search__top'>
                         <div className='top__type-selector'>
-                            <Select name="postType" values={postTypes} />
+                            <Select values={postTypes} classValue='type-selector' id='type-selector' name='type-selector'/>     
                         </div>
                         <div className='top__search-input'>
                             <Input type={Input.types.text} name="search" placeholder="Я ищу..."/>
