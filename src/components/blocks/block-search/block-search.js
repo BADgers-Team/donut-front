@@ -17,7 +17,7 @@ class BlockSearch extends Component {
         this._form = React.createRef();
         this.state = {
             showSubscritionsPrices: false,
-            freeSubscritionsChecked: true,
+            freeSubscritionsChecked: false,
         };
         this.toggleSubscritionsPrices = this.toggleSubscritionsPrices.bind(this);
         this.toggleFreeSubscritions = this.toggleFreeSubscritions.bind(this);
@@ -47,7 +47,7 @@ class BlockSearch extends Component {
 
         keys.min_price = 0;
         keys.max_price = 0;
-        
+
         if (form.freeCheckbox.checked && form.subscritionCheckbox.checked) {
             keys.min_price = 0;
             keys.max_price = parseInt(form.subscritionNumberMax.value, 10);
@@ -72,15 +72,26 @@ class BlockSearch extends Component {
     };
 
     toggleSubscritionsPrices() {
-        this.setState({ showSubscritionsPrices: !this.state.showSubscritionsPrices});
+        this.setState({ showSubscritionsPrices: !this.state.showSubscritionsPrices}, this.checkCheckboxes);
+        
+    }
+
+    checkCheckboxes = () => {
+        // если нажата галочка "Бесплатно" и "По подписке" одновременно, мин. цену принимает за 0
+        const form = this._form.current;
+        if (this.state.showSubscritionsPrices && this.state.freeSubscritionsChecked) {
+            form.subscritionNumberMin.value = 0;
+            form.subscritionNumberMin.disabled = true;
+        } else {
+            if (form.subscritionNumberMin) {
+                form.subscritionNumberMin.value = '';
+                form.subscritionNumberMin.disabled = false;                
+            }
+        }
     }
 
     toggleFreeSubscritions() {
-        this.setState({ freeSubscritionsChecked: !this.state.freeSubscritionsChecked});
-        const value = this.state.freeSubscritionsChecked ? 0 : '';
-        const form = this._form.current;
-        form.subscritionNumberMin.value = value;
-        form.subscritionNumberMin.disabled = this.state.freeSubscritionsChecked;
+        this.setState({ freeSubscritionsChecked: !this.state.freeSubscritionsChecked}, this.checkCheckboxes);
     }
 
     render() {
