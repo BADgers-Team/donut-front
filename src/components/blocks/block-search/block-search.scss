@@ -3,7 +3,7 @@
 .search {
   display: flex;
   flex-direction: column;
-  padding: 25px 15px 20px;
+  padding: 25px 40px 20px;
   background-color: $color-almost-dark-purple;
   color: $color-dark-white;
 
@@ -18,8 +18,12 @@
     margin-bottom: 20px;
   }
 
-  &__top > *, &__bottom > * {
+  &__top > *:not(*:last-child), &__bottom > *:not(*:last-child) {
     margin-right: 10px;
+  }
+
+  &__bottom > *:first-child {
+    margin-right: 30px;
   }
 
   label {
@@ -37,6 +41,22 @@
 
   select::-ms-expand {
     display: none;
+  }
+
+  // redefinition Material design
+
+  .MuiSvgIcon-root {
+    height: 2em !important;
+    width: 2em !important;
+    padding-top: 0 !important;
+  }
+
+  .MuiFormControlLabel-root {
+    margin: 0 8px 0 0;
+  }
+
+  .MuiIconButton-root {
+    padding: 0 !important;
   }
 }
   
@@ -90,6 +110,36 @@
   }
 }
 
+.bottom {
+  &__subscrition {
+    width: 35%;
+    input {  
+      padding: 0 20px;
+      height: 40px;
+      border-radius: 10px;
+      width: 20%;
+      font-size: 20px;
+      cursor: pointer;
+      outline: none;
+      margin-right: 8px;
+    }
+    label {
+      margin-right: 8px;
+    }
+  }
+
+  &__select-activity {
+    width: 55%;
+    border: 2px solid $color-purple;
+    border-radius: 10px;
+    height: 40px;
+  }
+
+  &__select-activity:last-child {
+    margin-left: auto;
+  }
+}
+
 .select-activity {
   &__list {
     display: flex;
@@ -98,3 +148,7 @@
     background-color: $color-almost-dark-purple;
   }
 }
+
+
+
+

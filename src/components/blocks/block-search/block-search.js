@@ -108,11 +108,10 @@ class BlockSearch extends Component {
                     </div>
                     <div className='search__bottom'>
                         <div className='bottom__free-checkbox'>
-                            <Input type={Input.types.checkbox} name="freeCheckbox" label="Бесплатно"/>
+                            <Input type={Input.types.checkbox} name="freeCheckbox" label="Бесплатно" material={true}/>
                         </div>
                         <div className='bottom__subscrition'>
-                            <Input type={Input.types.checkbox} name="subscritionCheckbox"/>
-                            <label>По подписке от</label>
+                            <Input type={Input.types.checkbox} name="subscritionCheckbox" label='По подписке от' material={true}/>
                             <Input type={Input.types.number} name="subscritionNumberMin" label="₽"/>
                             <label>до</label>
                             <Input type={Input.types.number} name="subscritionNumberMax" label="₽"/>

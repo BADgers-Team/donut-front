@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 import './input.scss';
 
 class Input extends Component {
@@ -28,7 +31,7 @@ class Input extends Component {
     }
 
     render() {
-        const { name, type, placeholder, label, id, onAction, classValue } = this.props;
+        const { name, type, placeholder, label, id, onAction, classValue, material } = this.props;
 
         let node;
         switch(type) {
@@ -65,18 +68,34 @@ class Input extends Component {
         case this._types.number:
             node = (
                 <>
-                    <input ref={this._input} type="number" min="0" max="1000000" name={name}/>
+                    <input ref={this._input} type="number" min="0" max="2147483647 " name={name}/>
                     {label === null || label === undefined? '' : <label className="number">{label}</label>}
                 </>
             );
             break;   
         case this._types.checkbox:
-            node = (
-                <>
-                    <input ref={this._input} type="checkbox" className={classValue} name={name} id={id}/>
-                    {label === null || label === undefined? '' : <label  htmlFor={name}>{label}</label>}
-                </>
-            );
+            if (material) {  
+                node = (
+                    <>
+                        <FormControlLabel
+                        control={<Checkbox 
+                            style={{color:'white'}}
+                            size='medium'
+                            name={name}
+                        />}
+                        label={label}
+                        labelPlacement="end"
+                        />
+                    </>
+                );
+            } else {
+                node = (
+                    <>
+                        <input ref={this._input} type="checkbox" className={classValue} name={name} id={id}/>
+                        {label === null || label === undefined? '' : <label  htmlFor={name}>{label}</label>}
+                    </>
+                );
+            }
             break;     
         default:
             node = (
