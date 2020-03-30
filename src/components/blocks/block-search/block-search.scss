@@ -6,6 +6,7 @@
   padding: 25px 40px 20px;
   background-color: $color-almost-dark-purple;
   color: $color-dark-white;
+  min-width: 1090px;
 
   & > *:not(*:last-child) {
     margin-right: 2%;
@@ -53,6 +54,10 @@
 
   .MuiFormControlLabel-root {
     margin: 0 8px 0 0;
+  }
+
+  .MuiTypography-body1 {
+    font-family: inherit !important;
   }
 
   .MuiIconButton-root {
@@ -112,12 +117,14 @@
 
 .bottom {
   &__subscrition {
-    width: 35%;
+    display: flex;
+    align-items: center;
+    width: 40%;
     input {  
-      padding: 0 20px;
+      padding: 0 10px;
       height: 40px;
       border-radius: 10px;
-      width: 20%;
+      width: 25%;
       font-size: 20px;
       cursor: pointer;
       outline: none;
@@ -130,9 +137,7 @@
 
   &__select-activity {
     width: 55%;
-    border: 2px solid $color-purple;
-    border-radius: 10px;
-    height: 40px;
+    height: 40px;  
   }
 
   &__select-activity:last-child {
@@ -144,9 +149,46 @@
   &__list {
     display: flex;
     flex-direction: column;
-    position: absolute;
     background-color: $color-almost-dark-purple;
+    border: 2px solid $color-purple;
+    border-radius: 0 0 10px 10px;
+    height: auto !important;
+    padding: 5px;
+    margin-top: -3px;
   }
+
+  &__list, &__list-title, &__default {
+    height: inherit;
+    position: inherit;
+  }
+
+  &__default, &__list-title {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 18px;
+  }
+
+  &__default {
+    border: 2px solid $color-purple;
+    border-radius: 10px;
+  }
+
+  &__list-title {
+    border: 2px solid $color-purple;
+    border-radius: 10px 10px 0 0;
+  }
+}
+
+.round-borders {
+  border-radius: 10px;
+}
+
+.selected-activity {
+  background-color: $color-purple;
+  padding: 5px;
+  border-radius: 10px;
+  margin: 5px;
 }
 
 

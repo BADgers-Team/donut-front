@@ -31,7 +31,7 @@ class Input extends Component {
     }
 
     render() {
-        const { name, type, placeholder, label, id, onAction, classValue, material } = this.props;
+        const { name, type, placeholder, label, id, onAction, classValue, material, value } = this.props;
 
         let node;
         switch(type) {
@@ -68,7 +68,7 @@ class Input extends Component {
         case this._types.number:
             node = (
                 <>
-                    <input ref={this._input} type="number" min="0" max="2147483647 " name={name}/>
+                    <input ref={this._input} type="number" min="0" max="2147483647 " name={name} value={value}/>
                     {label === null || label === undefined? '' : <label className="number">{label}</label>}
                 </>
             );
@@ -81,7 +81,10 @@ class Input extends Component {
                         control={<Checkbox 
                             style={{color:'white'}}
                             size='medium'
-                            name={name}
+                            name={name} 
+                            onChange={onAction}
+                            className={classValue}
+                            id={`${id}`}
                         />}
                         label={label}
                         labelPlacement="end"
@@ -91,7 +94,7 @@ class Input extends Component {
             } else {
                 node = (
                     <>
-                        <input ref={this._input} type="checkbox" className={classValue} name={name} id={id}/>
+                        <input ref={this._input} type="checkbox" className={classValue} name={name} id={id} onChange={onAction}/>
                         {label === null || label === undefined? '' : <label  htmlFor={name}>{label}</label>}
                     </>
                 );
