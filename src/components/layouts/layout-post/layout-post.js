@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 
 import BlockPostStatic from 'components/blocks/block-post-static/block-post-static';
 import BlockPostDynamic from 'components/blocks/block-post-dynamic/block-post-dynamic';
+import { BlockPaywall } from 'components/blocks/block-paywall/block-paywall';
 import AjaxModule from 'services/ajax';
 import RouteStore from 'store/routes';
 import { getRouteWithID } from 'services/getRouteWithId';
+import { PRIVACY } from 'store/const';
 
 import './layout-post.scss';
 
@@ -32,6 +34,7 @@ class LayoutPost extends Component {
             <>
                 <BlockPostStatic post={post}/>
                 <BlockPostDynamic post={post}/>
+                {post.visible_type !== PRIVACY.OPEN && <BlockPaywall post={post}/>}
             </>
         ) : <div>Пост не найден</div>;
 

@@ -5,5 +5,8 @@
   width: 60%;
   color: $color-dark-white;
   padding: 40px;
-  overflow-y: scroll;
+
+  &__blur {
+    filter: blur(3px);
+  }
 }

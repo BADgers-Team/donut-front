@@ -4,9 +4,12 @@
   background-color: $color-upper-purple;
   color: $color-dark-white;
   width: 30%;
-  min-height: 100%;
   padding: 3vh 80px;
-  //position: fixed;
+
+  &__inner {
+    position: fixed;
+    width: inherit;
+  }
 
   &__title {
     font-size: 32px;
@@ -17,45 +20,45 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 2vh 0;
+    margin: 24px 0;
     font-size: 25px;
 
     &-avatar {
-      width: 6vh;
-      height: 6vh;
+      width: 60px;
+      height: 60px;
       border-radius: 10px;
       border: 1px solid $color-dark-white;
-      margin-right: 28px;
+      margin-right: 24px;
     }
 
     &-nick {
-      font-size: 2vh;
+      font-size: 20px;
       color: $color-pink;
     }
   }
 
   &__info {
     color: $color-pink;
-    font-size: 2vh;
+    font-size: 18px;
     display: flex;
     flex-direction: row;
     align-items: center;
     margin-bottom: 14px;
 
     &-icon {
-      width: 3vh;
-      height: 3vh;
+      width: 28px;
+      height: 28px;
       margin-right: 12px;
     }
   }
 
   &__control {
     border-radius: 10px;
-    padding: 1vh;
-    margin: 2.5vh 6vh;
+    padding: 10px;
+    margin: 16px 60px;
     background-color: $color-purple;
     text-align: center;
-    font-size: 2.5vh;
+    font-size: 20px;
     cursor: pointer;
   }
 }
