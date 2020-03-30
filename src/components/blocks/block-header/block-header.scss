@@ -6,6 +6,8 @@
   display: flex;
   justify-content: space-around;
   font-size: 20px;
+  position: fixed;
+  width: 100%;
 
   &-button {
     padding: 0 4px;

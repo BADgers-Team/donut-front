@@ -6,7 +6,8 @@ import ActivityIcon from 'assets/img/activity.svg';
 import SubscriptionIcon from 'assets/img/subscription.svg';
 import CalendarIcon from 'assets/img/calendar.svg';
 import Button from 'components/fragments/button/button';
-import { DonatForm} from 'components/blocks/block-post-static/donat-form/donat-form';
+import { DonatForm } from 'components/blocks/block-post-static/donat-form/donat-form';
+import { PRIVACY } from 'store/const';
 
 class BlockPostStatic extends Component {
     render() {
@@ -37,12 +38,15 @@ class BlockPostStatic extends Component {
                         <img className="post-static__info-icon" src={SubscriptionIcon} alt="subscription"/>
                         <div>{visibility}</div>
                     </div>
-                    <div className="post-static__controls">
-                        <div className="post-static__control">
-                            <Button text="Подписаться" type={Button.types.link}/>
+
+                    {post.visible_type === PRIVACY.OPEN && (
+                        <div className="post-static__controls">
+                            <div className="post-static__control">
+                                <Button text="Подписаться" type={Button.types.link}/>
+                            </div>
+                            <DonatForm author={login}/>
                         </div>
-                        <DonatForm author={login}/>
-                    </div>
+                    )}
                 </div>
             </div>
         );
