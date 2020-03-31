@@ -31,14 +31,14 @@ class Input extends Component {
     }
 
     render() {
-        const { name, type, placeholder, label, id, onAction, classValue, material, value } = this.props;
+        const { name, type, placeholder, label, id, onAction, classValue, material, value, min, max } = this.props;
 
         let node;
         switch(type) {
         case this._types.text:
             node = (
                 <>
-                    {label === null || label === undefined ? '' : <label className="input-label">{label}</label>}
+                    { !label ? '' : <label className="input-label">{label}</label>}
                     <input ref={this._input} type="text" placeholder={placeholder} name={name} spellCheck="true"/>
                 </>
             );
@@ -46,7 +46,7 @@ class Input extends Component {
         case this._types.file:
             node = (
                 <>
-                    {label === null || label === undefined ? '' : <label className="file-label">{label}</label>}
+                    { !label ? '' : <label className="file-label">{label}</label>}
                     <label htmlFor={id}>
                         <div className="file-button" type="button">
                             <div className="file-text">Прикрепить файл</div>
@@ -60,7 +60,7 @@ class Input extends Component {
         case this._types.textarea:
             node = (
                 <>
-                    {label === null || label === undefined? '' : <label className="file-label">{label}</label>}
+                    { !label ? '' : <label className="file-label">{label}</label>}
                     <textarea ref={this._input} placeholder={placeholder} name={name} spellCheck="true"/>
                 </>
             );
@@ -68,8 +68,8 @@ class Input extends Component {
         case this._types.number:
             node = (
                 <>
-                    <input ref={this._input} type="number" min="0" max="2147483647 " name={name} value={value}/>
-                    {label === null || label === undefined? '' : <label className="number">{label}</label>}
+                    <input ref={this._input} type="number" min={min} max={max} name={name} value={value}/>
+                    { !label ? '' : <label className="number">{label}</label>}
                 </>
             );
             break;   

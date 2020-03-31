@@ -90,8 +90,6 @@ class BlockSearch extends Component {
         this.setState({ freeSubscritionsChecked: !this.state.freeSubscritionsChecked}, this.checkCheckboxes);
     }
 
-
-
     render() {
         const postTypes = [
             {id: 1, value:'all', text:'Везде'},
@@ -121,9 +119,9 @@ class BlockSearch extends Component {
                         <div className='bottom__subscrition'>
                             <Input type={Input.types.checkbox} name="subscritionCheckbox" label='По подписке ' material={true} onAction={this.toggleSubscritionsPrices}/>
                             {this.state.showSubscritionsPrices && <label>от</label>}
-                            {this.state.showSubscritionsPrices && <Input type={Input.types.number} name="subscritionNumberMin" label="₽"/>}
+                            {this.state.showSubscritionsPrices && <Input type={Input.types.number} name="subscritionNumberMin" min={0} max={2147483647} label="₽"/>}
                             {this.state.showSubscritionsPrices && <label>до</label>}
-                            {this.state.showSubscritionsPrices && <Input type={Input.types.number} name="subscritionNumberMax" label="₽"/>}
+                            {this.state.showSubscritionsPrices && <Input type={Input.types.number} name="subscritionNumberMax" min={0} max={2147483647} label="₽"/>}
                         </div>
                         <div className='bottom__select-activity'>
                             <ActivitiesSelect onChange={this.getSelectedActivities}/>
