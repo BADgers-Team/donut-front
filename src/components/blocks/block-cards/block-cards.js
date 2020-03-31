@@ -45,7 +45,7 @@ class BlockCards extends Component {
                     <div className="cards__content">
                         {postСardsNodes}
                     </div>
-                    <hr/>
+                    {subscriptionCards && <hr/>}
                 </div>}
 
                 {subscriptionCards && <div className="cards__items cards-posts"> 
@@ -53,7 +53,7 @@ class BlockCards extends Component {
                     <div className="cards__content">
                         {subscriptionСardsNodes}
                     </div>
-                    <hr/>
+                    {userCards && <hr/>}
                 </div>}
 
                 {userCards && <div className="cards__items cards-posts"> 
