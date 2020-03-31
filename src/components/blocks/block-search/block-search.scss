@@ -70,6 +70,7 @@
     background: url('../../../assets/img/search.svg') 5% / 10% no-repeat;
     border: 2px solid $color-purple;
     border-radius: 10px;
+    margin-right: 10px;
 
     select {
       color: $color-dark-white !important;
@@ -92,6 +93,7 @@
 
   &__search-input {
     width: 70%;
+    margin-right: 10px;
     input {  
       padding: 0 20px;
       height: 40px;
@@ -155,9 +157,10 @@
     height: auto !important;
     padding: 5px;
     margin-top: -3px;
+    position: relative;
   }
 
-  &__list, &__list-title, &__default {
+  &__list-title, &__default {
     height: inherit;
     position: inherit;
   }
