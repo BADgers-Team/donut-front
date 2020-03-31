@@ -2,11 +2,24 @@
 
 .cards {
   background-color: $color-dark-purple;
-  padding: 60px 120px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-column-gap: 10px;
-  grid-row-gap: 4em;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  // TODO fix height
+
+  &__title {
+    padding: 27px 120px;
+    color: $color-dark-white;
+    font-size: 55px;
+  }
+
+  &__content {
+    padding: 10px 120px 60px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 10px;
+    grid-row-gap: 4em;
+  }
 }
 
 .card {

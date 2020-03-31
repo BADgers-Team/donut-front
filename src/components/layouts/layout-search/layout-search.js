@@ -16,22 +16,15 @@ class LayoutIndex extends Component {
     }
 
     componentDidMount() {
-        AjaxModule.get(RouteStore.api.posts.all).then((data) => {
-            this.setState({ posts: data || [] });
-        }).catch((error) => {
-            console.error(error.message);
-        });
-    }
-
-    handleChangeActivity = (key) => {
-        AjaxModule.get(RouteStore.api.posts.all, {activities: key})
+        AjaxModule.get(RouteStore.api.search, [])
             .then((data) => {
+                console.log(data);
                 this.setState({ posts: data || [] });
             })
             .catch((error) => {
                 console.error(error.message);
             });
-    };
+    }
 
     //TODO запрос на поиск пойдет туть и тут же выборки, пришли посты или кто то еще
     handleSubmitSearch = (keys) => {
@@ -39,7 +32,7 @@ class LayoutIndex extends Component {
         AjaxModule.get(RouteStore.api.search, keys)
             .then((data) => {
                 console.log(data);
-                this.setState({ posts: data.posts || [] });
+                this.setState({ posts: data || [] });
             })
             .catch((error) => {
                 console.error(error.message);
