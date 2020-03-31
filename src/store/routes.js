@@ -30,6 +30,7 @@ export default {
         },
         podcasts: {
             all: '/podcasts'
-        }
+        },
+        search: '/search'
     }
 };

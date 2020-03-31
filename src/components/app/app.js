@@ -38,8 +38,7 @@ class App extends Component {
                     <Switch>
                         <Route path={pages.main} exact render={(props) => <LayoutIndex {...props}/>}/>
                         <Route path={pages.posts.new} render={(props) => <LayoutCreatePost {...props}/>}/>
-                        {/* TODO надо будет выпилить  */}
-                        <Route path={pages.podcasts.all} render={(props) => <LayoutSearch {...props}/>}/>
+                        <Route path={pages.search} render={(props) => <LayoutSearch {...props}/>}/>
                         <Route path="/posts/:id" render={(props) => <LayoutPost {...props}/>}/>
                     </Switch>
                 </div>

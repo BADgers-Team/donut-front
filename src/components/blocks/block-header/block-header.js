@@ -4,6 +4,7 @@ import RouteStore from 'store/routes';
 import Button from 'components/fragments/button/button';
 import './block-header.scss';
 import LogoImage from 'assets/img/logo.png';
+import SearchIcon from 'assets/img/search.svg';
 import AuthorAvatar from 'assets/img/michael.jpg';
 import ExitIcon from 'assets/img/exit.svg';
 
@@ -48,7 +49,7 @@ class BlockHeader extends Component {
         const activeClass = 'header-button__active';
         const myPosts = activeTab === 'Мои посты' ? `${baseClass} ${activeClass}` : baseClass;
         const mySubscriptions = activeTab === 'Мои подписки' ? `${baseClass} ${activeClass}` : baseClass;
-        const podcast = activeTab === 'Поиск' ? `${baseClass} ${activeClass}` : baseClass;
+        const podcast = activeTab === 'подборки' ? `${baseClass} ${activeClass}` : baseClass;
         const createPost = activeTab === 'Создать пост' ? `${baseClass} ${activeClass}` : baseClass;
         if (user) {
             return (
@@ -60,7 +61,10 @@ class BlockHeader extends Component {
                         <Button text="Мои подписки" type={Button.types.link} to={RouteStore.pages.subscriptions.my} onAction={this.handleChangeTab}/>
                     </div>
                     <div className={podcast}>
-                        <Button text="Поиск" type={Button.types.link} to={RouteStore.pages.podcasts.all} onAction={this.handleChangeTab}/>
+                        <Button text="Подборки" type={Button.types.link} to={RouteStore.pages.podcasts.all} onAction={this.handleChangeTab}/>
+                    </div>
+                    <div className="header-button">
+                        <Button text="Поиск" type={Button.types.link} to={RouteStore.pages.search}/>         
                     </div>
                     <div className={`${createPost} header-button__main`}>
                         <Button text="Создать пост" type={Button.types.link} to={RouteStore.pages.posts.new} onAction={this.handleChangeTab}/>
@@ -70,13 +74,16 @@ class BlockHeader extends Component {
                         <img className="user" src={AuthorAvatar} alt="user"/>
                     </div>
                     <div className="header-button">
-                        <img className="exit" src={ExitIcon} alt="exit"/>
+                        <a className="exit" src={ExitIcon} alt="exit"/>
                     </div>
                 </>
             );
         } else {
             return (
                 <>
+                    <div className="header-button">
+                        <Button text="Поиск" src={SearchIcon} type={Button.types.link} to={RouteStore.pages.search}/>         
+                    </div>
                     <Button text="Войти" type={Button.types.link} to={RouteStore.pages.user.login}/>
                     <Button text="Зарегистрироваться" type={Button.types.link} to={RouteStore.pages.user.register}/>
                 </>
