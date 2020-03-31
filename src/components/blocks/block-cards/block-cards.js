@@ -13,7 +13,8 @@ const backendUrl = 'http://localhost:8081';
 class BlockCards extends Component {
     render() {
         const { cards } = this.props;
-        const postCards = cards.posts;
+        //TODO пофиксить переиспользуемость карточек для поиска и главной
+        const postCards = Array.isArray(cards) ? cards : cards.posts;
         let postСardsNodes;
         if (postCards) {
             postСardsNodes = postCards.map((card, index) => {
@@ -141,10 +142,11 @@ class UserCard extends Component {
             <Link className="card">
                 <img className="card__preview" src={cardPreview} alt="preview"/>
                 <div className="card__info">
-                    <div className="card__title">{card.title}</div>
+                    <div className="card__title">{card.login}</div>
                     <div className="card__extra-info">
                         <div className="author">
                             <img className="author__avatar" src={cardAuthorAvatar} alt="author"/>
+                            <div className="author__name">{card.name}</div>
                         </div>
                         <div className="subscribers">
                             <img className="subscribers__icon" src={SubscribersIcon} alt="subscribers"/>

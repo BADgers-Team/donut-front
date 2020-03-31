@@ -26,6 +26,7 @@ class LayoutIndex extends Component {
     handleChangeActivity = (key) => {
         AjaxModule.get(RouteStore.api.posts.all, {activities: key})
             .then((data) => {
+                console.log("aaaa", data);
                 this.setState({ posts: data || [] });
             })
             .catch((error) => {
