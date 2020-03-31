@@ -20,21 +20,15 @@ class BlockSearch extends Component {
         this.state = {
             showSubscritionsPrices: false,
             freeSubscritionsChecked: false,
+            selectedActivities: [],
         };
         this.toggleSubscritionsPrices = this.toggleSubscritionsPrices.bind(this);
         this.toggleFreeSubscritions = this.toggleFreeSubscritions.bind(this);
     }
 
-    updateActivities = () => {
-        const activitiesNodes = document.getElementsByClassName('bottom__select-activity')[0].getElementsByTagName('input');
-        let activitiesArray = [];
-        for (let i=0; i< activitiesNodes.length; i++) {
-            if (activitiesNodes[i].checked) {
-                activitiesArray.push(activitiesNodes[i].id);
-            }
-        }
-        return activitiesArray;
-    } 
+    getSelectedActivities = (activities) => {
+        this.setState({ selectedActivities: activities });
+    }
 
     handleSubmit = (event) => {
         event.preventDefault();
@@ -42,7 +36,7 @@ class BlockSearch extends Component {
         const form = this._form.current;
 
         let keys = {
-            activities: this.updateActivities(),
+            activities: this.state.selectedActivities,
             data_type: form.postType.value,
             text: form.search.value,
         };
@@ -96,6 +90,8 @@ class BlockSearch extends Component {
         this.setState({ freeSubscritionsChecked: !this.state.freeSubscritionsChecked}, this.checkCheckboxes);
     }
 
+
+
     render() {
         const postTypes = [
             {id: 1, value:'all', text:'Везде'},
@@ -130,7 +126,7 @@ class BlockSearch extends Component {
                             {this.state.showSubscritionsPrices && <Input type={Input.types.number} name="subscritionNumberMax" label="₽"/>}
                         </div>
                         <div className='bottom__select-activity'>
-                            <ActivitiesSelect />
+                            <ActivitiesSelect onChange={this.getSelectedActivities}/>
                         </div>
                     </div>
                 </form>
@@ -169,16 +165,18 @@ class ActivitiesSelect extends Component {
             name: event.target.name
         };
         let foundItem = this.state.selectedActivities.find(item => item.id === newItem.id);
+        let tempArray = this.state.selectedActivities;
         if (!foundItem) {
-            this.setState((prevState => ({
-                selectedActivities: [...prevState.selectedActivities, newItem]
-            })));
+            tempArray.push(newItem);
         } else {
-            let tempArray = [...this.state.selectedActivities];
             let removeIndex = tempArray.map(function(item) { return item.id; }).indexOf(foundItem.id);
             tempArray.splice(removeIndex, 1);
-            this.setState({selectedActivities: tempArray});
         } 
+
+        this.setState({selectedActivities: tempArray}, () => {
+            const { onChange } = this.props;
+            onChange && onChange(this.state.selectedActivities);
+        });
     }
 
     handleActivityDisplay() {
