@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import RouterStore from 'store/routes';
+import RouteStore from 'store/routes';
 
 import Button from 'components/fragments/button/button';
 import Input from 'components/fragments/input/input';
@@ -13,33 +13,70 @@ class BlockPostForm extends Component {
     constructor(props) {
         super(props);
       
-        this.state = { postIDs: [], showSubscriptions: true, disabledButton: false };
+        this.state = { 
+            postIDs: [], 
+            activities: [],
+            subscriptions: [],
+            visibleTypes: [],
+            showSubscriptions: true, 
+            disabledButton: false 
+        };
         this.handleSubscription = this.handleSubscription.bind(this);
         this.handleCreatePostClick = this.handleCreatePostClick.bind(this);
         this.handleSendFile = this.handleSendFile.bind(this);
         this._form = React.createRef();
     }
+
+    componentDidMount() {
+        AjaxModule.get(RouteStore.api.activities).then((data) => {
+            this.setState({ activities: data || [] });
+        }).catch((error) => {
+            console.error(error.message);
+        });
+
+        AjaxModule.get(RouteStore.api.visible_types).then((data) => {
+            this.setState({ visibleTypes: data || [] });
+        }).catch((error) => {
+            console.error(error.message);
+        });
+
+        AjaxModule.get(RouteStore.api.subscriptions.my).then((data) => {
+            let tempData = data || [];
+            const defaultItem = {
+                id: 0, value:'0', title:'Без подписки'
+            };
+            tempData.splice(0, 0, defaultItem);
+            this.setState({ subscriptions: tempData });
+        }).catch((error) => {
+            console.error(error.message);
+        });
+    }
     
     render() {
-        //TODO get this data from back
-        const visibleTypeSelect = [
-            {id: 1, value:'For all', text:'Открыт для всех'},
-            {id: 2, value:'Subscribers', text: 'Только по подписке'},
-            {id: 3, value:'Subscribers and one time', text: 'Для подписчиков и разовая оплата'},
-            {id: 4, value:'One time', text: 'Только разовая оплата'},
-        ]; 
-        const subscriptionSelect = [
-            {id: 1, value:'Без подписки', text:'Без подписки'},
-            {id: 2, value:'Подписка 1', text:'Подписка 1'},
-        ]; 
-        const activitySelect = [
-            {id: 0, value:'All', text: 'Все'},
-            {id: 1, value:'Art', text: 'Живопись'},
-            {id: 2, value:'Blog', text: 'Блог'},
-            {id: 3, value:'Photography', text: 'Фотография'},
-            {id: 4, value:'Writing', text: 'Писательство'},
-            {id: 5, value:'Music', text: 'Музыка'},
-        ];
+        const { activities, visibleTypes, subscriptions } = this.state;
+
+        const visibleTypeSelect = visibleTypes.map((type) => {
+            return {
+                id: type.id,
+                value: type.id.toString(),
+                text: type.title,
+            };
+        });
+        const subscriptionSelect = subscriptions.map((subscription) => {
+            return {
+                id: subscription.id,
+                value: subscription.id.toString(),
+                text: subscription.title,
+            };
+        });
+        const activitySelect = activities.map((activity) => {
+            return {
+                id: activity.id,
+                value: activity.id.toString(),
+                text: activity.label,
+            };
+        });
+
         return (
             <form ref={this._form} id="post_form">
                 <div className="form__inputs">
@@ -50,7 +87,7 @@ class BlockPostForm extends Component {
                         <Input label="Содержание" type={Input.types.textarea} name="description" placeholder="Напишите что-нибудь..."/>
                     </div>
                     <div className="form-input input-file">
-                        <Input label="Загрузите файл" type={Input.types.file} name="file" id="file-input" onAction={this.handleSendFile}/>
+                        <Input label="Загрузите изображение" text="Прикрепить изображение" type={Input.types.file} name="file" id="file-input" onAction={this.handleSendFile}/>
                     </div>
                 </div>
 
@@ -73,7 +110,7 @@ class BlockPostForm extends Component {
     }
 
     handleSubscription(event) {
-        if (event.target[event.target.selectedIndex].value !== "One time") {
+        if (event.target[event.target.selectedIndex].value !== "4") {
             this.setState({showSubscriptions: true});
         } else {
             this.setState({showSubscriptions: false});

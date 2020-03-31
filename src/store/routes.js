@@ -10,8 +10,13 @@ export default {
                 new: '/posts/file',
             },
         },
+        subscriptions: {
+            my: '/subscriptions/my',
+            new: '/subscriptions'
+        },
         me: '/me',
         activities: '/activities',
+        visible_types: '/visible_types'
     },
     pages: {
         user: {
@@ -22,7 +27,7 @@ export default {
         main: '/',
         posts: {
             new: '/posts/new',
-            my: '/posts/my',
+            my: '/posts/my'
         },
         subscriptions: {
             my: '/subscriptions/my'

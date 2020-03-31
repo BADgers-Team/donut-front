@@ -26,7 +26,7 @@ class Input extends Component {
     }
 
     render() {
-        const { name, type, placeholder, label, id, onAction } = this.props;
+        const { name, type, placeholder, label, id, onAction, text } = this.props;
 
         let node;
         switch(type) {
@@ -44,7 +44,7 @@ class Input extends Component {
                     {label === null ? '' : <label className="file-label">{label}</label>}
                     <label htmlFor={id}>
                         <div className="file-button" type="button">
-                            <div className="file-text">Прикрепить файл</div>
+                            <div className="file-text">{text}</div>
                         </div>
                     </label>
                     <label id="loader"></label>
