@@ -176,6 +176,11 @@
   &__default {
     border: 2px solid $color-purple;
     border-radius: 10px;
+    justify-content: space-between;
+
+    img {
+      height: inherit;
+    }
   }
 
   &__list-title {

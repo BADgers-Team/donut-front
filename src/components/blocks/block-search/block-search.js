@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import AjaxModule from "services/ajax";
 import RouteStore from "store/routes";
 
+import ArrowDownIcon from 'assets/img/select-arrow.svg';
+
 import Button from 'components/fragments/button/button';
 import Input from 'components/fragments/input/input';
 import Select from 'components/fragments/select/select';
@@ -144,7 +146,7 @@ class ActivitiesSelect extends Component {
         super(props);
 
         this.state = {
-            activities: [{"id":0,"label":"Все","title":"Любые категории, любые тематики","subtitle":"Любой опубликованный пост можно найти здесь!"},{"id":1,"label":"Живопись","title":"Изобразительное искусство","subtitle":"Лучшие шедевры живописи можно отыскать тут!"},{"id":2,"label":"Блог","title":"Блогерство","subtitle":"Посты от самых \"залайканных\" блогеров можно увидеть здесь!"},{"id":3,"label":"Фото","title":"Фотография","subtitle":"Невероятно крутые фото от невероятно талантливых фотографов - и все тут!"},{"id":4,"label":"Писательство","title":"Писательство","subtitle":"Рукописями лучших авторов современности можно вдохновиться именно тут!"},{"id":5,"label":"Музыка","title":"Музыка","subtitle":"Музыканты, композиторы и певцы рады поделиться своими лучшими произведениями здесь!"}],
+            activities: [],
             selectedActivities: [],
             showАctivities: false,
             showАctivitiesList: false,
@@ -154,12 +156,11 @@ class ActivitiesSelect extends Component {
     }
 
     componentDidMount() {
-        // AjaxModule.get(RouteStore.api.activities).then((data) => {
-        //     this.setState({ activities: data || [] });
-        // }).catch((error) => {
-        //     console.error(error.message);
-        // });
-
+        AjaxModule.get(RouteStore.api.activities).then((data) => {
+            this.setState({ activities: data || [] });
+        }).catch((error) => {
+            console.error(error.message);
+        });
     }
 
     toggleSelectedActivity(event) {
@@ -201,6 +202,7 @@ class ActivitiesSelect extends Component {
             <>
                 {(!this.state.showАctivities && this.state.selectedActivities.length === 0) && <div className='select-activity__default' onClick={this.handleActivityDisplay}>
                     Выберите тематики 
+                    <img src={ArrowDownIcon}/>
                 </div>}
                 {(this.state.showАctivities || this.state.selectedActivities.length !== 0) && 
                 <div 
