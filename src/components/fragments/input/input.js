@@ -31,7 +31,7 @@ class Input extends Component {
     }
 
     render() {
-        const { name, type, placeholder, label, id, onAction, text, classValue, material, value, min, max, fileTypes } = this.props;
+        const { name, type, placeholder, label, id, onAction, text, min, max, classValue, material, value, fileTypes } = this.props;
       
         let node;
         switch(type) {
@@ -72,7 +72,7 @@ class Input extends Component {
                     {!label ? '' : <label className="number-label">{label}</label>}
                 </>
             );
-            break;   
+            break;       
         case this._types.checkbox:
             if (material) {  
                 node = (

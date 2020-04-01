@@ -31,7 +31,7 @@ export default {
             my: '/posts/my'
         },
         subscriptions: {
-            my: '/subscriptions/my'
+            new: '/subscriptions'
         },
         podcasts: {
             all: '/podcasts'

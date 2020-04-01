@@ -103,7 +103,7 @@ class BlockPostForm extends Component {
                     </div>
                 </div>
 
-                <div className="form__controls">
+               <div className="form__controls">
                     <div className="form-control control-button">    
                         <Button text="Опубликовать" type={Button.types.submit} name="createPost" isDisabled={this.state.isDisabled} onAction={this.handleCreatePostClick}/>
                     </div>
