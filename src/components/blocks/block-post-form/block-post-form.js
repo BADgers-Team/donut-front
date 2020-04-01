@@ -105,7 +105,7 @@ class BlockPostForm extends Component {
         let reqBody = {
             title: form.title.value,
             description: form.description.value,
-            subscription_id: form.subscription ? parseInt(form.subscription.options[form.subscription.selectedIndex].id, 10) : null,
+            subscription_id: form.subscription ? parseInt(form.subscription.options[form.subscription.selectedIndex].id, 10) : 0,
             visible_type_id: parseInt(form.visibleTypes.options[form.visibleTypes.selectedIndex].id, 10),
             file_ids: this.state.postIDs,
             activity_id: parseInt(form.activity.options[form.activity.selectedIndex].id, 10),

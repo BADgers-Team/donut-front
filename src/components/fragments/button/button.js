@@ -25,6 +25,7 @@ class Button extends Component {
     render() {
         const { text, type, onAction, to, className, isDisabled } = this.props;
         const classes = className ? `button ${className}` : 'button';
+
         let node;
         switch(type) {
         case this._types.submit :

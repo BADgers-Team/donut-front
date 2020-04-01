@@ -1,8 +1,21 @@
 @import 'consts';
 
+html {
+  height: 100%;
+}
+
 body {
+  height: 100%;
   margin: 0;
   padding: 0;
   font-family: $font-title, sans-serif;
   background-color: $color-dark-white;
+}
+
+#app {
+  height: 100%;
+}
+
+.content {
+  height: 100%;
 }

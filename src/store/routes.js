@@ -5,16 +5,17 @@ export default {
         posts: {
             all: '/posts',
             new: '/posts',
-            all: '/posts',
+            id: '/posts/:id',
             file: {
                 new: '/posts/file',
             },
         },
-        me: '/me',
-        activities: '/activities',        
+        me: '/me',       
         subscriptions: {
             new: '/subscriptions'
         },
+        activities: '/activities',
+        search: '/search'
     },
     pages: {
         user: {
@@ -32,6 +33,7 @@ export default {
         },
         podcasts: {
             all: '/podcasts'
-        }
+        },
+        search: '/search'
     }
 };
