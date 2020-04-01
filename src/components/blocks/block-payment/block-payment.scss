@@ -1,0 +1,71 @@
+@import 'components/app/consts';
+
+.modal-payment {
+    position: fixed;
+    background: white;
+    width: auto;
+    height: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 15px;
+
+    &__content {
+        margin-bottom: -5px;
+    }
+
+    &__header {
+        background-color: $color-pink;
+        border-radius: 15px 15px 0 0;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+from {top:-300px; opacity:0} 
+to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+from {top:-300px; opacity:0}
+to {top:0; opacity:1}
+}
+  
+.display-block {
+    display: block;
+}
+  
+.display-none {
+    display: none;
+}
+
+.payment-mock {
+    border-radius: 0 0 15px 15px;
+}
+
+.blur-app {
+    background-color: $color-dark-purple;
+    opacity: 0.7;
+}
+
+.ReactModal__Content--after-open {
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+
+.ReactModal__Body--open {
+    background-color: $color-medium-purple !important;
+}
+
+.close-icon {
+    height: 40px;
+    margin: 10px;
+    cursor: pointer;
+}
