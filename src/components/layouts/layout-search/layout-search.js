@@ -16,17 +16,22 @@ class LayoutIndex extends Component {
     }
 
     componentDidMount() {
-        AjaxModule.get(RouteStore.api.posts.all).then((data) => {
-            this.setState({ posts: data || [] });
-        }).catch((error) => {
-            console.error(error.message);
-        });
+        AjaxModule.get(RouteStore.api.search, [])
+            .then((data) => {
+                console.log(data);
+                this.setState({ posts: data || [] });
+            })
+            .catch((error) => {
+                console.error(error.message);
+            });
     }
 
-    handleChangeActivity = (key) => {
-        AjaxModule.get(RouteStore.api.posts.all, {activities: key})
+    //TODO запрос на поиск пойдет туть и тут же выборки, пришли посты или кто то еще
+    handleSubmitSearch = (keys) => {
+        console.log("KEYS", keys);
+        AjaxModule.get(RouteStore.api.search, keys)
             .then((data) => {
-                console.log("aaaa", data);
+                console.log(data);
                 this.setState({ posts: data || [] });
             })
             .catch((error) => {
@@ -38,7 +43,7 @@ class LayoutIndex extends Component {
         const { posts } = this.state;
         return (
             <>
-                <BlockActivities onChange={this.handleChangeActivity}/>
+                <BlockSearch onClick={this.handleSubmitSearch}/>
                 <BlockCards cards={posts}/>
             </>
         );

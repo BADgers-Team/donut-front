@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import {Select as SelectMaterial} from '@material-ui/core';
+import InputLabel from '@material-ui/core/InputLabel';
+
 import './select.scss';
 
 class Select extends Component {
@@ -18,7 +21,7 @@ class Select extends Component {
     }
 
     render() {
-        const { label, values, name } = this.props;
+        const { label, values, name, material, id, classValue } = this.props;
 
          
         let selectItems = values.map((item) => {
@@ -29,14 +32,33 @@ class Select extends Component {
             );
         })
 
-        const node = (
-            <>
-                {label === null ? '' : <label className="select-label">{label}</label>}
-                <select ref={this._select} name={name}>
-                    {selectItems}
-                </select>
-            </>
-        );
+
+        let node;
+        if (material) {
+            node = (
+                <>
+                    {(!label) ? '' : <InputLabel id={`${id}-label`} className="select-label">{label}</InputLabel>}
+                    <SelectMaterial
+                        variant='outlined'
+                        native
+                        labelId={`${id}-label`}
+                        id={id}
+                        className={`select ${classValue}`}
+                    >
+                        {selectItems}
+                    </SelectMaterial>
+                </>
+            );
+        } else {
+            node = (
+                <>
+                    {(!label) ? '' : <label className="select-label">{label}</label>}
+                    <select ref={this._select} name={name} className={`select ${classValue}`}>
+                        {selectItems}
+                    </select>
+                </>
+            );       
+        }
         return node;
     }
 
