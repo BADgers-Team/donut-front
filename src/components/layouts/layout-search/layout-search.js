@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
-import BlockActivities from 'components/blocks/block-activities/block-activities';
 import BlockSearch from 'components/blocks/block-search/block-search';
 import BlockCards from 'components/blocks/block-cards/block-cards';
 import AjaxModule from "services/ajax";
 import RouteStore from "store/routes";
+
+import './layout-search.scss';
 
 class LayoutIndex extends Component {
     constructor(props) {
@@ -43,8 +44,10 @@ class LayoutIndex extends Component {
         const { posts } = this.state;
         return (
             <>
-                <BlockSearch onClick={this.handleSubmitSearch}/>
-                <BlockCards cards={posts}/>
+                <div className="search-container">
+                    <BlockSearch onClick={this.handleSubmitSearch}/>
+                    <BlockCards cards={posts}/>
+                </div>
             </>
         );
     }

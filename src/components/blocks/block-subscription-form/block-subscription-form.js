@@ -38,7 +38,7 @@ class BlockSubscriptionForm extends Component {
                     <div className="form-input input-description">
                         <Input label="Описание" type={Input.types.textarea} name="description" placeholder="Напишите что-нибудь..."/>
                     </div>
-                    <div className="form__controls">
+                    <div className="form__controls-subscription">
                         <div className="form-control control-price">
                             <label className='price-label'>Цена</label>
                             <div className="control-price__input">

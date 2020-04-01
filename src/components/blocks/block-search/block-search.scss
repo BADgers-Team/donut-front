@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   padding: 25px 40px 20px;
-  background-color: $color-almost-dark-purple;
+  background-color: $color-upper-purple;
   color: $color-dark-white;
   min-width: 1090px;
 
@@ -120,7 +120,7 @@
   &__list {
     display: flex;
     flex-direction: column;
-    background-color: $color-almost-dark-purple;
+    background-color: $color-upper-purple;
     border: 2px solid $color-purple;
     border-radius: 0 0 10px 10px;
     height: auto !important;
