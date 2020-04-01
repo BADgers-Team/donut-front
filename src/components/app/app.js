@@ -43,7 +43,7 @@ class App extends Component {
                         <Route path={pages.subscriptions.new} render={(props) => <LayoutCreateSubscription {...props}/>}/>
                         <Route path={pages.search} render={(props) => <LayoutSearch {...props}/>}/>
                         <Route path="/posts/:id" render={(props) => <LayoutPost {...props}/>}/>
-                        <Route path="/users/:login" render={(props) => <LayoutProfile {...props}/>}/>
+                        <Route path="/users/:login" render={(props) => <LayoutProfile {...props} current={user}/>}/>
                     </Switch>
                 </div>
             </BrowserRouter>

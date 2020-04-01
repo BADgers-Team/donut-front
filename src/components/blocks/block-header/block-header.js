@@ -74,7 +74,7 @@ class BlockHeader extends Component {
                     </div>
                     <div className={profile}>
                         <Button
-                            text={`${user.name} ${user.surname}`}
+                            text={`${user.name}`}
                             type={Button.types.link}
                             to="/profile"
                             onAction={this.handleChangeTab}

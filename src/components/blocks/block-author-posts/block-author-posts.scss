@@ -10,4 +10,13 @@
     color: $color-pink;
     margin-bottom: 12px;
   }
+
+  &__selector {
+    font-size: 18px;
+    width: 94%;
+  }
+
+  &__body {
+    margin-top: 12px;
+  }
 }
