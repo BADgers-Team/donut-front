@@ -11,7 +11,10 @@ export default {
             },
         },
         me: '/me',
-        activities: '/activities',
+        activities: '/activities',        
+        subscriptions: {
+            new: '/subscriptions'
+        },
     },
     pages: {
         user: {
@@ -22,10 +25,10 @@ export default {
         main: '/',
         posts: {
             new: '/posts/new',
-            my: '/posts/my',
+            my: '/posts/my'
         },
         subscriptions: {
-            my: '/subscriptions/my'
+            new: '/subscriptions'
         },
         podcasts: {
             all: '/podcasts'

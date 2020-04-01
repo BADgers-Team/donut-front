@@ -1,0 +1,13 @@
+@import 'components/app/consts';
+
+.subscription-container {
+    width: 100%;
+    background-color: $color-upper-purple;
+    color: $color-dark-white;
+    padding: 25px 40px 150px 40px;
+}
+
+.subscription-header {
+    margin-bottom: 20px;
+    font-size: 30px;
+}
