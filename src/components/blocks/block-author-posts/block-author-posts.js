@@ -4,7 +4,6 @@ import Select from 'components/fragments/select/select';
 import { PRIVACY } from 'store/const';
 import RouteStore from 'store/routes';
 import AjaxModule from 'services/ajax';
-import { getUrlWithParams } from 'services/getUrlWithParams';
 
 import './block-author-posts.scss';
 import Avatar from 'assets/img/michael.jpg';

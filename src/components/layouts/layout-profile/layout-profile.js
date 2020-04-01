@@ -32,13 +32,14 @@ class LayoutProfile extends Component {
     }
 
     render() {
+        const { current } = this.props;
         const { user } = this.state;
         if (user) {
             return (
                 <div className="profile">
                     <BlockAuthor user={user}/>
                     <BlockAuthorPosts user={user}/>
-                    <BlockSubscriptions user={user}/>
+                    <BlockSubscriptions user={user} current={current}/>
                 </div>
             );
         }
