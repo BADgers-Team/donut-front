@@ -5,7 +5,7 @@ export default {
         posts: {
             all: '/posts',
             new: '/posts',
-            all: '/posts',
+            id: '/posts/:id',
             file: {
                 new: '/posts/file',
             },
@@ -16,7 +16,8 @@ export default {
         },
         me: '/me',
         activities: '/activities',
-        visible_types: '/visible_types'
+        visible_types: '/visible_types',
+        search: '/search'
     },
     pages: {
         user: {
@@ -34,6 +35,7 @@ export default {
         },
         podcasts: {
             all: '/podcasts'
-        }
+        },
+        search: '/search'
     }
 };

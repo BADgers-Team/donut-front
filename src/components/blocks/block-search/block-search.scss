@@ -1,0 +1,187 @@
+@import 'components/app/consts';
+
+.search {
+  display: flex;
+  flex-direction: column;
+  padding: 25px 40px 20px;
+  background-color: $color-almost-dark-purple;
+  color: $color-dark-white;
+  min-width: 1090px;
+
+  & > *:not(*:last-child) {
+    margin-right: 2%;
+  }
+
+  &__top, &__bottom {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  &__top > *:not(*:last-child), &__bottom > *:not(*:last-child) {
+    margin-right: 10px;
+  }
+
+  &__bottom > *:first-child {
+    margin-right: 30px;
+  }
+
+  label {
+    color: $color-dark-white;
+  }
+
+  // redefinition Material design
+
+  .MuiSvgIcon-root {
+    height: 2em !important;
+    width: 2em !important;
+    padding-top: 0 !important;
+  }
+
+  .MuiFormControlLabel-root {
+    margin: 0 8px 0 0;
+  }
+
+  .MuiTypography-body1 {
+    font-family: inherit !important;
+  }
+
+  .MuiIconButton-root {
+    padding: 0 !important;
+  }
+}
+  
+.top {
+  &__type-selector {
+    background: url('../../../assets/img/search.svg') 5% / 10% no-repeat;
+    border: 2px solid $color-purple;
+    border-radius: 10px;
+    margin-right: 10px;
+  }
+
+  &__search-input {
+    width: 70%;
+    margin-right: 10px;
+    input {  
+      padding: 0 20px;
+      height: 40px;
+      border-radius: 10px;
+      width: 100%;
+      font-size: 20px;
+    }
+  }
+
+  &__search-button {
+    width: 15%;
+    input {  
+      padding: 0 20px;
+      height: 40px;
+      border-radius: 10px;
+      width: 100%;
+      font-size: 20px;
+      background: $color-pink;
+      cursor: pointer;
+    }
+  }
+}
+
+.bottom {
+  &__subscrition {
+    display: flex;
+    align-items: center;
+    width: 40%;
+    input {  
+      padding: 0 10px;
+      height: 40px;
+      border-radius: 10px;
+      width: 25%;
+      font-size: 20px;
+      cursor: pointer;
+      outline: none;
+      margin-right: 8px;
+    }
+    label {
+      margin-right: 8px;
+    }
+  }
+
+  &__select-activity {
+    width: 55%;
+    height: 40px;  
+  }
+
+  &__select-activity:last-child {
+    margin-left: auto;
+  }
+}
+
+.select-activity {
+  &__list {
+    display: flex;
+    flex-direction: column;
+    background-color: $color-almost-dark-purple;
+    border: 2px solid $color-purple;
+    border-radius: 0 0 10px 10px;
+    height: auto !important;
+    padding: 5px;
+    margin-top: -3px;
+    position: relative;
+    z-index: 5;
+  }
+
+  &__list-title, &__default {
+    height: inherit;
+    position: inherit;
+  }
+
+  &__default, &__list-title {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 18px;
+  }
+
+  &__default {
+    border: 2px solid $color-purple;
+    border-radius: 10px;
+    justify-content: space-between;
+
+    img {
+      height: inherit;
+    }
+  }
+
+  &__list-title {
+    border: 2px solid $color-purple;
+    border-radius: 10px 10px 0 0;
+  }
+}
+
+.round-borders {
+  border-radius: 10px;
+}
+
+.selected-activity {
+  background-color: $color-purple;
+  padding: 5px;
+  border-radius: 10px;
+  margin: 5px;
+}
+
+// переопередяем на всякий через !important (не уверена, что !important обязательно)
+.type-selector {
+  background-color: transparent !important;
+  border: none !important;
+  background-size: 8% !important;
+  font-size: 20px;
+  padding-left: 50px;
+
+  option {
+      font-size: 20px;
+  }
+}
+
+
+
+

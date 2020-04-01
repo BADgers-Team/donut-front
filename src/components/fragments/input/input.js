@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 import './input.scss';
 
 class Input extends Component {
@@ -17,6 +20,7 @@ class Input extends Component {
             file: 'file',
             textarea: 'textarea',
             number: 'number',
+            checkbox: 'checkbox',
         };
     }
 
@@ -27,8 +31,8 @@ class Input extends Component {
     }
 
     render() {
-        const { name, type, placeholder, label, id, onAction, text, min, max, value, fileTypes } = this.props;
-
+        const { name, type, placeholder, label, id, onAction, text, classValue, material, value, min, max, fileTypes } = this.props;
+      
         let node;
         switch(type) {
         case this._types.text:
@@ -61,7 +65,6 @@ class Input extends Component {
                 </>
             );
             break;
-        
         case this._types.number:
             node = (
                 <>
@@ -69,7 +72,34 @@ class Input extends Component {
                     {!label ? '' : <label className="number-label">{label}</label>}
                 </>
             );
-            break;       
+            break;   
+        case this._types.checkbox:
+            if (material) {  
+                node = (
+                    <>
+                        <FormControlLabel
+                        control={<Checkbox 
+                            style={{color:'white'}}
+                            size='medium'
+                            name={name} 
+                            onChange={onAction}
+                            className={classValue}
+                            id={`${id}`}
+                        />}
+                        label={label}
+                        labelPlacement="end"
+                        />
+                    </>
+                );
+            } else {
+                node = (
+                    <>
+                        <input ref={this._input} type="checkbox" className={classValue} name={name} id={id} onChange={onAction}/>
+                        {label === null || label === undefined? '' : <label  htmlFor={name}>{label}</label>}
+                    </>
+                );
+            }
+            break;     
         default:
             node = (
                 <>
@@ -83,17 +113,20 @@ class Input extends Component {
     }
 
     static startLoader() {
+        if (!document.getElementById('loader')) return;
         document.getElementById('loader').innerText = 'Файл загружается...';
         return true;
     }
 
     static finishLoader() {
+        if (!document.getElementById('loader')) return;
         document.getElementById('loader').innerText = 'Файл загружен';
         return false;
     }
 
     componentDidMount() {
-        document.getElementById('loader').innerText = '';
+        if (document.getElementById('loader'))
+            document.getElementById('loader').innerText = '';
 
         const { actionType, onAction } = this.props;
         if (!(actionType in this._events)) return;

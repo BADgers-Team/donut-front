@@ -2,18 +2,31 @@
 
 .cards {
   background-color: $color-dark-purple;
-  margin-top: 40px;
-  padding: 60px 120px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-column-gap: 10px;
-  grid-row-gap: 4em;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  // TODO fix height
+
+  &__title {
+    padding: 27px 120px;
+    color: $color-dark-white;
+    font-size: 55px;
+  }
+
+  &__content {
+    padding: 10px 120px 60px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 10px;
+    grid-row-gap: 4em;
+  }
 }
 
 .card {
   width: 360px;
   transition: all .2s ease-out;
   border-radius: 10px;
+  text-decoration: none;
 
   &__preview {
     width: 360px;
@@ -45,7 +58,6 @@
 
   &:hover {
     transform: translateY(-6px);
-    cursor: pointer;
     transition: all .2s ease-out;
     box-shadow: 0 16px 16px 0 $color-grey;
   }
