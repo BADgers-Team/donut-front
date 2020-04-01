@@ -10,11 +10,17 @@ export default {
                 new: '/posts/file',
             },
         },
+        subscriptions: {
+            my: '/subscriptions/my',
+            new: '/subscriptions'
+        },
         me: '/me',
         activities: '/activities',
         users: {
             login: '/users/:id'
-        }
+        },
+        visible_types: '/visible_types',
+        search: '/search'
     },
     pages: {
         user: {
@@ -29,10 +35,11 @@ export default {
             id: '/posts/:id',
         },
         subscriptions: {
-            my: '/subscriptions/my'
+            new: '/subscriptions'
         },
         podcasts: {
             all: '/podcasts'
-        }
+        },
+        search: '/search'
     }
 };

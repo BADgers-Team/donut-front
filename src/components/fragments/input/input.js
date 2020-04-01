@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 import './input.scss';
 
 class Input extends Component {
@@ -16,6 +19,8 @@ class Input extends Component {
             text: 'text',
             file: 'file',
             textarea: 'textarea',
+            number: 'number',
+            checkbox: 'checkbox',
         };
     }
 
@@ -26,9 +31,9 @@ class Input extends Component {
     }
 
     render() {
-        const { name, type, placeholder, label, id, onAction, custom, value } = this.props;
+        const { name, type, placeholder, label, id, onAction, text, min, max, classValue, material, value, fileTypes, custom } = this.props;
         const classes = custom ? custom : null;
-
+      
         let node;
         switch(type) {
         case this._types.text:
@@ -45,22 +50,57 @@ class Input extends Component {
                     {!label ? '' : <label className="file-label">{label}</label>}
                     <label htmlFor={id}>
                         <div className="file-button" type="button">
-                            <div className="file-text">Прикрепить файл</div>
+                            <div className="file-text">{text}</div>
                         </div>
                     </label>
                     <label id="loader"></label>
-                    <input ref={this._input} type="file" className='file-input' name={name} id={id} onChange={onAction}/>
+                    <input ref={this._input} type="file" className='file-input' accept={fileTypes} name={name} id={id} onChange={onAction}/>
                 </>
             );
             break;
         case this._types.textarea:
             node = (
                 <>
-                    {!label ? '' : <label className="file-label">{label}</label>}
+                    {!label ? '' : <label className="textarea-label">{label}</label>}
                     <textarea className={classes} ref={this._input} placeholder={placeholder} name={name} spellCheck="true"/>
                 </>
             );
             break;
+        case this._types.number:
+            node = (
+                <>
+                    <input ref={this._input} type="number" min={min} max={max} name={name} value={value}/>
+                    {!label ? '' : <label className="number-label">{label}</label>}
+                </>
+            );
+            break;       
+        case this._types.checkbox:
+            if (material) {  
+                node = (
+                    <>
+                        <FormControlLabel
+                        control={<Checkbox 
+                            style={{color:'white'}}
+                            size='medium'
+                            name={name} 
+                            onChange={onAction}
+                            className={classValue}
+                            id={`${id}`}
+                        />}
+                        label={label}
+                        labelPlacement="end"
+                        />
+                    </>
+                );
+            } else {
+                node = (
+                    <>
+                        <input ref={this._input} type="checkbox" className={classValue} name={name} id={id} onChange={onAction}/>
+                        {label === null || label === undefined? '' : <label  htmlFor={name}>{label}</label>}
+                    </>
+                );
+            }
+            break;     
         default:
             node = (
                 <>
@@ -74,11 +114,13 @@ class Input extends Component {
     }
 
     static startLoader() {
+        if (!document.getElementById('loader')) return;
         document.getElementById('loader').innerText = 'Файл загружается...';
         return true;
     }
 
     static finishLoader() {
+        if (!document.getElementById('loader')) return;
         document.getElementById('loader').innerText = 'Файл загружен';
         return false;
     }

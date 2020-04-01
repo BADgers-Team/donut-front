@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import BlockPostForm from 'components/blocks/block-post-form/block-post-form';
 
+import './layout-create-post.scss';
+
 class LayoutCreatePost extends Component {
     constructor(props) {
         super(props);
@@ -8,8 +10,8 @@ class LayoutCreatePost extends Component {
     
     render() {    
         return (
-            <div className="container">
-                <h3>Создание нового поста</h3>
+            <div className="post-container">
+                <div className="post-header">Создание нового поста</div>
                 <BlockPostForm />
             </div>
         );
