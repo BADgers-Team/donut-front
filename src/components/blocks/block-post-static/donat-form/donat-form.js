@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Input from 'components/fragments/input/input';
 import Button from 'components/fragments/button/button';
+import BlockPayment from 'components/blocks/block-payment/block-payment';
 
 import './donat-form.scss';
 import DonutPicture from 'assets/img/donut.png';
