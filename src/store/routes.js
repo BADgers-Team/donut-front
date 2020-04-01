@@ -26,6 +26,7 @@ export default {
         posts: {
             new: '/posts/new',
             my: '/posts/my',
+            id: '/posts/:id',
         },
         subscriptions: {
             my: '/subscriptions/my'

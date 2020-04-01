@@ -71,7 +71,7 @@ class BlockHeader extends Component {
                         <Button
                             text={`${user.name} ${user.surname}`}
                             type={Button.types.link}
-                            to={getRouteWithID(RouteStore.pages.user.profile, user.login || 'mockuser')}
+                            to="/profile"
                             onAction={this.handleChangeTab}
                         />
                         <img className="user" src={AuthorAvatar} alt="user"/>
