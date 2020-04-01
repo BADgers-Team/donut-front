@@ -16,6 +16,7 @@ class DonatForm extends Component {
 
         this.state = {
             count: 1,
+            showModal: false,
         };
     }
 
@@ -42,6 +43,14 @@ class DonatForm extends Component {
         return count * PRICE;
     };
 
+    openModal = () => {
+        this.setState({ showModal: true });
+    }
+    
+    closeModal = () => {
+        this.setState({ showModal: false });
+    }
+
     render() {
         const { author } = this.props;
         const { count } = this.state;
@@ -56,26 +65,32 @@ class DonatForm extends Component {
         });
 
         return (
-            <form className="donat-form" onSubmit={this.handleFormSubmit}>
-                <div className="donat-form__label">
-                    Подарите&nbsp;
-                    <div className="donat-form__author">{author}</div>
-                    &nbsp;донат!
-                </div>
-                <div className="donat-form__choose-count">
-                    <div className="donat-form__donut">
-                        <img className="donat-form__donut-picture" src={DonutPicture} alt="donut"/>
-                        <div className="donat-form__donut-price">{PRICE} ₽</div>
+            <>
+                <BlockPayment 
+                isOpen={this.state.showModal}
+                closeModal={this.closeModal}/>
+
+                <form className="donat-form" onSubmit={this.handleFormSubmit}>
+                    <div className="donat-form__label">
+                        Подарите&nbsp;
+                        <div className="donat-form__author">{author}</div>
+                        &nbsp;донат!
                     </div>
-                    <div className="donat-form__multi">x</div>
-                    <Input custom="donat-form__input" type={Input.types.text} value={count} onAction={this.handleChangeCount}/>
-                    <div className="donat-form__counts">
-                        {countsNodes}
+                    <div className="donat-form__choose-count">
+                        <div className="donat-form__donut">
+                            <img className="donat-form__donut-picture" src={DonutPicture} alt="donut"/>
+                            <div className="donat-form__donut-price">{PRICE} ₽</div>
+                        </div>
+                        <div className="donat-form__multi">x</div>
+                        <Input custom="donat-form__input" type={Input.types.text} value={count} onAction={this.handleChangeCount}/>
+                        <div className="donat-form__counts">
+                            {countsNodes}
+                        </div>
                     </div>
-                </div>
-                <Input custom="donat-form__message" name="message" type={Input.types.textarea} placeholder={MSG_PLACEHOLDER}/>
-                <Button className="donat-form__submit" type={Button.types.submit} text={`Задонатить ${price} ₽`} name="submit"/>
-            </form>
+                    <Input custom="donat-form__message" name="message" type={Input.types.textarea} placeholder={MSG_PLACEHOLDER}/>
+                    <Button className="donat-form__submit" type={Button.types.submit} onAction={this.openModal} text={`Задонатить ${price} ₽`} name="submit"/>
+                </form>
+            </>
         );
     }
 }
