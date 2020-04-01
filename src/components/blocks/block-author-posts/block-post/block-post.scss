@@ -1,0 +1,28 @@
+@import 'components/app/app.scss';
+
+.author-post {
+  height: 250px;
+  width: 80%;
+  background-color: $color-upper-purple;
+  border-radius: 20px;
+
+  &__header {
+    display: flex;
+
+    &__avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      border: 1px solid $color-dark-white;
+    }
+
+    &__login {
+      font-size: 20px;
+      color: $color-pink;
+    }
+
+    &__created {
+      font-size: 10px;
+    }
+  }
+}

@@ -12,12 +12,15 @@ export default {
         },
         me: '/me',
         activities: '/activities',
+        users: {
+            login: '/users/:id'
+        }
     },
     pages: {
         user: {
             login: '/login',
             register: '/registration',
-            profile: '/profile'
+            profile: '/users/:id'
         },
         main: '/',
         posts: {

@@ -1,0 +1,10 @@
+@import 'components/app/app.scss';
+
+.profile {
+  background-color: $color-dark-purple;
+  width: 100%;
+  color: $color-dark-white;
+  display: flex;
+  justify-content: space-between;
+  padding: 50px;
+}

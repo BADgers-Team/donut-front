@@ -1,0 +1,12 @@
+@import 'components/app/app.scss';
+
+.author-subscriptions {
+  display: flex;
+  flex-direction: row;
+  width: 25%;
+
+  &__title {
+    font-size: 28px;
+    color: $color-pink;
+  }
+}
