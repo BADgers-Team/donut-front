@@ -10,9 +10,9 @@ const backendUrl = 'http://localhost:8081';
 class BlockCards extends Component {
     render() {
         const { cards } = this.props;
-        const cardsNodes = cards.map((card, index) => {
+        const cardsNodes = cards ? cards.map((card, index) => {
             return <Card key={index} card={card}/>;
-        });
+        }) : null;
         //TODO: сделать экран Данные не найдены
         return (
             <div className="cards">

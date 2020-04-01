@@ -8,8 +8,8 @@ class LayoutCreatePost extends Component {
     
     render() {    
         return (
-            <div className="container">
-                <h3>Создание нового поста</h3>
+            <div className="post-container">
+                <div className="post-header">Создание нового поста</div>
                 <BlockPostForm />
             </div>
         );

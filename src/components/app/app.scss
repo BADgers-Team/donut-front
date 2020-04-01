@@ -6,3 +6,18 @@ body {
   font-family: $font-title, sans-serif;
   background-color: $color-dark-white;
 }
+
+#app {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100%;
+}
+
+.content {
+  display: flex;
+  flex-grow: 1;
+  height: calc(100% - 60px);
+  width: 100%;
+  padding-top: 60px;
+}

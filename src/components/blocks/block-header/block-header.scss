@@ -2,10 +2,12 @@
 
 .header {
   height: 60px;
-  background-color: $color-dark-purple;
+  background-color: #1A082C;
   display: flex;
   justify-content: space-around;
   font-size: 20px;
+  position: fixed;
+  width: 100%;
 
   &-button {
     padding: 0 4px;

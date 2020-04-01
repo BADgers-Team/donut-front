@@ -5,6 +5,8 @@ import BlockCards from 'components/blocks/block-cards/block-cards';
 import AjaxModule from "services/ajax";
 import RouteStore from "store/routes";
 
+import './layout-index.scss';
+
 class LayoutIndex extends Component {
     constructor(props) {
         super(props);
@@ -36,8 +38,10 @@ class LayoutIndex extends Component {
         const { posts } = this.state;
         return (
             <>
-                <BlockActivities onChange={this.handleChangeActivity}/>
-                <BlockCards cards={posts}/>
+                <div className="layout-index">
+                    <BlockActivities onChange={this.handleChangeActivity}/>
+                    <BlockCards cards={posts}/>
+                </div>
             </>
         );
     }
