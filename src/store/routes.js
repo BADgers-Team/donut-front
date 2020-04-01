@@ -10,7 +10,10 @@ export default {
                 new: '/posts/file',
             },
         },
-        me: '/me',
+        me: '/me',       
+        subscriptions: {
+            new: '/subscriptions'
+        },
         activities: '/activities',
         search: '/search'
     },
@@ -23,10 +26,10 @@ export default {
         main: '/',
         posts: {
             new: '/posts/new',
-            my: '/posts/my',
+            my: '/posts/my'
         },
         subscriptions: {
-            my: '/subscriptions/my'
+            new: '/subscriptions'
         },
         podcasts: {
             all: '/podcasts'
