@@ -7,6 +7,7 @@ import LogoImage from 'assets/img/logo.png';
 import SearchIcon from 'assets/img/search.svg';
 import AuthorAvatar from 'assets/img/michael.jpg';
 import ExitIcon from 'assets/img/exit.svg';
+import {getRouteWithID} from 'services/getRouteWithId';
 
 class BlockHeader extends Component {
     constructor(props) {
@@ -53,6 +54,7 @@ class BlockHeader extends Component {
         const createPost = activeTab === 'Создать пост' ? `${baseClass} ${activeClass}` : baseClass;
         const search = activeTab === 'Поиск' ? `${baseClass} ${activeClass}` : baseClass;
         if (user) {
+            const profile = activeTab === `${user.name} ${user.surname}` ? `${baseClass} ${activeClass}` : baseClass;
             return (
                 <>
                     <div className={myPosts}>
@@ -70,8 +72,13 @@ class BlockHeader extends Component {
                     <div className={`${createPost} header-button__main`}>
                         <Button text="Создать пост" type={Button.types.link} to={RouteStore.pages.posts.new} onAction={this.handleChangeTab}/>
                     </div>
-                    <div className="header-button">
-                        <Button text={`${user.name} ${user.surname}`} type={Button.types.link} to={RouteStore.pages.user.profile} onAction={this.handleChangeTab}/>
+                    <div className={profile}>
+                        <Button
+                            text={`${user.name} ${user.surname}`}
+                            type={Button.types.link}
+                            to="/profile"
+                            onAction={this.handleChangeTab}
+                        />
                         <img className="user" src={AuthorAvatar} alt="user"/>
                     </div>
                     <div className="header-button">

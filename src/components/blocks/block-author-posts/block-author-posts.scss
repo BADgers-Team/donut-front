@@ -1,0 +1,13 @@
+@import 'components/app/app.scss';
+
+.author-posts {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+
+  &__title {
+    font-size: 28px;
+    color: $color-pink;
+    margin-bottom: 12px;
+  }
+}

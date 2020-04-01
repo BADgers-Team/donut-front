@@ -2,6 +2,6 @@
 
 .post {
   background-color: $color-dark-purple;
-  height: 100%;
   display: flex;
+  flex-grow: 1;
 }

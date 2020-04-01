@@ -1,0 +1,22 @@
+@import 'components/app/app.scss';
+
+.author-subscriptions {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+
+  &__title {
+    font-size: 28px;
+    color: $color-pink;
+    margin-bottom: 12px;
+  }
+
+  &__show {
+    border-radius: 10px;
+    border: 2px solid $color-purple;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+  }
+}

@@ -1,13 +1,12 @@
 @import 'components/app/consts';
 
 .post-dynamic {
-  //float: right;
   max-width: 60%;
   width: 60%;
   color: $color-dark-white;
   padding: 40px;
 
-  &__description {
-
+  &__blur {
+    filter: blur(3px);
   }
 }

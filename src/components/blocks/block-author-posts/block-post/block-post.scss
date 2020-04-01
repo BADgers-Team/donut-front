@@ -1,0 +1,72 @@
+@import 'components/app/app.scss';
+
+.author-post {
+  //height: 250px;
+  width: 80%;
+  background-color: $color-upper-purple;
+  border-radius: 20px;
+  padding: 20px 40px;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    &__info {
+      display: flex;
+      flex-direction: column;
+      margin-left: 12px;
+    }
+
+    &__avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      border: 1px solid $color-dark-white;
+    }
+
+    &__login {
+      font-size: 20px;
+      color: $color-pink;
+    }
+
+    &__created {
+      font-size: 10px;
+    }
+  }
+
+  &__title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 12px;
+  }
+
+  &__tizer {
+    text-align: justify;
+    margin-bottom: 12px;
+  }
+
+  &__extra {
+    display: flex;
+    justify-content: space-between;
+
+    &-statistic {
+      display: flex;
+
+      &__icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+      }
+
+      &__text:not(*:last-child) {
+        margin-right: 20px;
+      }
+    }
+
+    &-more {
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+}

@@ -5,6 +5,7 @@ import RouterStore from 'store/routes';
 import AjaxModule from 'services/ajax';
 import LayoutIndex from 'components/layouts/layout-index/layout-index';
 import LayoutCreatePost from 'components/layouts/layout-create-post/layout-create-post';
+import { LayoutProfile } from 'components/layouts/layout-profile/layout-profile';
 import LayoutCreateSubscription from 'components/layouts/layout-create-subscription/layout-create-subscription';
 import LayoutSearch from 'components/layouts/layout-search/layout-search';
 import LayoutPost from 'components/layouts/layout-post/layout-post';
@@ -42,6 +43,7 @@ class App extends Component {
                         <Route path={pages.subscriptions.new} render={(props) => <LayoutCreateSubscription {...props}/>}/>
                         <Route path={pages.search} render={(props) => <LayoutSearch {...props}/>}/>
                         <Route path="/posts/:id" render={(props) => <LayoutPost {...props}/>}/>
+                        <Route path="/users/:login" render={(props) => <LayoutProfile {...props}/>}/>
                     </Switch>
                 </div>
             </BrowserRouter>
