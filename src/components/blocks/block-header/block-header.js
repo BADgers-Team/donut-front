@@ -49,8 +49,9 @@ class BlockHeader extends Component {
         const activeClass = 'header-button__active';
         const myPosts = activeTab === 'Мои посты' ? `${baseClass} ${activeClass}` : baseClass;
         const mySubscriptions = activeTab === 'Мои подписки' ? `${baseClass} ${activeClass}` : baseClass;
-        const podcast = activeTab === 'подборки' ? `${baseClass} ${activeClass}` : baseClass;
+        const podcast = activeTab === 'Подборки' ? `${baseClass} ${activeClass}` : baseClass;
         const createPost = activeTab === 'Создать пост' ? `${baseClass} ${activeClass}` : baseClass;
+        const search = activeTab === 'Поиск' ? `${baseClass} ${activeClass}` : baseClass;
         if (user) {
             return (
                 <>
@@ -63,8 +64,8 @@ class BlockHeader extends Component {
                     <div className={podcast}>
                         <Button text="Подборки" type={Button.types.link} to={RouteStore.pages.podcasts.all} onAction={this.handleChangeTab}/>
                     </div>
-                    <div className="header-button">
-                        <Button text="Поиск" type={Button.types.link} to={RouteStore.pages.search}/>         
+                    <div className={search}>
+                        <Button text="Поиск" type={Button.types.link} to={RouteStore.pages.search} onAction={this.handleChangeTab}/>         
                     </div>
                     <div className={`${createPost} header-button__main`}>
                         <Button text="Создать пост" type={Button.types.link} to={RouteStore.pages.posts.new} onAction={this.handleChangeTab}/>
@@ -81,8 +82,8 @@ class BlockHeader extends Component {
         } else {
             return (
                 <>
-                    <div className="header-button">
-                        <Button text="Поиск" src={SearchIcon} type={Button.types.link} to={RouteStore.pages.search}/>         
+                    <div className={search}>
+                        <Button text="Поиск" type={Button.types.link} to={RouteStore.pages.search} onAction={this.handleChangeTab}/>         
                     </div>
                     <Button text="Войти" type={Button.types.link} to={RouteStore.pages.user.login}/>
                     <Button text="Зарегистрироваться" type={Button.types.link} to={RouteStore.pages.user.register}/>
