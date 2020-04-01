@@ -108,7 +108,7 @@ class BlockPostForm extends Component {
                         <Button text="Опубликовать" type={Button.types.submit} name="createPost" isDisabled={this.state.isDisabled} onAction={this.handleCreatePostClick}/>
                     </div>
                     <div className="form-control control-select-visible">
-                        <Select label="Уровень приватности поста" name="visibleTypes" actionType={Select.events.change} onAction={this.handleSubscription} values={visibleTypeSelect}/>
+                        <Select classValue='form-control__select' label="Уровень приватности поста" name="visibleTypes" actionType={Select.events.change} onAction={this.handleSubscription} values={visibleTypeSelect}/>
                     </div>
                     {this.state.showPrice && <div className="form-control control-price">
                         <label className='price-label'>Стоимость разовой оплаты поста</label>
@@ -117,10 +117,10 @@ class BlockPostForm extends Component {
                         </div>
                     </div>}
                     {this.state.showSubscriptions && <div className="form-control control-subscription">
-                        <Select label="Выберите подпискy" name="subscription" values={subscriptionSelect}/>
+                        <Select classValue='form-control__select' label="Выберите подпискy" name="subscription" values={subscriptionSelect}/>
                     </div>}
                     <div className="form-control control-select-activity">
-                        <Select label="Категория деятельности" name="activity" values={activitySelect}/>
+                        <Select classValue='form-control__select' label="Категория деятельности" name="activity" values={activitySelect}/>
                     </div>
                 </div>
             </form>
