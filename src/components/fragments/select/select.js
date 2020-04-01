@@ -22,14 +22,16 @@ class Select extends Component {
 
     render() {
         const { label, values, name, material, id, classValue } = this.props;
+
          
-        const selectItems = values.map((item) => {
+        let selectItems = values.map((item) => {
             return (
                 <option id={item.id} key={item.value} value={item.value}>
                     {item.text}
                 </option>
             );
-        });
+        })
+
 
         let node;
         if (material) {
@@ -41,7 +43,7 @@ class Select extends Component {
                         native
                         labelId={`${id}-label`}
                         id={id}
-                        className={classValue}
+                        className={`select ${classValue}`}
                     >
                         {selectItems}
                     </SelectMaterial>
@@ -51,7 +53,7 @@ class Select extends Component {
             node = (
                 <>
                     {(!label) ? '' : <label className="select-label">{label}</label>}
-                    <select ref={this._select} name={name} className={classValue}>
+                    <select ref={this._select} name={name} className={`select ${classValue}`}>
                         {selectItems}
                     </select>
                 </>

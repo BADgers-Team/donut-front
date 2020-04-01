@@ -31,19 +31,6 @@
     color: $color-dark-white;
   }
 
-  select {
-    background-color: transparent;
-    outline: none;
-    border: transparent;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    appearance: none;
-  }
-
-  select::-ms-expand {
-    display: none;
-  }
-
   // redefinition Material design
 
   .MuiSvgIcon-root {
@@ -71,24 +58,6 @@
     border: 2px solid $color-purple;
     border-radius: 10px;
     margin-right: 10px;
-
-    select {
-      color: $color-dark-white !important;
-      padding: 10px 100px 10px 40px !important;
-      background: url('../../../assets/img/select-arrow.svg') 96% / 10% no-repeat;
-      font-size: 15px;
-    }
-
-    option {   
-      background-color: $color-almost-dark-purple !important;
-      outline: none;
-      border: transparent;
-      font-size: 15px;
-    }
-
-    option:checked { 
-      background: $color-purple !important;
-    }
   }
 
   &__search-input {
@@ -198,6 +167,19 @@
   padding: 5px;
   border-radius: 10px;
   margin: 5px;
+}
+
+// переопередяем на всякий через !important (не уверена, что !important обязательно)
+.type-selector {
+  background-color: transparent !important;
+  border: none !important;
+  background-size: 8% !important;
+  font-size: 20px;
+  padding-left: 50px;
+
+  option {
+      font-size: 20px;
+  }
 }
 
 
