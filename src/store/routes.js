@@ -10,11 +10,13 @@ export default {
                 new: '/posts/file',
             },
         },
-        me: '/me',       
         subscriptions: {
+            my: '/subscriptions/my',
             new: '/subscriptions'
         },
+        me: '/me',
         activities: '/activities',
+        visible_types: '/visible_types',
         search: '/search'
     },
     pages: {

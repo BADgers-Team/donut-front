@@ -32,7 +32,7 @@ class Input extends Component {
 
     render() {
         const { name, type, placeholder, label, id, onAction, text, min, max, classValue, material, value, fileTypes } = this.props;
-
+      
         let node;
         switch(type) {
         case this._types.text:

@@ -13,6 +13,10 @@ const backendUrl = 'http://localhost:8081';
 class BlockCards extends Component {
     render() {
         const { cards } = this.props;
+
+        //TODO проверить проверку, если карточки приходят null
+        if (!cards) return;
+      
         //TODO пофиксить переиспользуемость карточек для поиска и главной
         const postCards = Array.isArray(cards) ? cards : cards.posts;
         let postСardsNodes;
