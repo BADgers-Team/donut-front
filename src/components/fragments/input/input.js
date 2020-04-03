@@ -69,7 +69,7 @@ class Input extends Component {
         case this._types.number:
             node = (
                 <>
-                    <input ref={this._input} type="number" min={min} max={max} name={name} value={value}/>
+                    <input ref={this._input} type="number" min={min} max={max} name={name} defaultValue={value}/>
                     {!label ? '' : <label className="number-label">{label}</label>}
                 </>
             );
