@@ -113,7 +113,7 @@ class BlockPostForm extends Component {
                     {this.state.showPrice && <div className="form-control control-price">
                         <label className='price-label'>Стоимость разовой оплаты поста</label>
                         <div className="control-price__input">
-                            <Input label="₽" type={Input.types.number} name="price" min={16} value={16}/>
+                            <Input label="₽" type={Input.types.number} name="price" min={16} defaultValue={16}/>
                         </div>
                     </div>}
                     {this.state.showSubscriptions && <div className="form-control control-subscription">

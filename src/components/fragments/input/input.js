@@ -31,7 +31,7 @@ class Input extends Component {
     }
 
     render() {
-        const { name, type, placeholder, label, id, onAction, text, min, max, classValue, material, value, fileTypes, custom } = this.props;
+        const { name, type, placeholder, label, id, onAction, text, min, max, classValue, material, value, fileTypes, custom, defaultValue } = this.props;
         const classes = custom ? custom : null;
       
         let node;
@@ -69,7 +69,7 @@ class Input extends Component {
         case this._types.number:
             node = (
                 <>
-                    <input ref={this._input} type="number" min={min} max={max} name={name} defaultValue={value}/>
+                    <input ref={this._input} type="number" min={min} max={max} name={name} defaultValue={defaultValue} value={value}/>
                     {!label ? '' : <label className="number-label">{label}</label>}
                 </>
             );
