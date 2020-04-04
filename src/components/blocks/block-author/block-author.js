@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BlockGoals } from 'components/blocks/block-author/block-goals/block-goals';
 
 import Avatar from 'assets/img/michael.jpg';
 
@@ -16,15 +17,18 @@ class BlockAuthor extends Component {
                                                 днём расстраивало всё больше, поэтому я пришёл сюда и делюсь этим с вами. Русские вперёд!`;
         // TODO: сделать plural на слова в info
         return (
-            <div className="author-info">
-                <img className="author-info__avatar" src={Avatar} alt="avatar"/>
-                <div className="author-info__login">{`@${user.login}`}</div>
-                <div className="author-info__name">{user.name}</div>
-                <div className="author-info__info">
-                    {`${posts} постов | ${subscriptions} подписок | ${followers} подписчиков`}
+            <>
+                <div className="author-info">
+                    <img className="author-info__avatar" src={Avatar} alt="avatar"/>
+                    <div className="author-info__login">{`@${user.login}`}</div>
+                    <div className="author-info__name">{user.name}</div>
+                    <div className="author-info__info">
+                        {`${posts} постов | ${subscriptions} подписок | ${followers} подписчиков`}
+                    </div>
+                    <div className="author-info__description">{description}</div>
+                    <BlockGoals {...this.props} />
                 </div>
-                <div className="author-info__description">{description}</div>
-            </div>
+            </>
         );
     }
 }

@@ -37,7 +37,7 @@ class LayoutProfile extends Component {
         if (user) {
             return (
                 <div className="profile">
-                    <BlockAuthor user={user}/>
+                    <BlockAuthor user={user} current={current}/>
                     <BlockAuthorPosts user={user}/>
                     <BlockSubscriptions user={user} current={current}/>
                 </div>
