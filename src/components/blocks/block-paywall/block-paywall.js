@@ -18,7 +18,9 @@ class BlockPaywall extends Component {
         super(props);
 
         this.state = {
-            showModal: false,
+            showPostPay: false,
+            showSubcriptionPay: false,
+            canView: false,
         }; 
     }
 
@@ -30,12 +32,31 @@ class BlockPaywall extends Component {
         enableScroll();
     }
 
-    openModal = () => {
-        this.setState({ showModal: true });
+    openSubcriptionPayModal = () => {
+        this.setState({ showSubcriptionPay: true });
     }
     
-    closeModal = () => {
-        this.setState({ showModal: false });
+    closeSubcriptionPayModal = () => {
+        this.setState({ showSubcriptionPay: false });
+    }
+
+    openPostPayModal = () => {
+        this.setState({ showPostPay: true });
+    }
+    
+    closePostPayModal = () => {
+        this.setState({ showPostPay: false });
+    }
+
+    handleSuccessChangePost = () => {
+        this.closePostPayModal();
+        this.setState({ post: data });
+    }
+
+    handleSuccessChangeSubcription = () => {
+        this.closeSubcriptionPayModal();
+        //TODO set like in search
+        this.setState({ post: data });
     }
 
     render() {
@@ -43,21 +64,21 @@ class BlockPaywall extends Component {
         const tizer = post.tizer || `Всегда незаметные вещи могут быть гораздо важнее чересчур привлекательных. 
                                      Этот пост о невероятной силе человеческого слова в описании природы`;
         const price = post.price || 150;
-        const controls = this._getControls(price, this.openModal);
+        const controls = this._getControls(price);
 
         return (
             <>
-                {<PostPayModal   
+                {this.state.showPostPay && <PostPayModal   
                 id={post.id}
                 title={post.title}   
-                price={post.price}                        
-                onClose={this.closeModal}/>}
+                price={price}                        
+                onClose={this.closePostPayModal} onSuccess={this.handleSuccessChangePost}/>}
 
-                {/* {this.state.showModal && <PaySubcriptionModal   
+                {this.state.showSubcriptionPay && <PaySubcriptionModal   
                 id={post.subscription_id}
                 title={post.subscription}   
                 price={post.price}                        
-                onClose={this.closeModal}/>} */}
+                onClose={this.closeSubcriptionPayModal} onSuccess={this.handleSuccessChangeSubcription}/>}
 
                 <div className="paywall">
                     <div className="paywall__info">{tizer}</div>
@@ -67,7 +88,7 @@ class BlockPaywall extends Component {
         );
     }
 
-    _getControls(price, openModal) {
+    _getControls(price) {
         switch (this.props.post.visible_type) {
         case (PRIVACY.SUBSCRIPTION):
             return (
@@ -76,7 +97,7 @@ class BlockPaywall extends Component {
                         {PRIVACY_MSG[0]}
                     </div>
                     <div className="paywall__controls__subscription">
-                        <Button text="Подписаться" type={Button.types.link} onAction={this.openModal}/>
+                        <Button text="Подписаться" type={Button.types.link} onAction={this.openSubcriptionPayModal}/>
                     </div>
                 </>
             );
@@ -87,7 +108,7 @@ class BlockPaywall extends Component {
                         {PRIVACY_MSG[1]}
                     </div>
                     <div className="paywall__controls__price">
-                        <Button text={`Оплатить ${price} ₽`} type={Button.types.link} onAction={this.openModal}/>
+                        <Button text={`Оплатить ${price} ₽`} type={Button.types.link} onAction={this.openPostPayModal}/>
                     </div>
                 </>
             );

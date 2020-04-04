@@ -7,9 +7,9 @@ const BLUR_CLASS = 'post-dynamic__blur';
 
 class BlockPostDynamic extends Component {
     render() {
-        const { post } = this.props;
+        const { post, current } = this.props;
         const classes = ['post-dynamic'];
-        if (post.visible_type !== PRIVACY.OPEN) {
+        if (post.visible_type !== PRIVACY.OPEN && !post.paid && !post.follows && current?.login !== post.author.login) {
             classes.push(BLUR_CLASS);
         }
 

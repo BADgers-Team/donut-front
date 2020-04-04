@@ -32,18 +32,17 @@ class PostPayModal extends Component {
             sum: this.props.price,
         };
 
+        const { onSuccess } = this.props;
+
         AjaxModule.post(RouterStore.api.pay, reqBody).then(() => {
             console.log('Оплачено');
-            this.setState({ redirect: true });
+            onSuccess && onSuccess(data);
         }).catch((error) => {
-            debugger
             console.error(error.message);
         });
     };
 
     render() {
-
-        debugger
         const { open, redirect } = this.state;
         const { onClose, title, price, id } = this.props;
 

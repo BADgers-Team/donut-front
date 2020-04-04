@@ -32,8 +32,14 @@ class BlockPostStatic extends Component {
         this.setState({ showModal: false });
     }
 
+    handleSuccessChange = (data) => {
+        this.closeModal();
+        //TODO
+        this.setState({ posts: data });
+    };
+
     render() {
-        const { post } = this.props;
+        const { post, current } = this.props;
         const login = post.author.login || 'cool_user';
         const profileRoute = getRouteWithID(RouteStore.pages.user.profile, login);
         const visibility = post.visible_type === 'Открыт для всех' ? 'Это публичный пост :)' : post.visible_type;
@@ -46,7 +52,7 @@ class BlockPostStatic extends Component {
             <>
                 <BlockPayment 
                 isOpen={this.state.showModal}
-                closeModal={this.closeModal}/>
+                closeModal={this.closeModal} onSuccess={this.handleSuccessChange}/>
 
                 <div className="post-static">
                     <div className="post-static__inner">
@@ -80,7 +86,7 @@ class BlockPostStatic extends Component {
                             textClass="post-static__info__text"/>
                         </div>
 
-                        {post.visible_type === PRIVACY.OPEN && (
+                        {(post.visible_type === PRIVACY.OPEN || post.paid || post.follows || current?.login === post.author.login) && (
                             <div className="post-static__controls">
                                 <div className="post-static__control">
                                     <Button text="Подписаться" onAction={this.openModal} type={Button.types.link}/>

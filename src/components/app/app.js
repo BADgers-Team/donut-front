@@ -42,7 +42,7 @@ class App extends Component {
                         <Route path={pages.posts.new} render={(props) => <LayoutCreatePost {...props}/>}/>
                         <Route path={pages.subscriptions.new} render={(props) => <LayoutCreateSubscription {...props}/>}/>
                         <Route path={pages.search} render={(props) => <LayoutSearch {...props}/>}/>
-                        <Route path="/posts/:id" render={(props) => <LayoutPost {...props}/>}/>
+                        <Route path="/posts/:id" render={(props) => <LayoutPost {...props} current={user}/>}/>
                         <Route path="/users/:login" render={(props) => <LayoutProfile {...props} current={user}/>}/>
                     </Switch>
                 </div>

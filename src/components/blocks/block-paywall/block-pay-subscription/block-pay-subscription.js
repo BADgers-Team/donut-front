@@ -31,12 +31,14 @@ class PaySubcriptionModal extends Component {
             post_id: this.props.id,
             sum: this.props.price,
         };
+        
+        const { onSuccess } = this.props;
 
         AjaxModule.post(RouterStore.api.pay, reqBody).then(() => {
             console.log('Оплачено');
-            this.setState({ redirect: true });
+            onSuccess && onSuccess(data);
         }).catch((error) => {
-            // console.error(error.message);
+            console.error(error.message);
         });
     };
 
@@ -52,8 +54,7 @@ class PaySubcriptionModal extends Component {
             <BlockModal
                 open={open}
                 title={MODAL_TITLE}
-                onClose={onClose}
-            >
+                onClose={onClose}>
                 <div>
                     <div>Вы покупаете подписку:</div>
                     <div>{title}</div>
