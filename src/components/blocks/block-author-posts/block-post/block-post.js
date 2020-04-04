@@ -5,17 +5,20 @@ import RouteStore from 'store/routes';
 import { getRouteWithID } from 'services/getRouteWithId';
 
 import './block-post.scss';
-import LikeIcon from 'assets/img/like.svg';
-import EyeIcon from 'assets/img/eye.svg';
+
+import Like from 'components/blocks/block-like/block-like';
+import Seen from 'components/blocks/block-seen/block-seen';
 
 class BlockPost extends Component {
     render() {
         const { post, login, avatar } = this.props;
-        const date = post.date || '23 февраля 2020 в 16:09';
+        const postId = post.id;
+        const date = new Date(post.created_at).toLocaleDateString("en-US") || '23/02/2020';
         const tizer = post.tizer || `Всегда незаметные вещи могут быть гораздо важнее чересчур привлекательных. 
                                      Этот пост о невероятной силе человеческого слова в описании природы`;
-        const likes = post.likes || 234;
-        const seen = post.seen || 1222;
+        const likes = post.likes_count || 0;
+        const currentUserLiked = post.liked;
+        const seen = post.views_count || 1;
         const postRoute = getRouteWithID(RouteStore.pages.posts.id, post.id);
         return (
             <div className="author-post">
@@ -30,10 +33,13 @@ class BlockPost extends Component {
                 <div className="author-post__tizer">{tizer}</div>
                 <div className="author-post__extra">
                     <div className="author-post__extra-statistic">
-                        <img className="author-post__extra-statistic__icon" src={LikeIcon} alt="like"/>
-                        <div className="author-post__extra-statistic__text">{likes}</div>
-                        <img className="author-post__extra-statistic__icon" src={EyeIcon} alt="seen"/>
-                        <div className="author-post__extra-statistic__text">{seen}</div>
+                        <Like likesCount={likes} currentUserLiked={currentUserLiked} postId={postId}
+                        likedClass="author-post__extra-statistic__icon" 
+                        dislikedClass="author-post__extra-statistic__icon author-post__extra-disliked__icon" 
+                        textClass="author-post__extra-statistic__text"/>
+                        <Seen seen={seen} 
+                        iconClass="author-post__extra-statistic__icon" 
+                        textClass="author-post__extra-statistic__text"/>
                     </div>
                     <Link className="author-post__extra-more" to={postRoute}>Подробнее &gt;</Link>
                 </div>

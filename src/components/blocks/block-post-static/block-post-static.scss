@@ -51,6 +51,25 @@
       height: 28px;
       margin-right: 12px;
     }
+
+    &-disliked__icon {
+      margin-right: 38px !important;
+    }
+
+    &__icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 8px;
+      color: $color-dark-white;
+    }
+
+    &__text:not(*:last-child) {
+      margin-right: 20px;
+    }
+
+    &__text {
+      color: $color-dark-white;
+    }
   }
 
   &__control {

@@ -7,6 +7,8 @@ import './block-cards.scss';
 import SubscribersIcon from 'assets/img/subscribers.svg';
 import CardImage from 'assets/img/card-image.jpg';
 import Avatar from 'assets/img/michael.jpg';
+import Like from 'components/blocks/block-like/block-like';
+import Seen from 'components/blocks/block-seen/block-seen';
 
 const backendUrl = 'http://localhost:8081';
 
@@ -83,10 +85,16 @@ class PostCard extends Component {
         const cardPreview = card.files ? `${backendUrl}/${card.files[0]}` : CardImage;
         const cardAuthorAvatar = card.author.avatar ? card.author.avatar : Avatar;
         const cardSubscribers = card.subscribers ? card.subscribers : 120;
-        const cardRoute = getRouteWithID(RouteStore.api.posts.id, card.id);
+        const cardRoute = getRouteWithID(RouteStore.api.posts.id, card.id);      
+        const cardDate = new Date(card.created_at).toLocaleDateString("en-US") || '23/02/2020';
+        const postId = card.id;
+        const cardLikes = card.likes_count || 0;
+        const currentUserLiked = card.liked;
+        const seen = card.views_count || 1;
 
         return (
             <Link className="card" to={cardRoute}>
+                <div className="card__date">{cardDate}</div>
                 <img className="card__preview" src={cardPreview} alt="preview"/>
                 <div className="card__info">
                     <div className="card__title">{card.title}</div>
@@ -96,8 +104,13 @@ class PostCard extends Component {
                             <div className="author__name">{card.author.name}</div>
                         </div>
                         <div className="subscribers">
-                            <img className="subscribers__icon" src={SubscribersIcon} alt="subscribers"/>
-                            <div className="subscribers__count">{cardSubscribers}</div>
+                            <Like likesCount={cardLikes} currentUserLiked={currentUserLiked} postId={postId}
+                                likedClass="post-static__info__icon" 
+                                dislikedClass="post-static__info__icon post-static__info-disliked__icon" 
+                                textClass="post-static__info__text"/>
+                            <Seen seen={seen} 
+                                iconClass="post-static__info__icon" 
+                                textClass="post-static__info__text"/>                       
                         </div>
                     </div>
                 </div>
