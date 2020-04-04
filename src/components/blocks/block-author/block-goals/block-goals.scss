@@ -1,0 +1,23 @@
+@import 'components/app/app.scss';
+
+.author-goals {
+  width: 100%;
+  margin-top: 12px;
+
+  &__title {
+    font-size: 28px;
+    color: $color-pink;
+    margin-bottom: 12px;
+  }
+
+  &__add {
+    border-radius: 10px;
+    border: 2px solid $color-pink;
+    color: $color-pink;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 12px;
+  }
+}

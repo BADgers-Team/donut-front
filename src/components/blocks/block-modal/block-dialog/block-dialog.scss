@@ -1,0 +1,66 @@
+.block-dialog {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  left: 50%;
+  top: 50%;
+  height: auto;
+  padding: 14px;
+  box-sizing: border-box;
+  background: #ffffff;
+  box-shadow: 0 2px 16px rgba(36, 38, 41, 0.16);
+  border-radius: 5px;
+  transform: translate(-50%,-50%);
+  width: 580px;
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    min-height: 100%;
+    max-height: 100%;
+    background: rgba(36, 38, 41, 0.64);
+    z-index: 3000;
+
+    &__hidden {
+      display: none;
+    }
+  }
+
+  &__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    border: none;
+    background: transparent;
+    transition: color .15s ease-in-out;
+    cursor: pointer;
+
+    &-icon {
+      height: 32px;
+      width: 32px;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__title {
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 32px;
+  }
+
+  &__content {
+    flex-grow: 1;
+  }
+}
