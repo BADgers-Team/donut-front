@@ -1,0 +1,54 @@
+@import 'components/app/consts';
+
+.goal {
+  &__form {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  &__subtitle {
+    color: $color-grey;
+    margin-bottom: 12px;
+  }
+
+  &__textarea {
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid $color-pink;
+    font-family: $font-title;
+    height: 40px;
+    margin: 4px 0;
+    padding: 5px;
+    resize: none;
+  }
+
+  &__input {
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid $color-pink;
+    font-family: $font-title;
+    margin: 4px 0;
+    padding: 5px;
+    color: $color-dark-purple;
+    width: 95%;
+
+    &-after {
+      margin-left: 8px;
+      color: $color-dark-purple;
+    }
+  }
+
+  &__submit {
+    margin-top: 8px;
+    border-radius: 5px;
+    background-color: $color-pink;
+    text-align: center;
+    font-size: 18px;
+    cursor: pointer;
+    height: 40px;
+    width: 100%;
+    outline: none;
+  }
+}
