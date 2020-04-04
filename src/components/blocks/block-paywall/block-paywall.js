@@ -47,11 +47,11 @@ class BlockPaywall extends Component {
 
         return (
             <>
-                {<PostPayModal   
+                {/* {<PostPayModal   
                 id={post.id}
                 title={post.title}   
                 price={post.price}                        
-                onClose={this.closeModal}/>}
+                onClose={this.closeModal}/>} */}
 
                 {/* {this.state.showModal && <PaySubcriptionModal   
                 id={post.subscription_id}
