@@ -28,13 +28,14 @@ class PostPayModal extends Component {
 
         const reqBody = {
             payment_type: 'Пост',
-            post_id: this.props.id,
+            post_id: this.props.post_id,
             sum: this.props.price,
         };
 
         const { onSuccess } = this.props;
 
-        AjaxModule.post(RouterStore.api.pay, reqBody).then(() => {
+        AjaxModule.post(RouterStore.api.pay, reqBody).then((data) => {
+            // const data = {"id":31,"title":"wwefwesdsgывывввввgwegehswrthfewf","description":"wfwef","description_length":0,"visible_type":"Только разовая оплата","activity":"Писательство","files":null,"file_ids":null,"files_count":0,"user_id":2,"author":{"id":2,"login":"AAAAAAAAAAAAAAAA","name":"AAAAAAAAAAAAAAA","email":"mock@user.com","number_of_followers":0,"number_of_subscriptions":0,"number_of_posts":0},"paid":true,"follows":false,"liked":false,"created_at":"2020-04-04 18:03:03 +0000","likes_count":0,"views_count":27};
             console.log('Оплачено');
             onSuccess && onSuccess(data);
         }).catch((error) => {
@@ -44,10 +45,10 @@ class PostPayModal extends Component {
 
     render() {
         const { open, redirect } = this.state;
-        const { onClose, title, price, id } = this.props;
+        const { onClose, title, price, post_id } = this.props;
 
         if (redirect) {
-            const route = getRouteWithID(RouterStore.api.posts.id, id);
+            const route = getRouteWithID(RouterStore.api.posts.id, post_id);
             return <Redirect to={route} />
         }
         return (

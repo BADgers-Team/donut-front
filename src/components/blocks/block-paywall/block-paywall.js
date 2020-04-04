@@ -21,6 +21,7 @@ class BlockPaywall extends Component {
             showPostPay: false,
             showSubcriptionPay: false,
             canView: false,
+            post: null,
         }; 
     }
 
@@ -48,15 +49,22 @@ class BlockPaywall extends Component {
         this.setState({ showPostPay: false });
     }
 
-    handleSuccessChangePost = () => {
+    handleSuccessChangePost = (data) => {
         this.closePostPayModal();
-        this.setState({ post: data });
+
+        this.setState({post: data}, () => {
+            const { onChange } = this.props;
+            onChange && onChange(this.state.post);
+        });
     }
 
-    handleSuccessChangeSubcription = () => {
+    handleSuccessChangeSubcription = (data) => {
         this.closeSubcriptionPayModal();
-        //TODO set like in search
-        this.setState({ post: data });
+
+        this.setState({post: data}, () => {
+            const { onChange } = this.props;
+            onChange && onChange(this.state.post);
+        });
     }
 
     render() {
@@ -69,15 +77,16 @@ class BlockPaywall extends Component {
         return (
             <>
                 {this.state.showPostPay && <PostPayModal   
-                id={post.id}
+                post_id={post.id}
                 title={post.title}   
                 price={price}                        
                 onClose={this.closePostPayModal} onSuccess={this.handleSuccessChangePost}/>}
 
                 {this.state.showSubcriptionPay && <PaySubcriptionModal   
-                id={post.subscription_id}
+                post_id={post.id}
+                subscription_id={post.subscription_id}
                 title={post.subscription}   
-                price={post.price}                        
+                price={price}                        
                 onClose={this.closeSubcriptionPayModal} onSuccess={this.handleSuccessChangeSubcription}/>}
 
                 <div className="paywall">
@@ -120,10 +129,10 @@ class BlockPaywall extends Component {
                     </div>
                     <div className="paywall__controls">
                         <div className="paywall__controls__subscription">
-                            <Button text="Подписаться" type={Button.types.link}/>
+                            <Button text="Подписаться" type={Button.types.link} onAction={this.openSubcriptionPayModal}/>
                         </div>
                         <div className="paywall__controls__price">
-                            <Button text={`Оплатить ${price} ₽`} type={Button.types.link}/>
+                            <Button text={`Оплатить ${price} ₽`} type={Button.types.link} onAction={this.openPostPayModal}/>
                         </div>
                     </div>
                 </>

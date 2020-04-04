@@ -51,6 +51,10 @@ class DonatForm extends Component {
         this.setState({ showModal: false });
     }
 
+    handleSuccessChange = () => {
+        this.closeModal();
+    };
+
     render() {
         const { author, post } = this.props;
         const { count } = this.state;
@@ -70,7 +74,8 @@ class DonatForm extends Component {
                 id={post.id}
                 title={post.title}   
                 price={price}                        
-                onClose={this.closeModal}/>}
+                onClose={this.closeModal}
+                onSuccess={this.handleSuccessChange}/>}
 
                 <form className="donat-form" onSubmit={this.handleFormSubmit}>
                     <div className="donat-form__label">

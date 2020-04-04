@@ -30,15 +30,19 @@ class LayoutPost extends Component {
         });
     }
 
+    getNewPost = (data) => {
+        this.setState({ post: data });
+    }
+
     render() {
-        const { post, } = this.state;
+        const { post } = this.state;
         const { current } = this.props;
 
         const content = post ? (
             <>
                 <BlockPostStatic post={post} current={current} />
                 <BlockPostDynamic post={post} current={current} />
-                {post.visible_type !== PRIVACY.OPEN && !post.paid && !post.follows && current?.login !== post.author.login && <BlockPaywall post={post}/>}
+                {post.visible_type !== PRIVACY.OPEN && !post.paid && !post.follows && current?.login !== post.author.login && <BlockPaywall post={post} onChange={this.getNewPost}/>}
             </>
         ) : <div>Пост не найден</div>;
 
