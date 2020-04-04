@@ -6,6 +6,7 @@ export default {
             all: '/posts',
             new: '/posts',
             id: '/posts/:id',
+            like: '/posts/:id/like',
             file: {
                 new: '/posts/file',
             },
