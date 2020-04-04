@@ -22,6 +22,7 @@ export default {
         },
         visible_types: '/visible_types',
         search: '/search',
+        pay: '/pay',
         goals: '/goals',
     },
     pages: {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Input from 'components/fragments/input/input';
 import Button from 'components/fragments/button/button';
-import BlockPayment from 'components/blocks/block-payment/block-payment';
+import { DonatPayModal } from 'components/blocks/block-post-static/donat-form/donat-pay-modal/donat-pay-modal';
 
 import './donat-form.scss';
 import DonutPicture from 'assets/img/donut.png';
@@ -52,7 +52,7 @@ class DonatForm extends Component {
     }
 
     render() {
-        const { author } = this.props;
+        const { author, post } = this.props;
         const { count } = this.state;
         const price = this.calculatePrice();
         const countsNodes = COUNTS.map((number, index) => {
@@ -66,9 +66,11 @@ class DonatForm extends Component {
 
         return (
             <>
-                <BlockPayment 
-                isOpen={this.state.showModal}
-                closeModal={this.closeModal}/>
+                {this.state.showModal && <DonatPayModal   
+                id={post.id}
+                title={post.title}   
+                price={price}                        
+                onClose={this.closeModal}/>}
 
                 <form className="donat-form" onSubmit={this.handleFormSubmit}>
                     <div className="donat-form__label">

@@ -85,7 +85,7 @@ class BlockPostStatic extends Component {
                                 <div className="post-static__control">
                                     <Button text="Подписаться" onAction={this.openModal} type={Button.types.link}/>
                                 </div>
-                                <DonatForm author={login}/>
+                                <DonatForm author={login} post={post}/>
                             </div>
                         )}
                     </div>

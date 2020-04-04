@@ -74,7 +74,7 @@ class BlockSubscriptionForm extends Component {
             this.setState({ redirect: true });
         }).catch((error) => {
             console.error(error.message);
-        });;
+        });
     }
 }
 
