@@ -28,6 +28,11 @@
   border-radius: 10px;
   text-decoration: none;
 
+  &__date {
+    text-decoration: none;
+    color: $color-dark-white;
+  }
+
   &__preview {
     width: 360px;
     height: 360px;

@@ -6,6 +6,7 @@ export default {
             all: '/posts',
             new: '/posts',
             id: '/posts/:id',
+            like: '/posts/:id/like',
             file: {
                 new: '/posts/file',
             },
@@ -21,7 +22,8 @@ export default {
         },
         visible_types: '/visible_types',
         search: '/search',
-        pay: '/pay'
+        pay: '/pay',
+        goals: '/goals',
     },
     pages: {
         user: {
