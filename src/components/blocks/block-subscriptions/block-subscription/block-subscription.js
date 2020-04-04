@@ -2,32 +2,47 @@ import React, { Component } from 'react';
 
 import './block-subscription.scss';
 import Button from 'components/fragments/button/button';
-import BlockPayment from 'components/blocks/block-payment/block-payment';
+import { PaySubcriptionModal } from 'components/blocks/block-paywall/block-pay-subscription/block-pay-subscription';
+
 
 class BlockSubscription extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            showModal: false,
+            post: null,
+            showSubcriptionPay: false,
         };
     }
 
-    openModal = () => {
-        this.setState({ showModal: true });
+    openSubcriptionPayModal = () => {
+        this.setState({ showSubcriptionPay: true });
     }
     
-    closeModal = () => {
-        this.setState({ showModal: false });
+    closeSubcriptionPayModal = () => {
+        this.setState({ showSubcriptionPay: false });
+    }
+
+    handleSuccessChangeSubcription = (data) => {
+        this.closeSubcriptionPayModal();
+
+        this.setState({post: data}, () => {
+            const { onChange } = this.props;
+            onChange && onChange(this.state.post);
+        });
     }
 
     render() {
         const { subscription } = this.props;
         return (
             <>
-                <BlockPayment 
-                isOpen={this.state.showModal}
-                closeModal={this.closeModal}/>
+                {/* {this.state.showSubcriptionPay && <PaySubcriptionModal   
+                post_id={post.id}
+                subscription_id={post.subscription_id}
+                title={post.subscription}   
+                price={post.price}                        
+                onClose={this.closeSubcriptionPayModal} onSuccess={this.handleSuccessChangeSubcription}/>} */}
+
 
                 <div className="author-subscription">
                     <div className="author-subscription__title">{subscription.title}</div>
