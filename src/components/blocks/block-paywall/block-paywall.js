@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Button from 'components/fragments/button/button';
-import BlockPayment from 'components/blocks/block-payment/block-payment';
+import { PostPayModal } from 'components/blocks/block-paywall/block-pay-post/block-pay-post';
+import { PaySubcriptionModal } from 'components/blocks/block-paywall/block-pay-subscription/block-pay-subscription';
 import { PRIVACY } from 'store/const';
 import { disableScroll, enableScroll } from 'services/scroll';
 
@@ -46,9 +47,17 @@ class BlockPaywall extends Component {
 
         return (
             <>
-                <BlockPayment 
-                isOpen={this.state.showModal}
-                closeModal={this.closeModal}/>
+                {<PostPayModal   
+                id={post.id}
+                title={post.title}   
+                price={post.price}                        
+                onClose={this.closeModal}/>}
+
+                {/* {this.state.showModal && <PaySubcriptionModal   
+                id={post.subscription_id}
+                title={post.subscription}   
+                price={post.price}                        
+                onClose={this.closeModal}/>} */}
 
                 <div className="paywall">
                     <div className="paywall__info">{tizer}</div>
@@ -67,7 +76,7 @@ class BlockPaywall extends Component {
                         {PRIVACY_MSG[0]}
                     </div>
                     <div className="paywall__controls__subscription">
-                        <Button text="Подписаться" type={Button.types.link} onAction={openModal}/>
+                        <Button text="Подписаться" type={Button.types.link} onAction={this.openModal}/>
                     </div>
                 </>
             );
@@ -78,7 +87,7 @@ class BlockPaywall extends Component {
                         {PRIVACY_MSG[1]}
                     </div>
                     <div className="paywall__controls__price">
-                        <Button text={`Оплатить ${price} ₽`} type={Button.types.link} onAction={openModal}/>
+                        <Button text={`Оплатить ${price} ₽`} type={Button.types.link} onAction={this.openModal}/>
                     </div>
                 </>
             );

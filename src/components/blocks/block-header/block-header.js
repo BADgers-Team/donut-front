@@ -58,13 +58,13 @@ class BlockHeader extends Component {
             return (
                 <>
                     <div className={myPosts}>
-                        <Button text="Мои посты" type={Button.types.link} to={RouteStore.pages.posts.my} onAction={this.handleChangeTab}/>
+                        <Button text="Мои посты" type={Button.types.block}/>
                     </div>
                     <div className={mySubscriptions}>
-                        <Button text="Мои подписки" type={Button.types.link} to={RouteStore.pages.subscriptions.my} onAction={this.handleChangeTab}/>
+                        <Button text="Мои подписки" type={Button.types.block}/>
                     </div>
                     <div className={podcast}>
-                        <Button text="Подборки" type={Button.types.link} to={RouteStore.pages.podcasts.all} onAction={this.handleChangeTab}/>
+                        <Button text="Подборки" type={Button.types.block}/>
                     </div>
                     <div className={search}>
                         <Button text="Поиск" type={Button.types.link} to={RouteStore.pages.search} onAction={this.handleChangeTab}/>         
@@ -76,7 +76,7 @@ class BlockHeader extends Component {
                         <Button
                             text={`${user.name}`}
                             type={Button.types.link}
-                            to="/profile"
+                            to={`/users/${user.login}`}
                             onAction={this.handleChangeTab}
                         />
                         <img className="user" src={AuthorAvatar} alt="user"/>
