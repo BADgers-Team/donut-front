@@ -8,6 +8,7 @@ class BlockGoals extends Component {
         super(props);
         this.state = {
             isModalOpen: true,
+            goals: [],
         };
     }
 
@@ -18,6 +19,11 @@ class BlockGoals extends Component {
 
     handleCloseModal = () => {
         this.setState({ isModalOpen: false });
+    };
+
+    handleSuccessChange = (data) => {
+        this.handleCloseModal();
+        this.setState({ goals: data });
     };
 
     render() {
@@ -36,7 +42,7 @@ class BlockGoals extends Component {
                 <div className="author-goals__body">
                     {/*{subscriptionsNodes}*/}
                 </div>
-                { isModalOpen && <GoalModal onClose={this.handleCloseModal}/> }
+                { isModalOpen && <GoalModal onClose={this.handleCloseModal} onSuccess={this.handleSuccessChange}/> }
             </div>
         );
     }
