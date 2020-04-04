@@ -36,12 +36,12 @@ class BlockSubscription extends Component {
         const { subscription } = this.props;
         return (
             <>
-                {this.state.showSubcriptionPay && <PaySubcriptionModal   
+                {/* {this.state.showSubcriptionPay && <PaySubcriptionModal   
                 post_id={post.id}
                 subscription_id={post.subscription_id}
                 title={post.subscription}   
                 price={post.price}                        
-                onClose={this.closeSubcriptionPayModal} onSuccess={this.handleSuccessChangeSubcription}/>}
+                onClose={this.closeSubcriptionPayModal} onSuccess={this.handleSuccessChangeSubcription}/>} */}
 
 
                 <div className="author-subscription">
