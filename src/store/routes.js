@@ -20,7 +20,8 @@ export default {
             login: '/users/:id'
         },
         visible_types: '/visible_types',
-        search: '/search'
+        search: '/search',
+        pay: '/pay'
     },
     pages: {
         user: {
