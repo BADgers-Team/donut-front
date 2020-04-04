@@ -19,7 +19,9 @@ class Like extends Component {
         };
     }
 
-    handleLikeClick = () => {     
+    handleLikeClick = (event) => {     
+        event.preventDefault();
+        
         const id = this.props.postId;
         const route = getRouteWithID(RouteStore.api.posts.like, id);
 
