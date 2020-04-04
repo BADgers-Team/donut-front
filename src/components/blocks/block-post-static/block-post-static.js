@@ -37,7 +37,7 @@ class BlockPostStatic extends Component {
         const login = post.author.login || 'cool_user';
         const profileRoute = getRouteWithID(RouteStore.pages.user.profile, login);
         const visibility = post.visible_type === 'Открыт для всех' ? 'Это публичный пост :)' : post.visible_type;
-        const date = post.date || '23 февраля 2019';
+        const date = new Date(post.created_at).toLocaleDateString("en-US") || '23/02/2020';
         const postId = post.id;
         const likes = post.likes_count || 0;
         const currentUserLiked = post.liked;

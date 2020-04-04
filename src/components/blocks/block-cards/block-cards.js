@@ -85,8 +85,8 @@ class PostCard extends Component {
         const cardPreview = card.files ? `${backendUrl}/${card.files[0]}` : CardImage;
         const cardAuthorAvatar = card.author.avatar ? card.author.avatar : Avatar;
         const cardSubscribers = card.subscribers ? card.subscribers : 120;
-        const cardRoute = getRouteWithID(RouteStore.api.posts.id, card.id);        
-        const cardDate = card.date || '23 февраля 2019';
+        const cardRoute = getRouteWithID(RouteStore.api.posts.id, card.id);      
+        const cardDate = new Date(card.created_at).toLocaleDateString("en-US") || '23/02/2020';
         const postId = card.id;
         const cardLikes = card.likes_count || 0;
         const currentUserLiked = card.liked;

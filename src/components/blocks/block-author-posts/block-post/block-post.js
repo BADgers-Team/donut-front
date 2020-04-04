@@ -13,7 +13,7 @@ class BlockPost extends Component {
     render() {
         const { post, login, avatar } = this.props;
         const postId = post.id;
-        const date = post.date || '23 февраля 2020 в 16:09';
+        const date = new Date(post.created_at).toLocaleDateString("en-US") || '23/02/2020';
         const tizer = post.tizer || `Всегда незаметные вещи могут быть гораздо важнее чересчур привлекательных. 
                                      Этот пост о невероятной силе человеческого слова в описании природы`;
         const likes = post.likes_count || 0;
