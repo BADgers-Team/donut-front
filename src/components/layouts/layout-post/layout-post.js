@@ -13,6 +13,7 @@ import './layout-post.scss';
 class LayoutPost extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             post: null,
         };
@@ -20,6 +21,7 @@ class LayoutPost extends Component {
 
     componentDidMount() {
         const id = this.props.match.params.id;
+
         const route = getRouteWithID(RouteStore.api.posts.id, id);
         AjaxModule.get(route).then((data) => {
             this.setState({ post: data || null });
@@ -28,13 +30,19 @@ class LayoutPost extends Component {
         });
     }
 
+    getNewPost = (data) => {
+        this.setState({ post: data });
+    }
+
     render() {
         const { post } = this.state;
+        const { current } = this.props;
+
         const content = post ? (
             <>
-                <BlockPostStatic post={post}/>
-                <BlockPostDynamic post={post}/>
-                {post.visible_type !== PRIVACY.OPEN && <BlockPaywall post={post}/>}
+                <BlockPostStatic post={post} current={current}  onChange={this.getNewPost}/>
+                <BlockPostDynamic post={post} current={current} />
+                {post.visible_type !== PRIVACY.OPEN && !post.paid && !post.follows && current?.login !== post.author.login && <BlockPaywall post={post} onChange={this.getNewPost}/>}
             </>
         ) : <div>Пост не найден</div>;
 
