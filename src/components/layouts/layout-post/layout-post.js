@@ -40,7 +40,7 @@ class LayoutPost extends Component {
 
         const content = post ? (
             <>
-                <BlockPostStatic post={post} current={current} />
+                <BlockPostStatic post={post} current={current}  onChange={this.getNewPost}/>
                 <BlockPostDynamic post={post} current={current} />
                 {post.visible_type !== PRIVACY.OPEN && !post.paid && !post.follows && current?.login !== post.author.login && <BlockPaywall post={post} onChange={this.getNewPost}/>}
             </>
