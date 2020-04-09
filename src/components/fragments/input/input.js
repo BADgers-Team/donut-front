@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 import './input.scss';
 
 class Input extends Component {
@@ -17,6 +20,7 @@ class Input extends Component {
             file: 'file',
             textarea: 'textarea',
             number: 'number',
+            checkbox: 'checkbox',
         };
     }
 
@@ -27,22 +31,23 @@ class Input extends Component {
     }
 
     render() {
-        const { name, type, placeholder, label, id, onAction, text, min, max, value, fileTypes } = this.props;
-
+        const { name, type, placeholder, label, id, onAction, text, min, max, classValue, material, value, fileTypes, custom, defaultValue } = this.props;
+        const classes = custom ? custom : null;
+      
         let node;
         switch(type) {
         case this._types.text:
             node = (
                 <>
-                    { !label ? '' : <label className="input-label">{label}</label>}
-                    <input ref={this._input} type="text" placeholder={placeholder} name={name} spellCheck="true"/>
+                    {!label ? '' : <label className="input-label">{label}</label>}
+                    <input ref={this._input} className={classes} type="text" placeholder={placeholder} name={name} value={value} spellCheck="true" onChange={onAction}/>
                 </>
             );
             break;
         case this._types.file:
             node = (
                 <>
-                    { !label ? '' : <label className="file-label">{label}</label>}
+                    {!label ? '' : <label className="file-label">{label}</label>}
                     <label htmlFor={id}>
                         <div className="file-button" type="button">
                             <div className="file-text">{text}</div>
@@ -56,20 +61,46 @@ class Input extends Component {
         case this._types.textarea:
             node = (
                 <>
-                    { !label ? '' : <label className="textarea-label">{label}</label>}
-                    <textarea ref={this._input} placeholder={placeholder} name={name} spellCheck="true"/>
+                    {!label ? '' : <label className="textarea-label">{label}</label>}
+                    <textarea className={classes} ref={this._input} placeholder={placeholder} name={name} spellCheck="true"/>
                 </>
             );
             break;
-        
         case this._types.number:
             node = (
                 <>
-                    <input ref={this._input} type="number" min={min} max={max} name={name} value={value}/>
+                    <input ref={this._input} type="number" min={min} max={max} name={name} defaultValue={defaultValue} value={value}/>
                     {!label ? '' : <label className="number-label">{label}</label>}
                 </>
             );
             break;       
+        case this._types.checkbox:
+            if (material) {  
+                node = (
+                    <>
+                        <FormControlLabel
+                        control={<Checkbox 
+                            style={{color:'white'}}
+                            size='medium'
+                            name={name} 
+                            onChange={onAction}
+                            className={classValue}
+                            id={`${id}`}
+                        />}
+                        label={label}
+                        labelPlacement="end"
+                        />
+                    </>
+                );
+            } else {
+                node = (
+                    <>
+                        <input ref={this._input} type="checkbox" className={classValue} name={name} id={id} onChange={onAction}/>
+                        {label === null || label === undefined? '' : <label  htmlFor={name}>{label}</label>}
+                    </>
+                );
+            }
+            break;     
         default:
             node = (
                 <>
@@ -83,22 +114,22 @@ class Input extends Component {
     }
 
     static startLoader() {
-        if (document.getElementById('loader')) {
-            document.getElementById('loader').innerText = 'Файл загружается...';
-            return true;
-        }
+        if (!document.getElementById('loader')) return;
+        document.getElementById('loader').innerText = 'Файл загружается...';
+        return true;
     }
 
     static finishLoader() {
-        if (document.getElementById('loader')) {
-            document.getElementById('loader').innerText = 'Файл загружен';
-            return false;            
-        }
-
+        if (!document.getElementById('loader')) return;
+        document.getElementById('loader').innerText = 'Файл загружен';
+        return false;
     }
 
     componentDidMount() {
-        if (document.getElementById('loader')) document.getElementById('loader').innerText = '';
+        const loader = document.getElementById('loader');
+        if (loader) {
+            loader.innerText = '';
+        }
 
         const { actionType, onAction } = this.props;
         if (!(actionType in this._events)) return;

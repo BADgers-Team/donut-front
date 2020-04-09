@@ -29,9 +29,10 @@
             margin-bottom: 0;
         }
 
-        &__controls {
+        &__controls-subscription {
             display: flex;
             flex-direction: column;
+            width: 50%;
         }
 
         &-input {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import BlockSubscriptionForm from 'components/blocks/block-subscription-form/block-subscription-form';
+import { BlockSubscriptionForm } from 'components/blocks/block-subscription-form/block-subscription-form';
 
 import './layout-create-subscription.scss';
 

@@ -38,11 +38,11 @@ class BlockSubscriptionForm extends Component {
                     <div className="form-input input-description">
                         <Input label="Описание" type={Input.types.textarea} name="description" placeholder="Напишите что-нибудь..."/>
                     </div>
-                    <div className="form__controls">
+                    <div className="form__controls-subscription">
                         <div className="form-control control-price">
                             <label className='price-label'>Цена</label>
                             <div className="control-price__input">
-                                <Input label="₽" type={Input.types.number} name="price" min={16} value={16}/>
+                                <Input label="₽" type={Input.types.number} name="price" min={16} defaultValue={16}/>
                             </div>
                         </div>
                         <div className="form-control control-button">    
@@ -74,8 +74,8 @@ class BlockSubscriptionForm extends Component {
             this.setState({ redirect: true });
         }).catch((error) => {
             console.error(error.message);
-        });;
+        });
     }
 }
 
-export default BlockSubscriptionForm;
+export { BlockSubscriptionForm };
