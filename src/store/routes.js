@@ -5,7 +5,8 @@ export default {
         posts: {
             all: '/posts',
             new: '/posts',
-            all: '/posts',
+            id: '/posts/:id',
+            like: '/posts/:id/like',
             file: {
                 new: '/posts/file',
             },
@@ -16,24 +17,32 @@ export default {
         },
         me: '/me',
         activities: '/activities',
-        visible_types: '/visible_types'
+        users: {
+            login: '/users/:id'
+        },
+        visible_types: '/visible_types',
+        search: '/search',
+        pay: '/pay',
+        goals: '/goals',
     },
     pages: {
         user: {
             login: '/login',
             register: '/registration',
-            profile: '/profile'
+            profile: '/users/:id'
         },
         main: '/',
         posts: {
             new: '/posts/new',
-            my: '/posts/my'
+            my: '/posts/my',
+            id: '/posts/:id',
         },
         subscriptions: {
-            my: '/subscriptions/my'
+            new: '/subscriptions'
         },
         podcasts: {
             all: '/podcasts'
-        }
+        },
+        search: '/search'
     }
 };
