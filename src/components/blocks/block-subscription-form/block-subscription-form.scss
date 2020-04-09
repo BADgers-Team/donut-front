@@ -1,26 +1,51 @@
 @import 'components/app/consts';
 
+.subscription-header {
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+
 #subscription_form {
     height: 100%;
     display: flex;
     flex-direction: row;
 
     .input-label, .select-label, .file-label, 
-    .textarea-label, .price-label {
+    .textarea-label {
         font-size: 22px;
         margin-bottom: 10px;
     }
 
+    // redefinition Material design
+
+    .MuiSvgIcon-root {
+        height: 2em !important;
+        width: 2em !important;
+        padding-top: 0 !important;
+    }
+
+    .MuiFormControlLabel-root {
+        margin: 0 8px 0 0;
+    }
+
+    .MuiTypography-body1 {
+        font-family: inherit !important;
+    }
+
+    .MuiIconButton-root {
+        padding: 0 !important;
+    }
+
+    .MuiFormControlLabel-label {
+        font-size: 20px;
+    }
+
     .form {
         &__inputs {
-            width: 80%;
-        }
-        &__controls {
-            width: 50%;
+            width: 60%;
         }
         &-input, &-control {
             display: flex;
-            flex-direction: column;
             margin-bottom: 10px;
         }
 
@@ -32,10 +57,11 @@
         &__controls-subscription {
             display: flex;
             flex-direction: column;
-            width: 50%;
         }
 
         &-input {
+            flex-direction: column;
+
             input, textarea {  
                 border-radius: 10px;
                 font-size: 16px;
@@ -63,10 +89,11 @@
         }
 
         &-control {
-            width: 70%;
+            width: 100%;
             margin-top: 10px;
+            flex-direction: row;
 
-            .button {
+            > .button {
                 border-radius: 10px;
                 background-color: $color-pink;
                 text-align: center;
@@ -81,6 +108,7 @@
                 border-color: transparent;
                 color: $color-dark-white;
                 margin-bottom: 8px;
+                width: 100%;
             }
 
             &__select {
@@ -103,7 +131,7 @@
     .input-description {
         textarea {
             padding: 10px 10px;
-            height: 200px;
+            height: 290px;
             margin: 0 !important;
         }
     }
@@ -132,4 +160,8 @@
 
 .disabled {
     opacity: 0.6;
+}
+
+.text-price {
+    font-size: 20px;
 }

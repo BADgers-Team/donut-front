@@ -11,7 +11,6 @@ class LayoutCreateSubscription extends Component {
     render() {    
         return (
             <div className="subscription-container">
-                <div className="subscription-header">Создание новой подписки</div>
                 <BlockSubscriptionForm />
             </div>
         );
