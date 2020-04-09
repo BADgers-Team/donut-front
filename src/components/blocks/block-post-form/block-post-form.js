@@ -134,7 +134,6 @@ class BlockPostForm extends Component {
         } else {
             this.setState({showSubscriptions: false});
         } 
-
         if (visibleType === '3' || visibleType === '4') {
             this.setState({showPrice: true});
         } else {
