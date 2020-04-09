@@ -31,48 +31,49 @@ class Input extends Component {
     }
 
     render() {
-        const { name, type, placeholder, label, id, onAction, classValue, material, value, min, max } = this.props;
-
+        const { name, type, placeholder, label, id, onAction, text, min, max, classValue, material, value, fileTypes, custom, defaultValue } = this.props;
+        const classes = custom ? custom : null;
+      
         let node;
         switch(type) {
         case this._types.text:
             node = (
                 <>
-                    { !label ? '' : <label className="input-label">{label}</label>}
-                    <input ref={this._input} type="text" placeholder={placeholder} name={name} spellCheck="true"/>
+                    {!label ? '' : <label className="input-label">{label}</label>}
+                    <input ref={this._input} className={classes} type="text" placeholder={placeholder} name={name} value={value} spellCheck="true" onChange={onAction}/>
                 </>
             );
             break;
         case this._types.file:
             node = (
                 <>
-                    { !label ? '' : <label className="file-label">{label}</label>}
+                    {!label ? '' : <label className="file-label">{label}</label>}
                     <label htmlFor={id}>
                         <div className="file-button" type="button">
-                            <div className="file-text">Прикрепить файл</div>
+                            <div className="file-text">{text}</div>
                         </div>
                     </label>
                     <label id="loader"></label>
-                    <input ref={this._input} type="file" className='file-input' name={name} id={id} onChange={onAction}/>
+                    <input ref={this._input} type="file" className='file-input' accept={fileTypes} name={name} id={id} onChange={onAction}/>
                 </>
             );
             break;
         case this._types.textarea:
             node = (
                 <>
-                    { !label ? '' : <label className="file-label">{label}</label>}
-                    <textarea ref={this._input} placeholder={placeholder} name={name} spellCheck="true"/>
+                    {!label ? '' : <label className="textarea-label">{label}</label>}
+                    <textarea className={classes} ref={this._input} placeholder={placeholder} name={name} spellCheck="true"/>
                 </>
             );
             break;
         case this._types.number:
             node = (
                 <>
-                    <input ref={this._input} type="number" min={min} max={max} name={name} value={value}/>
-                    { !label ? '' : <label className="number">{label}</label>}
+                    <input ref={this._input} type="number" min={min} max={max} name={name} defaultValue={defaultValue} value={value}/>
+                    {!label ? '' : <label className="number-label">{label}</label>}
                 </>
             );
-            break;   
+            break;       
         case this._types.checkbox:
             if (material) {  
                 node = (
@@ -84,8 +85,7 @@ class Input extends Component {
                             name={name} 
                             onChange={onAction}
                             className={classValue}
-                            id={`${id}`}
-                        />}
+                            id={`${id}`} />}
                         label={label}
                         labelPlacement="end"
                         />
@@ -95,7 +95,7 @@ class Input extends Component {
                 node = (
                     <>
                         <input ref={this._input} type="checkbox" className={classValue} name={name} id={id} onChange={onAction}/>
-                        {label === null || label === undefined? '' : <label  htmlFor={name}>{label}</label>}
+                        {!label ? '' : <label  htmlFor={name}>{label}</label>}
                     </>
                 );
             }
@@ -125,8 +125,10 @@ class Input extends Component {
     }
 
     componentDidMount() {
-        if (document.getElementById('loader'))
-            document.getElementById('loader').innerText = '';
+        const loader = document.getElementById('loader');
+        if (loader) {
+            loader.innerText = '';
+        }
 
         const { actionType, onAction } = this.props;
         if (!(actionType in this._events)) return;

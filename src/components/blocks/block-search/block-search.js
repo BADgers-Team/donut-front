@@ -12,6 +12,13 @@ import Select from 'components/fragments/select/select';
 
 import './block-search.scss';
 
+const postTypes = [
+    {id: 1, value:'all', text:'Везде'},
+    {id: 2, value:'posts', text: 'По постам'},
+    {id: 3, value:'subscriptions', text: 'По подпискам'},
+    {id: 4, value:'authors', text: 'По авторам'},
+]; 
+
 class BlockSearch extends Component {
     constructor(props) {
         super(props);
@@ -22,8 +29,6 @@ class BlockSearch extends Component {
             freeSubscritionsChecked: false,
             selectedActivities: [],
         };
-        this.toggleSubscritionsPrices = this.toggleSubscritionsPrices.bind(this);
-        this.toggleFreeSubscritions = this.toggleFreeSubscritions.bind(this);
     }
 
     getSelectedActivities = (activities) => {
@@ -35,22 +40,21 @@ class BlockSearch extends Component {
         
         const form = this._form.current;
 
-        let keys = {
+        const keys = {
             activities: this.state.selectedActivities,
             data_type: form.postType.value,
             text: form.search.value,
+            min_price: 0,
+            max_price: 0
         };
-
-        keys.min_price = 0;
-        keys.max_price = 0;
 
         if (form.freeCheckbox.checked && form.subscritionCheckbox.checked) {
             keys.min_price = 0;
-            keys.max_price = parseInt(form.subscritionNumberMax.value, 10);
+            keys.max_price = +form.subscritionNumberMax?.value;
         }
         if (!form.freeCheckbox.checked && form.subscritionCheckbox.checked) {
-            keys.min_price = parseInt(form.subscritionNumberMin.value, 10);
-            keys.max_price = parseInt(form.subscritionNumberMax.value, 10);
+            keys.min_price = +form.subscritionNumberMin?.value;
+            keys.max_price = +form.subscritionNumberMax?.value;
         }
         if (form.freeCheckbox.checked && !form.subscritionCheckbox.checked) {
             keys.min_price = 0;
@@ -59,7 +63,7 @@ class BlockSearch extends Component {
           
         //TODO временная проверка
         if (keys.min_price > keys.max_price) {
-            alert('Неверный диапазон цены!');
+            console.log('Неверный диапазон цены!');
             return;
         }
 
@@ -67,9 +71,8 @@ class BlockSearch extends Component {
         onClick && onClick(keys);
     };
 
-    toggleSubscritionsPrices() {
-        this.setState({ showSubscritionsPrices: !this.state.showSubscritionsPrices}, this.checkCheckboxes);
-        
+    toggleSubscritionsPrices = () => {
+        this.setState({ showSubscritionsPrices: !this.state.showSubscritionsPrices}, this.checkCheckboxes);        
     }
 
     checkCheckboxes = () => {
@@ -80,24 +83,17 @@ class BlockSearch extends Component {
             form.subscritionNumberMin.disabled = true;
         } else {
             if (form.subscritionNumberMin) {
-                form.subscritionNumberMin.value = '';
+                form.subscritionNumberMin.value = 0;
                 form.subscritionNumberMin.disabled = false;                
             }
         }
     }
 
-    toggleFreeSubscritions() {
+    toggleFreeSubscritions = () => {
         this.setState({ freeSubscritionsChecked: !this.state.freeSubscritionsChecked}, this.checkCheckboxes);
     }
 
     render() {
-        const postTypes = [
-            {id: 1, value:'all', text:'Везде'},
-            {id: 2, value:'posts', text: 'По постам'},
-            {id: 3, value:'subscriptions', text: 'По подпискам'},
-            {id: 4, value:'authors', text: 'По авторам'},
-        ]; 
-
         return (
             <div className='search'>
                 <form ref={this._form} className="search-form">
@@ -145,8 +141,6 @@ class ActivitiesSelect extends Component {
             showАctivities: false,
             showАctivitiesList: false,
         };
-        this.handleActivityDisplay = this.handleActivityDisplay.bind(this);
-        this.toggleSelectedActivity = this.toggleSelectedActivity.bind(this);
     }
 
     componentDidMount() {
@@ -157,17 +151,17 @@ class ActivitiesSelect extends Component {
         });
     }
 
-    toggleSelectedActivity(event) {
-        let newItem = {
+    toggleSelectedActivity = (event) => {
+        const newItem = {
             id: event.target.id,
             name: event.target.name
         };
-        let foundItem = this.state.selectedActivities.find(item => item.id === newItem.id);
-        let tempArray = this.state.selectedActivities;
+        const foundItem = this.state.selectedActivities.find(item => item.id === newItem.id);
+        const tempArray = this.state.selectedActivities;
         if (!foundItem) {
             tempArray.push(newItem);
         } else {
-            let removeIndex = tempArray.map(function(item) { return item.id; }).indexOf(foundItem.id);
+            const removeIndex = tempArray.map(function(item) { return item.id; }).indexOf(foundItem.id);
             tempArray.splice(removeIndex, 1);
         } 
 
@@ -177,7 +171,7 @@ class ActivitiesSelect extends Component {
         });
     }
 
-    handleActivityDisplay() {
+    handleActivityDisplay = () => {
         this.setState({showАctivities: !this.state.showАctivities});
     }
 
@@ -224,18 +218,12 @@ class SelectedActivity extends Component {
         }
     }
 
-    // closeActivity = () => {
-    //     this.setState({ showActivity: false});
-    // }
-
     render() {
         const { activity, id } = this.props;
         return (
             <>
                 { this.state.showActivity && <div className="selected-activity" id={id}>
                     {activity}
-                    {/* TODO fix - remove from arrayActivities */}
-                    {/* <span id='close' style={{marginLeft: '10px'}} onClick={this.closeActivity}>x</span> */}
                 </div>}
             </>
         );

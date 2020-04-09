@@ -6,27 +6,39 @@ export default {
             all: '/posts',
             new: '/posts',
             id: '/posts/:id',
+            like: '/posts/:id/like',
             file: {
                 new: '/posts/file',
             },
         },
+        subscriptions: {
+            my: '/subscriptions/my',
+            new: '/subscriptions'
+        },
         me: '/me',
         activities: '/activities',
-        search: '/search'
+        users: {
+            login: '/users/:id'
+        },
+        visible_types: '/visible_types',
+        search: '/search',
+        pay: '/pay',
+        goals: '/goals',
     },
     pages: {
         user: {
             login: '/login',
             register: '/registration',
-            profile: '/profile'
+            profile: '/users/:id'
         },
         main: '/',
         posts: {
             new: '/posts/new',
             my: '/posts/my',
+            id: '/posts/:id',
         },
         subscriptions: {
-            my: '/subscriptions/my'
+            new: '/subscriptions'
         },
         podcasts: {
             all: '/podcasts'

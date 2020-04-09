@@ -13,51 +13,40 @@ const backendUrl = 'http://localhost:8081';
 class BlockCards extends Component {
     render() {
         const { cards } = this.props;
+
+        //TODO проверить проверку, если карточки приходят null
+        if (!cards) return;
+
         //TODO пофиксить переиспользуемость карточек для поиска и главной
         const postCards = Array.isArray(cards) ? cards : cards.posts;
-        let postСardsNodes;
-        if (postCards) {
-            postСardsNodes = postCards.map((card, index) => {
-                return <PostCard key={index} card={card}/>;
-            });
-        }
+        const postСardsNodes = postCards ? postCards.map((card, index) => <PostCard key={index} card={card}/>) : null;
 
         const subscriptionCards = cards.subscriptions;
-        let subscriptionСardsNodes;
-        if (subscriptionCards) {
-            subscriptionСardsNodes = subscriptionCards.map((card, index) => {
-                return <SubscriptionCard key={index} card={card}/>;
-            });
-        }
+        const subscriptionСardsNodes = subscriptionCards ? subscriptionCards.map((card, index) => <SubscriptionCard key={index} card={card}/>) : null;
 
         const userCards = cards.users;
-        let userСardsNodes; 
-        if (userCards) {
-            userСardsNodes = userCards.map((card, index) => {
-                return <UserCard key={index} card={card}/>;
-            });
-        }
+        const userСardsNodes = userCards ? userCards.map((card, index) => <UserCard key={index} card={card}/>) : null;
 
         //TODO: сделать экран Данные не найдены
         return (
             <div className="cards">
-                {postCards && <div className="cards__items cards-posts"> 
+                {postСardsNodes && <div className="cards__items cards-posts"> 
                     <div className="cards__title">Посты</div>
                     <div className="cards__content">
                         {postСardsNodes}
                     </div>
-                    {subscriptionCards && <hr/>}
+                    {subscriptionСardsNodes && <hr className="cards__delimiter"/>}
                 </div>}
 
-                {subscriptionCards && <div className="cards__items cards-posts"> 
+                {subscriptionСardsNodes && <div className="cards__items cards-posts"> 
                     <div className="cards__title">Подписки</div>
                     <div className="cards__content">
                         {subscriptionСardsNodes}
                     </div>
-                    {userCards && <hr/>}
+                    {userСardsNodes && <hr className="cards__delimiter"/>}
                 </div>}
 
-                {userCards && <div className="cards__items cards-posts"> 
+                {userСardsNodes && <div className="cards__items cards-posts"> 
                     <div className="cards__title">Авторы</div>
                     <div className="cards__content">
                         {userСardsNodes}
@@ -71,7 +60,7 @@ class BlockCards extends Component {
 export default BlockCards;
 
 
-// карточки на переделку по новым макетам
+// TODO карточки на переделку по новым макетам
 
 class PostCard extends Component {
     render() {

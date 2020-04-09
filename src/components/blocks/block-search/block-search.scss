@@ -3,8 +3,8 @@
 .search {
   display: flex;
   flex-direction: column;
-  padding: 25px 40px 20px;
-  background-color: $color-almost-dark-purple;
+  padding: 25px 135px 20px 40px;
+  background-color: $color-upper-purple;
   color: $color-dark-white;
   min-width: 1090px;
 
@@ -19,7 +19,8 @@
     margin-bottom: 20px;
   }
 
-  &__top > *:not(*:last-child), &__bottom > *:not(*:last-child) {
+  &__top > *:not(*:last-child), 
+  &__bottom > *:not(*:last-child) {
     margin-right: 10px;
   }
 
@@ -120,7 +121,7 @@
   &__list {
     display: flex;
     flex-direction: column;
-    background-color: $color-almost-dark-purple;
+    background-color: $color-upper-purple;
     border: 2px solid $color-purple;
     border-radius: 0 0 10px 10px;
     height: auto !important;
@@ -181,7 +182,3 @@
       font-size: 20px;
   }
 }
-
-
-
-
