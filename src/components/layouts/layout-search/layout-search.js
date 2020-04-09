@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import BlockSearch from 'components/blocks/block-search/block-search';
+import { BlockSearch } from 'components/blocks/block-search/block-search';
 import BlockCards from 'components/blocks/block-cards/block-cards';
 import AjaxModule from "services/ajax";
 import RouteStore from "store/routes";

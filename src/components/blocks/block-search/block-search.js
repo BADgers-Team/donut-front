@@ -129,7 +129,7 @@ class BlockSearch extends Component {
     }
 }
 
-export default BlockSearch;
+export { BlockSearch };
 
 class ActivitiesSelect extends Component {
     constructor(props) {
