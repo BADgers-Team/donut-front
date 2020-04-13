@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {inject} from 'mobx-react';
+import { Redirect } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
 import { redirectToOauthServer } from 'services/oauth';
 import Input from 'components/fragments/input/input';
 import Button from 'components/fragments/button/button';
@@ -10,8 +11,10 @@ import GoogleIcon from 'assets/img/google.svg';
 import VkIcon from 'assets/img/vk.svg';
 import YandexIcon from 'assets/img/yandex.svg';
 import './layout-login.scss';
+import {getRouteWithID} from 'services/getRouteWithId';
 
 @inject('user')
+@observer
 class LayoutLogin extends Component {
     handleGoogleClick = () => {
         redirectToOauthServer('google');
@@ -28,12 +31,14 @@ class LayoutLogin extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         const form = event.target;
+        const { user } = this.props;
+
         AjaxModule.post(RouteStore.api.users.confirm, {
             login: form.login?.value,
             name: form.name?.value,
             description: form.description?.value || ''
         }).then((data) => {
-            console.log(data);
+            user.update(data);
         }).catch((error) => {
             console.error(error.message);
         });
@@ -41,7 +46,8 @@ class LayoutLogin extends Component {
 
     render() {
         const { user } = this.props;
-        if (user.name) {
+        if (user.name && !user.login) {
+            const login = this._generateLogin(user.email);
             return (
                 <div className="layout-login">
                     <div className="layout-login__form">
@@ -52,7 +58,7 @@ class LayoutLogin extends Component {
                                 <Input label="Имя" type={Input.types.text} name="name" value={user.name} custom="login__input"/>
                             </div>
                             <div className="layout-login__form-user-control">
-                                <Input label="Логин" type={Input.types.text} name="login" placeholder="Укажите уникальный ник, например @username" custom="login__input"/>
+                                <Input label="Логин" type={Input.types.text} name="login" value={login} custom="login__input"/>
                             </div>
                             <div className="layout-login__form-user-control">
                                 <Input
@@ -70,6 +76,10 @@ class LayoutLogin extends Component {
                     </div>
                 </div>
             );
+        }
+        if (user.login) {
+            const path = getRouteWithID(RouteStore.pages.user.profile, user.login);
+            return <Redirect to={path} />;
         }
         return (
             <div className="layout-login">
@@ -91,6 +101,10 @@ class LayoutLogin extends Component {
             </div>
 
         );
+    }
+
+    _generateLogin(email) {
+        return email.split('@')[0];
     }
 }
 
