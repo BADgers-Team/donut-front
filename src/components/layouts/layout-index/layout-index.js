@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 import BlockActivities from 'components/blocks/block-activities/block-activities';
 import BlockCards from 'components/blocks/block-cards/block-cards';
-import AjaxModule from 'services/ajax';
-import RouteStore from 'store/routes';
+import { AjaxModule } from 'services/ajax';
+import { RouteStore } from 'store/routes';
 
 class LayoutIndex extends Component {
     constructor(props) {
@@ -43,4 +43,4 @@ class LayoutIndex extends Component {
     }
 }
 
-export default LayoutIndex;
+export { LayoutIndex };

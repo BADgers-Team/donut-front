@@ -1,5 +1,5 @@
 // Все необходимые урлы для запросов на бек и переходов
-export default {
+export const RouteStore = {
     api: {
         login: '/login',
         posts: {

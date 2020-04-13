@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import RouterStore from 'store/routes';
-import AjaxModule from 'services/ajax';
-import LayoutIndex from 'components/layouts/layout-index/layout-index';
-import LayoutCreatePost from 'components/layouts/layout-create-post/layout-create-post';
-import BlockHeader from 'components/blocks/block-header/block-header';
+import { LayoutIndex } from 'components/layouts/layout-index/layout-index';
+import { LayoutCreatePost } from 'components/layouts/layout-create-post/layout-create-post';
+import { BlockHeader } from 'components/blocks/block-header/block-header';
+
+import { AjaxModule } from 'services/ajax';
+import { RouteStore } from 'store/routes';
 
 import './app.scss';
 import 'assets/fonts/Avenir-Next.ttf';
@@ -20,13 +21,13 @@ class App extends Component {
     }
 
     componentDidMount() {
-        AjaxModule.get(RouterStore.api.me).then((data) => {
+        AjaxModule.get(RouteStore.api.me).then((data) => {
             this.setState({ user: data });
         });
     }
 
     render() {
-        const pages = RouterStore.pages;
+        const pages = RouteStore.pages;
         const { user } = this.state;
 
         return (

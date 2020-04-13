@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import RouterStore from 'store/routes';
 
 import Button from 'components/fragments/button/button';
 import Input from 'components/fragments/input/input';
 import Select from 'components/fragments/select/select';
 
-import AjaxModule from 'services/ajax';
+import { AjaxModule } from 'services/ajax';
+import { RouteStore } from 'store/routes';
 
 import './block-post-from.scss';
 
@@ -87,7 +87,7 @@ class BlockPostForm extends Component {
             this.setState({isDisabled: Input.startLoader()});
             const data = new FormData();
             data.append('image', reqBody, reqBody.name);  
-            AjaxModule.post(RouterStore.api.posts.file.new, data, 'multipart/form-data')
+            AjaxModule.post(RouteStore.api.posts.file.new, data, 'multipart/form-data')
                 .then((response) => {
                     this.setState((prevState => ({
                         postIDs: [...prevState.postIDs, response]
@@ -111,7 +111,7 @@ class BlockPostForm extends Component {
             activity_id: parseInt(form.activity.options[form.activity.selectedIndex].id, 10),
         };
 
-        AjaxModule.post(RouterStore.api.posts.new, reqBody);
+        AjaxModule.post(RouteStore.api.posts.new, reqBody);
     }
 }
 

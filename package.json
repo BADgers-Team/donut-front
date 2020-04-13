@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --open --hot",
-    "build": "webpack --mode production",
+    "start": "webpack-dev-server --open --hot --config webpack.dev.config.js",
+    "build": "webpack --mode production --config webpack.prod.config.js",
     "linter": "npx eslint -c .eslintrc.json './**/*.js'",
     "linter-fix": "npx eslint -c .eslintrc.json './**/*.js' --fix"
   },

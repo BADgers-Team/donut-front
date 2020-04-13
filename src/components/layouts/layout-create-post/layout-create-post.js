@@ -16,4 +16,4 @@ class LayoutCreatePost extends Component {
     }
 }
 
-export default LayoutCreatePost;
+export { LayoutCreatePost };

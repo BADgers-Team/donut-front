@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import AjaxModule from 'services/ajax';
-import RouteStore from 'store/routes';
+import { AjaxModule } from 'services/ajax';
+import { RouteStore } from 'store/routes';
 
 import './block-activities.scss';
 

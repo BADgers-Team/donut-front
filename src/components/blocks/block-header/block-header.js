@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import RouteStore from 'store/routes';
 
 import Button from 'components/fragments/button/button';
-import './block-header.scss';
+
+import { RouteStore } from 'store/routes';
+
 import LogoImage from 'assets/img/logo.png';
 import AuthorAvatar from 'assets/img/michael.jpg';
 import ExitIcon from 'assets/img/exit.svg';
+import './block-header.scss';
 
 class BlockHeader extends Component {
     constructor(props) {
@@ -85,4 +87,4 @@ class BlockHeader extends Component {
     }
 }
 
-export default BlockHeader;
+export { BlockHeader };

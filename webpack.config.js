@@ -3,11 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const src = path.join(__dirname, 'src');
-const isProduction = process.env.NODE_ENV === 'production';
-const port = process.env.PORT || 3001;
 
 module.exports = {
-    mode: isProduction ? 'production' : 'development',
     entry: './src/index.js',
     output: {
         path: path.join(__dirname, 'dist'),
@@ -76,12 +73,5 @@ module.exports = {
             filename: path.join(__dirname, '/dist/index.html'),
         }),
         new CleanWebpackPlugin(),
-    ],
-    devServer: {
-        port,
-        publicPath: '/',
-        contentBase: '/',
-        hot: true,
-        historyApiFallback: true
-    }
+    ]
 };
