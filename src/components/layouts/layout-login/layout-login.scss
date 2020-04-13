@@ -1,0 +1,123 @@
+@import 'components/app/app.scss';
+
+.layout-login {
+  background-color: $color-upper-purple;
+  width: 100%;
+  color: $color-dark-white;
+
+  &__form {
+    border-radius: 10px;
+    border: 2px solid $color-purple;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 120px auto;
+    width: 600px;
+
+    &-title {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    &-subtitle {
+      font-size: 20px;
+      color: $color-pink;
+      margin-bottom: 12px;
+    }
+
+    &-controls {
+      display: flex;
+      width: 60%;
+      justify-content: space-around;
+      margin-bottom: 12px;
+      margin-top: 20px;
+    }
+
+    &-user {
+      width: 100%;
+
+      &-control {
+        display: flex;
+        flex-direction: column;
+        font-size: 20px;
+        margin-bottom: 12px;
+      }
+    }
+  }
+}
+
+.control {
+  height: 30px;
+  width: 30px;
+  padding: 15px;
+  cursor: pointer;
+  border-radius: 20px;
+  border: 2px solid transparent;
+  background-color: $color-dark-white;
+  transition: border .2s ease-in;
+
+  &:hover {
+    border: 2px solid $color-pink;
+  }
+
+  &-submit {
+    border-radius: 10px;
+    background-color: $color-pink;
+    text-align: center;
+    font-size: 22px;
+    cursor: pointer;
+    margin: 20px auto 0 auto;
+    width: 320px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 2px solid transparent;
+    transition: border, color, background-color .3s ease-in;
+
+    &:hover {
+      background-color: $color-dark-white;
+      border: 2px solid $color-pink;
+      color: $color-pink;
+    }
+  }
+}
+
+.icon {
+  height: 30px;
+  width: 30px;
+}
+
+.login {
+  &__input {
+    margin-top: 8px;
+    font-size: 16px;
+    padding: 8px;
+    color: $color-dark-purple;
+
+    &:focus {
+      box-shadow: 0 0 12px $color-purple;
+      border: 1px solid $color-purple;
+    }
+  }
+
+  &__text {
+    margin-top: 8px;
+    font-size: 16px;
+    padding: 8px;
+    color: $color-dark-purple;
+    resize: none;
+    height: 80px;
+    border-radius: 4px;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 12px $color-purple;
+      border: 1px solid $color-purple;
+    }
+  }
+}
