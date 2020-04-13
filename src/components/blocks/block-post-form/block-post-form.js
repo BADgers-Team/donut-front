@@ -73,7 +73,7 @@ class BlockPostForm extends Component {
     }
 
     handleSubscription(event) {
-        if (event.target[event.target.selectedIndex].value !== "One time") {
+        if (event.target[event.target.selectedIndex].value !== 'One time') {
             this.setState({showSubscriptions: true});
         } else {
             this.setState({showSubscriptions: false});

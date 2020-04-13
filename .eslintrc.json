@@ -5,7 +5,10 @@
     "amd": true,
     "node": true
   },
-  "extends": "eslint:recommended",
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -15,29 +18,34 @@
   },
   "parser": "babel-eslint",
   "rules": {
-    "quotes": [
-      "error",
-      "single"
-    ],
-    "semi": [
-      "error",
-      "always"
-    ],
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"],
     "eqeqeq": "warn",
-    "indent": [
-      "warn",
-      4
-    ],
+    "indent": ["warn", 4],
     "strict": 0,
     "react/react-in-jsx-scope": 0,
-    "react/prop-types": 0
+    "react/prop-types": 0,
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error"
   },
   "plugins": [
     "react"
   ],
   "settings": {
     "react": {
-      "version": "detect"
-    }
+      "version": "detect",
+      "createClass": "createReactClass",
+      "pragma": "React",
+      "flowVersion": "0.53"
+    },
+    "propWrapperFunctions": [
+      "forbidExtraProps",
+      {"property": "freeze", "object": "Object"},
+      {"property": "myFavoriteWrapper"}
+    ],
+    "linkComponents": [
+      "Hyperlink",
+      {"name": "Link", "linkAttribute": "to"}
+    ]
   }
 }

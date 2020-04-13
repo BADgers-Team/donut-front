@@ -27,7 +27,7 @@ class Select extends Component {
                     {item.text}
                 </option>
             );
-        })
+        });
 
         const node = (
             <>

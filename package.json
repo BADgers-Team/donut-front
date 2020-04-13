@@ -19,6 +19,11 @@
   "bugs": {
     "url": "https://github.com/BADgers-Team/donut-front/issues"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run linter"
+    }
+  },
   "homepage": "https://github.com/BADgers-Team/donut-front#readme",
   "devDependencies": {
     "@babel/core": "^7.8.7",
@@ -36,6 +41,7 @@
     "eslint-plugin-react-hooks": "^2.5.0",
     "file-loader": "^5.1.0",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^4.2.5",
     "node-sass": "^4.13.1",
     "sass-loader": "^8.0.2",
     "source-map-loader": "^0.2.4",
