@@ -5,9 +5,6 @@ import SubscribersIcon from 'assets/img/subscribers.svg';
 import CardImage from 'assets/img/card-image.jpg';
 import Avatar from 'assets/img/michael.jpg';
 
-// eslint-disable-next-line no-undef
-const STORAGE_URL = BASE_STATIC_URL;
-
 class BlockCards extends Component {
     render() {
         const { cards } = this.props;
@@ -28,7 +25,7 @@ export default BlockCards;
 class Card extends Component {
     render() {
         const { card } = this.props;
-        const cardPreview = card.files ? `${STORAGE_URL}/${card.files[0]}` : CardImage;
+        const cardPreview = card.files ? card.files[0] : CardImage;
         const cardAuthorAvatar = card.author.avatar ? card.author.avatar : Avatar;
         const cardSubscribers = card.subscribers ? card.subscribers : 120;
 

@@ -8,7 +8,6 @@ const prodConfig = {
 prodConfig.plugins.push(
     new webpack.DefinePlugin({
         BASE_BACKEND_URL: JSON.stringify('http://donat.emdobro.ru/api'),
-        BASE_STATIC_URL: JSON.stringify('http://donat.emdobro.ru'),
     }),
 );
 
