@@ -34,6 +34,7 @@ class SubscriptionCard extends Component {
 
         //TODO определить, заплатил ли юзер за подписку
         const isAvailable = current?.login === login;
+        
         return (
             <div className={`subscription-card ${cardBackgroundClass}`}>
                 <div className="subscription-card__title">{subscription.title}</div>

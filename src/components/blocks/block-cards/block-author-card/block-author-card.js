@@ -19,7 +19,11 @@ class AuthorCard extends Component {
         const profileRoute = getRouteWithID(RouteStore.pages.user.profile, login);
         const cardAvatar = author.avatar ? author.avatar : AvatarImage;      
         const postCount = author.number_of_posts || 0; 
-        // const activities = TODO;
+        const activities = author.activities;
+
+        const activitiesNodes = activities.map((activity, index) => {
+            return <div key={index} className="activities-item">{activity}</div>;
+        });
      
         return (
             <Link className="author-card" to={profileRoute}>
@@ -36,7 +40,7 @@ class AuthorCard extends Component {
                     </div>
                     <div className="author-card__name">{fullName}</div>
                     <div className="author-card__activities">
-                        {/* TODO */}
+                        {activitiesNodes}
                     </div>
                 </div>
             </Link>

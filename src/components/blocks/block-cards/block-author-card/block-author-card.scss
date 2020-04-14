@@ -26,6 +26,7 @@
     color: $color-dark-white;
     font-size: 32px;
     text-align: center;
+    padding: 0 0 15px 0;
   }
 
   &__extra-info {
@@ -54,6 +55,11 @@
     align-items: center;
   }
 
+  &__activities {
+    display: flex;
+    padding: 5px;
+  }
+
   &:hover {
     transform: translateY(-6px);
     cursor: pointer;
@@ -78,4 +84,19 @@
         font-size: 28px;
         margin-right: 18px;
     }
+}
+
+.activities-item {
+    background-color: $color-purple;
+    color: $color-dark-white;
+    padding: 7px;
+    font-size: 17px;
+    border-radius: 10px;
+    text-align: center;
+    width: fit-content;
+    margin-right: 10px;
+} 
+
+.activities-item:last-child {
+    margin-right: 0;
 }

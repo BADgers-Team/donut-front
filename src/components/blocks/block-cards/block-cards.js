@@ -11,21 +11,38 @@ class BlockCards extends Component {
     render() {
         const { cards, current } = this.props;
         let cardsNodes;
+        let cardsNodes1;
+        let cardsNodes2;
+        let cardsNodes3;
+        let cardsNodes4;
         if (!cards) {
             cardsNodes = null;
         } else {
             cardsNodes = cards.posts.map((card, index) => {
                 return <PostCard key={index} card={card} current={current}/>;
             });
-            // cardsNodes = cards.users.map((card, index) => {
-            //     return <AuthorCard key={index} author={card}/>;
-            // });
+            cardsNodes1 = cards.users.map((card, index) => {
+                return <AuthorCard key={index} author={card}/>;
+            });
+            cardsNodes2 = cards.subscriptions.map((card, index) => {
+                return <SubscriptionCard key={index} subscription={card} current={current} type={SubscriptionCard.types.profile}/>;
+            });
+            cardsNodes3 = cards.subscriptions.map((card, index) => {
+                return <SubscriptionCard key={index} subscription={card} current={current}/>;
+            });
+            cardsNodes4 = cards.posts.map((card, index) => {
+                return <ProfilePostCard key={index} post={card}/>;
+            });
         }
 
         //TODO: сделать экран Данные не найдены
         return (
             <div className="cards">
                 {cardsNodes}
+                {cardsNodes1}
+                {cardsNodes2}
+                {cardsNodes3}
+                {cardsNodes4}
             </div>
         );
     }
