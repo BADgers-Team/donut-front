@@ -10,21 +10,15 @@ class LayoutIndex extends Component {
         super(props);
         this.state = {
             selectedActivity: 'Все',
-            posts: null,
-            user: null,
+            posts: [],
         };
     }
 
     componentDidMount() {
-        //TODO for debug
-        AjaxModule.get(RouteStore.api.search).then((data) => {
+        AjaxModule.get(RouteStore.api.posts.all).then((data) => {
             this.setState({ posts: data || [] });
         }).catch((error) => {
             console.error(error.message);
-        });
-
-        AjaxModule.get(RouteStore.api.me).then((data) => {
-            this.setState({ user: data });
         });
     }
 
@@ -39,11 +33,11 @@ class LayoutIndex extends Component {
     };
 
     render() {
-        const { posts, user } = this.state;
+        const { posts } = this.state;
         return (
             <>
                 <BlockActivities onChange={this.handleChangeActivity}/>
-                <BlockCards cards={posts} current={user}/>
+                <BlockCards cards={posts}/>
             </>
         );
     }
