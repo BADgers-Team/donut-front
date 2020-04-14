@@ -1,7 +1,7 @@
 // Все необходимые урлы для запросов на бек и переходов
 export default {
     api: {
-        login: '/login',
+        oauth: '/oauth/:id',
         posts: {
             all: '/posts',
             new: '/posts',
@@ -18,7 +18,8 @@ export default {
         me: '/me',
         activities: '/activities',
         users: {
-            login: '/users/:id'
+            login: '/users/:id',
+            confirm: '/confirm',
         },
         visible_types: '/visible_types',
         search: '/search',
@@ -28,6 +29,7 @@ export default {
     pages: {
         user: {
             login: '/login',
+            callback: '/callback/:service',
             register: '/registration',
             profile: '/users/:id'
         },

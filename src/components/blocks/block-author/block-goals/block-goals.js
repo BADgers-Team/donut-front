@@ -44,9 +44,13 @@ class BlockGoals extends Component {
                         type={Button.types.block}
                         onAction={this.handleAddGoal}
                     />)}
-                <div className="author-goals__body">
-                    {goalsNodes}
-                </div>
+                {goalsNodes.length > 0 ? (
+                    <div className="author-goals__body">
+                        {goalsNodes}
+                    </div>
+                ) : (
+                    <div className="author-goals__body">Автор пока не добавил целей</div>
+                )}
                 { isModalOpen && <GoalModal onClose={this.handleCloseModal} onSuccess={this.handleSuccessChange}/> }
             </div>
         );
