@@ -12,6 +12,9 @@ export const RouteStore = {
         },
         me: '/me',
         activities: '/activities',
+
+        //TODO for debug
+        search: '/search',
     },
     pages: {
         user: {

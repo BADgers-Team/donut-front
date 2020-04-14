@@ -10,13 +10,14 @@ class LayoutIndex extends Component {
         super(props);
         this.state = {
             selectedActivity: 'Все',
-            posts: [],
+            posts: null,
             user: null,
         };
     }
 
     componentDidMount() {
-        AjaxModule.get(RouteStore.api.posts.all).then((data) => {
+        //TODO for debug
+        AjaxModule.get(RouteStore.api.search).then((data) => {
             this.setState({ posts: data || [] });
         }).catch((error) => {
             console.error(error.message);
