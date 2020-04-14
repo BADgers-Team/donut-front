@@ -7,6 +7,11 @@ import AjaxModule from 'services/ajax';
 import RouteStore from 'store/routes';
 
 import './layout-index.scss';
+import BlockLayoutIndexSlotLanding
+    from 'components/blocks/block-layout-index-slot-landing/block-layout-index-slot-landing';
+import { BrowserRouter } from 'react-router-dom';
+import BlockLayoutIndexSlotCategories
+    from 'components/blocks/block-layout-index-slot-categories/block-layout-index-slot-categories';
 
 class LayoutIndex extends Component {
     constructor(props) {
@@ -36,13 +41,32 @@ class LayoutIndex extends Component {
     };
 
     render() {
-        const { posts } = this.state;
+        // const { posts } = this.state;
         return (
             <div className="layout-index">
-                <BlockActivities onChange={this.handleChangeActivity}/>
-                <BlockCards cards={posts}/>
+                {/* TODO: туду туду туду туду тудуууууууу туду-ду-ду-ду */}
+                {/*<BlockActivities onChange={this.handleChangeActivity}/>*/}
+                {/*<BlockCards cards={posts}/>*/}
+                <div className="layout-index__slot-landing">
+                    <BlockLayoutIndexSlotLanding/>
+                </div>
+                <div className="layout-index__slot-categories">
+                    <BlockLayoutIndexSlotCategories/>
+                </div>
+                <div className="layout-index__slot-expose">
+                    экспоуз скрин
+                </div>
+                <div className="layout-index__slot-advantages">
+                    эдвентеджес скрин
+                </div>
+                <div className="layout-index__slot-finalize">
+                    файналайз скрин
+                </div>
+                {/* TODO: Переместить крутой футер в нормальное место */}
+                <div className="footer">
+                    крутой футер
+                </div>
             </div>
-
         );
     }
 }
