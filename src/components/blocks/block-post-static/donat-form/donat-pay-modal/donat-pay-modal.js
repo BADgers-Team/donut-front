@@ -52,11 +52,11 @@ class DonatPayModal extends Component {
                 title={MODAL_TITLE}
                 onClose={onClose}
             >
-                <div>
-                    <div>Вы поддерживаете пост:</div>
-                    <div>{title}</div>
-                    <div>Стоимость поддержки:</div>
-                    <div>{price}</div>
+                <div className="donat-modal">
+                    <div className="donat-modal__title-text">Вы поддерживаете пост:</div>
+                    <div className="donat-modal__title">{title}</div>
+                    <div className="donat-modal__price-text">Стоимость поддержки:</div>
+                    <div className="donat-modal__price">{price}</div>
                     <Button type={Button.types.submit} value="Поддержать пост" className="donat-modal__submit"  onAction={this.handlePay}/>
                 </div>
             </BlockModal>

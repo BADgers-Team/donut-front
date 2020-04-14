@@ -67,14 +67,16 @@ class BlockPostStatic extends Component {
         const likes = post.likes_count || 0;
         const currentUserLiked = post.liked;
         const seen = post.views_count || 1;
+        const price = post.price ? `${post.price} ₽` : 'Бесплатно';
 
         return (
             <>
                 {this.state.showSubcriptionPay && <PaySubcriptionModal   
-                post_id={post.id}
-                subscription_id={post.subscription_id}
+                postId={post.id}
+                subscriptionId={post.subscription_id}
                 title={post.subscription}   
-                price={post.price}                        
+                priceText={price}   
+                price={post.price}                     
                 onClose={this.closeSubcriptionPayModal} onSuccess={this.handleSuccessChangeSubcription}/>}
 
                 <div className="post-static">
@@ -111,9 +113,11 @@ class BlockPostStatic extends Component {
 
                         {(post.visible_type === PRIVACY.OPEN || post.paid || post.follows || current?.login === post.author.login) && (
                             <div className="post-static__controls">
-                                {(!post.follows && post.visible_type !== 'Только разовая оплата') && <div className="post-static__control">
-                                    <Button text="Подписаться" onAction={this.openSubcriptionPayModal} type={Button.types.link}/>
-                                </div>}
+                                {(!post.follows && post.visible_type !== 'Только разовая оплата') && (
+                                    <div className="post-static__control">
+                                        <Button text="Подписаться" onAction={this.openSubcriptionPayModal} type={Button.types.link}/>
+                                    </div>
+                                )}
                                 <DonatForm author={login} post={post}/>
                             </div>
                         )}

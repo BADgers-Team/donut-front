@@ -71,7 +71,8 @@ class BlockPaywall extends Component {
         const { post } = this.props;
         const tizer = post.tizer || `Всегда незаметные вещи могут быть гораздо важнее чересчур привлекательных. 
                                      Этот пост о невероятной силе человеческого слова в описании природы`;
-        const price = post.price || 150;
+        
+                                     const price = post.price ? post.price : 'Бесплатно';
         const controls = this._getControls(price);
 
         return (
@@ -117,7 +118,7 @@ class BlockPaywall extends Component {
                         {PRIVACY_MSG[1]}
                     </div>
                     <div className="paywall__controls__price">
-                        <Button text={`Оплатить ${price} ₽`} type={Button.types.link} onAction={this.openPostPayModal}/>
+                        <Button text="Оплатить" type={Button.types.link} onAction={this.openPostPayModal}/>
                     </div>
                 </>
             );
@@ -132,7 +133,7 @@ class BlockPaywall extends Component {
                             <Button text="Подписаться" type={Button.types.link} onAction={this.openSubcriptionPayModal}/>
                         </div>
                         <div className="paywall__controls__price">
-                            <Button text={`Оплатить ${price} ₽`} type={Button.types.link} onAction={this.openPostPayModal}/>
+                            <Button text="Оплатить" type={Button.types.link} onAction={this.openPostPayModal}/>
                         </div>
                     </div>
                 </>
