@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import { PostCard } from 'components/blocks/block-cards/block-post-card/block-post-card';
 import { SubscriptionCard } from 'components/blocks/block-cards/block-subscription-card/block-subscription-card';
+import { BlockProfilePostCard } from 'components/blocks/block-cards/block-profile-post-card/block-profile-post-card';
+
 
 import './block-cards.scss';
 
@@ -12,8 +14,8 @@ class BlockCards extends Component {
         if (!cards) {
             cardsNodes = null;
         } else {
-            cardsNodes = cards.subscriptions.map((card, index) => {
-                return <SubscriptionCard key={index} subscription={card} current={current}/>;
+            cardsNodes = cards.posts.map((card, index) => {
+                return <BlockProfilePostCard key={index} post={card} current={current}/>;
             });
         }
 
