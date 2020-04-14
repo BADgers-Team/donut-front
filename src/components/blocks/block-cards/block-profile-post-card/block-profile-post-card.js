@@ -32,6 +32,7 @@ class BlockProfilePostCard extends Component {
         const avatar = post.author.avatar ? post.author.avatar : AvatarMock;
         const postId = post.id;
         const date = this.formatDate(post.created_at);
+        //TODO если пост закрыт и без тизера?(вынести на обсуждение) + делать проверку на свою и чужую страницы 
         const tizer = post.tizer || `Всегда незаметные вещи могут быть гораздо важнее чересчур привлекательных. 
                                      Этот пост о невероятной силе человеческого слова в описании природы`;
         const likes = post.likes_count || 0;
