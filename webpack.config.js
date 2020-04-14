@@ -20,6 +20,7 @@ module.exports = {
             'store': path.join(src, 'store'),
             'assets': path.join(src, 'assets'),
             'services': path.join(src, 'services'),
+            'models': path.join(src, 'models')
         },
         extensions: ['.js']
     },
