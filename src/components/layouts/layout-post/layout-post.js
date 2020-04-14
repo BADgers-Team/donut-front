@@ -40,8 +40,6 @@ class LayoutPost extends Component {
         const { post } = this.state;
         const { user } = this.props;
 
-        debugger
-        console.log(user.login);
         const content = post ? (
             <>
                 <BlockPostStatic post={post} current={user}  onChange={this.getNewPost}/>

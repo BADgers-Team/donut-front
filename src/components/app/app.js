@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'mobx-react';
 
-import AjaxModule from 'services/ajax';
-import RouteStore from 'store/routes';
+import RouterStore from 'store/routes';
 import LayoutIndex from 'components/layouts/layout-index/layout-index';
 import LayoutCreatePost from 'components/layouts/layout-create-post/layout-create-post';
 import { LayoutProfile } from 'components/layouts/layout-profile/layout-profile';
@@ -27,21 +26,15 @@ class App extends Component {
         };
     }
 
-    componentDidMount() {
-        // AjaxModule.get(RouteStore.api.me).then((data) => {
-        //     this.setState({ user: data });
-        // });
-    }
-
     render() {
-        const pages = RouteStore.pages;
+        const pages = RouterStore.pages;
         const { user } = this.state;
         const stores = models();
 
         return (
             <Provider {...stores}>
                 <BrowserRouter>
-                    <BlockHeader user={user}/>
+                    <BlockHeader/>
                     <div className="content">
                         <Switch>
                             <Route path={pages.main} exact render={(props) => <LayoutIndex {...props}/>}/>
