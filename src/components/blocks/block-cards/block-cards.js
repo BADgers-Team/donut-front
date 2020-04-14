@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 import { PostCard } from 'components/blocks/block-cards/block-post-card/block-post-card';
 import { SubscriptionCard } from 'components/blocks/block-cards/block-subscription-card/block-subscription-card';
-import { BlockProfilePostCard } from 'components/blocks/block-cards/block-profile-post-card/block-profile-post-card';
-
+import { ProfilePostCard } from 'components/blocks/block-cards/block-profile-post-card/block-profile-post-card';
+import { AuthorCard } from 'components/blocks/block-cards/block-author-card/block-author-card';
 
 import './block-cards.scss';
 
@@ -15,8 +15,11 @@ class BlockCards extends Component {
             cardsNodes = null;
         } else {
             cardsNodes = cards.posts.map((card, index) => {
-                return <BlockProfilePostCard key={index} post={card} current={current}/>;
+                return <PostCard key={index} card={card} current={current}/>;
             });
+            // cardsNodes = cards.users.map((card, index) => {
+            //     return <AuthorCard key={index} author={card}/>;
+            // });
         }
 
         //TODO: сделать экран Данные не найдены

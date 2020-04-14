@@ -31,6 +31,7 @@ class PostCard extends Component {
         const postId = card.id;
         const login = card.author.login;
         const profileRoute = getRouteWithID(RouteStore.pages.user.profile, login);
+        const cardRoute = getRouteWithID(RouteStore.api.posts.id, card.id);  
         const cardDate = this.formatDate(card.created_at);
         const cardPreview = card.files ? card.files[0] : CardImage;      
         const likes = card.likes_count || 0;
@@ -42,7 +43,7 @@ class PostCard extends Component {
         const isAvailable = card.visible_type === PRIVACY.OPEN || card.paid || card.follows || current?.login === card.author.login;
         
         return (
-            <div className="post-card">
+            <Link className="post-card" to={cardRoute}>
                 <div className="post-card__header">
                     <div className="post-card__date">{cardDate}</div>
                     {!isAvailable && (
@@ -55,7 +56,7 @@ class PostCard extends Component {
                 <div className="post-card__info">
                     <div className="post-card__extra-info">
                         <div className="post-card__author">
-                            <Link className="post-card__author-login" to={profileRoute}>{`@${login}`}</Link>
+                            <div className="post-card__author-login">{`@${login}`}</div>
                         </div>
                         <div className="post-card__icons">                         
                             <Like likesCount={likes} currentUserLiked={currentUserLiked} postId={postId}
@@ -72,7 +73,7 @@ class PostCard extends Component {
                         <span>{cardContent}</span>
                     </div>
                 </div>
-            </div>
+            </Link>
         );
     }
 }

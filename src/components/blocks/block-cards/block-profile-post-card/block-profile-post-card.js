@@ -13,7 +13,7 @@ import { Seen } from 'components/blocks/block-seen/block-seen';
 
 const months = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
 
-class BlockProfilePostCard extends Component {
+class ProfilePostCard extends Component {
     formatDate = (date) => {
         const d = new Date(date);
         
@@ -67,4 +67,4 @@ class BlockProfilePostCard extends Component {
     }
 }
 
-export { BlockProfilePostCard };
+export { ProfilePostCard };
