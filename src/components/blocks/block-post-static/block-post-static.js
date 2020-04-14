@@ -14,7 +14,9 @@ import { DonatForm } from 'components/blocks/block-post-static/donat-form/donat-
 import { PRIVACY } from 'store/const';
 import RouteStore from 'store/routes';
 import { getRouteWithID } from 'services/getRouteWithId';
+import { inject } from 'mobx-react';
 
+@inject('user')
 class BlockPostStatic extends Component {
     constructor(props) {
         super(props);
@@ -58,7 +60,7 @@ class BlockPostStatic extends Component {
 
 
     render() {
-        const { post, current } = this.props;
+        const { post, user } = this.props;
         const login = post.author.login || 'cool_user';
         const profileRoute = getRouteWithID(RouteStore.pages.user.profile, login);
         const visibility = post.visible_type === 'Открыт для всех' ? 'Это публичный пост :)' : post.visible_type;
@@ -67,7 +69,7 @@ class BlockPostStatic extends Component {
         const likes = post.likes_count || 0;
         const currentUserLiked = post.liked;
         const seen = post.views_count || 1;
-        const price = post.price ? `${post.price} ₽` : 'Бесплатно';
+        const price = post.sum ? `${post.sum} ₽` : 'Бесплатно';
 
         return (
             <>
@@ -76,7 +78,7 @@ class BlockPostStatic extends Component {
                 subscriptionId={post.subscription_id}
                 title={post.subscription}   
                 priceText={price}   
-                price={post.price}                     
+                price={post.sum}                     
                 onClose={this.closeSubcriptionPayModal} onSuccess={this.handleSuccessChangeSubcription}/>}
 
                 <div className="post-static">
@@ -111,9 +113,9 @@ class BlockPostStatic extends Component {
                             textClass="post-static__info__text"/>
                         </div>
 
-                        {(post.visible_type === PRIVACY.OPEN || post.paid || post.follows || current?.login === post.author.login) && (
+                        {(post.visible_type === PRIVACY.OPEN || post.paid || post.follows || user?.login === post.author.login) && (
                             <div className="post-static__controls">
-                                {(!post.follows && post.visible_type !== 'Только разовая оплата') && (
+                                {(!post.follows && post.visible_type !== PRIVACY.PRICE && post.subscription && user?.login !== post.author.login) && (
                                     <div className="post-static__control">
                                         <Button text="Подписаться" onAction={this.openSubcriptionPayModal} type={Button.types.link}/>
                                     </div>
