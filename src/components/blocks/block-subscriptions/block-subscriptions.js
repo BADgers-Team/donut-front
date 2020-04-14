@@ -4,7 +4,9 @@ import './block-subscriptions.scss';
 import { BlockSubscription } from 'components/blocks/block-subscriptions/block-subscription/block-subscription';
 import Button from 'components/fragments/button/button';
 import RouteStore from 'store/routes';
+import { inject } from 'mobx-react';
 
+@inject('user')
 class BlockSubscriptions extends Component {
     constructor(props) {
         super(props);
@@ -20,7 +22,7 @@ class BlockSubscriptions extends Component {
 
     render() {
         const { user, current } = this.props;
-        const subscriptions = user.subscriptions;
+        const subscriptions = current.subscriptions;
         const { showAll } = this.state;
         const subscriptionsNodes = subscriptions && showAll ? (
             subscriptions.map((subscription) => {

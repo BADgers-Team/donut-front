@@ -14,7 +14,7 @@ class LayoutProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: null,
+            current: null,
         };
     }
 
@@ -22,21 +22,20 @@ class LayoutProfile extends Component {
         const login = this.props.match.params.login;
         const route = getRouteWithID(RouteStore.api.users.login, login);
         AjaxModule.get(route).then((data) => {
-            this.setState({ user: data || null });
+            this.setState({ current: data || null });
         }).catch((error) => {
             console.error(error.message);
         });
     }
 
     render() {
-        const { current } = this.props;
-        const { user } = this.state;
-        if (user) {
+        const { current } = this.state;
+        if (current) {
             return (
                 <div className="profile">
-                    <BlockAuthor user={user} current={current}/>
-                    <BlockAuthorPosts user={user}/>
-                    <BlockSubscriptions user={user} current={current}/>
+                    <BlockAuthor current={current}/>
+                    <BlockAuthorPosts current={current}/>
+                    <BlockSubscriptions current={current}/>
                 </div>
             );
         }
