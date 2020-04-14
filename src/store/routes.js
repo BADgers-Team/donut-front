@@ -5,6 +5,7 @@ export const RouteStore = {
         posts: {
             all: '/posts',
             new: '/posts',
+            like: '/posts/:id/like',
             file: {
                 new: '/posts/file',
             },

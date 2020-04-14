@@ -7,7 +7,7 @@ const prodConfig = {
 };
 prodConfig.plugins.push(
     new webpack.DefinePlugin({
-        BASE_BACKEND_URL: JSON.stringify('http://donat.emdobro.ru/api'),
+        BASE_BACKEND_URL: JSON.stringify('http://localhost:8080/api'),
     }),
 );
 
