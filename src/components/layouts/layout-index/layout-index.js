@@ -8,8 +8,6 @@ import RouteStore from 'store/routes';
 
 import './layout-index.scss';
 
-import './layout-index.scss';
-
 class LayoutIndex extends Component {
     constructor(props) {
         super(props);

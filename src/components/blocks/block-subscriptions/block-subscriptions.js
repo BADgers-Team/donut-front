@@ -40,16 +40,18 @@ class BlockSubscriptions extends Component {
                         to={RouteStore.pages.subscriptions.new}
                     />)}
                 <div className="author-subscriptions__body">
-                    {subscriptionsNodes}
+                    {subscriptionsNodes ? subscriptionsNodes : (
+                        <div>Автор пока не добавил подписок</div>
+                    )}
                 </div>
-                {!showAll &&
+                {(!showAll && subscriptionsNodes) && (
                     <Button
                         className="author-subscriptions__show"
                         text={`Показать все ${subscriptions?.length || 0} подписок`}
                         type={Button.types.block}
                         onAction={this.handleClickShowAll}
                     />
-                }
+                )}
             </div>
         );
     }
