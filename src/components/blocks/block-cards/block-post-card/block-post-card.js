@@ -68,7 +68,9 @@ class PostCard extends Component {
                             textClass="icons__views-text icons-text"/>
                         </div>
                     </div>
-                    <div className="post-card__title">{cardTitle}</div>
+                    <div className="post-card__title">
+                        <span>{cardTitle}</span>
+                    </div>
                     <div className="post-card__content">
                         <span>{cardContent}</span>
                     </div>

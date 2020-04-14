@@ -31,10 +31,10 @@ class SubscriptionCard extends Component {
         const profileRoute = getRouteWithID(RouteStore.pages.user.profile, login);
         const sum = subscription.sum === 0 ? 'Бесплатно' : `${subscription.sum} ₽ в месяц`;
         const cardBackgroundClass = type === this._types.profile ? 'card-profile' : 'card-common';
+        const subscribers = subscription.subscribers_count;
 
-        //TODO определить, заплатил ли юзер за подписку
-        const isAvailable = current?.login === login;
-        
+        const isAvailable = subscription.follows || current?.login === login;
+
         return (
             <div className={`subscription-card ${cardBackgroundClass}`}>
                 <div className="subscription-card__title">{subscription.title}</div>
@@ -47,7 +47,7 @@ class SubscriptionCard extends Component {
                     </div>
                     <div className="icons__subscribers">
                         <img className="icons__subscribers subscribers-icon" src={SubscribersIcon}/>
-                        <div className="icons__subscribers subscribers-value">112</div>
+                        <div className="icons__subscribers subscribers-value">{subscribers}</div>
                     </div>
                 </div>
                 {!isAvailable && (

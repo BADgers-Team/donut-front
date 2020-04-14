@@ -51,6 +51,10 @@
     color: $color-dark-white;
     font-size: 32px;
     text-align: center;
+    width: 336px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &__extra-info {
