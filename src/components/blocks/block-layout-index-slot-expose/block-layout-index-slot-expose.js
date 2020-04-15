@@ -9,32 +9,32 @@ import './block-layout-index-slot-expose.scss';
 
 export default class BlockLayoutIndexSlotExpose extends React.Component {
     sliderItems = [
-        // TODO: Поддержать карусель и правильные картинки, раскомментировать
-        // {
-        //     title: 'Подписываться',
-        //     description: 'Авторы предоставляют разный контент, который нельзя пропустить!',
-        //     picture: ImageDonut
-        // },
+        // TODO: Поддержать правильные картинки
+        {
+            title: 'Подписываться',
+            description: 'Авторы предоставляют разный контент, который нельзя пропустить!',
+            picture: ImageDonut
+        },
         {
             title: 'Поддерживать',
             description: 'Дарите понравившемуся автору донат или два!',
             picture: ImageDonut
         },
-        // {
-        //     title: 'Творить',
-        //     description: 'Рассказывайте о том, что делаете и получайте за это ₽',
-        //     picture: ImageDonut
-        // },
-        // {
-        //     title: 'Найти работы на любой вкус',
-        //     description: 'Фильтруйте работы по категориям, находите авторов и их публикации',
-        //     picture: ImageDonut
-        // },
-        // {
-        //     title: 'Устанавливать цели',
-        //     description: 'Укажите цель и сумму, которая необходима для ее свершения',
-        //     picture: ImageDonut
-        // },
+        {
+            title: 'Творить',
+            description: 'Рассказывайте о том, что делаете и получайте за это ₽',
+            picture: ImageDonut
+        },
+        {
+            title: 'Найти работы на любой вкус',
+            description: 'Фильтруйте работы по категориям, находите авторов и их публикации',
+            picture: ImageDonut
+        },
+        {
+            title: 'Устанавливать цели',
+            description: 'Укажите цель и сумму, которая необходима для ее свершения',
+            picture: ImageDonut
+        },
     ];
 
     render() {

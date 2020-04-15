@@ -1,8 +1,18 @@
 .block-slider-item {
+    $scale: 1000 / 600;
+    $height: 450px;
+    $width: $height * $scale;
+    height: $height;
+    min-width: $width;
+
     position: relative;
     
     border-radius: 10px;
     overflow: hidden;
+
+    &:not(:last-child) {
+        margin-right: 25px;
+    }
 
     &__dimmer {
         position: absolute;
@@ -32,9 +42,6 @@
     }
 
     &__picture {
-        $scale: 1000 / 600;
-        $height: 500px;
-        $width: $height * $scale;
         height: $height;
         width: $width;
     }

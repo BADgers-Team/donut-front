@@ -1,4 +1,7 @@
+@import '../../app/consts';
+
 .block-slider {
+    position: relative;
     display: flex;
     justify-content: center;
 
@@ -6,9 +9,13 @@
     height: 100%;
 
     &__arrow {
+        position: absolute;
         display: flex;
         justify-content: center;
         align-items: center;
+        top: 0;
+        bottom: 0;
+        cursor: pointer;
 
         padding: 30px;
         font-size: 40px;
@@ -17,5 +24,25 @@
         & > svg {
             cursor: pointer;
         }
+
+        &_right {
+            right: 0;
+            &:hover {
+                background-image: linear-gradient(to right, transparent, transparentize($color-medium-purple, .8));
+            }
+        }
+
+        &_left {
+            left: 0;
+            &:hover {
+                background-image: linear-gradient(to left, transparent, transparentize($color-medium-purple, .8));
+            }
+        }
+    }
+
+    &__items {
+        display: flex;
+        overflow-x: scroll;
+        padding: 0 50px;
     }
 }

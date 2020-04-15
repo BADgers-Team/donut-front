@@ -6,6 +6,7 @@
     //min-height: calc(100vh - 60px);
     background-image: linear-gradient(to bottom left, $color-purple, $color-medium-purple);
     padding-bottom: 50px;
+    overflow: hidden;
 
     &__title {
         padding: 20px;
