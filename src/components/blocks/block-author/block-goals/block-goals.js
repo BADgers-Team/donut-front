@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import { GoalModal } from 'components/blocks/block-author/block-goals/goal-modal/goal-modal';
 import Button from 'components/fragments/button/button';
 import './block-goals.scss';
+import { inject } from 'mobx-react';
 import {BlockGoal} from 'components/blocks/block-author/block-goals/block-goal/block-goal';
 
+@inject('user')
 class BlockGoals extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isModalOpen: false,
-            goals: props.user?.goals || [],
+            goals: props.current?.goals || [],
         };
     }
 

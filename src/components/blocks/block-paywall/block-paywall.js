@@ -71,23 +71,27 @@ class BlockPaywall extends Component {
         const { post } = this.props;
         const tizer = post.tizer || `Всегда незаметные вещи могут быть гораздо важнее чересчур привлекательных. 
                                      Этот пост о невероятной силе человеческого слова в описании природы`;
-        const price = post.price || 150;
-        const controls = this._getControls(price);
+        
+        const pricePost = post.sum ? `${post.sum} ₽` : 'Бесплатно';
+        const priceSubcription = post.subscription_sum ? `${post.subscription_sum} ₽` : 'Бесплатно';
+        const controls = this._getControls();
 
         return (
             <>
 
                 {this.state.showPostPay && <PostPayModal   
-                post_id={post.id}
-                title={post.title}   
-                price={price}                        
+                postId={post.id}
+                title={post.title}  
+                price={post.sum}    
+                priceText={pricePost}                        
                 onClose={this.closePostPayModal} onSuccess={this.handleSuccessChangePost}/>}
 
                 {this.state.showSubcriptionPay && <PaySubcriptionModal   
-                post_id={post.id}
-                subscription_id={post.subscription_id}
+                postId={post.id}
+                subscriptionId={post.subscription_id}
                 title={post.subscription}   
-                price={price}                        
+                price={post.subscription_sum}    
+                priceText={priceSubcription}                         
                 onClose={this.closeSubcriptionPayModal} onSuccess={this.handleSuccessChangeSubcription}/>}
 
                 <div className="paywall">
@@ -98,7 +102,7 @@ class BlockPaywall extends Component {
         );
     }
 
-    _getControls(price) {
+    _getControls() {
         switch (this.props.post.visible_type) {
         case (PRIVACY.SUBSCRIPTION):
             return (
@@ -118,7 +122,7 @@ class BlockPaywall extends Component {
                         {PRIVACY_MSG[1]}
                     </div>
                     <div className="paywall__controls__price">
-                        <Button text={`Оплатить ${price} ₽`} type={Button.types.link} onAction={this.openPostPayModal}/>
+                        <Button text="Оплатить" type={Button.types.link} onAction={this.openPostPayModal}/>
                     </div>
                 </>
             );
@@ -133,7 +137,7 @@ class BlockPaywall extends Component {
                             <Button text="Подписаться" type={Button.types.link} onAction={this.openSubcriptionPayModal}/>
                         </div>
                         <div className="paywall__controls__price">
-                            <Button text={`Оплатить ${price} ₽`} type={Button.types.link} onAction={this.openPostPayModal}/>
+                            <Button text="Оплатить" type={Button.types.link} onAction={this.openPostPayModal}/>
                         </div>
                     </div>
                 </>

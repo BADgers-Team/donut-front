@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import RouteStore from 'store/routes';
+import AjaxModule from 'services/ajax';
 
 import Button from 'components/fragments/button/button';
 import './block-header.scss';
@@ -8,13 +9,23 @@ import SearchIcon from 'assets/img/search.svg';
 import AuthorAvatar from 'assets/img/michael.jpg';
 import ExitIcon from 'assets/img/exit.svg';
 import {getRouteWithID} from 'services/getRouteWithId';
+import { inject, observer } from 'mobx-react';
 
+@inject('user')
+@observer
 class BlockHeader extends Component {
     constructor(props) {
         super(props);
         this.state = {
             activeTab: 'Главная',
         };
+    }
+
+    componentDidMount() {
+        const { user } = this.props;
+        AjaxModule.get(RouteStore.api.me).then((data) => {
+            user.update(data);
+        });
     }
 
     handleChangeTab = (tab) => {
@@ -55,7 +66,7 @@ class BlockHeader extends Component {
         const search = activeTab === 'Поиск' ? `${baseClass} ${activeClass}` : baseClass;
         const login = activeTab === 'Войти' ? `${baseClass} ${activeClass}` : baseClass;
         if (user) {
-            const profile = activeTab === `${user.name} ${user.surname}` ? `${baseClass} ${activeClass}` : baseClass;
+            const profile = activeTab === `${user.name}` ? `${baseClass} ${activeClass}` : baseClass;
             return (
                 <>
                     <div className={myPosts}>
@@ -80,7 +91,7 @@ class BlockHeader extends Component {
                             to={`/users/${user.login}`}
                             onAction={this.handleChangeTab}
                         />
-                        <img className="user" src={AuthorAvatar} alt="user"/>
+                        <img className="user" src={user.avatar } alt="user"/>
                     </div>
                     <div className="header-button">
                         <a className="exit" src={ExitIcon} alt="exit"/>

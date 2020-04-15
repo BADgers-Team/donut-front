@@ -26,12 +26,6 @@ class App extends Component {
         };
     }
 
-    componentDidMount() {
-        // AjaxModule.get(RouterStore.api.me).then((data) => {
-        //     this.setState({ user: data });
-        // });
-    }
-
     render() {
         const pages = RouterStore.pages;
         const { user } = this.state;
@@ -40,7 +34,7 @@ class App extends Component {
         return (
             <Provider {...stores}>
                 <BrowserRouter>
-                    <BlockHeader user={user}/>
+                    <BlockHeader/>
                     <div className="content">
                         <Switch>
                             <Route path={pages.main} exact render={(props) => <LayoutIndex {...props}/>}/>

@@ -10,7 +10,7 @@ import { getRouteWithID } from 'services/getRouteWithId';
 
 import './block-pay-subscription.scss';
 
-const MODAL_TITLE = 'Покупка подписки';
+const MODAL_TITLE = 'Приобретение подписки';
 
 class PaySubcriptionModal extends Component {
     constructor(props) {
@@ -28,8 +28,8 @@ class PaySubcriptionModal extends Component {
 
         const reqBody = {
             payment_type: 'Подписка',
-            post_id: this.props.post_id,
-            subscription_id: this.props.subscription_id,
+            post_id: this.props.postId,
+            subscription_id: this.props.subscriptionId,
             sum: this.props.price,
         };
         
@@ -46,19 +46,19 @@ class PaySubcriptionModal extends Component {
 
     render() {
         const { open } = this.state;
-        const { onClose, title, price } = this.props;
+        const { onClose, title, priceText } = this.props;
 
         return (
             <BlockModal
                 open={open}
                 title={MODAL_TITLE}
                 onClose={onClose}>
-                <div>
-                    <div>Вы покупаете подписку:</div>
-                    <div>{title}</div>
-                    <div>Стоимость подписки:</div>
-                    <div>{price}</div>
-                    <Button type={Button.types.submit} value="Купить подписку" className="subscription-modal__submit"  onAction={this.handlePay}/>
+                <div className="subscription-modal">
+                    <div className="subscription-modal__title-text">Вы приобретаете подписку:</div>
+                    <div className="subscription-modal__title">{title}</div>
+                    <div className="subscription-modal__price-text">Стоимость подписки:</div>
+                    <div className="subscription-modal__price">{priceText}</div>
+                    <Button type={Button.types.submit} value="Приобрести подписку" className="subscription-modal__submit"  onAction={this.handlePay}/>
                 </div>
             </BlockModal>
         );

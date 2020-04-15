@@ -10,7 +10,7 @@ import { getRouteWithID } from 'services/getRouteWithId';
 
 import './block-pay-post.scss';
 
-const MODAL_TITLE = 'Платеж';
+const MODAL_TITLE = 'Приобретение поста';
 
 class PostPayModal extends Component {
     constructor(props) {
@@ -28,7 +28,7 @@ class PostPayModal extends Component {
 
         const reqBody = {
             payment_type: 'Пост',
-            post_id: this.props.post_id,
+            post_id: this.props.postId,
             sum: this.props.price,
         };
 
@@ -45,10 +45,10 @@ class PostPayModal extends Component {
 
     render() {
         const { open, redirect } = this.state;
-        const { onClose, title, price, post_id } = this.props;
+        const { onClose, title, priceText, postId } = this.props;
 
         if (redirect) {
-            const route = getRouteWithID(RouterStore.api.posts.id, post_id);
+            const route = getRouteWithID(RouterStore.api.posts.id, postId);
             return <Redirect to={route} />
         }
         return (
@@ -57,12 +57,12 @@ class PostPayModal extends Component {
                 title={MODAL_TITLE}
                 onClose={onClose}
             >
-                <div>
-                    <div>Вы покупаете доступ к посту:</div>
-                    <div>{title}</div>
-                    <div>Стоимость поста:</div>
-                    <div>{price}</div>
-                    <Button type={Button.types.submit} value="Купить пост" className="post-modal__submit"  onAction={this.handlePayPost}/>
+                <div className="post-modal">
+                    <div className="post-modal__title-text">Вы приобретаете доступ к посту:</div>
+                    <div className="post-modal__title-">{title}</div>
+                    <div className="post-modal__price-text">Стоимость поста:</div>
+                    <div className="post-modal__price">{priceText}</div>
+                    <Button type={Button.types.submit} value="Приобрести пост" className="post-modal__submit"  onAction={this.handlePayPost}/>
                 </div>
             </BlockModal>
         );
