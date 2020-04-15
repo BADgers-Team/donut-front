@@ -4,7 +4,9 @@ import './block-subscriptions.scss';
 import { BlockSubscription } from 'components/blocks/block-subscriptions/block-subscription/block-subscription';
 import Button from 'components/fragments/button/button';
 import RouteStore from 'store/routes';
+import { inject } from 'mobx-react';
 
+@inject('user')
 class BlockSubscriptions extends Component {
     constructor(props) {
         super(props);
@@ -20,12 +22,12 @@ class BlockSubscriptions extends Component {
 
     render() {
         const { user, current } = this.props;
-        const subscriptions = user.subscriptions;
+        const subscriptions = current.subscriptions;
         const { showAll } = this.state;
         const subscriptionsNodes = subscriptions && showAll ? (
             subscriptions.map((subscription) => {
-                return <BlockSubscription key={subscription.id} subscription={subscription}/>;
-            })) : subscriptions ? <BlockSubscription subscription={subscriptions[0]}/> : null;
+                return <BlockSubscription key={subscription.id} current={current} user={user} subscription={subscription}/>;
+            })) : subscriptions ? <BlockSubscription current={current} user={user} subscription={subscriptions[0]}/> : null;
 
         // TODO: сделать plural на кол-во подписок
 

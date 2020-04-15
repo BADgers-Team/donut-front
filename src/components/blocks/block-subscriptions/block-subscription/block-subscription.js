@@ -21,6 +21,7 @@ class BlockSubscription extends Component {
     
     closeSubcriptionPayModal = () => {
         this.setState({ showSubcriptionPay: false });
+        window.location.reload();
     }
 
     handleSuccessChangeSubcription = (data) => {
@@ -33,22 +34,24 @@ class BlockSubscription extends Component {
     }
 
     render() {
-        const { subscription } = this.props;
+        const { subscription, current, user } = this.props;
+        const price = subscription.sum ? `${subscription.sum} ₽ в месяц` : 'Бесплатно';
         return (
             <>
-                {/* {this.state.showSubcriptionPay && <PaySubcriptionModal   
-                post_id={post.id}
-                subscription_id={post.subscription_id}
-                title={post.subscription}   
-                price={post.price}                        
-                onClose={this.closeSubcriptionPayModal} onSuccess={this.handleSuccessChangeSubcription}/>} */}
-
+                {this.state.showSubcriptionPay && <PaySubcriptionModal   
+                subscriptionId={subscription.id}
+                title={subscription.title}   
+                priceText={price}     
+                price={subscription.sum}                        
+                onClose={this.closeSubcriptionPayModal} onSuccess={this.handleSuccessChangeSubcription}/>} 
 
                 <div className="author-subscription">
                     <div className="author-subscription__title">{subscription.title}</div>
-                    <div className="author-subscription__price">{`${subscription.sum} ₽ в месяц`}</div>
+                    <div className="author-subscription__price">{price}</div>
                     <div className="author-subscription__description">{subscription.description}</div>
-                    <Button className="author-subscription__button" onAction={this.openModal} text={`Подписаться за ${subscription.sum} ₽`} type={Button.types.block}/>
+                    {(user.login !== current?.login && !subscription.follows) && (
+                        <Button className="author-subscription__button" onAction={this.openSubcriptionPayModal} text='Подписаться' type={Button.types.block}/>
+                    )}
                 </div>
             </>
         );

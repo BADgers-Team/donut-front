@@ -9,4 +9,24 @@
   &__blur {
     filter: blur(3px);
   }
+
+  &__files {
+    padding-top: 10px;
+  }
+
+  .slider .slide &__image {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
 }
+
+.slider {
+  height: 50vh;
+}
+

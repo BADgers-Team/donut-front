@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { PRIVACY } from 'store/const';
+import { Carousel } from 'react-responsive-carousel';
+import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
+
 
 import './block-post-dynamic.scss';
 
@@ -18,9 +21,15 @@ class BlockPostDynamic extends Component {
                 <div className="post-dynamic__description">
                     {post.description}
                 </div>
-                <div className="post-dynamic__files">
-
-                </div>
+                {post.files && (
+                    <div className="post-dynamic__files">
+                        <Carousel dynamicHeight={false} className="post-dynamic__carousel" showArrows={true} useKeyboardArrows={true} showIndicators={false} emulateTouch={true}>
+                            {post.files.map((imgSrc, index) => {
+                                return <img className="post-dynamic__image" key={index} src={imgSrc} />
+                            })} 
+                        </Carousel>
+                    </div>
+                )}
             </div>
         );
     }

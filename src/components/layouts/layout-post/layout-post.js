@@ -7,9 +7,11 @@ import AjaxModule from 'services/ajax';
 import RouteStore from 'store/routes';
 import { getRouteWithID } from 'services/getRouteWithId';
 import { PRIVACY } from 'store/const';
+import { inject } from 'mobx-react';
 
 import './layout-post.scss';
 
+@inject('user')
 class LayoutPost extends Component {
     constructor(props) {
         super(props);
@@ -36,13 +38,13 @@ class LayoutPost extends Component {
 
     render() {
         const { post } = this.state;
-        const { current } = this.props;
+        const { user } = this.props;
 
         const content = post ? (
             <>
-                <BlockPostStatic post={post} current={current}  onChange={this.getNewPost}/>
-                <BlockPostDynamic post={post} current={current} />
-                {post.visible_type !== PRIVACY.OPEN && !post.paid && !post.follows && current?.login !== post.author.login && <BlockPaywall post={post} onChange={this.getNewPost}/>}
+                <BlockPostStatic post={post} current={user}  onChange={this.getNewPost}/>
+                <BlockPostDynamic post={post} current={user} />
+                {post.visible_type !== PRIVACY.OPEN && !post.paid && !post.follows && user?.login !== post.author.login && <BlockPaywall post={post} onChange={this.getNewPost}/>}
             </>
         ) : <div>Пост не найден</div>;
 

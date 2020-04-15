@@ -17,15 +17,15 @@ class BlockAuthorPosts extends Component {
     }
 
     componentDidMount() {
-        const { user } = this.props;
-        this.setState({ posts: user.posts });
+        const { current } = this.props;
+        this.setState({ posts: current.posts ? current.posts : [] });
     }
 
     handleSelectChange = (event) => {
-        const { user } = this.props;
+        const { current } = this.props;
         const selectedPrivacy = event.target[event.target.selectedIndex].value;
         AjaxModule.get(RouteStore.api.search, {
-            login: user.login,
+            login: current.login,
             visible_type: selectedPrivacy,
             data_type: 'posts'
         }).then((data) => {
@@ -36,10 +36,10 @@ class BlockAuthorPosts extends Component {
     };
 
     render() {
-        const { user } = this.props;
+        const { current } = this.props;
         const { posts } = this.state;
         const postsNodes = posts && posts.length !== 0 ? posts.map((post) => {
-            return <BlockPost key={post.id} post={post} login={user.login} avatar={user.avatar || Avatar}/>;
+            return <BlockPost key={post.id} post={post} login={current.login} avatar={current.avatar || Avatar}/>;
         }) : null;
 
         const patchedPrivacy = Object.assign({ ALL: ''}, PRIVACY);
