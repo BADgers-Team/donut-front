@@ -25,24 +25,24 @@ class BlockCards extends Component {
       
         //TODO пофиксить переиспользуемость карточек для поиска и главной
         const postCards = Array.isArray(cards) ? cards : cards.posts;
-        let postСardsNodes;
-        if (postCards) {
+        let postСardsNodes = null;
+        if (postCards && postCards.length > 0) {
             postСardsNodes = postCards.map((card, index) => {
                 return <PostCard key={index} card={card} current={user}/>;
             });
         }
 
         const subscriptionCards = Array.isArray(cards) ? cards : cards.subscriptions;
-        let subscriptionСardsNodes;
-        if (subscriptionCards) {
+        let subscriptionСardsNodes = null;
+        if (subscriptionCards && subscriptionCards.length > 0) {
             subscriptionСardsNodes = subscriptionCards.map((card, index) => {
                 return <SubscriptionCard key={index} subscription={card} current={user}/>;
             });
         }
 
         const userCards = cards.users;
-        let userСardsNodes; 
-        if (userCards) {
+        let userСardsNodes = null;
+        if (userCards && userCards.length > 0) {
             userСardsNodes = userCards.map((card, index) => {
                 return <AuthorCard key={index} author={card}/>;
             });
