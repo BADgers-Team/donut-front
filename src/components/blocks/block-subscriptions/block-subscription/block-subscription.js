@@ -21,6 +21,7 @@ class BlockSubscription extends Component {
     
     closeSubcriptionPayModal = () => {
         this.setState({ showSubcriptionPay: false });
+        window.location.reload();
     }
 
     handleSuccessChangeSubcription = (data) => {
