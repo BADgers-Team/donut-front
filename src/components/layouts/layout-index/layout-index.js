@@ -14,6 +14,8 @@ import BlockLayoutIndexSlotCategories
     from 'components/blocks/block-layout-index-slot-categories/block-layout-index-slot-categories';
 import BlockLayoutIndexSlotExpose
     from 'components/blocks/block-layout-index-slot-expose/block-layout-index-slot-expose';
+import BlockLayoutIndexSlotAdvantages
+    from 'components/blocks/block-layout-index-slot-advantages/block-layout-index-slot-advantages';
 
 class LayoutIndex extends Component {
     constructor(props) {
@@ -59,7 +61,7 @@ class LayoutIndex extends Component {
                     <BlockLayoutIndexSlotExpose/>
                 </div>
                 <div className="layout-index__slot-advantages">
-                    эдвентеджес скрин
+                    <BlockLayoutIndexSlotAdvantages/>
                 </div>
                 <div className="layout-index__slot-finalize">
                     файналайз скрин

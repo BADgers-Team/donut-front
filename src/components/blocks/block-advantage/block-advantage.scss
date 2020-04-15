@@ -1,0 +1,27 @@
+@import '../../app/consts';
+
+.block-advantage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 300px;
+
+    margin-right: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+
+    border: 2px solid $color-pink;
+    border-radius: 10px;
+    color: $color-pink;
+
+    &__icon {
+        margin: 40px 15px;
+        font-size: 100px;
+    }
+
+    &__title {
+        font-size: 18px;
+        text-align: center;
+    }
+}
