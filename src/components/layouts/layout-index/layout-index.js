@@ -7,6 +7,18 @@ import AjaxModule from 'services/ajax';
 import RouteStore from 'store/routes';
 
 import './layout-index.scss';
+import BlockLayoutIndexSlotLanding
+    from 'components/blocks/block-layout-index-slot-landing/block-layout-index-slot-landing';
+import { BrowserRouter } from 'react-router-dom';
+import BlockLayoutIndexSlotCategories
+    from 'components/blocks/block-layout-index-slot-categories/block-layout-index-slot-categories';
+import BlockLayoutIndexSlotExpose
+    from 'components/blocks/block-layout-index-slot-expose/block-layout-index-slot-expose';
+import BlockLayoutIndexSlotAdvantages
+    from 'components/blocks/block-layout-index-slot-advantages/block-layout-index-slot-advantages';
+import BlockLayoutIndexSlotFinalize
+    from 'components/blocks/block-layout-index-slot-finalize/block-layout-index-slot-finalize';
+import BlockFooter from 'components/blocks/block-footer/block-footer';
 
 class LayoutIndex extends Component {
     constructor(props) {
@@ -36,13 +48,30 @@ class LayoutIndex extends Component {
     };
 
     render() {
-        const { posts } = this.state;
+        // const { posts } = this.state;
         return (
             <div className="layout-index">
-                <BlockActivities onChange={this.handleChangeActivity}/>
-                <BlockCards cards={posts}/>
+                {/* TODO: туду туду туду туду тудуууууууу туду-ду-ду-ду */}
+                {/*<BlockActivities onChange={this.handleChangeActivity}/>*/}
+                {/*<BlockCards cards={posts}/>*/}
+                <div className="layout-index__slot-landing">
+                    <BlockLayoutIndexSlotLanding/>
+                </div>
+                <div className="layout-index__slot-categories">
+                    <BlockLayoutIndexSlotCategories/>
+                </div>
+                <div className="layout-index__slot-expose">
+                    <BlockLayoutIndexSlotExpose/>
+                </div>
+                <div className="layout-index__slot-advantages">
+                    <BlockLayoutIndexSlotAdvantages/>
+                </div>
+                <div className="layout-index__slot-finalize">
+                    <BlockLayoutIndexSlotFinalize/>
+                </div>
+                {/* TODO: Переместить крутой футер в нормальное место */}
+                <BlockFooter/>
             </div>
-
         );
     }
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
 import './button.scss';
+import { classNames } from '../../../utils/class-names';
 
 class Button extends Component {
     constructor(props) {
@@ -23,8 +24,15 @@ class Button extends Component {
     };
 
     render() {
-        const { text, type, onAction, to, className, isDisabled, name } = this.props;
-        const classes = className ? `button ${className}` : 'button';
+        const { text, type, onAction, to, className, isDisabled, primary, outline, wide, name } = this.props;
+
+        const classes = classNames([
+            'button',
+            primary && 'button_primary',
+            outline && 'button_outline',
+            wide && 'button_wide',
+            className,
+        ]);
 
         let node;
         switch(type) {

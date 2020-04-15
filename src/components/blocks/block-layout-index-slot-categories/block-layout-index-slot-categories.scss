@@ -1,0 +1,41 @@
+@import '../../app/consts';
+
+.block-layout-index-slot-categories {
+    $title-font-size: 36px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    min-height: calc(100vh - 60px);
+
+    padding-bottom: 20px;
+
+    background-color: white;
+
+    &__title {
+        padding: 20px;
+        text-align: center;
+        font-size: $title-font-size;
+    }
+
+    &__secondary-title {
+        text-align: center;
+        font-size: $title-font-size;
+    }
+
+    &__category-list {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+
+        max-width: $card-size * $card-row-count + $card-margin * $card-row-count;
+
+        margin: 15px 40px 0 40px;
+    }
+
+    &__cta {
+        margin: 30px 0 20px 0;
+    }
+}

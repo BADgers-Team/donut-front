@@ -20,7 +20,8 @@ module.exports = {
             'store': path.join(src, 'store'),
             'assets': path.join(src, 'assets'),
             'services': path.join(src, 'services'),
-            'models': path.join(src, 'models')
+            'models': path.join(src, 'models'),
+            'utils': path.join(src, 'utils')
         },
         extensions: ['.js']
     },
@@ -50,7 +51,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(jpg|png|gif|svg|pdf)$/,
+                test: /\.(jpe?g|png|gif|svg|pdf)$/,
                 use: [
                     {
                         loader: 'file-loader',

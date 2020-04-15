@@ -1,0 +1,10 @@
+@import '../../app/consts';
+
+.text {
+    display: inline-block;
+    font-family: $font-title, sans-serif;
+
+    &_primary {
+        color: $color-pink;
+    }
+}

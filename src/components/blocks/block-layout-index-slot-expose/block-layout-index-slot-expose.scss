@@ -1,0 +1,26 @@
+@import '../../app/consts';
+
+.block-layout-index-slot-expose {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    //min-height: calc(100vh - 60px);
+    min-height: 85vh;
+    background-image: linear-gradient(to bottom left, $color-purple, $color-medium-purple);
+    padding-bottom: 50px;
+    overflow: hidden;
+
+    &__title {
+        padding: 20px;
+        text-align: center;
+        color: white;
+        font-size: 36px;
+    }
+
+    &__slider {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+}

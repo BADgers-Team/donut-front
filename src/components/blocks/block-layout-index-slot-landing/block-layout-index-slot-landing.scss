@@ -1,0 +1,55 @@
+@import '../../app/consts';
+
+.block-layout-index-slot-landing {
+    $picture-width: 430px;
+    $picture-height: 280px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 20px 0;
+
+    height: calc(100vh - 60px);
+    background-color: $color-upper-purple;
+    color: $color-dark-white;
+
+    &__content {
+        display: flex;
+    }
+
+    &__picture-cards {
+        position: relative;
+        height: $picture-height + 100px;
+        width: $picture-width + 100px;
+    }
+
+    &__picture {
+        position: absolute;
+        height: $picture-height;
+        width: $picture-width;
+        border-radius: 20px;
+    }
+
+    &__text {
+        max-width: 600px;
+        margin-left: 60px;
+    }
+
+    &__title {
+        font-size: 45px;
+        line-height: 1.3;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    &__description {
+        margin-bottom: 40px; // TODO: Что-то с высотой, разобраться
+        font-size: 22px;
+        line-height: 1.5;
+
+        & > div {
+           margin-bottom: 15px;
+        }
+    }
+}

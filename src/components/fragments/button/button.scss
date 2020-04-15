@@ -1,6 +1,32 @@
-@import 'components/app/consts';
+@import '../../app/consts';
 
 .button {
   color: $color-dark-white;
   text-decoration: none;
+
+  &_primary {
+    display: inline-block;
+    color: white;
+    background-color: $color-pink;
+    font-weight: bold;
+    font-size: 22px;
+    padding: 10px 20px;
+    border: 2px solid $color-pink;
+    border-radius: 5px;
+
+    &:hover {
+      opacity: .9;
+    }
+  }
+
+  &_outline {
+    background-color: transparent;
+    color: $color-pink;
+  }
+
+  &_wide {
+    $wide-padding: 80px;
+    padding-left: $wide-padding;
+    padding-right: $wide-padding;
+  }
 }
