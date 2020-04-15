@@ -19,7 +19,7 @@ class AuthorCard extends Component {
         const profileRoute = getRouteWithID(RouteStore.pages.user.profile, login);
         const cardAvatar = author.avatar ? author.avatar : AvatarImage;      
         const postCount = author.number_of_posts || 0; 
-        const activities = author.activities;
+        const activities = author.activities || [];
 
         const activitiesNodes = activities.map((activity, index) => {
             return <div key={index} className="activities-item">{activity}</div>;
