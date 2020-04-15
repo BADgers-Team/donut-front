@@ -76,8 +76,6 @@ class BlockPaywall extends Component {
         const priceSubcription = post.subscription_sum ? `${post.subscription_sum} ₽` : 'Бесплатно';
         const controls = this._getControls();
 
-        debugger
-
         return (
             <>
                 {this.state.showPostPay && <PostPayModal   
