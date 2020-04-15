@@ -32,7 +32,7 @@ class BlockCards extends Component {
             });
         }
 
-        const subscriptionCards = Array.isArray(cards) ? cards : cards.subscriptions;
+        const subscriptionCards = cards.subscriptions;
         let subscriptionСardsNodes = null;
         if (subscriptionCards && subscriptionCards.length > 0) {
             subscriptionСardsNodes = subscriptionCards.map((card, index) => {
