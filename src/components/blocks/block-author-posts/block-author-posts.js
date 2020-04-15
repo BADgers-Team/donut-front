@@ -18,7 +18,7 @@ class BlockAuthorPosts extends Component {
 
     componentDidMount() {
         const { current } = this.props;
-        this.setState({ posts: current.posts });
+        this.setState({ posts: current.posts ? current.posts : [] });
     }
 
     handleSelectChange = (event) => {
