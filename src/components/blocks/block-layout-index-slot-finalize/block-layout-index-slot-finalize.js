@@ -20,16 +20,15 @@ export default class BlockLayoutIndexSlotFinalize extends React.Component {
                         primary
                         wide
                         type={Button.types.link}
-                        to={RouteStore.pages.user.register}
-                        text="Создать аккаунт"
+                        to={RouteStore.pages.user.login}
+                        text="Присоединиться"
                     />
                 </div>
                 <div className="block-layout-index-slot-finalize__separator">
                     или
                 </div>
                 <div className="block-layout-index-slot-finalize__cta-link">
-                    {/* TODO: Правильный роут */}
-                    <Link to={RouteStore.pages.posts}>Посмотреть подборки</Link>
+                    <Link to={RouteStore.pages.collections}>Посмотреть подборки</Link>
                 </div>
             </div>
         );

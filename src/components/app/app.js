@@ -18,6 +18,7 @@ import { models } from 'models/models';
 
 import './app.scss';
 import 'assets/fonts/Avenir-Next.ttf';
+import {LayoutCollections} from 'components/layouts/layout-collections/layout-collections';
 
 class App extends Component {
     constructor(props) {
@@ -45,6 +46,7 @@ class App extends Component {
                             <Route path={pages.search} render={(props) => <LayoutSearch {...props}/>}/>
                             <Route path={pages.user.login} render={(props) => <LayoutLogin {...props}/>}/>
                             <Route path={pages.user.callback} render={(props) => <LayoutCallback {...props}/>}/>
+                            <Route path={pages.collections} render={(props) => <LayoutCollections {...props}/>}/>
                             <Route path="/posts/:id" render={(props) => <LayoutPost {...props} current={user}/>}/>
                             <Route path="/users/:login" render={(props) => <LayoutProfile {...props} current={user}/>}/>
                         </Switch>

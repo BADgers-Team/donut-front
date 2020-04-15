@@ -4,11 +4,53 @@
   height: 60px;
   background-color: #1A082C;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   font-size: 20px;
   position: fixed;
   z-index: 1;
   width: 100%;
+
+  &-left {
+    display: flex;
+    padding-left: 40px;
+
+    & > * {
+      margin-right: 100px;
+    }
+  }
+
+  &-right {
+    display: flex;
+    padding-right: 20px;
+
+    & div, & a {
+      margin-left: 12px;
+    }
+  }
+
+  &-logo {
+    padding: 0 4px;
+    border-bottom: 4px solid transparent;
+    cursor: pointer;
+  }
+
+  &-exit {
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+    border-bottom: 4px solid transparent;
+    cursor: pointer;
+  }
+
+  &-create {
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+    border-bottom: 4px solid transparent;
+    cursor: pointer;
+    transition: .3s;
+    text-decoration: none;
+  }
 
   &-button {
     padding: 0 4px;
@@ -16,6 +58,7 @@
     align-items: center;
     border-bottom: 4px solid transparent;
     transition: .3s;
+    text-decoration: none;
 
     &__main {
       border-radius: 10px;

@@ -41,4 +41,11 @@ export default class AjaxModule {
             withCredentials: true,
         });
     }
+
+    static doAxioDelete(path = '/') {
+        return axios(`${backendUrl}${path}`, {
+            method: 'delete',
+            withCredentials: true,
+        });
+    }
 }
