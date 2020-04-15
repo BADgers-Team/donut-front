@@ -20,6 +20,7 @@ module.exports = {
             'store': path.join(src, 'store'),
             'assets': path.join(src, 'assets'),
             'services': path.join(src, 'services'),
+            'models': path.join(src, 'models')
         },
         extensions: ['.js']
     },
@@ -38,6 +39,14 @@ module.exports = {
                     'style-loader',
                     'css-loader',
                     'sass-loader'
+                ]
+            },
+            {
+                test: /\.css$/,
+                include: /node_modules/,
+                use: [
+                    'style-loader',
+                    'css-loader',
                 ]
             },
             {

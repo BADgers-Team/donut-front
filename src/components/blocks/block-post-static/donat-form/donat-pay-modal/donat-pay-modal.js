@@ -32,22 +32,20 @@ class DonatPayModal extends Component {
             sum: this.props.price,
         };
 
+        const { onSuccess } = this.props;
+
         AjaxModule.post(RouterStore.api.pay, reqBody).then(() => {
             console.log('Оплачено');
-            this.setState({ redirect: true });
+            onSuccess && onSuccess();
         }).catch((error) => {
-            // console.error(error.message);
+            console.error(error.message);
         });
     };
 
     render() {
-        const { open, redirect } = this.state;
-        const { onClose, title, price, id } = this.props;
+        const { open } = this.state;
+        const { onClose, title, price } = this.props;
 
-        if (redirect) {
-            const route = getRouteWithID(RouterStore.api.posts.id, id);
-            return <Redirect to={route} />
-        }
         return (
             <BlockModal
                 open={open}

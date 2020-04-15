@@ -1,6 +1,8 @@
+import axios from 'axios';
+
+import { getUrlWithParams } from 'services/getUrlWithParams';
 const backendUrl = 'http://localhost:8080/api';
 // const backendUrl = 'http://donat.emdobro.ru/api';
-import { getUrlWithParams } from 'services/getUrlWithParams';
 
 export default class AjaxModule {
     static get(path, params) {
@@ -30,5 +32,13 @@ export default class AjaxModule {
         }
 
         return fetch(url, options).then((response) => response.json());
+    }
+
+    static doAxioPost(path = '/', data) {
+        return axios(`${backendUrl}${path}`, {
+            method: 'post',
+            data,
+            withCredentials: true,
+        });
     }
 }

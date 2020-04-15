@@ -7,7 +7,7 @@ import ActivityIcon from 'assets/img/activity.svg';
 import SubscriptionIcon from 'assets/img/subscription.svg';
 import CalendarIcon from 'assets/img/calendar.svg';
 import Button from 'components/fragments/button/button';
-import BlockPayment from 'components/blocks/block-payment/block-payment';
+import { PaySubcriptionModal } from 'components/blocks/block-paywall/block-pay-subscription/block-pay-subscription';
 import Like from 'components/blocks/block-like/block-like';
 import Seen from 'components/blocks/block-seen/block-seen';
 import { DonatForm } from 'components/blocks/block-post-static/donat-form/donat-form';
@@ -21,6 +21,7 @@ class BlockPostStatic extends Component {
 
         this.state = {
             showModal: false,
+            showSubcriptionPay: false,
         };
     }
 
@@ -32,8 +33,32 @@ class BlockPostStatic extends Component {
         this.setState({ showModal: false });
     }
 
+    handleSuccessChange = (data) => {
+        this.closeModal();
+
+        this.setState({ posts: data });
+    };
+
+    openSubcriptionPayModal = () => {
+        this.setState({ showSubcriptionPay: true });
+    }
+    
+    closeSubcriptionPayModal = () => {
+        this.setState({ showSubcriptionPay: false });
+    }
+
+    handleSuccessChangeSubcription = (data) => {
+        this.closeSubcriptionPayModal();
+
+        this.setState({post: data}, () => {
+            const { onChange } = this.props;
+            onChange && onChange(this.state.post);
+        });
+    }
+
+
     render() {
-        const { post } = this.props;
+        const { post, current } = this.props;
         const login = post.author.login || 'cool_user';
         const profileRoute = getRouteWithID(RouteStore.pages.user.profile, login);
         const visibility = post.visible_type === 'Открыт для всех' ? 'Это публичный пост :)' : post.visible_type;
@@ -42,11 +67,15 @@ class BlockPostStatic extends Component {
         const likes = post.likes_count || 0;
         const currentUserLiked = post.liked;
         const seen = post.views_count || 1;
+
         return (
             <>
-                <BlockPayment 
-                isOpen={this.state.showModal}
-                closeModal={this.closeModal}/>
+                {this.state.showSubcriptionPay && <PaySubcriptionModal   
+                post_id={post.id}
+                subscription_id={post.subscription_id}
+                title={post.subscription}   
+                price={post.price}                        
+                onClose={this.closeSubcriptionPayModal} onSuccess={this.handleSuccessChangeSubcription}/>}
 
                 <div className="post-static">
                     <div className="post-static__inner">
@@ -80,11 +109,11 @@ class BlockPostStatic extends Component {
                             textClass="post-static__info__text"/>
                         </div>
 
-                        {post.visible_type === PRIVACY.OPEN && (
+                        {(post.visible_type === PRIVACY.OPEN || post.paid || post.follows || current?.login === post.author.login) && (
                             <div className="post-static__controls">
-                                <div className="post-static__control">
-                                    <Button text="Подписаться" onAction={this.openModal} type={Button.types.link}/>
-                                </div>
+                                {(!post.follows && post.visible_type !== 'Только разовая оплата') && <div className="post-static__control">
+                                    <Button text="Подписаться" onAction={this.openSubcriptionPayModal} type={Button.types.link}/>
+                                </div>}
                                 <DonatForm author={login} post={post}/>
                             </div>
                         )}

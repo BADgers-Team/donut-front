@@ -53,6 +53,7 @@ class BlockHeader extends Component {
         const podcast = activeTab === 'Подборки' ? `${baseClass} ${activeClass}` : baseClass;
         const createPost = activeTab === 'Создать пост' ? `${baseClass} ${activeClass}` : baseClass;
         const search = activeTab === 'Поиск' ? `${baseClass} ${activeClass}` : baseClass;
+        const login = activeTab === 'Войти' ? `${baseClass} ${activeClass}` : baseClass;
         if (user) {
             const profile = activeTab === `${user.name} ${user.surname}` ? `${baseClass} ${activeClass}` : baseClass;
             return (
@@ -92,8 +93,10 @@ class BlockHeader extends Component {
                     <div className={search}>
                         <Button text="Поиск" type={Button.types.link} to={RouteStore.pages.search} onAction={this.handleChangeTab}/>         
                     </div>
-                    <Button text="Войти" type={Button.types.link} to={RouteStore.pages.user.login}/>
-                    <Button text="Зарегистрироваться" type={Button.types.link} to={RouteStore.pages.user.register}/>
+                    <div className={login}>
+                        <Button text="Войти" type={Button.types.link} to={RouteStore.pages.user.login}/>
+                    </div>
+                    {/*<Button text="Зарегистрироваться" type={Button.types.link} to={RouteStore.pages.user.register}/>*/}
                 </>
             );
         }

@@ -12,6 +12,9 @@ class Input extends Component {
         this._types = Input.types;
         this._events = Input.events;
         this._input = React.createRef();
+        this.state = {
+            field: props.value || '',
+        };
     }
 
     static get types() {
@@ -30,9 +33,16 @@ class Input extends Component {
         };
     }
 
+    handleChangeValue = (event) => {
+        const value = event.target.value;
+        this.setState({ field: value });
+    };
+
     render() {
         const { name, type, placeholder, label, id, onAction, text, min, max, classValue, material, value, fileTypes, custom, defaultValue } = this.props;
         const classes = custom ? custom : null;
+        const action = onAction ? onAction : this.handleChangeValue;
+        const { field } = this.state;
       
         let node;
         switch(type) {
@@ -40,7 +50,7 @@ class Input extends Component {
             node = (
                 <>
                     {!label ? '' : <label className="input-label">{label}</label>}
-                    <input ref={this._input} className={classes} type="text" placeholder={placeholder} name={name} value={value} spellCheck="true" onChange={onAction}/>
+                    <input ref={this._input} className={classes} type="text" placeholder={placeholder} name={name} value={field} spellCheck="true" onChange={action}/>
                 </>
             );
             break;
