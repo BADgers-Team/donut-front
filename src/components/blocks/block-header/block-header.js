@@ -40,7 +40,6 @@ class BlockHeader extends Component {
                 '/search': 4,
             };
             tabs[`/users/${user.login}/`] = 5;
-            debugger
             this.setState({
                 activeTab: tabs[pathname] || 0,
             });
