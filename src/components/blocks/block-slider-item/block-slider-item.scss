@@ -1,0 +1,41 @@
+.block-slider-item {
+    position: relative;
+    
+    border-radius: 10px;
+    overflow: hidden;
+
+    &__dimmer {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        background-image: linear-gradient(transparent, rgba(0, 0, 0, .8));
+    }
+
+    &__text {
+        position: absolute;
+        bottom: 0;
+        padding: 40px;
+        color: white;
+    }
+
+    &__title {
+        font-size: 36px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    &__description {
+        font-size: 24px;
+    }
+
+    &__picture {
+        $scale: 1000 / 600;
+        $height: 500px;
+        $width: $height * $scale;
+        height: $height;
+        width: $width;
+    }
+}

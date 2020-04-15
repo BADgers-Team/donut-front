@@ -12,6 +12,8 @@ import BlockLayoutIndexSlotLanding
 import { BrowserRouter } from 'react-router-dom';
 import BlockLayoutIndexSlotCategories
     from 'components/blocks/block-layout-index-slot-categories/block-layout-index-slot-categories';
+import BlockLayoutIndexSlotExpose
+    from 'components/blocks/block-layout-index-slot-expose/block-layout-index-slot-expose';
 
 class LayoutIndex extends Component {
     constructor(props) {
@@ -54,7 +56,7 @@ class LayoutIndex extends Component {
                     <BlockLayoutIndexSlotCategories/>
                 </div>
                 <div className="layout-index__slot-expose">
-                    экспоуз скрин
+                    <BlockLayoutIndexSlotExpose/>
                 </div>
                 <div className="layout-index__slot-advantages">
                     эдвентеджес скрин

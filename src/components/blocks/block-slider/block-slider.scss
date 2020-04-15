@@ -1,0 +1,21 @@
+.block-slider {
+    display: flex;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    &__arrow {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        padding: 30px;
+        font-size: 40px;
+        color: #BFA7DF;
+
+        & > svg {
+            cursor: pointer;
+        }
+    }
+}

@@ -21,7 +21,6 @@
     &__picture-cards {
         position: relative;
         height: $picture-height + 100px;
-        //height: 100%;
         width: $picture-width + 100px;
     }
 
@@ -49,7 +48,7 @@
         font-size: 22px;
         line-height: 1.5;
 
-        & > p {
+        & > div {
            margin-bottom: 15px;
         }
     }

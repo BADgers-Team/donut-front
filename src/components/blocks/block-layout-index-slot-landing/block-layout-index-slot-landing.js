@@ -35,12 +35,12 @@ export default class BlockLayoutIndexSlotLanding extends React.Component {
                             Место, где таланты помогают талантам
                         </div>
                         <div className="block-layout-index-slot-landing__description">
-                            <p>
+                            <div>
                                 Никогда еще не было так приятно делиться своими успехами! <Text primary>Ваш талант</Text> может вдохновить многих, не забывайте об этом!
-                            </p>
-                            <p>
+                            </div>
+                            <div>
                                 Делитесь <Text primary>своими успехами</Text> с другими участниками, а они будут делиться с вами <Text primary>пончиками!</Text>
-                            </p>
+                            </div>
                         </div>
                         {/* TODO: Покрыть нужные кейсы по нажатию кнопки */}
                         <Button
