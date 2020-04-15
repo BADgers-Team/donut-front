@@ -1,0 +1,65 @@
+@import 'components/app/consts';
+
+.feed-cards {
+  background-color: $color-dark-purple;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  // TODO fix height
+
+  &__title {
+    padding: 27px 120px;
+    color: $color-dark-white;
+    font-size: 55px;
+  }
+
+  &__content {
+    padding: 10px 120px 60px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 10px;
+    grid-row-gap: 4em;
+  }
+}
+
+.feed-tabs {
+  display: flex;
+  flex-direction: row;
+  font-size: 45px;
+  display: flex;
+  flex-direction: row;
+  color: $color-grey;
+  padding: 20px;
+  justify-content: space-around;
+
+  &__line {
+    color: $color-grey;
+    background-color: $color-grey;
+    margin: 0 0 30px 0;
+    border: none; 
+    height: 2px;
+  }
+
+  &__posts,
+  &__subscriptions {
+    cursor: pointer;
+    width: 50%;
+    text-align: center;
+  }
+}
+
+
+.active-tab {
+    color: $color-pink;
+}
+
+.active-line {
+    color: $color-pink;
+    background-color: $color-pink;
+}
+
+.empty-cards {
+    color: $color-dark-white;
+    text-align: center;
+    font-size: 24px;
+}

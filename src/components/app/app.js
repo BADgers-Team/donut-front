@@ -10,6 +10,7 @@ import LayoutCreatePost from 'components/layouts/layout-create-post/layout-creat
 import { LayoutProfile } from 'components/layouts/layout-profile/layout-profile';
 import LayoutCreateSubscription from 'components/layouts/layout-create-subscription/layout-create-subscription';
 import LayoutSearch from 'components/layouts/layout-search/layout-search';
+import { LayoutFeed } from 'components/layouts/layout-feed/layout-feed';
 import LayoutPost from 'components/layouts/layout-post/layout-post';
 import { LayoutLogin } from 'components/layouts/layout-login/layout-login';
 import { LayoutCallback } from 'components/layouts/layout-callback/layout-callback';
@@ -46,6 +47,7 @@ class App extends Component {
                             <Route path={pages.search} render={(props) => <LayoutSearch {...props}/>}/>
                             <Route path={pages.user.login} render={(props) => <LayoutLogin {...props}/>}/>
                             <Route path={pages.user.callback} render={(props) => <LayoutCallback {...props}/>}/>
+                            <Route path={pages.feed} render={(props) => <LayoutFeed {...props}/>}/>
                             <Route path={pages.collections} render={(props) => <LayoutCollections {...props}/>}/>
                             <Route path="/posts/:id" render={(props) => <LayoutPost {...props} current={user}/>}/>
                             <Route path="/users/:login" render={(props) => <LayoutProfile {...props} current={user}/>}/>

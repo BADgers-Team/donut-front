@@ -26,6 +26,7 @@ export default {
         search: '/search',
         pay: '/pay',
         goals: '/goals',
+        feed: '/feed',
     },
     pages: {
         user: {
@@ -43,6 +44,7 @@ export default {
         subscriptions: {
             new: '/subscriptions'
         },
+        feed: '/feed',
         collections: '/collections',
         search: '/search'
     }

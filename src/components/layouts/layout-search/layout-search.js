@@ -7,7 +7,7 @@ import RouteStore from "store/routes";
 
 import './layout-search.scss';
 
-class LayoutIndex extends Component {
+class LayoutSearch extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -53,4 +53,4 @@ class LayoutIndex extends Component {
     }
 }
 
-export default LayoutIndex;
+export default LayoutSearch;
