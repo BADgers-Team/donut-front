@@ -42,6 +42,14 @@ module.exports = {
                 ]
             },
             {
+                test: /\.css$/,
+                include: /node_modules/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                ]
+            },
+            {
                 test: /\.(jpg|png|gif|svg|pdf)$/,
                 use: [
                     {
