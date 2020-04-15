@@ -20,6 +20,7 @@ export default {
         users: {
             login: '/users/:id',
             confirm: '/confirm',
+            exit: '/logout',
         },
         visible_types: '/visible_types',
         search: '/search',
@@ -42,9 +43,7 @@ export default {
         subscriptions: {
             new: '/subscriptions'
         },
-        podcasts: {
-            all: '/podcasts'
-        },
+        collections: '/collections',
         search: '/search'
     }
 };

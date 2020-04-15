@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 
-import BlockActivities from 'components/blocks/block-activities/block-activities';
-import BlockSearch from 'components/blocks/block-search/block-search';
-import BlockCards from 'components/blocks/block-cards/block-cards';
 import AjaxModule from 'services/ajax';
 import RouteStore from 'store/routes';
 
 import './layout-index.scss';
 import BlockLayoutIndexSlotLanding
     from 'components/blocks/block-layout-index-slot-landing/block-layout-index-slot-landing';
-import { BrowserRouter } from 'react-router-dom';
 import BlockLayoutIndexSlotCategories
     from 'components/blocks/block-layout-index-slot-categories/block-layout-index-slot-categories';
 import BlockLayoutIndexSlotExpose
@@ -37,23 +33,9 @@ class LayoutIndex extends Component {
         });
     }
 
-    handleChangeActivity = (key) => {
-        AjaxModule.get(RouteStore.api.posts.all, key !== 'Все' ? {activities: key} : null)
-            .then((data) => {
-                this.setState({ posts: data || [] });
-            })
-            .catch((error) => {
-                console.error(error.message);
-            });
-    };
-
     render() {
-        // const { posts } = this.state;
         return (
             <div className="layout-index">
-                {/* TODO: туду туду туду туду тудуууууууу туду-ду-ду-ду */}
-                {/*<BlockActivities onChange={this.handleChangeActivity}/>*/}
-                {/*<BlockCards cards={posts}/>*/}
                 <div className="layout-index__slot-landing">
                     <BlockLayoutIndexSlotLanding/>
                 </div>

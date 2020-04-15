@@ -25,6 +25,27 @@ class UserModel {
             this[field] = data[field];
         });
     }
+
+    @action
+    delete() {
+        let allowedFields = [
+            'login',
+            'name',
+            'email',
+            'avatar'
+        ];
+        allowedFields.forEach((field) => {
+            this[field] = null;
+        });
+        allowedFields = [
+            'number_of_followers',
+            'number_of_subscriptions',
+            'number_of_posts'
+        ];
+        allowedFields.forEach((field) => {
+            this[field] = 0;
+        });
+    }
 }
 
 export { UserModel };
