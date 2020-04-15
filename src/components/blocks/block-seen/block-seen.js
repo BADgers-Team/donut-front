@@ -18,4 +18,4 @@ class Seen extends Component {
     }
 }
 
-export default Seen;
+export { Seen };

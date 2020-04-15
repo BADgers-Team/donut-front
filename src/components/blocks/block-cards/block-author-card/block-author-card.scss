@@ -1,0 +1,102 @@
+@import 'components/app/consts';
+
+.author-card {
+  width: 360px;
+  transition: all .2s ease-out;
+  border-radius: 10px;
+  position: relative;
+  text-decoration: none;
+
+  &__preview {
+    width: 360px;
+    height: 360px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: block;
+  }
+
+  &__info {
+    background: linear-gradient(to bottom, $color-dark-purple, $color-medium-purple);
+    padding: 6px 12px 12px 12px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  &__name {
+    color: $color-dark-white;
+    font-size: 32px;
+    text-align: center;
+    padding: 0 0 15px 0;
+  }
+
+  &__extra-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 4px 8px 4px;
+    align-items: center;
+  }
+
+  &__author {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  
+    &-login {
+      font-size: 28px;
+      color: $color-pink;
+      text-decoration: none;
+    }
+  }
+
+  &__icons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &__activities {
+    display: flex;
+    padding: 5px;
+  }
+
+  &:hover {
+    transform: translateY(-6px);
+    cursor: pointer;
+    transition: all .2s ease-out;
+    box-shadow: 0 16px 16px 0 $color-grey;
+  }
+}
+
+.icons {
+    &-posts-icon {
+        width: 28px;
+        height: 28px;
+        margin-right: 12px;
+    }
+
+    &-text {
+        color: $color-dark-white;
+        font-size: 28px
+    }
+
+    &-text:not(*:last-child) {
+        font-size: 28px;
+        margin-right: 18px;
+    }
+}
+
+.activities-item {
+    background-color: $color-purple;
+    color: $color-dark-white;
+    padding: 7px;
+    font-size: 17px;
+    border-radius: 10px;
+    text-align: center;
+    width: fit-content;
+    margin-right: 10px;
+} 
+
+.activities-item:last-child {
+    margin-right: 0;
+}

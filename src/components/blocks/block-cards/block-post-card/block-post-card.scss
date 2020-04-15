@@ -1,0 +1,146 @@
+@import 'components/app/consts';
+
+.post-card {
+  width: 360px;
+  transition: all .2s ease-out;
+  border-radius: 10px;
+  position: relative;
+  text-decoration: none;
+
+  &__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: absolute;
+    width: 100%;
+    color: $color-dark-white;
+    background: linear-gradient(to bottom, $color-grey-half-transparent, transparent);
+    height: 80px;
+    font-size: 20px;
+    opacity: 0.9;
+    border-radius: 10px;
+  }
+
+  &__date {
+    padding: 10px;
+  }
+
+  &__access {
+      &-lock {
+        padding: 10px;
+        width: 28px;
+        height: 28px;
+      }
+  }
+
+  &__preview {
+    width: 360px;
+    height: 360px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: block;
+  }
+
+  &__info {
+    background: linear-gradient(to bottom, $color-dark-purple, $color-medium-purple);
+    padding: 6px 12px 12px 12px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  &__title {
+    color: $color-dark-white;
+    font-size: 32px;
+    text-align: center;
+    width: 336px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__extra-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 4px 8px 4px;
+    align-items: center;
+  }
+
+  &__author {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  
+    &-login {
+      font-size: 20px;
+      color: $color-pink;
+      text-decoration: none;
+    }
+  }
+
+  &__icons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &__content {
+    color: $color-dark-white;
+    font-size: 22px;
+    text-align: center;
+    width: 336px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 10px 0;
+  }
+
+  &:hover {
+    transform: translateY(-6px);
+    cursor: pointer;
+    transition: all .2s ease-out;
+    box-shadow: 0 16px 16px 0 $color-grey;
+  }
+}
+
+.icons {
+    &__likes {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        &-liked {
+            width: 28px;
+            height: 28px;
+            margin-right: 12px;
+        }
+      
+        &-disliked {
+            width: 28px;
+            height: 28px;
+            margin-right: 38px !important;
+        }
+    }
+
+    &__views {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        
+        &-icon {
+            width: 28px;
+            height: 28px;
+            margin-right: 12px;
+        }
+    }
+
+    &-text {
+        color: $color-dark-white;
+        font-size: 28px
+    }
+
+    &-text:not(*:last-child) {
+        font-size: 28px;
+        margin-right: 18px;
+    }
+}
