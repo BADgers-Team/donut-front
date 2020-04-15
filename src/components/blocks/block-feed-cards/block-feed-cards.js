@@ -77,15 +77,24 @@ class BlockFeedCards extends Component {
                 );
                 break;
         }
+
+        const activePostsTabClass = selectedTab === FEED_TABS.POSTS ? 'active-tab' : '';
+        const activeSubscriptionTabClass = selectedTab === FEED_TABS.SUBSCRIPTIONS ? 'active-tab' : '';
+        
+        const activePostsLineClass = selectedTab === FEED_TABS.POSTS ? 'active-line' : '';
+        const activeSubscriptionLineClass = selectedTab === FEED_TABS.SUBSCRIPTIONS ? 'active-line' : '';
+        
         //TODO: сделать экран Данные не найдены
         return (
             <div className="feed-cards">
                 <div className="feed-tabs">
-                    <div className="feed-tabs__posts" onClick={this.handlePostTabClick}>
+                    <div className={`feed-tabs__posts ${activePostsTabClass}`} onClick={this.handlePostTabClick}>
                         {FEED_TABS.POSTS}
+                        <hr className={`feed-tabs__line ${activePostsLineClass}`}/>
                     </div>
-                    <div className="feed-tabs__subscriptions" onClick={this.handleSubscriptionTabClick}>
+                    <div className={`feed-tabs__subscriptions ${activeSubscriptionTabClass}`} onClick={this.handleSubscriptionTabClick}>
                         {FEED_TABS.SUBSCRIPTIONS}
+                        <hr className={`feed-tabs__line ${activeSubscriptionLineClass}`}/>
                     </div>
                 </div>
                 {cardsNodes}
