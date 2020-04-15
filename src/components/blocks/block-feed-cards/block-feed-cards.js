@@ -35,22 +35,17 @@ class BlockFeedCards extends Component {
         const { posts, subscriptions, user } = this.props;
         const { selectedTab } = this.state;
       
-        //TODO проверить на пустые данные
         const postCards = posts ? posts : [];
-        let postСardsNodes;
-        if (postCards) {
-            postСardsNodes = postCards.map((card, index) => {
-                return <PostCard key={index} card={card} current={user}/>;
-            });
-        }
+        const postСardsNodes = postCards.length !== 0 ? 
+                postCards.map((card, index) => {
+                    return <PostCard key={index} card={card} current={user}/>;
+                }) : <div className="empty-cards">Нет постов</div>;
 
         const subscriptionCards = subscriptions ? subscriptions : [];
-        let subscriptionСardsNodes;
-        if (subscriptionCards) {
-            subscriptionСardsNodes = subscriptionCards.map((card, index) => {
-                return <SubscriptionCard key={index} subscription={card} current={user}/>;
-            });
-        }
+        const subscriptionСardsNodes = subscriptionCards.length !== 0 ?
+                subscriptionCards.map((card, index) => {
+                    return <SubscriptionCard key={index} subscription={card} current={user}/>;
+                }) : <div className="empty-cards">Нет подписок</div>;
 
         let cardsNodes;
         switch (selectedTab) {
@@ -84,7 +79,6 @@ class BlockFeedCards extends Component {
         const activePostsLineClass = selectedTab === FEED_TABS.POSTS ? 'active-line' : '';
         const activeSubscriptionLineClass = selectedTab === FEED_TABS.SUBSCRIPTIONS ? 'active-line' : '';
         
-        //TODO: сделать экран Данные не найдены
         return (
             <div className="feed-cards">
                 <div className="feed-tabs">

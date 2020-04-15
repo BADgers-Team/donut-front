@@ -16,6 +16,8 @@ const months = ["января", "февраля", "марта", "апреля", 
 class PostCard extends Component {
     formatDate = (date) => {
         const d = new Date(date);
+
+        debugger
         
         const day = d.getDate();
         const month = months[d.getMonth()];
