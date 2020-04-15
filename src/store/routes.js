@@ -25,6 +25,7 @@ export default {
         search: '/search',
         pay: '/pay',
         goals: '/goals',
+        feed: '/feed',
     },
     pages: {
         user: {
@@ -45,6 +46,7 @@ export default {
         podcasts: {
             all: '/podcasts'
         },
-        search: '/search'
+        search: '/search',
+        feed: '/feed',
     }
 };
