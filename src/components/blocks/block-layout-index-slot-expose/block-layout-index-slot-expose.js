@@ -2,11 +2,11 @@ import React from 'react';
 
 import BlockSlider from 'components/blocks/block-slider/block-slider';
 
-import ImageCreate from 'assets/img/index/expose/create.jpeg';
+import ImageCreate from 'assets/img/index/expose/create.jpg';
 import ImageDonut from 'assets/img/index/expose/donut.jpeg';
-import ImageEverything from 'assets/img/index/expose/everything.png';
-import ImageObjectives from 'assets/img/index/expose/objectives.png';
-import ImageSubscribe from 'assets/img/index/expose/subscribe.jpeg';
+import ImageEverything from 'assets/img/index/expose/everything.jpeg';
+import ImageObjectives from 'assets/img/index/expose/objectives.jpg';
+import ImageSubscribe from 'assets/img/index/expose/subscribe.png';
 
 import './block-layout-index-slot-expose.scss';
 

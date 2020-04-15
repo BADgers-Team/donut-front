@@ -63,6 +63,11 @@ export default class BlockSlider extends React.Component {
         return this.itemsContainerRef.current;
     }
 
+    componentDidMount() {
+        const maxScrollLeft = this.container.scrollWidth - this.container.clientWidth;
+        this.container.scrollLeft = maxScrollLeft / 2 + 25;
+    }
+
     render() {
         const {items} = this.props;
         const {showLeftArrow, showRightArrow} = this.state;
