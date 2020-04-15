@@ -6,8 +6,8 @@ import { getRouteWithID } from 'services/getRouteWithId';
 
 import './block-post.scss';
 
-import Like from 'components/blocks/block-like/block-like';
-import Seen from 'components/blocks/block-seen/block-seen';
+import { Like } from 'components/blocks/block-like/block-like';
+import { Seen } from 'components/blocks/block-seen/block-seen';
 
 class BlockPost extends Component {
     render() {
