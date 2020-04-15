@@ -84,7 +84,7 @@ class BlockPostForm extends Component {
         const teaserPlaceholder = `Напишите тизер, чтобы пользователи, у которых ещё нет доступа к посту, могли понять о чём вы пишите. Используйте это краткое описание для привлечения новых подписчиков...(опционально)`;
         
         if (redirect) {
-            return <Redirect to={RouterStore.pages.main} />
+            return <Redirect to={RouterStore.pages.collections} />
         }
         return (
             <form ref={this._form} id="post_form">
