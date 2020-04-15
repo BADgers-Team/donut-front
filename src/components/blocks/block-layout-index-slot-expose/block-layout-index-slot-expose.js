@@ -2,7 +2,11 @@ import React from 'react';
 
 import BlockSlider from 'components/blocks/block-slider/block-slider';
 
+import ImageCreate from 'assets/img/index/expose/create.jpeg';
 import ImageDonut from 'assets/img/index/expose/donut.jpeg';
+import ImageEverything from 'assets/img/index/expose/everything.png';
+import ImageObjectives from 'assets/img/index/expose/objectives.png';
+import ImageSubscribe from 'assets/img/index/expose/subscribe.jpeg';
 
 import './block-layout-index-slot-expose.scss';
 
@@ -13,7 +17,7 @@ export default class BlockLayoutIndexSlotExpose extends React.Component {
         {
             title: 'Подписываться',
             description: 'Авторы предоставляют разный контент, который нельзя пропустить!',
-            picture: ImageDonut
+            picture: ImageSubscribe
         },
         {
             title: 'Поддерживать',
@@ -23,17 +27,17 @@ export default class BlockLayoutIndexSlotExpose extends React.Component {
         {
             title: 'Творить',
             description: 'Рассказывайте о том, что делаете и получайте за это ₽',
-            picture: ImageDonut
+            picture: ImageCreate
         },
         {
             title: 'Найти работы на любой вкус',
             description: 'Фильтруйте работы по категориям, находите авторов и их публикации',
-            picture: ImageDonut
+            picture: ImageEverything
         },
         {
             title: 'Устанавливать цели',
             description: 'Укажите цель и сумму, которая необходима для ее свершения',
-            picture: ImageDonut
+            picture: ImageObjectives
         },
     ];
 

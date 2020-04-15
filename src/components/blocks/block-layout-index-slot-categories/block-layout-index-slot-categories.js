@@ -3,7 +3,21 @@ import React from 'react';
 import CategoryCard from 'components/fragments/category-card/category-card';
 import Button from 'components/fragments/button/button';
 
+import ImageCategoryPainting from 'assets/img/index/categories/painting.png';
+import ImageCategoryBlog from 'assets/img/index/categories/blog.png';
+import ImageCategoryPhotography from 'assets/img/index/categories/photography.png';
+import ImageCategoryMusic from 'assets/img/index/categories/music.png';
+import ImageCategoryPublications from 'assets/img/index/categories/publications.png';
+import ImageCategorySport from 'assets/img/index/categories/sport.png';
+import ImageCategoryVideo from 'assets/img/index/categories/video.png';
+import ImageCategoryEducation from 'assets/img/index/categories/education.png';
 import ImageCategoryArt from 'assets/img/index/categories/art.png';
+import ImageCategoryComics from 'assets/img/index/categories/comics.png';
+import ImageCategoryHandmade from 'assets/img/index/categories/handmade.png';
+import ImageCategoryPodcasts from 'assets/img/index/categories/podcasts.png';
+import ImageCategoryGames from 'assets/img/index/categories/games.png';
+import ImageCategoryBusiness from 'assets/img/index/categories/business.png';
+import ImageCategoryDevelopment from 'assets/img/index/categories/development.png';
 
 import RouteStore from 'store/routes';
 
@@ -12,21 +26,21 @@ import './block-layout-index-slot-categories.scss';
 
 export default class BlockLayoutIndexSlotCategories extends React.Component {
     categories = [
-        {title: 'Живопись', picture: ImageCategoryArt},
-        {title: 'Блог', picture: ImageCategoryArt},
-        {title: 'Фото', picture: ImageCategoryArt},
-        {title: 'Музыка', picture: ImageCategoryArt},
-        {title: 'Публицистика', picture: ImageCategoryArt},
-        {title: 'Спорт', picture: ImageCategoryArt},
-        {title: 'Видео', picture: ImageCategoryArt},
-        {title: 'Образование', picture: ImageCategoryArt},
+        {title: 'Живопись', picture: ImageCategoryPainting},
+        {title: 'Блог', picture: ImageCategoryBlog},
+        {title: 'Фото', picture: ImageCategoryPhotography},
+        {title: 'Музыка', picture: ImageCategoryMusic},
+        {title: 'Публицистика', picture: ImageCategoryPublications},
+        {title: 'Спорт', picture: ImageCategorySport},
+        {title: 'Видео', picture: ImageCategoryVideo},
+        {title: 'Образование', picture: ImageCategoryEducation},
         {title: 'Искусство', picture: ImageCategoryArt},
-        {title: 'Комиксы', picture: ImageCategoryArt},
-        {title: 'Рукоделие', picture: ImageCategoryArt},
-        {title: 'Подкасты', picture: ImageCategoryArt},
-        {title: 'Игры', picture: ImageCategoryArt},
-        {title: 'Бизнес', picture: ImageCategoryArt},
-        {title: 'Разработка', picture: ImageCategoryArt},
+        {title: 'Комиксы', picture: ImageCategoryComics},
+        {title: 'Рукоделие', picture: ImageCategoryHandmade},
+        {title: 'Подкасты', picture: ImageCategoryPodcasts},
+        {title: 'Игры', picture: ImageCategoryGames},
+        {title: 'Бизнес', picture: ImageCategoryBusiness},
+        {title: 'Разработка', picture: ImageCategoryDevelopment},
     ];
 
     render() {
