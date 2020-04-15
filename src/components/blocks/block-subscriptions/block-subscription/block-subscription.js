@@ -44,12 +44,10 @@ class BlockSubscription extends Component {
                 price={subscription.sum}                        
                 onClose={this.closeSubcriptionPayModal} onSuccess={this.handleSuccessChangeSubcription}/>} 
 
-
                 <div className="author-subscription">
                     <div className="author-subscription__title">{subscription.title}</div>
                     <div className="author-subscription__price">{price}</div>
                     <div className="author-subscription__description">{subscription.description}</div>
-                    {/* TODO subscription.follows */}
                     {(user.login !== current?.login && !subscription.follows) && (
                         <Button className="author-subscription__button" onAction={this.openSubcriptionPayModal} text='Подписаться' type={Button.types.block}/>
                     )}
