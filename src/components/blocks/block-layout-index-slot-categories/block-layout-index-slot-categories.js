@@ -1,4 +1,5 @@
 import React from 'react';
+import { inject } from 'mobx-react';
 
 import CategoryCard from 'components/fragments/category-card/category-card';
 import Button from 'components/fragments/button/button';
@@ -23,8 +24,8 @@ import RouteStore from 'store/routes';
 
 import './block-layout-index-slot-categories.scss';
 
-
-export default class BlockLayoutIndexSlotCategories extends React.Component {
+@inject('user')
+class BlockLayoutIndexSlotCategories extends React.Component {
     categories = [
         {title: 'Живопись', picture: ImageCategoryPainting},
         {title: 'Блог', picture: ImageCategoryBlog},
@@ -44,6 +45,8 @@ export default class BlockLayoutIndexSlotCategories extends React.Component {
     ];
 
     render() {
+        const { user } = this.props;
+        const link = user.login ? RouteStore.pages.posts.new : RouteStore.pages.user.login;
         return (
             <div className="block-layout-index-slot-categories">
                 <div className="block-layout-index-slot-categories__title">
@@ -63,7 +66,7 @@ export default class BlockLayoutIndexSlotCategories extends React.Component {
                         primary
                         outline
                         type={Button.types.link}
-                        to={RouteStore.pages.user.login}
+                        to={link}
                         text="Присоединиться"
                     />
                 </div>
@@ -71,3 +74,5 @@ export default class BlockLayoutIndexSlotCategories extends React.Component {
         );
     }
 }
+
+export default BlockLayoutIndexSlotCategories;

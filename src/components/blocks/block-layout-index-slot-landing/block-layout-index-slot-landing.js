@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { inject } from 'mobx-react';
 
 import Text from 'components/fragments/text/text';
 import Button from 'components/fragments/button/button';
@@ -10,9 +11,11 @@ import RouteStore from 'store/routes';
 
 import './block-layout-index-slot-landing.scss';
 
-
-export default class BlockLayoutIndexSlotLanding extends React.Component {
+@inject('user')
+class BlockLayoutIndexSlotLanding extends Component {
     render() {
+        const { user } = this.props;
+        const link = user.login ? RouteStore.pages.posts.new : RouteStore.pages.user.login;
         return (
             <div className="block-layout-index-slot-landing">
                 <div className="block-layout-index-slot-landing__content">
@@ -48,7 +51,7 @@ export default class BlockLayoutIndexSlotLanding extends React.Component {
                             outline
                             wide
                             type={Button.types.link}
-                            to={RouteStore.pages.user.login}
+                            to={link}
                             text="Попробовать"
                         />
                     </div>
@@ -57,3 +60,5 @@ export default class BlockLayoutIndexSlotLanding extends React.Component {
         );
     }
 }
+
+export default BlockLayoutIndexSlotLanding;
