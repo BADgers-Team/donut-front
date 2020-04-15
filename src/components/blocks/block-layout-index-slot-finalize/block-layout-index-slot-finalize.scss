@@ -1,0 +1,29 @@
+.block-layout-index-slot-finalize {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px 50px 20px;
+
+    background-color: #3B1B67;
+
+    &__title {
+        padding: 20px;
+        text-align: center;
+        color: white;
+        font-size: 36px;
+    }
+
+    &__cta-button {
+        margin: 20px 10px 10px 10px;
+    }
+
+    &__cta-link > a {
+        text-decoration: none;
+        color: white;
+    }
+
+    &__separator {
+        margin-bottom: 10px;
+        color: #988BBE;
+    }
+}

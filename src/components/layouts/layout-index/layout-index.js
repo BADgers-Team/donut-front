@@ -16,6 +16,8 @@ import BlockLayoutIndexSlotExpose
     from 'components/blocks/block-layout-index-slot-expose/block-layout-index-slot-expose';
 import BlockLayoutIndexSlotAdvantages
     from 'components/blocks/block-layout-index-slot-advantages/block-layout-index-slot-advantages';
+import BlockLayoutIndexSlotFinalize
+    from 'components/blocks/block-layout-index-slot-finalize/block-layout-index-slot-finalize';
 
 class LayoutIndex extends Component {
     constructor(props) {
@@ -64,7 +66,7 @@ class LayoutIndex extends Component {
                     <BlockLayoutIndexSlotAdvantages/>
                 </div>
                 <div className="layout-index__slot-finalize">
-                    файналайз скрин
+                    <BlockLayoutIndexSlotFinalize/>
                 </div>
                 {/* TODO: Переместить крутой футер в нормальное место */}
                 <div className="footer">

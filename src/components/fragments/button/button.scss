@@ -5,6 +5,7 @@
   text-decoration: none;
 
   &_primary {
+    display: inline-block;
     color: white;
     background-color: $color-pink;
     font-weight: bold;
