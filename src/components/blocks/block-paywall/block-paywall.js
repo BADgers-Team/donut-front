@@ -109,8 +109,8 @@ class BlockPaywall extends Component {
                     <div className="paywall__message__subscription">
                         {PRIVACY_MSG[0]}
                     </div>
-                    <div className="paywall__controls__subscription">
-                        <Button text="Подписаться" type={Button.types.link} onAction={this.openSubcriptionPayModal}/>
+                    <div className="paywall__controls__subscription" onClick={this.openSubcriptionPayModal}>
+                        <Button text="Подписаться" type={Button.types.link}/>
                     </div>
                 </>
             );
@@ -120,8 +120,8 @@ class BlockPaywall extends Component {
                     <div className="paywall__message__price">
                         {PRIVACY_MSG[1]}
                     </div>
-                    <div className="paywall__controls__price">
-                        <Button text="Оплатить" type={Button.types.link} onAction={this.openPostPayModal}/>
+                    <div className="paywall__controls__price" onClick={this.openPostPayModal}>
+                        <Button text="Оплатить" type={Button.types.link}/>
                     </div>
                 </>
             );
@@ -132,11 +132,11 @@ class BlockPaywall extends Component {
                         {PRIVACY_MSG[2]}
                     </div>
                     <div className="paywall__controls">
-                        <div className="paywall__controls__subscription">
-                            <Button text="Подписаться" type={Button.types.link} onAction={this.openSubcriptionPayModal}/>
+                        <div className="paywall__controls__subscription" onClick={this.openSubcriptionPayModal}>
+                            <Button text="Подписаться" type={Button.types.link}/>
                         </div>
-                        <div className="paywall__controls__price">
-                            <Button text="Оплатить" type={Button.types.link} onAction={this.openPostPayModal}/>
+                        <div className="paywall__controls__price" onClick={this.openPostPayModal}>
+                            <Button text="Оплатить" type={Button.types.link}/>
                         </div>
                     </div>
                 </>
