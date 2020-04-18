@@ -64,12 +64,13 @@ class BlockPostStatic extends Component {
         const login = post.author.login || 'cool_user';
         const profileRoute = getRouteWithID(RouteStore.pages.user.profile, login);
         const visibility = post.visible_type === 'Открыт для всех' ? 'Это публичный пост :)' : post.visible_type;
-        const date = new Date(post.created_at).toLocaleDateString("en-US") || '23/02/2020';
+        const date = new Date(post.created_at).toLocaleDateString('en-US') || '23/02/2020';
         const postId = post.id;
         const likes = post.likes_count || 0;
         const currentUserLiked = post.liked;
         const seen = post.views_count || 1;
         const price = post.sum ? `${post.sum} ₽` : 'Бесплатно';
+        const avatar = post.author.avatar || Avatar;
 
         return (
             <>
@@ -85,7 +86,7 @@ class BlockPostStatic extends Component {
                     <div className="post-static__inner">
                         <div className="post-static__title">{post.title}</div>
                         <div className="post-static__author">
-                            <img className="post-static__author-avatar" src={Avatar} alt="author"/>
+                            <img className="post-static__author-avatar" src={avatar} alt="author"/>
                             <div>
                                 <div>{post.author.name}</div>
                                 <Link className="post-static__author-nick" to={profileRoute}>{`@${login}`}</Link>

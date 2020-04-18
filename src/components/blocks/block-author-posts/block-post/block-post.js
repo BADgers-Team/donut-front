@@ -13,9 +13,8 @@ class BlockPost extends Component {
     render() {
         const { post, login, avatar } = this.props;
         const postId = post.id;
-        const date = new Date(post.created_at).toLocaleDateString("en-US") || '23/02/2020';
-        const tizer = post.tizer || `Всегда незаметные вещи могут быть гораздо важнее чересчур привлекательных. 
-                                     Этот пост о невероятной силе человеческого слова в описании природы`;
+        const date = new Date(post.created_at).toLocaleDateString('en-US') || '23/02/2020';
+        const teaser = post.teaser || post.description;
         const likes = post.likes_count || 0;
         const currentUserLiked = post.liked;
         const seen = post.views_count || 1;
@@ -30,7 +29,7 @@ class BlockPost extends Component {
                     </div>
                 </div>
                 <div className="author-post__title">{post.title}</div>
-                <div className="author-post__tizer">{tizer}</div>
+                <div className="author-post__tizer">{teaser}</div>
                 <div className="author-post__extra">
                     <div className="author-post__extra-statistic">
                         <Like likesCount={likes} currentUserLiked={currentUserLiked} postId={postId}

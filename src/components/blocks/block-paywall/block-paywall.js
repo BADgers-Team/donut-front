@@ -69,8 +69,7 @@ class BlockPaywall extends Component {
 
     render() {
         const { post } = this.props;
-        const tizer = post.tizer || `Всегда незаметные вещи могут быть гораздо важнее чересчур привлекательных. 
-                                     Этот пост о невероятной силе человеческого слова в описании природы`;
+        const teaser = post.teaser || 'Автор не добавил тизер :(';
         
         const pricePost = post.sum ? `${post.sum} ₽` : 'Бесплатно';
         const priceSubcription = post.subscription_sum ? `${post.subscription_sum} ₽` : 'Бесплатно';
@@ -95,7 +94,7 @@ class BlockPaywall extends Component {
                 onClose={this.closeSubcriptionPayModal} onSuccess={this.handleSuccessChangeSubcription}/>}
 
                 <div className="paywall">
-                    <div className="paywall__info">{tizer}</div>
+                    <div className="paywall__info">{teaser}</div>
                     {controls}
                 </div>
             </>

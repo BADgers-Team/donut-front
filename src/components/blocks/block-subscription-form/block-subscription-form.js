@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-import { Redirect } from "react-router-dom";
+import { Redirect } from 'react-router-dom';
+import { inject } from 'mobx-react';
+
 import RouterStore from 'store/routes';
+import AjaxModule from 'services/ajax';
+import { getRouteWithID } from 'services/getRouteWithId';
 
 import Button from 'components/fragments/button/button';
 import Input from 'components/fragments/input/input';
 
-import AjaxModule from 'services/ajax';
 
 import './block-subscription-form.scss';
 
+@inject('user')
 class BlockSubscriptionForm extends Component {
     constructor(props) {
         super(props);
@@ -21,9 +25,11 @@ class BlockSubscriptionForm extends Component {
     
     render() {
         const { redirect } = this.state;
+        const { user } = this.props;
 
         if (redirect) {
-            return <Redirect to={RouterStore.pages.main} />
+            const profileUrl = getRouteWithID(RouterStore.pages.user.profile, user.login);
+            return <Redirect to={profileUrl} />;
         }
         return (
             <form ref={this._form} id="subscription_form">

@@ -34,12 +34,12 @@
     &-nick {
       font-size: 20px;
       color: $color-pink;
-      text-decoration: none;
+      //text-decoration: none;
     }
   }
 
   &__info {
-    color: $color-pink;
+    color: $color-dark-white;
     font-size: 18px;
     display: flex;
     flex-direction: row;
