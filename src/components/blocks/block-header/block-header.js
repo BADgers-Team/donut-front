@@ -5,7 +5,7 @@ import AjaxModule from 'services/ajax';
 import Button from 'components/fragments/button/button';
 import './block-header.scss';
 import LogoImage from 'assets/img/logo.png';
-import AuthorAvatar from 'assets/img/michael.jpg';
+import AuthorAvatar from 'assets/img/michael.png';
 import ExitIcon from 'assets/img/exit.svg';
 import { inject, observer } from 'mobx-react';
 import {Link} from 'react-router-dom';

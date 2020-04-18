@@ -5,7 +5,7 @@ import { getRouteWithID } from 'services/getRouteWithId';
 
 import './block-post-card.scss';
 
-import CardImage from 'assets/img/card-image.jpg';
+import CardImage from 'assets/img/card-image.png';
 import LockIcon from 'assets/img/lock.svg';
 import { Like } from 'components/blocks/block-like/block-like';
 import { Seen } from 'components/blocks/block-seen/block-seen';

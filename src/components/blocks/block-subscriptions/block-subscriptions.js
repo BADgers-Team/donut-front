@@ -46,7 +46,7 @@ class BlockSubscriptions extends Component {
                         <div>Автор пока не добавил подписок</div>
                     )}
                 </div>
-                {(!showAll && subscriptionsNodes?.length > 1) && (
+                {(!showAll && subscriptions?.length > 1) && (
                     <Button
                         className="author-subscriptions__show"
                         text={`Показать все ${subscriptions?.length || 0} подписок`}
