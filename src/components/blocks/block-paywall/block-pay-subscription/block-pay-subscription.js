@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from "react-router-dom";
 import RouterStore from 'store/routes';
 
 import AjaxModule from 'services/ajax';
@@ -19,7 +18,6 @@ class PaySubcriptionModal extends Component {
         this.state = {
             open: props.open || true,
             sum: 16,
-            redirect: false,
         };
     }
 
