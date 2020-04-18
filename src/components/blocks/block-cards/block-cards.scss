@@ -4,8 +4,8 @@
   background-color: $color-dark-purple;
   display: flex;
   flex-direction: column;
-  padding: 0 20px;
-  // TODO fix height
+  padding: 0 20px;  
+  height: 100%;
 
   &__title {
     padding: 27px 120px;
