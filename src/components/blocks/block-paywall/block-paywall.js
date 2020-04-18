@@ -4,6 +4,9 @@ import { PostPayModal } from 'components/blocks/block-paywall/block-pay-post/blo
 import { PaySubcriptionModal } from 'components/blocks/block-paywall/block-pay-subscription/block-pay-subscription';
 import { PRIVACY } from 'store/const';
 import { disableScroll, enableScroll } from 'services/scroll';
+import { inject } from 'mobx-react';
+import { Redirect } from "react-router-dom";
+import RouterStore from 'store/routes';
 
 import './block-paywall.scss';
 
@@ -13,6 +16,7 @@ const PRIVACY_MSG = [
     'Пост доступен только для подписчиков или по единоразовой оплате',
 ];
 
+@inject('user')
 class BlockPaywall extends Component {
     constructor(props) {
         super(props);
@@ -22,6 +26,7 @@ class BlockPaywall extends Component {
             showSubcriptionPay: false,
             canView: false,
             post: null,
+            redirect: false,
         }; 
     }
 
@@ -34,6 +39,14 @@ class BlockPaywall extends Component {
     }
 
     openSubcriptionPayModal = () => {
+
+        const { user } = this.props;
+
+        if (!user.login) {
+            this.setState({ redirect: true });
+            return
+        }
+
         this.setState({ showSubcriptionPay: true });
     }
     
@@ -42,6 +55,14 @@ class BlockPaywall extends Component {
     }
 
     openPostPayModal = () => {
+
+        const { user } = this.props;
+
+        if (!user.login) {
+            this.setState({ redirect: true });
+            return
+        }
+
         this.setState({ showPostPay: true });
     }
     
@@ -68,6 +89,7 @@ class BlockPaywall extends Component {
     }
 
     render() {
+        const { redirect } = this.state;
         const { post } = this.props;
         const teaser = post.teaser || 'Автор не добавил тизер :(';
         
@@ -75,6 +97,9 @@ class BlockPaywall extends Component {
         const priceSubcription = post.subscription_sum ? `${post.subscription_sum} ₽` : 'Бесплатно';
         const controls = this._getControls();
 
+        if (redirect) {
+            return <Redirect to={RouterStore.pages.user.login} />
+        }
         return (
             <>
 

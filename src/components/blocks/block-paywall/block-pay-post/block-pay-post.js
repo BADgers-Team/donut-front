@@ -26,6 +26,8 @@ class PostPayModal extends Component {
     handlePayPost = (event) => {
         event.preventDefault();
 
+        
+
         const reqBody = {
             payment_type: 'Пост',
             post_id: this.props.postId,
