@@ -6,7 +6,7 @@ import RouteStore from 'store/routes';
 import AjaxModule from 'services/ajax';
 
 import './block-author-posts.scss';
-import Avatar from 'assets/img/michael.jpg';
+import Avatar from 'assets/img/michael.png';
 
 class BlockAuthorPosts extends Component {
     constructor(props) {

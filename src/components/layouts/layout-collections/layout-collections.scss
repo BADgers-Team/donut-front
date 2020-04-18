@@ -1,3 +1,20 @@
+@import 'components/app/consts';
+
 .layout-collections {
     width: 100%;
+}
+
+.continue {
+    background-color: $color-dark-purple;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: $color-dark-white;
+    font-size: 20px;
+    padding-bottom: 90px;
+
+    &__title {
+        margin-bottom: 12px;
+    }
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { inject } from 'mobx-react';
 import { BlockGoals } from 'components/blocks/block-author/block-goals/block-goals';
 
-import Avatar from 'assets/img/michael.jpg';
+import Avatar from 'assets/img/michael.png';
 
 import './block-author.scss';
 

@@ -5,7 +5,7 @@ import { getRouteWithID } from 'services/getRouteWithId';
 
 import './block-author-card.scss';
 
-import AvatarImage from 'assets/img/michael.jpg';
+import AvatarImage from 'assets/img/michael.png';
 import PostsIcon from 'assets/img/posts.svg';
 import { Like } from 'components/blocks/block-like/block-like';
 import { Seen } from 'components/blocks/block-seen/block-seen';

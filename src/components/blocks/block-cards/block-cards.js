@@ -5,8 +5,8 @@ import RouteStore from 'store/routes';
 
 import './block-cards.scss';
 import SubscribersIcon from 'assets/img/subscribers.svg';
-import CardImage from 'assets/img/card-image.jpg';
-import Avatar from 'assets/img/michael.jpg';
+import CardImage from 'assets/img/card-image.png';
+import Avatar from 'assets/img/michael.png';
 import Like from 'components/blocks/block-like/block-like';
 import Seen from 'components/blocks/block-seen/block-seen';
 

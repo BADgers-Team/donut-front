@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import './block-post-static.scss';
-import Avatar from 'assets/img/michael.jpg';
+import Avatar from 'assets/img/michael.png';
 import ActivityIcon from 'assets/img/activity.svg';
 import SubscriptionIcon from 'assets/img/subscription.svg';
 import CalendarIcon from 'assets/img/calendar.svg';

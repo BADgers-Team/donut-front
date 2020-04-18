@@ -6,7 +6,7 @@ import { getRouteWithID } from 'services/getRouteWithId';
 
 import './block-profile-post-card.scss';
 
-import AvatarMock from 'assets/img/michael.jpg';
+import AvatarMock from 'assets/img/michael.png';
 
 import { Like } from 'components/blocks/block-like/block-like';
 import { Seen } from 'components/blocks/block-seen/block-seen';
