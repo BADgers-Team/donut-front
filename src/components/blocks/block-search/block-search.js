@@ -35,8 +35,11 @@ class BlockSearch extends Component {
         
         const form = this._form.current;
 
+        let activitiesIDs = this.state.selectedActivities.map((value) => { return +value.id });
+
         let keys = {
-            activities: this.state.selectedActivities,
+            activities: activitiesIDs,
+
             data_type: form.postType.value,
             text: form.search.value,
         };
@@ -62,6 +65,8 @@ class BlockSearch extends Component {
             alert('Неверный диапазон цены!');
             return;
         }
+
+        debugger
 
         const { onClick } = this.props;
         onClick && onClick(keys);
@@ -224,18 +229,12 @@ class SelectedActivity extends Component {
         }
     }
 
-    // closeActivity = () => {
-    //     this.setState({ showActivity: false});
-    // }
-
     render() {
         const { activity, id } = this.props;
         return (
             <>
                 { this.state.showActivity && <div className="selected-activity" id={id}>
                     {activity}
-                    {/* TODO fix - remove from arrayActivities */}
-                    {/* <span id='close' style={{marginLeft: '10px'}} onClick={this.closeActivity}>x</span> */}
                 </div>}
             </>
         );
