@@ -28,3 +28,7 @@ body {
   width: 100%;
   padding-top: 60px;
 }
+
+input, textarea {
+  font-family: $font-title;
+}
