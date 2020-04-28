@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { classNames } from 'utils/class-names';
 
 import './input.scss';
 
@@ -39,8 +40,12 @@ class Input extends Component {
     };
 
     render() {
-        const { name, type, placeholder, label, id, onAction, text, min, max, classValue, material, value, fileTypes, custom, defaultValue } = this.props;
-        const classes = custom ? custom : null;
+        const { name, type, placeholder, label, id, onAction, text, min, max, classValue, material, value, fileTypes, custom, defaultValue, error, isRequired } = this.props;
+        const classes = classNames([
+            'input',
+            custom,
+            Boolean(error) && 'input-error'
+        ]);
         const action = onAction ? onAction : this.handleChangeValue;
         const { field } = this.state;
       
@@ -49,8 +54,12 @@ class Input extends Component {
         case this._types.text:
             node = (
                 <>
-                    {!label ? '' : <label className="input-label">{label}</label>}
+                    {!label ? '' : <label className="input-label">
+                        {label}
+                        {isRequired && <span style={{color: 'red'}}> *</span>}
+                    </label>}
                     <input ref={this._input} className={classes} type="text" placeholder={placeholder} name={name} value={field} spellCheck="true" onChange={action}/>
+                    {error && <span className="form-input__error">{error}</span>}
                 </>
             );
             break;
@@ -64,6 +73,7 @@ class Input extends Component {
                         </div>
                     </label>
                     <label id="loader"></label>
+                    {error && <span className="form-input__error">{error}</span>}
                     <input ref={this._input} type="file" className='file-input' accept={fileTypes} name={name} id={id} onChange={onAction}/>
                 </>
             );
@@ -71,15 +81,19 @@ class Input extends Component {
         case this._types.textarea:
             node = (
                 <>
-                    {!label ? '' : <label className="textarea-label">{label}</label>}
+                    {!label ? '' : <label className="textarea-label">
+                        {label}
+                        {isRequired && <span style={{color: 'red'}}> *</span>}
+                    </label>}
                     <textarea className={classes} ref={this._input} placeholder={placeholder} name={name} spellCheck="true"/>
+                    {error && <span className="form-input__error">{error}</span>}
                 </>
             );
             break;
         case this._types.number:
             node = (
                 <>
-                    <input ref={this._input} type="number" min={min} max={max} name={name} defaultValue={defaultValue} value={value}/>
+                    <input ref={this._input} type="number" min={min} max={max} name={name} defaultValue={defaultValue} value={value} className={classes}/>
                     {!label ? '' : <label className="number-label">{label}</label>}
                 </>
             );
@@ -129,10 +143,12 @@ class Input extends Component {
         return true;
     }
 
-    static finishLoader() {
+    static finishLoader(isSuccess) {
         if (!document.getElementById('loader')) return;
-        document.getElementById('loader').innerText = 'Файл загружен';
-        return false;
+        if (isSuccess) {
+            document.getElementById('loader').innerText = 'Файл загружен';
+        }
+        document.getElementById('loader').innerText = '';
     }
 
     componentDidMount() {
