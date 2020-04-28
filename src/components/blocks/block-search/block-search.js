@@ -186,6 +186,10 @@ class ActivitiesSelect extends Component {
         this.setState({showАctivities: !this.state.showАctivities});
     }
 
+    collapse = () => {
+        this.setState({showАctivities: false});
+    }
+
     render() {
         const { activities, selectedActivities } = this.state;
         const activitiesNodes = activities.map((activity, index) => {
@@ -207,12 +211,17 @@ class ActivitiesSelect extends Component {
                 </div>}
                 {(this.state.showАctivities || this.state.selectedActivities.length !== 0) && 
                 <div 
+                    tabIndex="0" onBlur={ this.collapse }
                     className={ `select-activity__list-title ${roundBorders}` }
                     name="activities" onClick={this.handleActivityDisplay}>
-                    Тематики: {selectedActivitiesNodes}
+                        Тематики: {selectedActivitiesNodes}
                 </div>}
-                <div className='select-activity__list' name="activities" style={{visibility: !this.state.showАctivities ? 'hidden' : 'visible'}}>
-                    {activitiesNodes}
+                <div 
+                    tabIndex="0" onBlur={ this.collapse }
+                    className='select-activity__list' 
+                    name="activities" 
+                    style={{visibility: !this.state.showАctivities ? 'hidden' : 'visible'}}>
+                        {activitiesNodes}
                 </div>
             </>
         );
