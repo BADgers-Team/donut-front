@@ -27,8 +27,6 @@
         left: 0;
         right: 0;
         bottom: 0;
-        //background: rgba(0, 0, 0, .5);
-        //background: linear-gradient(to bottom, transparent 20%, transparent 0%, black, $color-purple);
         background: linear-gradient(to bottom, transparentize($dimmer, .8), transparentize($dimmer, .2) 80%,  $dimmer);
         height: 320px;
     }
@@ -45,7 +43,6 @@
         justify-content: space-between;
     }
 
-    // COPYPASTE
     &__header {
         display: flex;
         flex-direction: row;
@@ -53,8 +50,7 @@
         //position: absolute;
         width: 100%;
         color: $color-dark-white;
-        //background: linear-gradient(to bottom, $color-grey-half-transparent, transparent);
-        height: 80px;
+        margin-bottom: 15px;
         font-size: 20px;
         opacity: 0.9;
         border-radius: 10px;
@@ -80,11 +76,10 @@
     }
 
     &__title {
+        padding: 0 15px;
+        margin: 20px 0 10px 0;
         color: $color-dark-white;
-        font-size: 32px;
-        text-align: center;
-        //width: 300px;
-        white-space: nowrap;
+        font-size: 28px;
         overflow: hidden;
         text-overflow: ellipsis;
     }
@@ -103,7 +98,7 @@
         align-items: center;
 
         &-login {
-            font-size: 20px;
+            font-size: 18px;
             color: $color-pink;
             text-decoration: none;
         }
@@ -116,15 +111,23 @@
         margin-left: 16px;
     }
 
+    &__content-container {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+
     &__content {
+        //flex-grow: 1;
         color: $color-dark-white;
-        font-size: 22px;
-        text-align: center;
-        //width: 300px;
-        white-space: nowrap;
+        font-size: 18px;
+        max-height: 150px;
+        line-height: 1.5;
         overflow: hidden;
         text-overflow: ellipsis;
-        padding: 10px 0;
+        padding: 15px;
+        margin-bottom: 25px;
     }
 
     &:hover {
@@ -133,112 +136,6 @@
         transition: all .2s ease-out;
         box-shadow: 0 16px 16px 0 $color-grey;
     }
-}
-
-._post-card {
-  width: 320px;
-  transition: all .2s ease-out;
-  border-radius: 10px;
-  position: relative;
-  text-decoration: none;
-
-  &__header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    position: absolute;
-    width: 100%;
-    color: $color-dark-white;
-    background: linear-gradient(to bottom, $color-grey-half-transparent, transparent);
-    height: 80px;
-    font-size: 20px;
-    opacity: 0.9;
-    border-radius: 10px;
-  }
-
-  &__date {
-    padding: 10px;
-  }
-
-  &__access {
-      &-lock {
-        padding: 10px;
-        width: 28px;
-        height: 28px;
-      }
-  }
-
-  &__preview {
-    //width: 360px;
-    //height: 360px;
-    width: 320px;
-    height: 320px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    display: block;
-  }
-
-  &__info {
-    background: linear-gradient(to bottom, $color-dark-purple, $color-medium-purple);
-    padding: 6px 12px 12px 12px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-  }
-
-  &__title {
-    color: $color-dark-white;
-    font-size: 32px;
-    text-align: center;
-    //width: 300px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  &__extra-info {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 0 4px 8px 4px;
-    align-items: center;
-  }
-
-  &__author {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  
-    &-login {
-      font-size: 20px;
-      color: $color-pink;
-      text-decoration: none;
-    }
-  }
-
-  &__icons {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-left: 16px;
-  }
-
-  &__content {
-    color: $color-dark-white;
-    font-size: 22px;
-    text-align: center;
-    //width: 300px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding: 10px 0;
-  }
-
-  &:hover {
-    transform: translateY(-6px);
-    cursor: pointer;
-    transition: all .2s ease-out;
-    box-shadow: 0 16px 16px 0 $color-grey;
-  }
 }
 
 .icons {
