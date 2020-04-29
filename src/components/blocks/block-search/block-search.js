@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 
 import AjaxModule from "services/ajax";
 import RouteStore from "store/routes";
@@ -171,8 +170,6 @@ class ActivitiesSelect extends Component {
     handleClickActivitiesOutside = event => {
         const domNode = this._activitiesSelector.current;
     
-        debugger 
-
         if ((!domNode || !domNode.contains(event.target)) && this._activitiesSelector.current.style.visibility === 'visible') {
             this.setState({
                 showАctivities: false
