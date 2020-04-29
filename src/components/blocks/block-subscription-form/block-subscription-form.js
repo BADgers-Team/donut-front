@@ -41,10 +41,13 @@ class BlockSubscriptionForm extends Component {
         const subscriptionsNodes = subscriptions && subscriptions.map((card, index) => {
             return <SubscriptionCard key={index} subscription={card} current={user} type={SubscriptionCard.types.profile}/>;
         });
+
+        debugger
+
         return (
             <form ref={this._form} id="subscription_form">
                 <div className="form__subscriptions">
-                    {subscriptionsNodes ? 
+                    {subscriptionsNodes.length !== 0 ? 
                     ( 
                         <>
                             <div className="form__subscriptions-title">Мои подписки</div>
