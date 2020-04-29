@@ -18,24 +18,16 @@ class BlockSubscriptionForm extends Component {
         super(props);
       
         this.state = { 
-            redirect: false,
-            showFree: false 
+            isFree: false,
         };
         this._form = React.createRef();
     }
 
     handleFreeClick = () => {
-        this.setState({ showFree: !this.state.showFree});
+        this.setState({ isFree: !this.state.isFree});
     }
     
     render() {
-        const { redirect } = this.state;
-        const { user } = this.props;
-
-        if (redirect) {
-            const profileUrl = getRouteWithID(RouterStore.pages.user.profile, user.login);
-            return <Redirect to={profileUrl} />;
-        }
         return (
             <form ref={this._form} id="subscription_form">
                 <div className="form__subscriptions">
@@ -56,9 +48,9 @@ class BlockSubscriptionForm extends Component {
                         </div>
                         <div className="form-control control-price">
                             <div className='bottom__free-checkbox'>
-                                <Input type={Input.types.checkbox} name="freeCheckbox" label="Бесплатно" material={true} onAction={this.handleFreeClick}/>
+                                <Input type={Input.types.checkbox} name="freeCheckbox" label="Бесплатно" id="freeCheckbox" material={true} onAction={this.handleFreeClick} checked={this.state.isFree}/>
                             </div>
-                            {!this.state.showFree && <div className="control-price__input">
+                            {!this.state.isFree && <div className="control-price__input">
                                 <Input label="₽" type={Input.types.number} name="price" min={16} defaultValue={16} placeholder="Цена"/>
                             </div>}
                         </div>
@@ -81,17 +73,22 @@ class BlockSubscriptionForm extends Component {
             sum: form.price ? +form.price?.value : 0,
         };
 
-        // TODO временная валидация
-        if (!reqBody.title || !reqBody.description) {
-            alert('Заполните навание и описание!');
-            return;
-        }
-
-        AjaxModule.post(RouterStore.api.subscriptions.new, reqBody).then(() => {
-            this.setState({ redirect: true });
+        AjaxModule.post(RouterStore.api.subscriptions.new, reqBody).then((data) => {
+            // this.setState({ subscriptions: data });
+            this.clearInputs();
         }).catch((error) => {
             console.error(error.message);
         });
+    }
+
+    clearInputs = () => {
+        const form = this._form.current;
+
+        this.setState({ isFree: false});
+
+        form.title.value = "";
+        form.description.value = "";
+        form.price.value = 16;
     }
 }
 
