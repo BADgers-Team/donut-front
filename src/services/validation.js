@@ -3,7 +3,7 @@ const ERROR_TYPES = {
     LENGTH: 'Длина поля должна быть от :min до :max символов',
     TYPE: 'Тип файла не допустим. ',
     SIZE: 'Размер файла должен быть до :max',
-    SUM: 'Стоимость может быть от :min до :max ₽',
+    SUM: 'Сумма может быть от :min до :max ₽',
     VALIDATION_FAILED: 'Произошла ошибка проверки поля',
     CUSTOM: ':text'
 };
@@ -13,6 +13,7 @@ export const FIELDS_TYPES = {
     CONTENT: 'content',
     FILE: 'file',
     SUM: 'sum',
+    SHORT_CONTENT: 'short-content',
 };
 
 export const FILES_TYPES = [
@@ -30,6 +31,8 @@ export const validate = (field, type) => {
         return checkTitle(field);
     case(FIELDS_TYPES.CONTENT):
         return checkContent(field);
+    case(FIELDS_TYPES.SHORT_CONTENT):
+        return checkShortContent(field);
     case(FIELDS_TYPES.FILE):
         return checkFile(field);
     case(FIELDS_TYPES.SUM):
@@ -64,6 +67,24 @@ const checkTitle = (field) => {
 const checkContent = (field) => {
     if (!field || field.length === 0) {
         return ERROR_TYPES.REQUIRED;
+    }
+    return null;
+};
+
+/** Функция проверки контента (содержимого), ограниченного по длине
+ * @param {string} field - поле, которое нужно проверить
+ * @returns {string|null}
+ */
+const checkShortContent = (field) => {
+    const maxLength = 270;
+    const minLength = 1;
+    if (!field || field.length === 0) {
+        return ERROR_TYPES.REQUIRED;
+    }
+    if (field.length > maxLength || field.length < minLength) {
+        return ERROR_TYPES.LENGTH
+            .replace(':min', minLength)
+            .replace(':max', maxLength);
     }
     return null;
 };

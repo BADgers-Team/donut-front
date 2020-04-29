@@ -5,6 +5,7 @@ import RouteStore from 'store/routes';
 import AjaxModule from 'services/ajax';
 
 import './goal-modal.scss';
+import {FIELDS_TYPES, validate} from 'services/validation';
 
 const MODAL_TITLE = 'Новая цель';
 
@@ -16,6 +17,10 @@ export class GoalModal extends Component {
             open: props.open || true,
             goal: '',
             sum: 16,
+            errors: {
+                title: null,
+                sum: null,
+            }
         };
     }
 
@@ -31,10 +36,21 @@ export class GoalModal extends Component {
 
     handleSubmit = (event) => {
         const { goal, sum } = this.state;
-        const { onSuccess } = this.props;
         event.preventDefault();
-        const form = event.target;
-        if (form) {
+
+        this.setState({
+            errors: {
+                title: validate(goal, FIELDS_TYPES.SHORT_CONTENT),
+                sum: validate(sum, FIELDS_TYPES.SUM),
+            }
+        }, this._makeRequest);
+    };
+
+    _makeRequest() {
+        const { goal, sum, errors } = this.state;
+        const { onSuccess } = this.props;
+        const isFormValid = Array.from(Object.values(errors)).filter(error => Boolean(error)).length === 0;
+        if (isFormValid) {
             AjaxModule.post(RouteStore.api.goals, {
                 title: goal,
                 sum_wanted: +sum,
@@ -44,10 +60,10 @@ export class GoalModal extends Component {
                 console.log(error.message);
             });
         }
-    };
+    }
 
     render() {
-        const { open, goal, sum } = this.state;
+        const { open, goal, sum, errors } = this.state;
         const { onClose } = this.props;
 
         return (
@@ -58,13 +74,18 @@ export class GoalModal extends Component {
             >
                 <form className="goal__form" onSubmit={this.handleSubmit}>
                     <div className="goal__subtitle">Расскажите своим подписчикам, чего вы хотите достичь с помощью Give me a donut!</div>
-                    <label className="goal__label" htmlFor="title">Моя цель</label>
+                    <label className="goal__label" htmlFor="title">
+                        Моя цель
+                        <span style={{color: 'red'}}> *</span>
+                    </label>
                     <textarea className="goal__textarea" name="title" value={goal} placeholder="Опишите кратко свою цель" onChange={this.handleGoalChange}/>
+                    {errors.title && <span className="form-input__error modal-input__error">{errors.title}</span>}
                     <label className="goal__label" htmlFor="sum">Я хочу собрать</label>
                     <div>
-                        <input className="goal__input" type="number" min="16" max="2147483647" name="sum" value={sum} onChange={this.handleSumChange}/>
+                        <input className="goal__input" type="number" name="sum" value={sum} onChange={this.handleSumChange}/>
                         <label className="goal__input-after">₽</label>
                     </div>
+                    {errors.sum && <span className="form-input__error modal-input__error">{errors.sum}</span>}
                     <Button className="goal__submit" type={Button.types.submit} text="Добавить цель"/>
                 </form>
             </BlockModal>

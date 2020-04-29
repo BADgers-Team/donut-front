@@ -56,12 +56,6 @@ class BlockSearch extends Component {
             keys.min_price = 0;
             keys.max_price = 0;
         }
-          
-        //TODO временная проверка
-        if (keys.min_price > keys.max_price) {
-            alert('Неверный диапазон цены!');
-            return;
-        }
 
         const { onClick } = this.props;
         onClick && onClick(keys);
