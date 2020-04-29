@@ -30,7 +30,6 @@ class BlockPostForm extends Component {
         this._form = React.createRef();
     }
 
-    // TODO почему вызывается по 4 раза каждый ?
     componentDidMount() {
         AjaxModule.get(RouterStore.api.activities).then((data) => {
             this.setState({ activities: data || [] });

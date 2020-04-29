@@ -42,6 +42,26 @@
 
     
     .form {
+        &__subscriptions {
+            height: 940px;
+            width: auto;
+            padding: 0 50px;
+
+            &-title {
+                text-align: center;
+                padding: 0 25px 25px 0;
+                font-size: 30px;
+                margin-left: 50px;
+            }
+
+            &-items {
+                height: 940px;
+                overflow-y: auto;
+                overflow-x: hidden;
+                width: 430px;
+            }
+        }
+
         &__inputs {
             width: 60%;
         }

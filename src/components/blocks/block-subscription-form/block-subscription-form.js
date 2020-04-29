@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 import { inject } from 'mobx-react';
 
 import RouterStore from 'store/routes';
 import AjaxModule from 'services/ajax';
-import { getRouteWithID } from 'services/getRouteWithId';
+import { SubscriptionCard } from 'components/blocks/block-cards/block-subscription-card/block-subscription-card';
 
 import Button from 'components/fragments/button/button';
 import Input from 'components/fragments/input/input';
@@ -19,8 +18,17 @@ class BlockSubscriptionForm extends Component {
       
         this.state = { 
             isFree: false,
+            subscriptions: [],
         };
         this._form = React.createRef();
+    }
+
+    componentDidMount() {
+        AjaxModule.get(RouterStore.api.subscriptions.my).then((data) => {
+            this.setState({ subscriptions: data || [] });
+        }).catch((error) => {
+            console.error(error.message);
+        });
     }
 
     handleFreeClick = () => {
@@ -28,10 +36,25 @@ class BlockSubscriptionForm extends Component {
     }
     
     render() {
+        const { user } = this.props;
+        const { subscriptions } = this.state;
+        const subscriptionsNodes = subscriptions && subscriptions.map((card, index) => {
+            return <SubscriptionCard key={index} subscription={card} current={user} type={SubscriptionCard.types.profile}/>;
+        });
         return (
             <form ref={this._form} id="subscription_form">
                 <div className="form__subscriptions">
-                    {/* TODO тут будут подписки */}
+                    {subscriptionsNodes ? 
+                    ( 
+                        <>
+                            <div className="form__subscriptions-title">Мои подписки</div>
+                            <div className="form__subscriptions-items">
+                                {subscriptionsNodes}
+                            </div>
+                        </>
+                    ) : (
+                        <div>Автор пока не добавил подписок</div>
+                    )}
                 </div>
 
                 <div className="form__inputs">
@@ -74,7 +97,7 @@ class BlockSubscriptionForm extends Component {
         };
 
         AjaxModule.post(RouterStore.api.subscriptions.new, reqBody).then((data) => {
-            // this.setState({ subscriptions: data });
+            this.setState({ subscriptions: data });
             this.clearInputs();
         }).catch((error) => {
             console.error(error.message);

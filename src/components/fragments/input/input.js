@@ -34,7 +34,6 @@ class Input extends Component {
     }
 
     handleChangeValue = (event) => {
-        debugger
         const value = event.target.value;
         this.setState({ field: value });
     };
