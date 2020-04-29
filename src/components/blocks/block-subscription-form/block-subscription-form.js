@@ -18,9 +18,14 @@ class BlockSubscriptionForm extends Component {
         super(props);
       
         this.state = { 
-            redirect: false 
+            redirect: false,
+            showFree: false 
         };
         this._form = React.createRef();
+    }
+
+    handleFreeClick = () => {
+        this.setState({ showFree: !this.state.showFree});
     }
     
     render() {
@@ -38,6 +43,7 @@ class BlockSubscriptionForm extends Component {
                 </div>
 
                 <div className="form__inputs">
+                    <div className="subscription-header">Создание новой подписки</div>
                     <div className="form-input input-title">
                         <Input label="Заголовок" type={Input.types.text} name="title" placeholder="Добавьте заголовок"/>
                     </div>
@@ -45,11 +51,16 @@ class BlockSubscriptionForm extends Component {
                         <Input label="Описание" type={Input.types.textarea} name="description" placeholder="Напишите что-нибудь..."/>
                     </div>
                     <div className="form__controls-subscription">
+                        <div className="form-control text-price">
+                            Вы можете создать платную или бесплатную подписку. Для платной подписки укажите стоимоть в месяц. Минимальная стоимость платной подписки - 16 ₽.
+                        </div>
                         <div className="form-control control-price">
-                            <label className='price-label'>Цена</label>
-                            <div className="control-price__input">
-                                <Input label="₽" type={Input.types.number} name="price" min={16} defaultValue={16}/>
+                            <div className='bottom__free-checkbox'>
+                                <Input type={Input.types.checkbox} name="freeCheckbox" label="Бесплатно" material={true} onAction={this.handleFreeClick}/>
                             </div>
+                            {!this.state.showFree && <div className="control-price__input">
+                                <Input label="₽" type={Input.types.number} name="price" min={16} defaultValue={16} placeholder="Цена"/>
+                            </div>}
                         </div>
                         <div className="form-control control-button">    
                             <Button text="Создать подписку" type={Button.types.submit} isDisabled={this.state.isDisabled} onAction={this.handleCreateSubscriptionClick}/>
@@ -67,7 +78,7 @@ class BlockSubscriptionForm extends Component {
         let reqBody = {
             title: form.title.value,
             description: form.description.value,
-            sum: form.price ? parseInt(form.price.value, 10) : 0,
+            sum: form.price ? +form.price?.value : 0,
         };
 
         // TODO временная валидация
@@ -84,4 +95,4 @@ class BlockSubscriptionForm extends Component {
     }
 }
 
-export default BlockSubscriptionForm;
+export { BlockSubscriptionForm };
