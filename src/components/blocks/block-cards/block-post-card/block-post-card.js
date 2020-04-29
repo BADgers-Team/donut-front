@@ -29,11 +29,11 @@ class PostCard extends Component {
     formatDate = (date) => {
         const d = new Date(date);
 
-        const day = d.getDate();
+        const day = String(d.getDate()).padStart(2, '0');
         const month = months[d.getMonth()];
         const year = d.getFullYear();
-        const hours = d.getHours();
-        const minutes = d.getMinutes();
+        const hours = String(d.getHours()).padStart(2, '0');
+        const minutes = String(d.getMinutes()).padStart(2, '0');
 
         return `${day} ${month} ${year} в ${hours}:${minutes}`;
     };
