@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
 import AjaxModule from "services/ajax";
 import RouteStore from "store/routes";
@@ -150,8 +151,8 @@ class ActivitiesSelect extends Component {
             showАctivities: false,
             showАctivitiesList: false,
         };
-        this.handleActivityDisplay = this.handleActivityDisplay.bind(this);
         this.toggleSelectedActivity = this.toggleSelectedActivity.bind(this);
+        this._activitiesSelector = React.createRef();
     }
 
     componentDidMount() {
@@ -160,6 +161,23 @@ class ActivitiesSelect extends Component {
         }).catch((error) => {
             console.error(error.message);
         });
+        document.addEventListener('click', this.handleClickActivitiesOutside, true);
+    }
+    
+    componentWillUnmount() {
+        document.removeEventListener('click', this.handleClickActivitiesOutside, true);
+    }
+    
+    handleClickActivitiesOutside = event => {
+        const domNode = this._activitiesSelector.current;
+    
+        debugger 
+
+        if ((!domNode || !domNode.contains(event.target)) && this._activitiesSelector.current.style.visibility === 'visible') {
+            this.setState({
+                showАctivities: false
+            });
+        }
     }
 
     toggleSelectedActivity(event) {
@@ -182,12 +200,17 @@ class ActivitiesSelect extends Component {
         });
     }
 
-    handleActivityDisplay() {
-        this.setState({showАctivities: !this.state.showАctivities});
+    openActivityDisplay = () => {
+        this.setState({showАctivities: true});
     }
 
-    collapse = () => {
-        this.setState({showАctivities: false});
+    handleListTitleClick = () => {
+        //TODO починить закрытие/открытие с учетом нажатий вне компонента
+        if (this._activitiesSelector.current.style.visibility === 'hidden') {
+            this.setState({showАctivities: true});
+        } else {
+            this.setState({showАctivities: false});
+        }        
     }
 
     render() {
@@ -205,19 +228,22 @@ class ActivitiesSelect extends Component {
 
         return (
             <>
-                {(!this.state.showАctivities && this.state.selectedActivities.length === 0) && <div className='select-activity__default' onClick={this.handleActivityDisplay}>
-                    Выберите тематики 
-                    <img src={ArrowDownIcon}/>
-                </div>}
+                {(!this.state.showАctivities && this.state.selectedActivities.length === 0) && 
+                    <div 
+                        className='select-activity__default' 
+                        onClick={this.openActivityDisplay}>
+                        Выберите тематики 
+                        <img src={ArrowDownIcon}/>
+                    </div>}
                 {(this.state.showАctivities || this.state.selectedActivities.length !== 0) && 
                 <div 
-                    tabIndex="0" onBlur={ this.collapse }
                     className={ `select-activity__list-title ${roundBorders}` }
-                    name="activities" onClick={this.handleActivityDisplay}>
+                    name="activities" 
+                    onClick={this.handleListTitleClick}>
                         Тематики: {selectedActivitiesNodes}
                 </div>}
                 <div 
-                    tabIndex="0" onBlur={ this.collapse }
+                    ref = {this._activitiesSelector}
                     className='select-activity__list' 
                     name="activities" 
                     style={{visibility: !this.state.showАctivities ? 'hidden' : 'visible'}}>
