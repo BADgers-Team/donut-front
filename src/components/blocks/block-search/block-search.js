@@ -37,7 +37,6 @@ class BlockSearch extends Component {
 
         let keys = {
             data_type: form.postType.value,
-            text: form.search.value,
         };
 
         let activitiesIDs = this.state.selectedActivities.map((value) => { return +value.id });
@@ -45,26 +44,21 @@ class BlockSearch extends Component {
             keys.activities = activitiesIDs;
         }
 
-        keys.min_price = 0;
-        keys.max_price = 0;
+        if (form.search.value !== "") {
+            keys.text = form.search.value;
+        }
 
         if (form.freeCheckbox.checked && form.subscritionCheckbox.checked) {
             keys.min_price = 0;
-            keys.max_price = parseInt(form.subscritionNumberMax.value, 10);
+            keys.max_price = +form.subscritionNumberMax.value;
         }
         if (!form.freeCheckbox.checked && form.subscritionCheckbox.checked) {
-            keys.min_price = parseInt(form.subscritionNumberMin.value, 10);
-            keys.max_price = parseInt(form.subscritionNumberMax.value, 10);
+            keys.min_price = +form.subscritionNumberMin.value;
+            keys.max_price = +form.subscritionNumberMax.value;
         }
         if (form.freeCheckbox.checked && !form.subscritionCheckbox.checked) {
             keys.min_price = 0;
             keys.max_price = 0;
-        }
-          
-        //TODO временная проверка
-        if (keys.min_price > keys.max_price) {
-            alert('Неверный диапазон цены!');
-            return;
         }
 
         const { onClick } = this.props;
