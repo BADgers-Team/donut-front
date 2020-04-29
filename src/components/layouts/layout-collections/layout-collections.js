@@ -28,7 +28,7 @@ class LayoutCollections extends Component {
     }
 
     handleChangeActivity = (key) => {
-        AjaxModule.get(RouteStore.api.posts.all, key !== 'Все' ? {activities: key} : null)
+        AjaxModule.get(RouteStore.api.posts.all, key !== 'Все' ? {activities: key} : {})
             .then((data) => {
                 this.setState({ posts: data || [] });
             })
