@@ -42,8 +42,6 @@ class BlockSubscriptionForm extends Component {
             return <SubscriptionCard key={index} subscription={card} current={user} type={SubscriptionCard.types.profile}/>;
         });
 
-        debugger
-
         return (
             <form ref={this._form} id="subscription_form">
                 <div className="form__subscriptions">
