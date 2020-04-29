@@ -37,8 +37,8 @@ class BlockFeedCards extends Component {
       
         const postCards = posts ? posts : [];
         const postСardsNodes = postCards.length !== 0 ? 
-                postCards.map((card, index) => {
-                    return <PostCard key={index} card={card} current={user}/>;
+                postCards.map((card) => {
+                    return <PostCard key={card.id} card={card} current={user}/>;
                 }) : <div className="empty-cards">Нет постов</div>;
 
         const subscriptionCards = subscriptions ? subscriptions : [];

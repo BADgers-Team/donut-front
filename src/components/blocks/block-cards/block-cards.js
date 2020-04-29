@@ -27,8 +27,8 @@ class BlockCards extends Component {
         const postCards = Array.isArray(cards) ? cards : cards.posts;
         let postСardsNodes = null;
         if (postCards && postCards.length > 0) {
-            postСardsNodes = postCards.map((card, index) => {
-                return <PostCard key={index} card={card} current={user}/>;
+            postСardsNodes = postCards.map((card) => {
+                return <PostCard key={card.id} card={card} current={user}/>;
             });
         }
 
