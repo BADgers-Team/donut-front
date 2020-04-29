@@ -36,31 +36,29 @@ class BlockSearch extends Component {
         const form = this._form.current;
 
         let keys = {
-            activities: this.state.selectedActivities,
             data_type: form.postType.value,
-            text: form.search.value,
         };
 
-        keys.min_price = 0;
-        keys.max_price = 0;
+        let activitiesIDs = this.state.selectedActivities.map((value) => { return +value.id });
+        if (activitiesIDs.length !== 0) {
+            keys.activities = activitiesIDs;
+        }
+
+        if (form.search.value !== "") {
+            keys.text = form.search.value;
+        }
 
         if (form.freeCheckbox.checked && form.subscritionCheckbox.checked) {
             keys.min_price = 0;
-            keys.max_price = parseInt(form.subscritionNumberMax.value, 10);
+            keys.max_price = +form.subscritionNumberMax.value;
         }
         if (!form.freeCheckbox.checked && form.subscritionCheckbox.checked) {
-            keys.min_price = parseInt(form.subscritionNumberMin.value, 10);
-            keys.max_price = parseInt(form.subscritionNumberMax.value, 10);
+            keys.min_price = +form.subscritionNumberMin.value;
+            keys.max_price = +form.subscritionNumberMax.value;
         }
         if (form.freeCheckbox.checked && !form.subscritionCheckbox.checked) {
             keys.min_price = 0;
             keys.max_price = 0;
-        }
-          
-        //TODO временная проверка
-        if (keys.min_price > keys.max_price) {
-            alert('Неверный диапазон цены!');
-            return;
         }
 
         const { onClick } = this.props;
@@ -145,8 +143,8 @@ class ActivitiesSelect extends Component {
             showАctivities: false,
             showАctivitiesList: false,
         };
-        this.handleActivityDisplay = this.handleActivityDisplay.bind(this);
         this.toggleSelectedActivity = this.toggleSelectedActivity.bind(this);
+        this._activitiesSelector = React.createRef();
     }
 
     componentDidMount() {
@@ -155,6 +153,21 @@ class ActivitiesSelect extends Component {
         }).catch((error) => {
             console.error(error.message);
         });
+        document.addEventListener('click', this.handleClickActivitiesOutside, true);
+    }
+    
+    componentWillUnmount() {
+        document.removeEventListener('click', this.handleClickActivitiesOutside, true);
+    }
+    
+    handleClickActivitiesOutside = event => {
+        const domNode = this._activitiesSelector.current;
+    
+        if ((!domNode || !domNode.contains(event.target)) && this._activitiesSelector.current.style.visibility === 'visible') {
+            this.setState({
+                showАctivities: false
+            });
+        }
     }
 
     toggleSelectedActivity(event) {
@@ -177,8 +190,17 @@ class ActivitiesSelect extends Component {
         });
     }
 
-    handleActivityDisplay() {
-        this.setState({showАctivities: !this.state.showАctivities});
+    openActivityDisplay = () => {
+        this.setState({showАctivities: true});
+    }
+
+    handleListTitleClick = () => {
+        //TODO починить закрытие/открытие с учетом нажатий вне компонента
+        if (this._activitiesSelector.current.style.visibility === 'hidden') {
+            this.setState({showАctivities: true});
+        } else {
+            this.setState({showАctivities: false});
+        }        
     }
 
     render() {
@@ -196,18 +218,26 @@ class ActivitiesSelect extends Component {
 
         return (
             <>
-                {(!this.state.showАctivities && this.state.selectedActivities.length === 0) && <div className='select-activity__default' onClick={this.handleActivityDisplay}>
-                    Выберите тематики 
-                    <img src={ArrowDownIcon}/>
-                </div>}
+                {(!this.state.showАctivities && this.state.selectedActivities.length === 0) && 
+                    <div 
+                        className='select-activity__default' 
+                        onClick={this.openActivityDisplay}>
+                        Выберите тематики 
+                        <img src={ArrowDownIcon}/>
+                    </div>}
                 {(this.state.showАctivities || this.state.selectedActivities.length !== 0) && 
                 <div 
                     className={ `select-activity__list-title ${roundBorders}` }
-                    name="activities" onClick={this.handleActivityDisplay}>
-                    Тематики: {selectedActivitiesNodes}
+                    name="activities" 
+                    onClick={this.handleListTitleClick}>
+                        Тематики: {selectedActivitiesNodes}
                 </div>}
-                <div className='select-activity__list' name="activities" style={{visibility: !this.state.showАctivities ? 'hidden' : 'visible'}}>
-                    {activitiesNodes}
+                <div 
+                    ref = {this._activitiesSelector}
+                    className='select-activity__list' 
+                    name="activities" 
+                    style={{visibility: !this.state.showАctivities ? 'hidden' : 'visible'}}>
+                        {activitiesNodes}
                 </div>
             </>
         );
@@ -224,18 +254,12 @@ class SelectedActivity extends Component {
         }
     }
 
-    // closeActivity = () => {
-    //     this.setState({ showActivity: false});
-    // }
-
     render() {
         const { activity, id } = this.props;
         return (
             <>
                 { this.state.showActivity && <div className="selected-activity" id={id}>
                     {activity}
-                    {/* TODO fix - remove from arrayActivities */}
-                    {/* <span id='close' style={{marginLeft: '10px'}} onClick={this.closeActivity}>x</span> */}
                 </div>}
             </>
         );
