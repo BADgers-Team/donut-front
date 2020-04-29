@@ -13,15 +13,27 @@ import { PRIVACY } from 'store/const';
 
 const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
 
+const trim = (str, length) => {
+    if (str.length <= length) {
+        return str;
+    }
+
+    const sliced = str.slice(0, length - 3);
+    const slicedArr = sliced.split(' ');
+    const result = slicedArr.slice(0, -1).join(' ');
+
+    return `${result}...`;
+};
+
 class PostCard extends Component {
     formatDate = (date) => {
         const d = new Date(date);
 
-        const day = d.getDate();
+        const day = String(d.getDate()).padStart(2, '0');
         const month = months[d.getMonth()];
         const year = d.getFullYear();
-        const hours = d.getHours();
-        const minutes = d.getMinutes();
+        const hours = String(d.getHours()).padStart(2, '0');
+        const minutes = String(d.getMinutes()).padStart(2, '0');
 
         return `${day} ${month} ${year} в ${hours}:${minutes}`;
     };
@@ -41,38 +53,48 @@ class PostCard extends Component {
         const cardContent = card.teaser ? card.teaser : card.description;
 
         const isAvailable = card.visible_type === PRIVACY.OPEN || card.paid || card.follows || current?.login === card.author.login;
-        
+
         return (
             <Link className="post-card" to={cardRoute}>
-                <div className="post-card__header">
-                    <div className="post-card__date">{cardDate}</div>
-                    {!isAvailable && (
-                        <div className="post-card__access">
-                            <img className="post-card__access-lock" src={LockIcon} alt="preview"/>
+                <div className="post-card__preview" style={{
+                    backgroundImage: `url('${cardPreview}')`
+                }}/>
+                <div className="post-card__dimmer"/>
+                <div className="post-card__container">
+                    <div className="post-card__header">
+                        <div className="post-card__date">{cardDate}</div>
+                        {!isAvailable && (
+                            <div className="post-card__access">
+                                <img className="post-card__access-lock" src={LockIcon} alt="preview"/>
+                            </div>
+                        )}
+                    </div>
+                    <div className="post-card__content-container">
+                        <div className="post-card__title">
+                            {cardTitle}
                         </div>
-                    )}
-                </div>
-                <img className="post-card__preview" src={cardPreview} alt="preview"/>
-                <div className="post-card__info">
-                    <div className="post-card__extra-info">
-                        <div className="post-card__author">
-                            <div className="post-card__author-login">{`@${login}`}</div>
-                        </div>
-                        <div className="post-card__icons">                         
-                            <Like likesCount={likes} currentUserLiked={currentUserLiked} postId={postId}
-                            likedClass="icons__likes-liked" 
-                            dislikedClass="icons__likes-disliked" 
-                            textClass="icons__likes-text icons-text"/>
-                            <Seen seen={seen} 
-                            iconClass="icons__views-icon" 
-                            textClass="icons__views-text icons-text"/>
+                        <div className="post-card__content">
+                            {/* Длина подобрана эмпирически */}
+                            {trim(cardContent, 140)}
                         </div>
                     </div>
-                    <div className="post-card__title">
-                        <span>{cardTitle}</span>
-                    </div>
-                    <div className="post-card__content">
-                        <span>{cardContent}</span>
+                    <div className="post-card__info">
+                        <div className="post-card__extra-info">
+                            <div className="post-card__author">
+                                <div className="post-card__author-login">{`@${login}`}</div>
+                            </div>
+                            <div className="post-card__icons">
+                                <Like
+                                    likesCount={likes} currentUserLiked={currentUserLiked} postId={postId}
+                                    likedClass="icons__likes-liked"
+                                    dislikedClass="icons__likes-disliked"
+                                    textClass="icons__likes-text icons-text"/>
+                                <Seen
+                                    seen={seen}
+                                    iconClass="icons__views-icon"
+                                    textClass="icons__views-text icons-text"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </Link>

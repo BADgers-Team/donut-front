@@ -43,7 +43,8 @@
     align-items: center;
   
     &-login {
-      font-size: 28px;
+      //font-size: 28px;
+      font-size: 20px;
       color: $color-pink;
       text-decoration: none;
     }
@@ -77,13 +78,14 @@
 
     &-text {
         color: $color-dark-white;
-        font-size: 28px
+        //font-size: 28px
+        font-size: 20px;
     }
 
-    &-text:not(*:last-child) {
-        font-size: 28px;
-        margin-right: 18px;
-    }
+    //&-text:not(*:last-child) {
+    //    font-size: 28px;
+    //    margin-right: 18px;
+    //}
 }
 
 .activities-item {
