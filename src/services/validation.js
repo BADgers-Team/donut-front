@@ -51,7 +51,7 @@ const checkTitle = (field) => {
         return ERROR_TYPES.REQUIRED;
     }
     const titleMaxLength = 70;
-    const titleMinLength = 5;
+    const titleMinLength = 1;
     if (field.length > titleMaxLength || field.length < titleMinLength) {
         return ERROR_TYPES.LENGTH
             .replace(':min', titleMinLength)

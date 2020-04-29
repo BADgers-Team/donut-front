@@ -257,7 +257,7 @@ class BlockPostForm extends Component {
             errors: {
                 title: validate(form.title?.value, FIELDS_TYPES.TITLE),
                 description: validate(form.description?.value, FIELDS_TYPES.CONTENT),
-                sum: validate(form.price?.value, FIELDS_TYPES.SUM),
+                sum: form.price ? validate(form.price?.value, FIELDS_TYPES.SUM) : 0,
             }
         }, this._makeRequest);
     }
