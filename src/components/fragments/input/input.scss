@@ -2,12 +2,19 @@
     display: none;
 }
 
-input {
+.input {
     display: inline-block;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    box-sizing: border-box; 
+    border: 2px solid transparent;
+    box-sizing: border-box;
     outline: none;
-  }
-  
 
+    border-radius: 10px;
+    font-size: 16px;
+    margin-right: 8px;
+    resize: none;
+}
+
+.input-error {
+    transition: border 0.2s ease-in;
+    border: 2px solid red;
+}

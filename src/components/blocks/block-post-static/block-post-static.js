@@ -15,6 +15,8 @@ import { PRIVACY } from 'store/const';
 import RouteStore from 'store/routes';
 import { getRouteWithID } from 'services/getRouteWithId';
 import { inject } from 'mobx-react';
+import { Redirect } from "react-router-dom";
+
 
 @inject('user')
 class BlockPostStatic extends Component {
@@ -24,6 +26,7 @@ class BlockPostStatic extends Component {
         this.state = {
             showModal: false,
             showSubcriptionPay: false,
+            redirect: false,
         };
     }
 
@@ -42,6 +45,13 @@ class BlockPostStatic extends Component {
     };
 
     openSubcriptionPayModal = () => {
+        const { user } = this.props;
+
+        if (!user.login) {
+            this.setState({ redirect: true });
+            return
+        }
+
         this.setState({ showSubcriptionPay: true });
     }
     
@@ -60,6 +70,7 @@ class BlockPostStatic extends Component {
 
 
     render() {
+        const { redirect } = this.state;
         const { post, user } = this.props;
         const login = post.author.login || 'cool_user';
         const profileRoute = getRouteWithID(RouteStore.pages.user.profile, login);
@@ -72,6 +83,9 @@ class BlockPostStatic extends Component {
         const price = post.sum ? `${post.sum} ₽` : 'Бесплатно';
         const avatar = post.author.avatar || Avatar;
 
+        if (redirect) {
+            return <Redirect to={RouterStore.pages.user.login} />
+        }
         return (
             <>
                 {this.state.showSubcriptionPay && <PaySubcriptionModal   

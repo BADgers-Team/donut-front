@@ -34,15 +34,6 @@
     }
 
     &-input {
-        input, textarea {  
-            border-radius: 10px;
-            font-size: 16px;
-            outline: none;
-            margin-right: 8px;
-            border-color: transparent;
-        }
-
-
         .file-button{
             border-radius: 10px;
             background-color: #6549B8;
@@ -57,6 +48,22 @@
             outline: none;
             border-color: transparent;
             color: #F2F2F2;
+        }
+
+        &__error {
+            display: block;
+            color: red;
+            margin: 2px;
+            animation: fadeOut .2s ease-in;
+
+            &.no-subscriptions {
+                align-self: flex-start;
+                padding-left: 110px;
+            }
+
+            &.sum-error{
+                align-self: flex-start;
+            }
         }
     }
 
@@ -116,7 +123,7 @@
     display: flex;
     align-items: center;
 
-    input {
+    .input {
         border-radius: 10px;
         font-size: 16px;
         outline: none;
@@ -127,6 +134,11 @@
         width: 100%;
     }
 
+    .input-error {
+        transition: border 0.2s ease-in;
+        border: 2px solid red;
+    }
+
     .number-label {
         font-size: 40px;
     }
@@ -134,4 +146,13 @@
 
 .disabled {
     opacity: 0.6;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
