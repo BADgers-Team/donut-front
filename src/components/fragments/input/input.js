@@ -39,7 +39,7 @@ class Input extends Component {
     };
 
     render() {
-        const { name, type, placeholder, label, id, onAction, text, min, max, classValue, material, value, fileTypes, custom, defaultValue } = this.props;
+        const { name, type, placeholder, label, id, onAction, text, min, max, classValue, material, value, fileTypes, custom, defaultValue, checked } = this.props;
         const classes = custom ? custom : null;
         const action = onAction ? onAction : this.handleChangeValue;
         const { field } = this.state;
@@ -50,7 +50,7 @@ class Input extends Component {
             node = (
                 <>
                     {!label ? '' : <label className="input-label">{label}</label>}
-                    <input ref={this._input} className={classes} type="text" placeholder={placeholder} name={name} value={field} spellCheck="true" onChange={action}/>
+                    <input ref={this._input} className={classes} type="text" placeholder={placeholder} name={name} defaultValue={defaultValue} value={value} spellCheck="true" onChange={action}/>
                 </>
             );
             break;
@@ -85,7 +85,7 @@ class Input extends Component {
             );
             break;       
         case this._types.checkbox:
-            if (material) {  
+            if (material) { 
                 node = (
                     <>
                         <FormControlLabel
@@ -96,6 +96,7 @@ class Input extends Component {
                             onChange={onAction}
                             className={classValue}
                             id={`${id}`}
+                            checked = {checked}
                         />}
                         label={label}
                         labelPlacement="end"

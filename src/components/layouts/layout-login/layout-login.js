@@ -55,10 +55,10 @@ class LayoutLogin extends Component {
                         <div className="layout-login__form-subtitle">Заполните информацию о себе, чтобы другие пользователи сервиса смогли с вами познакомиться!</div>
                         <form className="layout-login__form-user" onSubmit={this.handleSubmit}>
                             <div className="layout-login__form-user-control">
-                                <Input label="Имя" type={Input.types.text} name="name" value={user.name} custom="login__input"/>
+                                <Input label="Имя" type={Input.types.text} name="name" defaultValue={user.name} custom="login__input"/>
                             </div>
                             <div className="layout-login__form-user-control">
-                                <Input label="Логин" type={Input.types.text} name="login" value={login} custom="login__input"/>
+                                <Input label="Логин" type={Input.types.text} name="login" defaultValue={login} custom="login__input"/>
                             </div>
                             <div className="layout-login__form-user-control">
                                 <Input
