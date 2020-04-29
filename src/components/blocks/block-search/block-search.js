@@ -66,8 +66,6 @@ class BlockSearch extends Component {
             return;
         }
 
-        debugger
-
         const { onClick } = this.props;
         onClick && onClick(keys);
     };
