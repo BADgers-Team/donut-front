@@ -59,7 +59,7 @@ class Input extends Component {
                         {label}
                         {isRequired && <span style={{color: 'red'}}> *</span>}
                     </label>}
-                    <input ref={this._input} className={classes} type="text" placeholder={placeholder} name={name} defaultValue={defaultValue} value={field} spellCheck="true" onChange={action}/>
+                    <input ref={this._input} className={classes} type="text" placeholder={placeholder} name={name} defaultValue={defaultValue} value={value} spellCheck="true" onChange={action}/>
                     {error && <span className="form-input__error">{error}</span>}
                 </>
             );
