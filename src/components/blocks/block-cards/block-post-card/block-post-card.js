@@ -41,42 +41,85 @@ class PostCard extends Component {
         const cardContent = card.teaser ? card.teaser : card.description;
 
         const isAvailable = card.visible_type === PRIVACY.OPEN || card.paid || card.follows || current?.login === card.author.login;
-        
+
         return (
             <Link className="post-card" to={cardRoute}>
-                <div className="post-card__header">
-                    <div className="post-card__date">{cardDate}</div>
-                    {!isAvailable && (
-                        <div className="post-card__access">
-                            <img className="post-card__access-lock" src={LockIcon} alt="preview"/>
-                        </div>
-                    )}
-                </div>
-                <img className="post-card__preview" src={cardPreview} alt="preview"/>
-                <div className="post-card__info">
-                    <div className="post-card__extra-info">
-                        <div className="post-card__author">
-                            <div className="post-card__author-login">{`@${login}`}</div>
-                        </div>
-                        <div className="post-card__icons">                         
-                            <Like likesCount={likes} currentUserLiked={currentUserLiked} postId={postId}
-                            likedClass="icons__likes-liked" 
-                            dislikedClass="icons__likes-disliked" 
-                            textClass="icons__likes-text icons-text"/>
-                            <Seen seen={seen} 
-                            iconClass="icons__views-icon" 
-                            textClass="icons__views-text icons-text"/>
-                        </div>
+                <div className="post-card__preview" style={{
+                    backgroundImage: `url('${cardPreview}')`
+                }}/>
+                <div className="post-card__dimmer"/>
+                <div className="post-card__container">
+                    <div className="post-card__header">
+                        <div className="post-card__date">{cardDate}</div>
+                        {!isAvailable && (
+                            <div className="post-card__access">
+                                <img className="post-card__access-lock" src={LockIcon} alt="preview"/>
+                            </div>
+                        )}
                     </div>
-                    <div className="post-card__title">
-                        <span>{cardTitle}</span>
-                    </div>
-                    <div className="post-card__content">
-                        <span>{cardContent}</span>
+                    <div className="post-card__info">
+                        <div className="post-card__extra-info">
+                            <div className="post-card__author">
+                                <div className="post-card__author-login">{`@${login}`}</div>
+                            </div>
+                            <div className="post-card__icons">
+                                <Like
+                                    likesCount={likes} currentUserLiked={currentUserLiked} postId={postId}
+                                    likedClass="icons__likes-liked"
+                                    dislikedClass="icons__likes-disliked"
+                                    textClass="icons__likes-text icons-text"/>
+                                <Seen
+                                    seen={seen}
+                                    iconClass="icons__views-icon"
+                                    textClass="icons__views-text icons-text"/>
+                            </div>
+                        </div>
+                        <div className="post-card__title">
+                            <span>{cardTitle}</span>
+                        </div>
+                        <div className="post-card__content">
+                            <span>{cardContent}</span>
+                        </div>
                     </div>
                 </div>
             </Link>
         );
+
+        // return (
+        //     <Link className="post-card" to={cardRoute}>
+        //         <div className="post-card__header">
+        //             <div className="post-card__date">{cardDate}</div>
+        //             {!isAvailable && (
+        //                 <div className="post-card__access">
+        //                     <img className="post-card__access-lock" src={LockIcon} alt="preview"/>
+        //                 </div>
+        //             )}
+        //         </div>
+        //         <img className="post-card__preview" src={cardPreview} alt="preview"/>
+        //         <div className="post-card__info">
+        //             <div className="post-card__extra-info">
+        //                 <div className="post-card__author">
+        //                     <div className="post-card__author-login">{`@${login}`}</div>
+        //                 </div>
+        //                 <div className="post-card__icons">
+        //                     <Like likesCount={likes} currentUserLiked={currentUserLiked} postId={postId}
+        //                     likedClass="icons__likes-liked"
+        //                     dislikedClass="icons__likes-disliked"
+        //                     textClass="icons__likes-text icons-text"/>
+        //                     <Seen seen={seen}
+        //                     iconClass="icons__views-icon"
+        //                     textClass="icons__views-text icons-text"/>
+        //                 </div>
+        //             </div>
+        //             <div className="post-card__title">
+        //                 <span>{cardTitle}</span>
+        //             </div>
+        //             <div className="post-card__content">
+        //                 <span>{cardContent}</span>
+        //             </div>
+        //         </div>
+        //     </Link>
+        // );
     }
 }
 
