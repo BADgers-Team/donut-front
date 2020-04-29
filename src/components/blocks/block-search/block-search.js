@@ -35,14 +35,15 @@ class BlockSearch extends Component {
         
         const form = this._form.current;
 
-        let activitiesIDs = this.state.selectedActivities.map((value) => { return +value.id });
-
         let keys = {
-            activities: activitiesIDs,
-
             data_type: form.postType.value,
             text: form.search.value,
         };
+
+        let activitiesIDs = this.state.selectedActivities.map((value) => { return +value.id });
+        if (activitiesIDs.length !== 0) {
+            keys.activities = activitiesIDs;
+        }
 
         keys.min_price = 0;
         keys.max_price = 0;
