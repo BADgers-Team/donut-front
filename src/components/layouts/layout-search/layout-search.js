@@ -19,7 +19,6 @@ class LayoutSearch extends Component {
     componentDidMount() {
         AjaxModule.get(RouteStore.api.search, [])
             .then((data) => {
-                console.log(data);
                 this.setState({ posts: data || [] });
             })
             .catch((error) => {
@@ -32,7 +31,6 @@ class LayoutSearch extends Component {
         console.log("KEYS", keys);
         AjaxModule.get(RouteStore.api.search, keys)
             .then((data) => {
-                console.log(data);
                 this.setState({ posts: data || [] });
             })
             .catch((error) => {

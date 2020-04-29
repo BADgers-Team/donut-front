@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import RouteStore from 'store/routes';
 import { getRouteWithID } from 'services/getRouteWithId';
+import { inject } from 'mobx-react';
 
 import './block-like.scss';
 import LikeIcon from 'assets/img/like.svg';
@@ -9,6 +10,7 @@ import DislikeIcon from 'assets/img/dislike.svg';
 
 import AjaxModule from 'services/ajax';
 
+@inject('user')
 class Like extends Component {
     constructor(props) {
         super(props);
@@ -22,8 +24,13 @@ class Like extends Component {
     handleLikeClick = (event) => {     
         event.preventDefault();
         
-        const id = this.props.postId;
-        const route = getRouteWithID(RouteStore.api.posts.like, id);
+        const { postId, user } = this.props;
+
+        if (!user.login) {
+            return;
+        }
+
+        const route = getRouteWithID(RouteStore.api.posts.like, postId);
 
         AjaxModule.post(route).then((data) => {
             this.setState({ liked: !this.state.liked });

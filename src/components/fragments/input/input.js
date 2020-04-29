@@ -40,12 +40,13 @@ class Input extends Component {
     };
 
     render() {
-        const { name, type, placeholder, label, id, onAction, text, min, max, classValue, material, value, fileTypes, custom, defaultValue, error, isRequired } = this.props;
+        const { name, type, placeholder, label, id, onAction, text, min, max, classValue, material, value, fileTypes, custom, defaultValue, error, isRequired, checked } = this.props;
         const classes = classNames([
             'input',
             custom,
             Boolean(error) && 'input-error'
         ]);
+      
         const action = onAction ? onAction : this.handleChangeValue;
         const { field } = this.state;
       
@@ -58,7 +59,7 @@ class Input extends Component {
                         {label}
                         {isRequired && <span style={{color: 'red'}}> *</span>}
                     </label>}
-                    <input ref={this._input} className={classes} type="text" placeholder={placeholder} name={name} value={field} spellCheck="true" onChange={action}/>
+                    <input ref={this._input} className={classes} type="text" placeholder={placeholder} name={name} defaultValue={defaultValue} value={field} spellCheck="true" onChange={action}/>
                     {error && <span className="form-input__error">{error}</span>}
                 </>
             );
@@ -99,7 +100,7 @@ class Input extends Component {
             );
             break;       
         case this._types.checkbox:
-            if (material) {  
+            if (material) { 
                 node = (
                     <>
                         <FormControlLabel
@@ -110,6 +111,7 @@ class Input extends Component {
                             onChange={onAction}
                             className={classValue}
                             id={`${id}`}
+                            checked = {checked}
                         />}
                         label={label}
                         labelPlacement="end"
