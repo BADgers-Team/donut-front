@@ -11,7 +11,7 @@ import { Like } from 'components/blocks/block-like/block-like';
 import { Seen } from 'components/blocks/block-seen/block-seen';
 import { PRIVACY } from 'store/const';
 
-const months = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
+const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
 
 class PostCard extends Component {
     formatDate = (date) => {
@@ -23,14 +23,14 @@ class PostCard extends Component {
         const hours = d.getHours();
         const minutes = d.getMinutes();
 
-        return `${day} ${month} ${year} в ${hours}:${minutes}`
-    }
+        return `${day} ${month} ${year} в ${hours}:${minutes}`;
+    };
 
     render() {
         const { card, current } = this.props;
         const postId = card.id;
         const login = card.author.login;
-        const profileRoute = getRouteWithID(RouteStore.pages.user.profile, login);
+        // const profileRoute = getRouteWithID(RouteStore.pages.user.profile, login);
         const cardRoute = getRouteWithID(RouteStore.api.posts.id, card.id);  
         const cardDate = this.formatDate(card.created_at);
         const cardPreview = card.files ? card.files[0] : CardImage;      

@@ -1,7 +1,7 @@
 @import 'components/app/consts';
 
 .post-card {
-  width: 360px;
+  width: 320px;
   transition: all .2s ease-out;
   border-radius: 10px;
   position: relative;
@@ -34,8 +34,10 @@
   }
 
   &__preview {
-    width: 360px;
-    height: 360px;
+    //width: 360px;
+    //height: 360px;
+    width: 320px;
+    height: 320px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     display: block;
@@ -52,7 +54,7 @@
     color: $color-dark-white;
     font-size: 32px;
     text-align: center;
-    width: 336px;
+    //width: 300px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -82,13 +84,14 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-left: 16px;
   }
 
   &__content {
     color: $color-dark-white;
     font-size: 22px;
     text-align: center;
-    width: 336px;
+    //width: 300px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -110,15 +113,15 @@
         align-items: center;
 
         &-liked {
-            width: 28px;
-            height: 28px;
-            margin-right: 12px;
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
         }
       
         &-disliked {
-            width: 28px;
-            height: 28px;
-            margin-right: 38px !important;
+            width: 20px;
+            height: 20px;
+            margin-right: 20px !important;
         }
     }
 
@@ -128,19 +131,19 @@
         align-items: center;
         
         &-icon {
-            width: 28px;
-            height: 28px;
-            margin-right: 12px;
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
         }
     }
 
     &-text {
         color: $color-dark-white;
-        font-size: 28px
+        font-size: 20px
     }
 
     &-text:not(*:last-child) {
-        font-size: 28px;
-        margin-right: 18px;
+        font-size: 20px;
+        margin-right: 8px;
     }
 }
