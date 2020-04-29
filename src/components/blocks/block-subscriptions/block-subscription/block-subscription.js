@@ -6,7 +6,9 @@ import { PaySubcriptionModal } from 'components/blocks/block-paywall/block-pay-s
 
 import { Redirect } from "react-router-dom";
 import RouterStore from 'store/routes';
+import { inject } from 'mobx-react';
 
+@inject('user')
 class BlockSubscription extends Component {
     constructor(props) {
         super(props);

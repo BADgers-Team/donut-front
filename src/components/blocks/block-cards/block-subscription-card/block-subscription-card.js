@@ -6,12 +6,14 @@ import { Redirect } from "react-router-dom";
 
 import './block-subscription-card.scss';
 import Button from 'components/fragments/button/button';
+import { inject } from 'mobx-react';
 
 import BellIcon from 'assets/img/bell.svg';
 import UserIcon from 'assets/img/user.svg';
 import SubscribersIcon from 'assets/img/subscribers.svg';
 import { PaySubcriptionModal } from 'components/blocks/block-paywall/block-pay-subscription/block-pay-subscription';
 
+@inject('user')
 class SubscriptionCard extends Component {
     constructor(props) {
         super(props);
