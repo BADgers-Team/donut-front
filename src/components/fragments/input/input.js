@@ -149,8 +149,9 @@ class Input extends Component {
         if (!document.getElementById('loader')) return;
         if (isSuccess) {
             document.getElementById('loader').innerText = 'Файл загружен';
+        } else {
+            document.getElementById('loader').innerText = '';
         }
-        document.getElementById('loader').innerText = '';
     }
 
     componentDidMount() {
