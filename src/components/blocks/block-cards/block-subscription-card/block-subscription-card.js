@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import RouteStore from 'store/routes';
+import RouterStore from 'store/routes';
 import { getRouteWithID } from 'services/getRouteWithId';
 
 import './block-subscription-card.scss';
@@ -19,10 +19,19 @@ class SubscriptionCard extends Component {
         this.state = {
             post: null,
             showSubcriptionPay: false,
+            redirect: false,
         };
     }
 
     openSubcriptionPayModal = () => {
+
+        const { user } = this.props;
+
+        if (!user.login) {
+            this.setState({ redirect: true });
+            return
+        }
+
         this.setState({ showSubcriptionPay: true });
     }
     
@@ -48,10 +57,11 @@ class SubscriptionCard extends Component {
     }
 
     render() {
+        const { redirect } = this.state;
         const { subscription, current, type } = this.props;
 
         const login = subscription.user_login;
-        const profileRoute = getRouteWithID(RouteStore.pages.user.profile, login);
+        const profileRoute = getRouteWithID(RouterStore.pages.user.profile, login);
         const sum = subscription.sum === 0 ? 'Бесплатно' : `${subscription.sum} ₽ в месяц`;
         const cardBackgroundClass = type === this._types.profile ? 'card-profile' : 'card-common';
         const subscribers = subscription.subscribers_count;
@@ -59,6 +69,9 @@ class SubscriptionCard extends Component {
         const isAvailable = subscription.follows || current?.login === login;
         const price = subscription.sum ? `${subscription.sum} ₽ в месяц` : 'Бесплатно';
         
+        if (redirect) {
+            return <Redirect to={RouterStore.pages.user.login} />
+        }
         return (
             <>
                 {this.state.showSubcriptionPay && <PaySubcriptionModal   

@@ -4,6 +4,7 @@ import './block-subscription.scss';
 import Button from 'components/fragments/button/button';
 import { PaySubcriptionModal } from 'components/blocks/block-paywall/block-pay-subscription/block-pay-subscription';
 
+import RouterStore from 'store/routes';
 
 class BlockSubscription extends Component {
     constructor(props) {
@@ -12,10 +13,18 @@ class BlockSubscription extends Component {
         this.state = {
             post: null,
             showSubcriptionPay: false,
+            redirect: false,
         };
     }
 
     openSubcriptionPayModal = () => {
+        const { user } = this.props;
+
+        if (!user.login) {
+            this.setState({ redirect: true });
+            return
+        }
+
         this.setState({ showSubcriptionPay: true });
     }
     
@@ -34,8 +43,13 @@ class BlockSubscription extends Component {
     }
 
     render() {
+        const { redirect } = this.state;
         const { subscription, current, user } = this.props;
         const price = subscription.sum ? `${subscription.sum} ₽ в месяц` : 'Бесплатно';
+        
+        if (redirect) {
+            return <Redirect to={RouterStore.pages.user.login} />
+        }
         return (
             <>
                 {this.state.showSubcriptionPay && <PaySubcriptionModal   
