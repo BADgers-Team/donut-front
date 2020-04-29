@@ -4,6 +4,7 @@ import './block-subscription.scss';
 import Button from 'components/fragments/button/button';
 import { PaySubcriptionModal } from 'components/blocks/block-paywall/block-pay-subscription/block-pay-subscription';
 
+import { Redirect } from "react-router-dom";
 import RouterStore from 'store/routes';
 
 class BlockSubscription extends Component {

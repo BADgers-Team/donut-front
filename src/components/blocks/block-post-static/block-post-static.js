@@ -12,9 +12,11 @@ import { Like } from 'components/blocks/block-like/block-like';
 import { Seen } from 'components/blocks/block-seen/block-seen';
 import { DonatForm } from 'components/blocks/block-post-static/donat-form/donat-form';
 import { PRIVACY } from 'store/const';
-import RouterStore from 'store/routes';
+import RouteStore from 'store/routes';
 import { getRouteWithID } from 'services/getRouteWithId';
 import { inject } from 'mobx-react';
+import { Redirect } from "react-router-dom";
+
 
 @inject('user')
 class BlockPostStatic extends Component {

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import RouterStore from 'store/routes';
 import { getRouteWithID } from 'services/getRouteWithId';
+import { Redirect } from "react-router-dom";
 
 import './block-subscription-card.scss';
 import Button from 'components/fragments/button/button';
