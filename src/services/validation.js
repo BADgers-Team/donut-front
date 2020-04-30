@@ -4,6 +4,7 @@ const ERROR_TYPES = {
     TYPE: 'Тип файла не допустим. ',
     SIZE: 'Размер файла должен быть до :max',
     SUM: 'Сумма может быть от :min до :max ₽',
+    COUNT: 'Количество не может быть меньше :min',
     VALIDATION_FAILED: 'Произошла ошибка проверки поля',
     CUSTOM: ':text'
 };
@@ -14,6 +15,7 @@ export const FIELDS_TYPES = {
     FILE: 'file',
     SUM: 'sum',
     SHORT_CONTENT: 'short-content',
+    COUNT: 'count',
 };
 
 export const FILES_TYPES = [
@@ -38,6 +40,8 @@ export const validate = (field, type) => {
         return checkFile(field);
     case(FIELDS_TYPES.SUM):
         return checkSum(field);
+    case(FIELDS_TYPES.COUNT):
+        return checkCount(field);
     default:
         return ERROR_TYPES.VALIDATION_FAILED;
     }
@@ -131,5 +135,20 @@ const checkSum = (field) => {
         return ERROR_TYPES.SUM
             .replace(':min', minPrice)
             .replace(':max', maxPrice);
+    }
+};
+
+/** Функция проверки количества
+ * @param {string} field - поле, которое нужно проверить
+ * @returns {string|null}
+ */
+const checkCount = (field) => {
+    if (!field) {
+        return ERROR_TYPES.CUSTOM.replace(':text', 'Не удалось установить количество');
+    }
+    const minCount = 1;
+    if (+field < minCount) {
+        return ERROR_TYPES.COUNT
+            .replace(':min', minCount);
     }
 };

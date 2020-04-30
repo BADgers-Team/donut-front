@@ -10,6 +10,7 @@ import Input from 'components/fragments/input/input';
 
 
 import './block-subscription-form.scss';
+import {FIELDS_TYPES, validate} from 'services/validation';
 
 @inject('user')
 class BlockSubscriptionForm extends Component {
@@ -19,6 +20,10 @@ class BlockSubscriptionForm extends Component {
         this.state = { 
             isFree: false,
             subscriptions: [],
+            errors: {
+                title: null,
+                sum: null,
+            }
         };
         this._form = React.createRef();
     }
@@ -33,11 +38,11 @@ class BlockSubscriptionForm extends Component {
 
     handleFreeClick = () => {
         this.setState({ isFree: !this.state.isFree});
-    }
+    };
     
     render() {
         const { user } = this.props;
-        const { subscriptions } = this.state;
+        const { subscriptions, errors } = this.state;
         const subscriptionsNodes = subscriptions && subscriptions.map((card, index) => {
             return <SubscriptionCard key={index} subscription={card} current={user} type={SubscriptionCard.types.profile}/>;
         });
@@ -45,8 +50,7 @@ class BlockSubscriptionForm extends Component {
         return (
             <form ref={this._form} id="subscription_form">
                 <div className="form__subscriptions">
-                    {subscriptionsNodes.length !== 0 ? 
-                    ( 
+                    {subscriptionsNodes.length !== 0 ? (
                         <>
                             <div className="form__subscriptions-title">Мои подписки</div>
                             <div className="form__subscriptions-items">
@@ -61,14 +65,21 @@ class BlockSubscriptionForm extends Component {
                 <div className="form__inputs">
                     <div className="subscription-header">Создание новой подписки</div>
                     <div className="form-input input-title">
-                        <Input label="Заголовок" type={Input.types.text} name="title" placeholder="Добавьте заголовок"/>
+                        <Input
+                            label="Заголовок"
+                            type={Input.types.text}
+                            name="title"
+                            placeholder="Добавьте заголовок"
+                            error={errors.title}
+                            isRequired={true}
+                        />
                     </div>
                     <div className="form-input input-description">
                         <Input label="Описание" type={Input.types.textarea} name="description" placeholder="Напишите что-нибудь..."/>
                     </div>
                     <div className="form__controls-subscription">
                         <div className="form-control text-price">
-                            Вы можете создать платную или бесплатную подписку. Для платной подписки укажите стоимоть в месяц. Минимальная стоимость платной подписки - 16 ₽.
+                            Вы можете создать платную или бесплатную подписку. Для платной подписки укажите стоимость в месяц. Минимальная стоимость платной подписки - 16 ₽.
                         </div>
                         <div className="form-control control-price">
                             <div className='bottom__free-checkbox'>
@@ -78,6 +89,7 @@ class BlockSubscriptionForm extends Component {
                                 <Input label="₽" type={Input.types.number} name="price" min={16} defaultValue={16} placeholder="Цена"/>
                             </div>}
                         </div>
+                        {errors.sum && <span className="form-input__error">{errors.sum}</span>}
                         <div className="form-control control-button">    
                             <Button text="Создать подписку" type={Button.types.submit} isDisabled={this.state.isDisabled} onAction={this.handleCreateSubscriptionClick}/>
                         </div>
@@ -91,18 +103,31 @@ class BlockSubscriptionForm extends Component {
         event.preventDefault();
 
         const form = this._form.current;
-        let reqBody = {
-            title: form.title.value,
-            description: form.description.value,
-            sum: form.price ? +form.price?.value : 0,
-        };
+        this.setState({
+            errors: {
+                title: validate(form.title?.value, FIELDS_TYPES.TITLE),
+                sum: form.price ? validate(form.price?.value, FIELDS_TYPES.SUM) : null,
+            }
+        }, this._makeRequest);
+    };
 
-        AjaxModule.post(RouterStore.api.subscriptions.new, reqBody).then((data) => {
-            this.setState({ subscriptions: data });
-            this.clearInputs();
-        }).catch((error) => {
-            console.error(error.message);
-        });
+    _makeRequest() {
+        const { errors } = this.state;
+
+        const form = this._form.current;
+        const isFormValid = Array.from(Object.values(errors)).filter(error => Boolean(error)).length === 0;
+        if (isFormValid) {
+            const body = {
+                title: form.title.value,
+                sum: form.price ? +form.price?.value : 0,
+            };
+
+            AjaxModule.post(RouterStore.api.subscriptions.new, body).then((data) => {
+                this.setState({ subscriptions: data }, this.clearInputs);
+            }).catch((error) => {
+                console.error(error.message);
+            });
+        }
     }
 
     clearInputs = () => {
@@ -110,8 +135,8 @@ class BlockSubscriptionForm extends Component {
 
         this.setState({ isFree: false});
 
-        form.title.value = "";
-        form.description.value = "";
+        form.title.value = '';
+        form.description.value = '';
         form.price.value = 16;
     }
 }

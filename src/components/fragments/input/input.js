@@ -13,9 +13,6 @@ class Input extends Component {
         this._types = Input.types;
         this._events = Input.events;
         this._input = React.createRef();
-        this.state = {
-            field: props.value || '',
-        };
     }
 
     static get types() {
@@ -48,8 +45,7 @@ class Input extends Component {
         ]);
       
         const action = onAction ? onAction : this.handleChangeValue;
-        const { field } = this.state;
-      
+
         let node;
         switch(type) {
         case this._types.text:

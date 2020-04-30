@@ -6,6 +6,7 @@ import { DonatPayModal } from 'components/blocks/block-post-static/donat-form/do
 import './donat-form.scss';
 import DonutPicture from 'assets/img/donut.png';
 import { PRICE } from 'store/const';
+import { FIELDS_TYPES, validate } from 'services/validation';
 
 const MSG_PLACEHOLDER = 'Напишите сообщение... (опционально)';
 const COUNTS = [1, 2, 5];
@@ -17,6 +18,7 @@ class DonatForm extends Component {
         this.state = {
             count: 1,
             showModal: false,
+            error: null,
         };
     }
 
@@ -33,9 +35,18 @@ class DonatForm extends Component {
     handleFormSubmit = (event) => {
         event.preventDefault();
         const form = event.target;
-        console.log('Отправляем пончик...');
-        console.log(form.message.value);
-        console.log(form.submit.value.split(' ')[1]);
+
+        this.setState({
+            error: validate(form.count?.value, FIELDS_TYPES.COUNT),
+        }, () => {
+            const { error } = this.state;
+            if (!error) {
+                console.log('Отправляем пончик...');
+                console.log(form.message.value);
+                console.log(form.submit.value.split(' ')[1]);
+                this.openModal();
+            }
+        });
     };
 
     calculatePrice = () => {
@@ -45,11 +56,11 @@ class DonatForm extends Component {
 
     openModal = () => {
         this.setState({ showModal: true });
-    }
+    };
     
     closeModal = () => {
         this.setState({ showModal: false });
-    }
+    };
 
     handleSuccessChange = () => {
         this.closeModal();
@@ -57,7 +68,7 @@ class DonatForm extends Component {
 
     render() {
         const { author, post } = this.props;
-        const { count } = this.state;
+        const { count, error } = this.state;
         const price = this.calculatePrice();
         const countsNodes = COUNTS.map((number, index) => {
             return (
@@ -70,12 +81,15 @@ class DonatForm extends Component {
 
         return (
             <>
-                {this.state.showModal && <DonatPayModal   
-                id={post.id}
-                title={post.title}   
-                price={price}                        
-                onClose={this.closeModal}
-                onSuccess={this.handleSuccessChange}/>}
+                {this.state.showModal && (
+                    <DonatPayModal
+                        id={post.id}
+                        title={post.title}
+                        price={price}
+                        onClose={this.closeModal}
+                        onSuccess={this.handleSuccessChange}
+                    />
+                )}
 
                 <form className="donat-form" onSubmit={this.handleFormSubmit}>
                     <div className="donat-form__label">
@@ -89,13 +103,14 @@ class DonatForm extends Component {
                             <div className="donat-form__donut-price">{PRICE} ₽</div>
                         </div>
                         <div className="donat-form__multi">x</div>
-                        <Input custom="donat-form__input" type={Input.types.text} value={count} onAction={this.handleChangeCount}/>
+                        <Input custom="donat-form__input" type={Input.types.text} value={count} onAction={this.handleChangeCount} name="count"/>
                         <div className="donat-form__counts">
                             {countsNodes}
                         </div>
                     </div>
+                    {error && <span className="form-input__error sum-error">{error}</span>}
                     <Input custom="donat-form__message" name="message" type={Input.types.textarea} placeholder={MSG_PLACEHOLDER}/>
-                    <Button className="donat-form__submit" type={Button.types.submit} onAction={this.openModal} text={`Задонатить ${price} ₽`} name="submit"/>
+                    <Button className="donat-form__submit" type={Button.types.submit} text={`Задонатить ${price} ₽`} name="submit"/>
                 </form>
             </>
         );
