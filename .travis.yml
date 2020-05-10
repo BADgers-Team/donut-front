@@ -19,4 +19,5 @@ before_install:
 - ssh -i ./deploy_key $MACHINE_USERNAME@$MACHINE_ADDRESS pwd
 after_success:
 - npm ci && npm run build
+- ssh -i ./deploy_key $MACHINE_USERNAME@$MACHINE_ADDRESS "sudo rm -rf /workenv/donut-front/dist/*"
 - scp -rp -i ./deploy_key ./dist/* $MACHINE_USERNAME@$MACHINE_ADDRESS:/workenv/donut-front/dist/
