@@ -135,7 +135,9 @@ class BlockPostStatic extends Component {
                                         <Button text="Подписаться" onAction={this.openSubcriptionPayModal} type={Button.types.link}/>
                                     </div>
                                 )}
-                                <DonatForm author={login} post={post}/>
+                                { user?.login !== post.author.login && (
+                                    <DonatForm author={login} post={post}/>
+                                )}
                             </div>
                         )}
                     </div>
