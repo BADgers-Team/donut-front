@@ -74,7 +74,7 @@ class BlockPostStatic extends Component {
         const { post, user } = this.props;
         const login = post.author.login || 'cool_user';
         const profileRoute = getRouteWithID(RouteStore.pages.user.profile, login);
-        const visibility = post.visible_type === 'Открыт для всех' ? 'Это публичный пост :)' : post.visible_type;
+        const visibility = post.subscription ? post.subscription : 'Без подписки';
         const date = new Date(post.created_at).toLocaleDateString('en-US') || '23/02/2020';
         const postId = post.id;
         const likes = post.likes_count || 0;
@@ -131,8 +131,8 @@ class BlockPostStatic extends Component {
                         {(post.visible_type === PRIVACY.OPEN || post.paid || post.follows || user?.login === post.author.login) && (
                             <div className="post-static__controls">
                                 {(!post.follows && post.visible_type !== PRIVACY.PRICE && post.subscription && user?.login !== post.author.login) && (
-                                    <div className="post-static__control">
-                                        <Button text="Подписаться" onAction={this.openSubcriptionPayModal} type={Button.types.link}/>
+                                    <div className="post-static__control" onClick={this.openSubcriptionPayModal}>
+                                        <Button text="Подписаться" type={Button.types.link}/>
                                     </div>
                                 )}
                                 { user?.login !== post.author.login && (
