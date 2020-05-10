@@ -1,7 +1,6 @@
 @import 'components/app/app.scss';
 
 .subscription-card {
-  width: 360px;
   border-radius: 10px;
   margin-bottom: 12px;
   padding: 15px 20px;
@@ -15,6 +14,7 @@
     font-size: 32px;
     font-weight: bold;
     margin-bottom: 8px;
+    overflow-wrap: anywhere;
   }
 
   &__price {
@@ -27,6 +27,7 @@
     font-size: 22px;
     text-align: justify;
     margin-bottom: 8px;
+    overflow-wrap: anywhere;
   }
 
   &__icons {
