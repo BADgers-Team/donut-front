@@ -4,7 +4,6 @@
   "description": "Frontend repo for project Donuting",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --open --hot",
     "build": "webpack --mode production",
     "linter": "npx eslint -c .eslintrc.json './**/*.js'",
