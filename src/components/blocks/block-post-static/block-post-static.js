@@ -83,8 +83,6 @@ class BlockPostStatic extends Component {
         const price = post.sum ? `${post.sum} ₽` : 'Бесплатно';
         const avatar = post.author.avatar || Avatar;
 
-        debugger
-
         if (redirect) {
             return <Redirect to={RouterStore.pages.user.login} />
         }
