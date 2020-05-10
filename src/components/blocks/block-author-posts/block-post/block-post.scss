@@ -52,7 +52,7 @@
     justify-content: space-between;
 
     &-disliked__icon {
-      margin-right: 38px !important;
+      margin-right: 8px !important;
     }
 
     &-statistic {
@@ -63,6 +63,10 @@
         height: 20px;
         margin-right: 8px;
         cursor: pointer;
+      }
+
+      &__text {
+        margin-right: 5px;
       }
 
       &__text:not(*:last-child) {

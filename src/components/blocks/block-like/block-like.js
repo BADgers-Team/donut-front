@@ -33,7 +33,7 @@ class Like extends Component {
         const route = getRouteWithID(RouteStore.api.posts.like, postId);
 
         AjaxModule.post(route).then((data) => {
-            this.setState({ liked: !this.state.liked });
+            this.setState({ liked: data.liked });
             this.setState({ likesCount: data.likes_count });
         }).catch((error) => {
             console.error(error.message);
@@ -41,12 +41,12 @@ class Like extends Component {
     }
 
     render() {
-        const { likedClass, dislikedClass, textClass} = this.props
+        const { likedClass, dislikedClass, textClass} = this.props;
         return (
             <>
                 {this.state.liked && <img className={likedClass} src={LikeIcon} alt="like" onClick={this.handleLikeClick} />}
                 {!this.state.liked && <img className={dislikedClass} src={DislikeIcon} alt="dislike" onClick={this.handleLikeClick} />}
-                {this.state.likesCount !== 0 && <div className={textClass}>{this.state.likesCount}</div>}
+                <div className={textClass + `${this.state.likesCount !== 0 ? '' : ' hidden-text'}`}>{this.state.likesCount}</div>
             </>
         );
     }
