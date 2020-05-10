@@ -41,12 +41,12 @@ class Like extends Component {
     }
 
     render() {
-        const { likedClass, dislikedClass, textClass} = this.props
+        const { likedClass, dislikedClass, textClass} = this.props;
         return (
             <>
                 {this.state.liked && <img className={likedClass} src={LikeIcon} alt="like" onClick={this.handleLikeClick} />}
                 {!this.state.liked && <img className={dislikedClass} src={DislikeIcon} alt="dislike" onClick={this.handleLikeClick} />}
-                {this.state.likesCount !== 0 && <div className={textClass}>{this.state.likesCount}</div>}
+                <div className={textClass + `${this.state.likesCount !== 0 ? '' : ' hidden-text'}`}>{this.state.likesCount}</div>
             </>
         );
     }

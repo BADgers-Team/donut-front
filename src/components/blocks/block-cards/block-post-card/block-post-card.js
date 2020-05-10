@@ -10,6 +10,7 @@ import LockIcon from 'assets/img/lock.svg';
 import { Like } from 'components/blocks/block-like/block-like';
 import { Seen } from 'components/blocks/block-seen/block-seen';
 import { PRIVACY } from 'store/const';
+import { abbrNumber } from 'utils/functions';
 
 const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
 
@@ -45,10 +46,10 @@ class PostCard extends Component {
         // const profileRoute = getRouteWithID(RouteStore.pages.user.profile, login);
         const cardRoute = getRouteWithID(RouteStore.api.posts.id, card.id);  
         const cardDate = this.formatDate(card.created_at);
-        const cardPreview = card.files ? card.files[0] : CardImage;      
-        const likes = card.likes_count || 0;
+        const cardPreview = card.files ? card.files[0] : CardImage;             
+        const likes = abbrNumber(card.likes_count);
         const currentUserLiked = card.liked;
-        const seen = card.views_count || 1;
+        const seen = abbrNumber(card.views_count);
         const cardTitle = card.title;
         const cardContent = card.teaser ? card.teaser : card.description;
 

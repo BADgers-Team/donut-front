@@ -158,7 +158,11 @@
         &-disliked {
             width: $icon-size;
             height: $icon-size;
-            margin-right: $icon-size !important;
+            margin-right: 8px !important;
+        }
+
+        &-text {
+            margin-right: 5px;
         }
     }
 

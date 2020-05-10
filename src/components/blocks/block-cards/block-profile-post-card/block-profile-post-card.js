@@ -10,6 +10,7 @@ import AvatarMock from 'assets/img/michael.png';
 
 import { Like } from 'components/blocks/block-like/block-like';
 import { Seen } from 'components/blocks/block-seen/block-seen';
+import { abbrNumber } from 'utils/functions';
 
 const months = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
 
@@ -27,17 +28,13 @@ class ProfilePostCard extends Component {
     }
 
     render() {
-        const { post } = this.props;
-        const login = post.author.login;
-        const avatar = post.author.avatar ? post.author.avatar : AvatarMock;
+        const { post, login, avatar } = this.props;
         const postId = post.id;
         const date = this.formatDate(post.created_at);
-        //TODO если пост закрыт и без тизера?(вынести на обсуждение) + делать проверку на свою и чужую страницы 
-        const tizer = post.tizer || `Всегда незаметные вещи могут быть гораздо важнее чересчур привлекательных. 
-                                     Этот пост о невероятной силе человеческого слова в описании природы`;
-        const likes = post.likes_count || 0;
+        const teaser = post.teaser || post.description;
+        const likes = abbrNumber(post.likes_count);
         const currentUserLiked = post.liked;
-        const seen = post.views_count || 1;
+        const seen = abbrNumber(post.views_count);
         const postRoute = getRouteWithID(RouteStore.pages.posts.id, postId);
         return (
             <div className="profile-post-card">
@@ -49,7 +46,7 @@ class ProfilePostCard extends Component {
                     </div>
                 </div>
                 <div className="profile-post-card__title">{post.title}</div>
-                <div className="profile-post-card__tizer">{tizer}</div>
+                <div className="profile-post-card__tizer">{teaser}</div>
                 <div className="profile-post-card__extra">
                     <div className="profile-post-card__extra-statistic">
                         <Like likesCount={likes} currentUserLiked={currentUserLiked} postId={postId}

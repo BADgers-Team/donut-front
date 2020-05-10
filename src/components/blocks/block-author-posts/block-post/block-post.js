@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import RouteStore from 'store/routes';
 import { getRouteWithID } from 'services/getRouteWithId';
+import { abbrNumber } from 'utils/functions';
 
 import './block-post.scss';
 
@@ -15,9 +16,9 @@ class BlockPost extends Component {
         const postId = post.id;
         const date = new Date(post.created_at).toLocaleDateString('en-US') || '23/02/2020';
         const teaser = post.teaser || post.description;
-        const likes = post.likes_count || 0;
+        const likes = abbrNumber(post.likes_count);
         const currentUserLiked = post.liked;
-        const seen = post.views_count || 1;
+        const seen = abbrNumber(post.views_count);
         const postRoute = getRouteWithID(RouteStore.pages.posts.id, post.id);
         return (
             <div className="author-post">
