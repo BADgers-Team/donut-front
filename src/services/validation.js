@@ -19,8 +19,8 @@ export const FIELDS_TYPES = {
 };
 
 export const FILES_TYPES = [
-    // '.jpg', '.png', '.gif', '.heic'
-    '.jpg', '.png', '.gif'
+    '.jpg', '.png', '.gif', '.heic'
+    //'.jpg', '.png', '.gif'
 ];
 
 /** Функция валидации вводимых данных
