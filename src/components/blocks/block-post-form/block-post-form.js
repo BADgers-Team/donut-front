@@ -8,6 +8,7 @@ import Select from 'components/fragments/select/select';
 
 import AjaxModule from 'services/ajax';
 import { validate, FIELDS_TYPES, FILES_TYPES } from 'services/validation';
+import { getRouteWithID } from 'services/getRouteWithId';
 
 import './block-post-from.scss';
 
@@ -16,7 +17,8 @@ class BlockPostForm extends Component {
         super(props);
       
         this.state = { 
-            postIDs: [], 
+            fileIDs: [], 
+            postID: 0, 
             activities: [],
             subscriptions: [],
             visibleTypes: [],
@@ -64,7 +66,7 @@ class BlockPostForm extends Component {
     }
     
     render() {
-        const { activities, visibleTypes, subscriptions, redirect, errors } = this.state;
+        const { activities, visibleTypes, subscriptions, redirect, errors, postID } = this.state;
 
         const visibleTypeSelect = visibleTypes.map((type) => {
             return {
@@ -89,9 +91,10 @@ class BlockPostForm extends Component {
         });
 
         const teaserPlaceholder =  'Напишите тизер, чтобы пользователи, у которых ещё нет доступа к посту, могли понять о чём вы пишите. Используйте это краткое описание для привлечения новых подписчиков...(опционально)';
+        const postRoute = getRouteWithID(RouterStore.api.posts.id, postID);  
         
         if (redirect) {
-            return <Redirect to={RouterStore.pages.collections} />;
+            return <Redirect to={postRoute} />;
         }
         return (
             <form ref={this._form} id="post_form">
@@ -224,7 +227,7 @@ class BlockPostForm extends Component {
                         throw new Error(response.data?.message);
                     }
                     this.setState((prevState => ({
-                        postIDs: [...prevState.postIDs, response.data]
+                        fileIDs: [...prevState.fileIDs, response.data]
                     })));
                     this.setState({isDisabled: Input.finishLoader(true)}, this.checkDisabledButtonStyle);
                 })
@@ -274,7 +277,7 @@ class BlockPostForm extends Component {
                 subscription_id: form.subscription ?+form.subscription.options[form.subscription.selectedIndex].id : 0,
                 sum: form.price ? +form.price.value : 0,
                 visible_type_id: +form.visibleTypes.options[form.visibleTypes.selectedIndex].id,
-                file_ids: this.state.postIDs,
+                file_ids: this.state.fileIDs,
                 activity_id: +form.activity.options[form.activity.selectedIndex].id,
             };
 
@@ -282,6 +285,7 @@ class BlockPostForm extends Component {
                 if (response.status !== 201) {
                     throw new Error(response.data?.message || 'Не удалось создать пост');
                 }
+                this.setState({ postID: response.data.id });
                 this.setState({ redirect: true });
             }).catch((error) => {
                 // TODO: нотифайку, что не удалось создать пост
