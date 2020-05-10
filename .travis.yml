@@ -14,6 +14,7 @@ before_install:
 - eval "$(ssh-agent -s)"
 - chmod 600 ./deploy_key
 - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+- ssh-keyscan -H $MACHINE_ADDRESS >> ~/.ssh/known_hosts
 - ssh-add ./deploy_key
 - ssh -i ./deploy_key $MACHINE_USERNAME@$MACHINE_ADDRESS pwd
 after_success:
