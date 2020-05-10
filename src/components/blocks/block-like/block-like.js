@@ -33,7 +33,7 @@ class Like extends Component {
         const route = getRouteWithID(RouteStore.api.posts.like, postId);
 
         AjaxModule.post(route).then((data) => {
-            this.setState({ liked: !this.state.liked });
+            this.setState({ liked: data.liked });
             this.setState({ likesCount: data.likes_count });
         }).catch((error) => {
             console.error(error.message);
