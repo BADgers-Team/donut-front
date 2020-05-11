@@ -43,7 +43,6 @@
     
     .form {
         &__subscriptions {
-            height: 940px;
             width: auto;
             padding: 0 50px;
 
@@ -55,7 +54,7 @@
             }
 
             &-items {
-                height: 940px;
+                height: 750px;
                 overflow-y: auto;
                 overflow-x: hidden;
                 width: 430px;
