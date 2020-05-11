@@ -150,7 +150,7 @@ class BlockHeader extends Component {
         return (
             <>
                 <Link className={this._getTabClassName(3)} to="/feed" onClick={this.handleChangeTab} data-id="3">
-                    <Button text="Моя лента" type={Button.types.block}/>
+                    <Button text="Лента" type={Button.types.block}/>
                 </Link>
                 <Link className={this._getTabClassName(4)} to={RouteStore.pages.search} onClick={this.handleChangeTab} data-id="4">
                     <Button text="Поиск" type={Button.types.block}/>
