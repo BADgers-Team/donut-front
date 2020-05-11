@@ -28,7 +28,6 @@ class LayoutSearch extends Component {
 
     //TODO запрос на поиск пойдет туть и тут же выборки, пришли посты или кто то еще
     handleSubmitSearch = (keys) => {
-        console.log("KEYS", keys);
         AjaxModule.get(RouteStore.api.search, keys)
             .then((data) => {
                 this.setState({ posts: data || [] });

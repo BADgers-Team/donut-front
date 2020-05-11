@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { getRouteWithID } from 'services/getRouteWithId';
-import RouteStore from 'store/routes';
-
-import './block-cards.scss';
-import SubscribersIcon from 'assets/img/subscribers.svg';
-import CardImage from 'assets/img/card-image.png';
-import Avatar from 'assets/img/michael.png';
-import Like from 'components/blocks/block-like/block-like';
-import Seen from 'components/blocks/block-seen/block-seen';
+import { inject } from 'mobx-react';
 
 import { PostCard } from 'components/blocks/block-cards/block-post-card/block-post-card';
 import { SubscriptionCard } from 'components/blocks/block-cards/block-subscription-card/block-subscription-card';
 import { AuthorCard } from 'components/blocks/block-cards/block-author-card/block-author-card';
-import { inject, observer } from 'mobx-react';
+import { BlockEmpty } from 'components/blocks/block-empty/block-empty';
+
+import './block-cards.scss';
+import RouteStore from 'store/routes';
 
 @inject('user')
 class BlockCards extends Component {
@@ -25,55 +19,59 @@ class BlockCards extends Component {
       
         //TODO пофиксить переиспользуемость карточек для поиска и главной
         const postCards = Array.isArray(cards) ? cards : cards.posts;
-        let postСardsNodes = null;
-        if (postCards && postCards.length > 0) {
-            postСardsNodes = postCards.map((card) => {
-                return <PostCard key={card.id} card={card} current={user}/>;
-            });
-        }
+        const postCardsNodes = postCards?.length > 0 ?
+            postCards.map((card) => <PostCard key={card.id} card={card} current={user}/>) : null;
 
         const subscriptionCards = cards.subscriptions;
-        let subscriptionСardsNodes = null;
-        if (subscriptionCards && subscriptionCards.length > 0) {
-            subscriptionСardsNodes = subscriptionCards.map((card, index) => {
-                return <SubscriptionCard key={index} subscription={card} current={user}/>;
-            });
-        }
+        const subscriptionCardsNodes = subscriptionCards?.length > 0 ?
+            subscriptionCards.map((card) => <SubscriptionCard key={card.id} subscription={card} current={user}/>) : null;
 
         const userCards = cards.users;
-        let userСardsNodes = null;
-        if (userCards && userCards.length > 0) {
-            userСardsNodes = userCards.map((card, index) => {
-                return <AuthorCard key={index} author={card}/>;
-            });
-        }
+        const userCardsNodes = userCards?.length > 0 ?
+            userCards.map((card) => <AuthorCard key={card.id} author={card}/>) : null;
 
-        //TODO: сделать экран Данные не найдены
+        const emptyBlock = window.location.pathname === RouteStore.pages.search ? (
+            <BlockEmpty
+                subtitle="По вашему запросу ничего не найдено. Попробуйте изменить параметры"
+            />
+        ) : (
+            <BlockEmpty
+                subtitle="Авторы пока не добавили посты в эту тематику. Станьте первым!"
+                linkText="Создать пост"
+                link={RouteStore.pages.posts.new}
+            />
+        );
+
         return (
-            <div className="cards">
-                {postCards && <div className="cards__items cards-posts"> 
-                    <div className="cards__title">Посты</div>
-                    <div className="cards__content">
-                        {postСardsNodes}
-                    </div>
-                    {subscriptionCards && <hr/>}
-                </div>}
+            <>
+                {(postCards?.length > 0 || subscriptionCards?.length > 0 || userCards?.length > 0) ? (
+                    <div className="cards">
+                        {postCards?.length > 0 && <div className="cards__items cards-posts">
+                            <div className="cards__title">Посты</div>
+                            <div className="cards__content">
+                                {postCardsNodes}
+                            </div>
+                            {subscriptionCards?.length > 0 && <hr/>}
+                        </div>}
 
-                {subscriptionCards && <div className="cards__items cards-posts"> 
-                    <div className="cards__title">Подписки</div>
-                    <div className="cards__content">
-                        {subscriptionСardsNodes}
-                    </div>
-                    {userCards && <hr/>}
-                </div>}
+                        {subscriptionCards?.length > 0 && <div className="cards__items cards-posts">
+                            <div className="cards__title">Подписки</div>
+                            <div className="cards__content">
+                                {subscriptionCardsNodes}
+                            </div>
+                            {userCards?.length > 0 && <hr/>}
+                        </div>}
 
-                {userCards && <div className="cards__items cards-posts"> 
-                    <div className="cards__title">Авторы</div>
-                    <div className="cards__content">
-                        {userСardsNodes}
+                        {userCards?.length > 0 && <div className="cards__items cards-posts">
+                            <div className="cards__title">Авторы</div>
+                            <div className="cards__content">
+                                {userCardsNodes}
+                            </div>
+                        </div>}
                     </div>
-                </div>}
-            </div>
+                ) : emptyBlock
+                }
+            </>
         );
     }
 }
