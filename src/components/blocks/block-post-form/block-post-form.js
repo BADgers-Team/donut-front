@@ -58,7 +58,7 @@ class BlockPostForm extends Component {
               reader.onerror = e => reject(e);
               reader.readAsDataURL(file);
             });
-      }
+    }
 
     componentDidMount() {
         AjaxModule.get(RouterStore.api.activities).then((data) => {
@@ -101,7 +101,7 @@ class BlockPostForm extends Component {
         }
       
         return null;
-      }
+    }
 
 
     Media = (props) => {
@@ -171,7 +171,7 @@ class BlockPostForm extends Component {
                     <div className="form-input input-description">
                         <label className="textarea-label">Содержание<span style={{color: 'red'}}> *</span></label>
                         <Editor
-                            //blockRendererFn={this.mediaBlockRenderer}
+                            blockRendererFn={this.mediaBlockRenderer}
                             editorState={editorState}
                             wrapperClassName="form-input input-description"
                             editorClassName="input-description__editor"
@@ -183,26 +183,25 @@ class BlockPostForm extends Component {
                                 image: { 
                                     uploadCallback: this.uploadImageCallBack, 
                                     previewImage: true,
-                                    alt: { present: true, mandatory: true } 
                                 },
                                 link: {
                                     linkCallback: params => ({ ...params }),
                                     options: ['link'],
                                   },
-                                  embedded: {
+                                embedded: {
                                     icon: embeddedIcon,  
                                     embedCallback: link => {
-                                      const detectedSrc = /<iframe.*? src="(.*?)"/.exec(embed(link));
-                                      return (detectedSrc && detectedSrc[1]) || link;
+                                        const detectedSrc = /<iframe.*? src="(.*?)"/.exec(embed(link));
+                                        return (detectedSrc && detectedSrc[1]) || link;
                                     }
-                                  }
+                                }
                                 
                               }}
                               localization={{
                                 locale: 'ru',
                               }}
 
-                              toolbarCustomButtons={[<MusicToolbarButton />]}
+                              toolbarCustomButtons={[<MusicToolbarButton onChange={this.getEditorState}/>]}
                             />
                         {/* <Input
                             label="Содержание"
@@ -347,6 +346,10 @@ class BlockPostForm extends Component {
         }
     };
 
+    getEditorState = (state) => {
+        this.setState({ editorState: state });
+    }
+
     handleCreatePostClick(event) {
         event.preventDefault();
 
@@ -399,15 +402,40 @@ class BlockPostForm extends Component {
 }
 
 class MusicToolbarButton extends Component {
- 
+    uploadImageCallBack = () => {
+            var url;
+            var ffile = document.querySelector("#music__file");
+            var file = ffile.files[0];
+            debugger
+            var reader = new FileReader();
+            reader.onload = function(evt) {
+              url = evt.target.result;
+              console.log(url);
+              var sound = document.createElement("audio");
+              var link = document.createElement("source");
+              sound.id = "audio-player";
+              sound.controls = "controls";
+              link.src = url;
+              document.querySelector("#music__control").src = url;
+              sound.type = "audio/mpeg";
+              debugger
+              return url;
+            };
+            if (!file) return '';
+            reader.readAsDataURL(file);
+            return url;
+    }
+
     addElem = () => {
         const { editorState, onChange } = this.props;
+
+        const url = this.uploadImageCallBack();
 
         const contentState = editorState.getCurrentContent();
         const contentStateWithEntity = contentState.createEntity(
             'audio',
             'IMMUTABLE',
-        {src: 'https://raw.githubusercontent.com/facebook/draft-js/master/examples/draft-0-10-0/media/' + 'media.mp3'}
+            {src: url}
         );
         const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
     
@@ -416,16 +444,21 @@ class MusicToolbarButton extends Component {
             {currentContent: contentStateWithEntity}
         );
    
-        onChange(EditorState.push(AtomicBlockUtils.insertAtomicBlock(
+        onChange(AtomicBlockUtils.insertAtomicBlock(
             newEditorState,
             entityKey,
             ' '
-        ), contentStateWithEntity, 'insert-fragment'));
+        ));
       };
   
     render() {
       return (
-        <div className="rdw-storybook-custom-option" onClick={this.addElem}>Music</div>
+        <>
+            <label htmlFor='music__file'>
+                <div className="rdw-storybook-custom-option" onClick={this.addElem}>Music</div>
+            </label>
+            <input type="file" className='file-input' id='music__file' onChange={this.uploadImageCallBack}/>
+        </>
       );
     }
   }
@@ -433,7 +466,8 @@ class MusicToolbarButton extends Component {
 class Audio extends Component {
     render () {
         return (
-            <audio controls src='/home/kate/Музыка/test.mp3' />
+            // <audio controls src='/home/kate/Музыка/test.mp3' />
+            <audio id='music__control' controls />
         )   
     }
     
@@ -442,7 +476,9 @@ class Audio extends Component {
 class Image extends Component {
     render () {
         return (
-            <img src={this.props.src} />
+            <div className='rdw-image-imagewrapper'>
+                <img src={this.props.src} />
+            </div>
         )   
     }
     
