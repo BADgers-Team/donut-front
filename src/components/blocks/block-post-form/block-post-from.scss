@@ -156,3 +156,31 @@
         opacity: 1;
     }
 }
+
+.rdw-embedded-wrapper img {
+    height: 26px !important;
+    width: 21px !important;
+}
+
+.rdw-editor-toolbar {
+    margin-bottom: 0 !important;
+    border-radius: 10px 10px 0 0;  
+    color: black;
+}
+
+.input-description__editor {
+    background-color: white;
+    padding: 10px 10px;
+    height: 200px;
+    border-radius: 0 0 10px 10px;    
+    color: black;
+    -ms-overflow-style: none;
+}
+
+.input-description__editor::-webkit-scrollbar {
+    display: none;
+}
+
+.rdw-editor-wrapper {
+    padding: 0 10px 0 0;
+}

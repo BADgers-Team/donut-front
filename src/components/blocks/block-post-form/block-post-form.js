@@ -10,11 +10,19 @@ import AjaxModule from 'services/ajax';
 import { validate, FIELDS_TYPES, FILES_TYPES } from 'services/validation';
 import { getRouteWithID } from 'services/getRouteWithId';
 
+import { Editor } from 'react-draft-wysiwyg';
+import { EditorState, convertToRaw, convertFromRaw, RichUtils, Modifier, ContentState, convertFromHTML, AtomicBlockUtils  } from 'draft-js';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import embed from "embed-video";
+
+import embeddedIcon from 'assets/img/video.svg';
+
 import './block-post-from.scss';
 
 class BlockPostForm extends Component {
     constructor(props) {
         super(props);
+        //   const editorState = EditorState.createWithContent(contentState);
       
         this.state = { 
             fileIDs: [], 
@@ -32,13 +40,25 @@ class BlockPostForm extends Component {
                 file: null,
                 subscription: null,
                 sum: null,
-            }
+            },
+            // editorState: EditorState.createWithContent(contentState),
+            editorState: EditorState.createEmpty(),
         };
         this.handleSubscription = this.handleSubscription.bind(this);
         this.handleCreatePostClick = this.handleCreatePostClick.bind(this);
         this.handleSendFile = this.handleSendFile.bind(this);
         this._form = React.createRef();
     }
+
+    uploadImageCallBack = (file) => {
+        return new Promise(
+            (resolve, reject) => {
+              const reader = new FileReader(); // eslint-disable-line no-undef
+              reader.onload = e => resolve({ data: { link: e.target.result } });
+              reader.onerror = e => reject(e);
+              reader.readAsDataURL(file);
+            });
+      }
 
     componentDidMount() {
         AjaxModule.get(RouterStore.api.activities).then((data) => {
@@ -64,9 +84,48 @@ class BlockPostForm extends Component {
             console.error(error.message);
         });
     }
+
+    onEditorStateChange = (editorState) => {
+        this.setState({
+          editorState,
+        });
+        // console.log(convertToRaw(editorState.getCurrentContent()));
+    };
+
+    mediaBlockRenderer = (block) => {
+        if (block.getType() === 'atomic') {
+          return {
+            component: this.Media,
+            editable: false,
+          };
+        }
+      
+        return null;
+      }
+
+
+    Media = (props) => {
+        const entity = props.contentState.getEntity(
+          props.block.getEntityAt(0)
+        );
+        const {src} = entity.getData();
+        const type = entity.getType().toLowerCase();
+      
+        let media = null;
+        if (type === 'audio') {
+          media = <Audio src={src} />;
+        } else if (type === 'image') {
+          media = <Image src={src} />;
+        } else if (type === 'video') {
+          media = <Video src={src} />;
+        }
+      
+        return media;
+    };
+         
     
     render() {
-        const { activities, visibleTypes, subscriptions, redirect, errors, postID } = this.state;
+        const { activities, visibleTypes, subscriptions, redirect, errors, postID, editorState } = this.state;
 
         const visibleTypeSelect = visibleTypes.map((type) => {
             return {
@@ -110,19 +169,55 @@ class BlockPostForm extends Component {
                         />
                     </div>
                     <div className="form-input input-description">
-                        <Input
+                        <label className="textarea-label">Содержание<span style={{color: 'red'}}> *</span></label>
+                        <Editor
+                            //blockRendererFn={this.mediaBlockRenderer}
+                            editorState={editorState}
+                            wrapperClassName="form-input input-description"
+                            editorClassName="input-description__editor"
+                            onEditorStateChange={this.onEditorStateChange}
+                            placeholder = 'Напишите что-нибудь...'
+                            // toolbarHidden={true}
+                            toolbar={{
+                                options: ['emoji', 'link', 'embedded', 'image', 'history'],
+                                image: { 
+                                    uploadCallback: this.uploadImageCallBack, 
+                                    previewImage: true,
+                                    alt: { present: true, mandatory: true } 
+                                },
+                                link: {
+                                    linkCallback: params => ({ ...params }),
+                                    options: ['link'],
+                                  },
+                                  embedded: {
+                                    icon: embeddedIcon,  
+                                    embedCallback: link => {
+                                      const detectedSrc = /<iframe.*? src="(.*?)"/.exec(embed(link));
+                                      return (detectedSrc && detectedSrc[1]) || link;
+                                    }
+                                  }
+                                
+                              }}
+                              localization={{
+                                locale: 'ru',
+                              }}
+
+                              toolbarCustomButtons={[<MusicToolbarButton />]}
+                            />
+                        {/* <Input
                             label="Содержание"
                             type={Input.types.textarea}
                             name="description"
                             placeholder="Напишите что-нибудь..."
                             error={errors.description}
                             isRequired={true}
-                        />
+                        /> */}
+                        
                     </div>
                     <div className="form-input input-teaser">
                         <Input label="Тизер" type={Input.types.textarea} name="teaser" placeholder={teaserPlaceholder}/>
                     </div>
-                    <div className="form-input input-file">
+                    {/* <div className="form-input input-file">
                         <Input
                             label="Загрузите изображение"
                             fileTypes={FILES_TYPES}
@@ -133,7 +228,7 @@ class BlockPostForm extends Component {
                             onAction={this.handleSendFile}
                             error={errors.file}
                         />
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="form__controls">
@@ -255,14 +350,22 @@ class BlockPostForm extends Component {
     handleCreatePostClick(event) {
         event.preventDefault();
 
-        const form = this._form.current;
-        this.setState({
-            errors: {
-                title: validate(form.title?.value, FIELDS_TYPES.TITLE),
-                description: validate(form.description?.value, FIELDS_TYPES.CONTENT),
-                sum: form.price ? validate(form.price?.value, FIELDS_TYPES.SUM) : null,
-            }
-        }, this._makeRequest);
+        const editorState = this.state.editorState;
+
+
+        console.log(JSON.stringify(convertToRaw(editorState.getCurrentContent())));
+        const blocks = convertToRaw(editorState.getCurrentContent()).blocks;
+        const value = blocks.map(block => (!block.text.trim() && '\n') || block.text).join('\n');
+        console.log(value);
+
+        // const form = this._form.current;
+        // this.setState({
+        //     errors: {
+        //         title: validate(form.title?.value, FIELDS_TYPES.TITLE),
+        //         //description: validate(form.description?.value, FIELDS_TYPES.CONTENT),
+        //         sum: form.price ? validate(form.price?.value, FIELDS_TYPES.SUM) : null,
+        //     }
+        // }, this._makeRequest);
     }
 
     _makeRequest() {
@@ -294,5 +397,56 @@ class BlockPostForm extends Component {
         }
     }
 }
+
+class MusicToolbarButton extends Component {
+ 
+    addElem = () => {
+        const { editorState, onChange } = this.props;
+
+        const contentState = editorState.getCurrentContent();
+        const contentStateWithEntity = contentState.createEntity(
+            'audio',
+            'IMMUTABLE',
+        {src: 'https://raw.githubusercontent.com/facebook/draft-js/master/examples/draft-0-10-0/media/' + 'media.mp3'}
+        );
+        const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+    
+        const newEditorState = EditorState.set(
+            editorState,
+            {currentContent: contentStateWithEntity}
+        );
+   
+        onChange(EditorState.push(AtomicBlockUtils.insertAtomicBlock(
+            newEditorState,
+            entityKey,
+            ' '
+        ), contentStateWithEntity, 'insert-fragment'));
+      };
+  
+    render() {
+      return (
+        <div className="rdw-storybook-custom-option" onClick={this.addElem}>Music</div>
+      );
+    }
+  }
+
+class Audio extends Component {
+    render () {
+        return (
+            <audio controls src='/home/kate/Музыка/test.mp3' />
+        )   
+    }
+    
+}
+
+class Image extends Component {
+    render () {
+        return (
+            <img src={this.props.src} />
+        )   
+    }
+    
+}
+
 
 export default BlockPostForm;
