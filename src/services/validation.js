@@ -19,7 +19,7 @@ export const FIELDS_TYPES = {
 };
 
 export const FILES_TYPES = [
-    '.jpg', '.png', '.gif', '.heic'
+    '.jpg', '.png', '.gif', '.heic', '.pdf'
     //'.jpg', '.png', '.gif'
 ];
 
@@ -107,6 +107,7 @@ const checkFile = (field) => {
         'image/heic',
         'image/heif',
         'image/webp',
+        'application/pdf'
     ];
     if (!field) {
         return ERROR_TYPES.CUSTOM.replace(':text', 'Не удалось загрузить файл');

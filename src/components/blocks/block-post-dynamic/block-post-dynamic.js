@@ -53,15 +53,15 @@ class BlockPostDynamic extends Component {
                 />
                     {/* {post.description} */}
                 </div>
-                {/* {post.files && (
+                {post.files && (
                     <div className="post-dynamic__files">
-                        <Carousel dynamicHeight={false} className="post-dynamic__carousel" showArrows={true} useKeyboardArrows={true} showIndicators={false} emulateTouch={true}>
+                        {/* <Carousel dynamicHeight={false} className="post-dynamic__carousel" showArrows={true} useKeyboardArrows={true} showIndicators={false} emulateTouch={true}> */}
                             {post.files.map((imgSrc, index) => {
-                                return <img className="post-dynamic__image" key={index} src={imgSrc} />
+                                return <a className="post-dynamic__image" target="_blank" rel="noopener noreferrer" key={index} href={imgSrc}>{imgSrc.substr(53)}</a>
                             })} 
-                        </Carousel>
+                        {/* </Carousel> */}
                     </div>
-                )} */}
+                )}
             </div>
         );
     }

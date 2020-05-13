@@ -11,7 +11,7 @@ import { validate, FIELDS_TYPES, FILES_TYPES } from 'services/validation';
 import { getRouteWithID } from 'services/getRouteWithId';
 
 import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, convertToRaw, convertFromRaw, RichUtils, Modifier, ContentState, convertFromHTML, AtomicBlockUtils  } from 'draft-js';
+import { EditorState, convertToRaw, convertFromRaw, RichUtils, Modifier, ContentState, AtomicBlockUtils  } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import embed from "embed-video";
 import { inject, observer } from 'mobx-react';
@@ -26,8 +26,7 @@ import './block-post-from.scss';
 class BlockPostForm extends Component {
     constructor(props) {
         super(props);
-        //   const editorState = EditorState.createWithContent(contentState);
-      
+
         this.state = { 
             fileIDs: [], 
             postID: 0, 
@@ -45,7 +44,6 @@ class BlockPostForm extends Component {
                 subscription: null,
                 sum: null,
             },
-            // editorState: EditorState.createWithContent(contentState),
             editorState: EditorState.createEmpty(),
         };
         this.handleSubscription = this.handleSubscription.bind(this);
@@ -217,18 +215,18 @@ class BlockPostForm extends Component {
                     <div className="form-input input-teaser">
                         <Input label="Тизер" type={Input.types.textarea} name="teaser" placeholder={teaserPlaceholder}/>
                     </div>
-                    {/* <div className="form-input input-file">
+                    <div className="form-input input-file">
                         <Input
-                            label="Загрузите изображение"
+                            label="Загрузите файл"
                             fileTypes={FILES_TYPES}
-                            text="Прикрепить изображение"
+                            text="Прикрепить файл"
                             type={Input.types.file}
                             name="file"
                             id="file-input"
                             onAction={this.handleSendFile}
                             error={errors.file}
                         />
-                    </div> */}
+                    </div>
                 </div>
 
                 <div className="form__controls">
@@ -308,6 +306,7 @@ class BlockPostForm extends Component {
    
 
     _makeFileRequest() {
+        const { post } = this.props;
         const { errors } = this.state;
         const form = this._form.current;
         const isFileInvalid = Boolean(errors.file);
@@ -322,6 +321,14 @@ class BlockPostForm extends Component {
                     if (response.data?.status) {
                         throw new Error(response.data?.message);
                     }
+                    let filesIDS = post.file_ids;
+                    filesIDS.push(response.data);
+
+                    const obj = {
+                        file_ids: filesIDS,
+                    };
+                    post.update(obj);
+                    
                     this.setState((prevState => ({
                         fileIDs: [...prevState.fileIDs, response.data]
                     })));
