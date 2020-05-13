@@ -21,6 +21,7 @@ export default {
             login: '/users/:id',
             confirm: '/confirm',
             exit: '/logout',
+            avatar: '/me/avatar',
         },
         visible_types: '/visible_types',
         search: '/search',
