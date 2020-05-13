@@ -189,8 +189,20 @@ class BlockPostForm extends Component {
                                 embedded: {
                                     icon: embeddedIcon,  
                                     embedCallback: link => {
-                                        const detectedSrc = /<iframe.*? src="(.*?)"/.exec(embed(link));
-                                        return (detectedSrc && detectedSrc[1]) || link;
+                                        if (link.match('https://vimeo.com/')) {
+                                            let videoID = link.split('https://vimeo.com/');
+                                            videoID = videoID[1].split('#')[0];
+                                            return 'https://player.vimeo.com/video/' + videoID;
+                                        }
+
+                                        if (link.indexOf("youtube") >= 0 || link.indexOf("youtu.be") >= 0){
+                                            link = link.replace("watch?v=","embed/");
+                                            link = link.replace("/watch/", "/embed/");
+                                            link = link.replace("youtu.be/","youtube.com/embed/");
+                                            link = link.replace("&feature=youtu.be","");
+                                        }
+
+                                        return link;
                                     }
                                 }
                                 
