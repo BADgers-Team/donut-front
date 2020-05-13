@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {inject, observer} from 'mobx-react';
 
 import {BlockAuthor} from 'components/blocks/block-author/block-author';
 import {BlockAuthorPosts} from 'components/blocks/block-author-posts/block-author-posts';
@@ -10,6 +11,8 @@ import { getRouteWithID } from 'services/getRouteWithId';
 
 import './layout-profile.scss';
 
+@inject('user')
+@observer
 class LayoutProfile extends Component {
     constructor(props) {
         super(props);
@@ -30,10 +33,12 @@ class LayoutProfile extends Component {
 
     render() {
         const { current } = this.state;
+        const { user } = this.props;
+        console.log(user);
         if (current) {
             return (
                 <div className="profile">
-                    <BlockAuthor current={current}/>
+                    <BlockAuthor current={current.login === user.login ? user : current}/>
                     <BlockAuthorPosts current={current}/>
                     <BlockSubscriptions current={current}/>
                 </div>
