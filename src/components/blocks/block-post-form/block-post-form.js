@@ -181,6 +181,7 @@ class BlockPostForm extends Component {
                                 image: { 
                                     uploadCallback: this.uploadImageCallBack, 
                                     previewImage: true,
+                                    urlEnabled: false,
                                 },
                                 link: {
                                     linkCallback: params => ({ ...params }),
