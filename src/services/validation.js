@@ -19,7 +19,7 @@ export const FIELDS_TYPES = {
 };
 
 export const FILES_TYPES = [
-    '.jpg', '.png', '.gif', '.heic'
+    '.jpg', '.png', '.gif', '.heic', '.pdf', '.rtf', '.mp4', '.gzip', 'zip'
     //'.jpg', '.png', '.gif'
 ];
 
@@ -101,12 +101,64 @@ const checkShortContent = (field) => {
 const checkFile = (field) => {
     const maxFileSize = 5 * 1024 * 1024; // 5 Мб
     const mimeTypes = [
-        'image/jpeg',
-        'image/png',
-        'image/gif',
-        'image/heic',
-        'image/heif',
-        'image/webp',
+        "image/jpeg",
+        "image/jpg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+        "image/x-canon-cr2",
+        "image/tiff",
+        "image/bmp",
+        "image/heif",
+        "image/heic",
+        "image/vnd.ms-photo",
+        "image/vnd.adobe.photoshop",
+        "image/x-icon",
+        "image/vnd.dwg",
+        "video/mp4",
+        "video/x-m4v",
+        "video/x-matroska",
+        "video/webm",
+        "video/quicktime",
+        "video/x-msvideo",
+        "video/x-ms-wmv",
+        "video/mpeg",
+        "video/x-flv",
+        "video/3gpp",
+        "audio/midi",
+        "audio/mpeg",
+        "audio/m4a",
+        "audio/ogg",
+        "audio/x-flac",
+        "audio/x-wav",
+        "audio/amr",
+        "audio/aac",
+        "application/epub+zip",
+        "application/x-tar",
+        "application/x-rar-compressed",
+        "application/gzip",
+        "application/x-bzip2",
+        "application/x-7z-compressed",
+        "application/x-xz",
+        "application/pdf",
+        "application/x-msdownload",
+        "application/x-shockwave-flash",
+        "application/rtf",
+        "application/x-iso9660-image",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/vnd.ms-excel",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "application/vnd.ms-powerpoint",
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        "application/font-woff",
+        "application/font-sfnt",
+        "application/x-iwork-keynote-sffkey",
+        "application/x-iwork-pages-sffpages",
+        "application/x-iwork-numbers-sffnumbers",
+        "application/vnd.apple.pages",
+        "application/vnd.apple.numbers",
+        "application/vnd.apple.keynote",
     ];
     if (!field) {
         return ERROR_TYPES.CUSTOM.replace(':text', 'Не удалось загрузить файл');
