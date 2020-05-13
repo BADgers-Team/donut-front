@@ -11,7 +11,9 @@
   }
 
   &__files {
-    padding-top: 10px;
+    padding-top: 10px;    
+    display: flex;
+    flex-direction: column;
   }
 
   &__description > .rdw-editor-wrapper {

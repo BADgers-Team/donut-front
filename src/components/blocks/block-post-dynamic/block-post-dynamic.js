@@ -57,6 +57,7 @@ class BlockPostDynamic extends Component {
                     <div className="post-dynamic__files">
                         {/* <Carousel dynamicHeight={false} className="post-dynamic__carousel" showArrows={true} useKeyboardArrows={true} showIndicators={false} emulateTouch={true}> */}
                             {post.files.map((imgSrc, index) => {
+                                if (imgSrc.substr(53) === 'undefined') return;
                                 return <a className="post-dynamic__image" target="_blank" rel="noopener noreferrer" key={index} href={imgSrc}>{imgSrc.substr(53)}</a>
                             })} 
                         {/* </Carousel> */}
