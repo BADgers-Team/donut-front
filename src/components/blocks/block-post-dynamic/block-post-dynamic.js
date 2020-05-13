@@ -18,22 +18,8 @@ class BlockPostDynamic extends Component {
     constructor(props) {
         super(props);
       
-        this.state = {
-            editorState: null,
-        };
     }
 
-    componentDidMount() {
-        const { post } = this.props;
-        if (!post.raw) return;
-
-        const contentState = convertFromRaw(JSON.parse(post.raw));
-        this.setState({ editorState: EditorState.createWithContent(contentState) });
-    }
-
-    onContentStateChange = (contentState) => {
-        this.setState({ contentState: contentState});
-    };
 
     render() {
         const { post, current } = this.props;
@@ -48,7 +34,7 @@ class BlockPostDynamic extends Component {
                 <Editor
                     readOnly
                     toolbarHidden={true}
-                    editorState={this.state.editorState}
+                    editorState={!post.raw ? null : EditorState.createWithContent(convertFromRaw(JSON.parse(post.raw)))}
                     wrapperClassName="post-dynamic__description"
                 />
                     {/* {post.description} */}
