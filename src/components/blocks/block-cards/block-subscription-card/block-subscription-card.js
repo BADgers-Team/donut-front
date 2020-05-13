@@ -40,11 +40,12 @@ class SubscriptionCard extends Component {
     
     closeSubcriptionPayModal = () => {
         this.setState({ showSubcriptionPay: false });
-        window.location.reload();
     }
 
     handleSuccessChangeSubcription = (data) => {
         this.closeSubcriptionPayModal();
+
+        window.location.reload();
 
         // this.setState({post: data}, () => {
         //     const { onChange } = this.props;

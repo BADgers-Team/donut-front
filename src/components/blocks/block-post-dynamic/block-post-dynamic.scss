@@ -11,7 +11,13 @@
   }
 
   &__files {
-    padding-top: 10px;
+    padding-top: 10px;    
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__description > .rdw-editor-wrapper {
+    max-width: 70%;
   }
 
   .slider .slide &__image {
@@ -28,5 +34,15 @@
 
 .slider {
   height: 50vh;
+}
+
+.post-dynamic figure { 
+  width: auto;
+  height: 500px;
+}
+
+.post-dynamic iframe { 
+  width: 100%;
+  height: 100%;
 }
 

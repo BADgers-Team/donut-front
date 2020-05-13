@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'mobx-react';
 
 import '@fortawesome/fontawesome-free/js/all.js';
+import '@fortawesome/fontawesome-free/css/all.css';
 
 import RouterStore from 'store/routes';
 import LayoutIndex from 'components/layouts/layout-index/layout-index';

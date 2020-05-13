@@ -42,6 +42,22 @@ export default class AjaxModule {
         });
     }
 
+    static doAxioPatch(path = '/', data) {
+        return axios(`${backendUrl}${path}`, {
+            method: 'patch',
+            data,
+            withCredentials: true,
+        });
+    }
+
+    static doAxioPut(path = '/', data) {
+        return axios(`${backendUrl}${path}`, {
+            method: 'put',
+            data,
+            withCredentials: true,
+        });
+    }
+
     static doAxioDelete(path = '/') {
         return axios(`${backendUrl}${path}`, {
             method: 'delete',

@@ -30,7 +30,7 @@ class BlockSubscriptionForm extends Component {
 
     componentDidMount() {
         AjaxModule.get(RouterStore.api.subscriptions.my).then((data) => {
-            this.setState({ subscriptions: data || [] });
+            this.setState({ subscriptions: data.reverse() || [] });
         }).catch((error) => {
             console.error(error.message);
         });
@@ -123,7 +123,7 @@ class BlockSubscriptionForm extends Component {
             };
 
             AjaxModule.post(RouterStore.api.subscriptions.new, body).then((data) => {
-                this.setState({ subscriptions: data }, this.clearInputs);
+                this.setState({ subscriptions: data.reverse() }, this.clearInputs);
             }).catch((error) => {
                 console.error(error.message);
             });

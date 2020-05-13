@@ -1,0 +1,20 @@
+@import 'components/app/consts';
+
+.block-empty {
+  color: $color-dark-white;
+  text-align: center;
+  font-size: 24px;
+
+  &__image {
+    width: 300px;
+  }
+
+  &__title {
+    font-size: 40px;
+    margin-bottom: 12px;
+  }
+
+  &__subtitle {
+    margin-bottom: 28px;
+  }
+}

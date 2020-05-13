@@ -8,9 +8,11 @@ class UserModel {
     @observable number_of_followers = 0;
     @observable number_of_subscriptions = 0;
     @observable number_of_posts = 0;
+    @observable description = null;
 
     @action
     update(data) {
+        console.log('====== Обновили ========');
         const allowedFields = [
             'login',
             'name',
@@ -18,7 +20,8 @@ class UserModel {
             'avatar',
             'number_of_followers',
             'number_of_subscriptions',
-            'number_of_posts'
+            'number_of_posts',
+            'description'
         ];
         const fields = Object.keys(data).filter((field) => allowedFields.includes(field));
         fields.forEach((field) => {
@@ -32,7 +35,8 @@ class UserModel {
             'login',
             'name',
             'email',
-            'avatar'
+            'avatar',
+            'description',
         ];
         allowedFields.forEach((field) => {
             this[field] = null;

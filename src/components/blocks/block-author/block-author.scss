@@ -32,4 +32,13 @@
     text-align: justify;
     margin-top: 8px;
   }
+
+  &__edit {
+    color: $color-pink;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: underline;
+    cursor: pointer;
+    margin: 12px 0;
+  }
 }
