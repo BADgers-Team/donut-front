@@ -3,10 +3,10 @@ import React from 'react';
 import BlockSlider from 'components/blocks/block-slider/block-slider';
 
 import ImageCreate from 'assets/img/index/expose/create.jpg';
-import ImageDonut from 'assets/img/index/expose/donut.jpeg';
-import ImageEverything from 'assets/img/index/expose/everything.jpeg';
+import ImageDonut from 'assets/img/index/expose/donut.jpg';
+import ImageEverything from 'assets/img/index/expose/everything.jpg';
 import ImageObjectives from 'assets/img/index/expose/objectives.jpg';
-import ImageSubscribe from 'assets/img/index/expose/subscribe.png';
+import ImageSubscribe from 'assets/img/index/expose/subscribe.jpg';
 
 import './block-layout-index-slot-expose.scss';
 

@@ -4,21 +4,21 @@ import { inject } from 'mobx-react';
 import CategoryCard from 'components/fragments/category-card/category-card';
 import Button from 'components/fragments/button/button';
 
-import ImageCategoryPainting from 'assets/img/index/categories/painting.png';
-import ImageCategoryBlog from 'assets/img/index/categories/blog.png';
-import ImageCategoryPhotography from 'assets/img/index/categories/photography.png';
-import ImageCategoryMusic from 'assets/img/index/categories/music.png';
-import ImageCategoryPublications from 'assets/img/index/categories/publications.png';
-import ImageCategorySport from 'assets/img/index/categories/sport.png';
-import ImageCategoryVideo from 'assets/img/index/categories/video.png';
-import ImageCategoryEducation from 'assets/img/index/categories/education.png';
-import ImageCategoryArt from 'assets/img/index/categories/art.png';
-import ImageCategoryComics from 'assets/img/index/categories/comics.png';
-import ImageCategoryHandmade from 'assets/img/index/categories/handmade.png';
-import ImageCategoryPodcasts from 'assets/img/index/categories/podcasts.png';
-import ImageCategoryGames from 'assets/img/index/categories/games.png';
-import ImageCategoryBusiness from 'assets/img/index/categories/business.png';
-import ImageCategoryDevelopment from 'assets/img/index/categories/development.png';
+import ImageCategoryPainting from 'assets/img/index/categories/painting.jpg';
+import ImageCategoryBlog from 'assets/img/index/categories/blog.jpg';
+import ImageCategoryPhotography from 'assets/img/index/categories/photography.jpg';
+import ImageCategoryMusic from 'assets/img/index/categories/music.jpg';
+import ImageCategoryPublications from 'assets/img/index/categories/publications.jpg';
+import ImageCategorySport from 'assets/img/index/categories/sport.jpg';
+import ImageCategoryVideo from 'assets/img/index/categories/video.jpg';
+import ImageCategoryEducation from 'assets/img/index/categories/education.jpg';
+import ImageCategoryArt from 'assets/img/index/categories/art.jpg';
+import ImageCategoryComics from 'assets/img/index/categories/comics.jpg';
+import ImageCategoryHandmade from 'assets/img/index/categories/handmade.jpg';
+import ImageCategoryPodcasts from 'assets/img/index/categories/podcasts.jpg';
+import ImageCategoryGames from 'assets/img/index/categories/games.jpg';
+import ImageCategoryBusiness from 'assets/img/index/categories/business.jpg';
+import ImageCategoryDevelopment from 'assets/img/index/categories/development.jpg';
 
 import RouteStore from 'store/routes';
 
