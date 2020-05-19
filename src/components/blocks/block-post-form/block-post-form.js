@@ -196,7 +196,8 @@ class BlockPostForm extends Component {
                                 image: { 
                                     uploadCallback: this.uploadImageCallBack, 
                                     previewImage: true,
-                                    urlEnabled: false,    
+                                    urlEnabled: false, 
+                                    inputAccept: 'image/gif,image/jpeg,image/jpg,image/png,image/svg,image/heic,image/heif,image/webp',   
                                     defaultSize: {
                                         height: 'auto',
                                         width: '100%',
