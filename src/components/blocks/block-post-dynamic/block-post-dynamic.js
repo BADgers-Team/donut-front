@@ -46,11 +46,22 @@ class BlockPostDynamic extends Component {
                                 const url = location.protocol + '//'+location.host + '/static/';
                                 const pathLenWithoutName = url.length + 14 + 10;
                                 if (imgSrc.substr(pathLenWithoutName) === 'undefined') return;
-                                return <a className="post-dynamic__image" target="_blank" rel="noopener noreferrer" key={index} href={imgSrc}>{imgSrc.substr(53)}</a>
+                                return <a className="post-dynamic__image" target="_blank" rel="noopener noreferrer" key={index} href={imgSrc}>{imgSrc.substr(pathLenWithoutName)}</a>
                             })} 
                         {/* </Carousel> */}
                     </div>
                 )}
+
+
+                {post.full_files && (
+                    <div className="post-dynamic__music">
+                        {post.full_files.map((audio, index) => {
+                            if (audio.mimetype === 'audio/mpeg' && audio.link !== '')
+                                return <audio className="post-dynamic__audio" key={index} src={audio.link} controls />
+                        })} 
+                    </div>
+                )}
+
             </div>
         );
     }
