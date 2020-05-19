@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import ReactDOM from 'react-dom'
 import RouterStore from 'store/routes';
 
 import Button from 'components/fragments/button/button';
@@ -18,6 +19,7 @@ import { inject, observer } from 'mobx-react';
 import { toJS } from 'mobx';
 
 import embeddedIcon from 'assets/img/video.svg';
+import musicIcon from 'assets/img/music.svg';
 
 import './block-post-from.scss';
 
@@ -230,17 +232,8 @@ class BlockPostForm extends Component {
                               }}
 
                               //TODO доделать прогрузку содержимого аудио на сервер
-                            //   toolbarCustomButtons={[<MusicToolbarButton onChange={this.setEditorState}/>]}
-                            />
-                        {/* <Input
-                            label="Содержание"
-                            type={Input.types.textarea}
-                            name="description"
-                            placeholder="Напишите что-нибудь..."
-                            error={errors.description}
-                            isRequired={true}
-                        /> */}
-                        
+                              toolbarCustomButtons={[<MusicToolbarButton onChange={this.setEditorState}/>]}
+                            />                        
                     </div>
                     <div className="form-input input-teaser">
                         <Input label="Тизер" type={Input.types.textarea} name="teaser" placeholder={teaserPlaceholder}/>
@@ -442,62 +435,48 @@ class BlockPostForm extends Component {
     }
 }
 
-@inject('post')
-@observer
 class MusicToolbarButton extends Component {
-    uploadImageCallBack = () => {
-            var url;
-            var ffile = document.querySelector("#music__file");
-            var file = ffile.files[0];
-            var reader = new FileReader();
-            reader.addEventListener('load', function(evt) {
-                url = evt.target.result;
-                var sound = document.createElement("audio");
-                var link = document.createElement("source");
-                sound.id = "audio-player";
-                sound.controls = "controls";
-                link.src = url;
-                sound.type = "audio/mpeg";
-                sound.appendChild(link);
-                document.getElementById("music__control").appendChild(sound);
-            }, false);
-            if (!file) return '';
-            reader.readAsDataURL(file);
-            return url;
-    }
-
     insertAudio = () => {
         const { editorState, onChange } = this.props;
 
-        const url = this.uploadImageCallBack();
+        let url;
+        var file = document.querySelector("#music__file").files[0];
+        var reader = new FileReader();
+        reader.addEventListener('load', function(evt) {
+            url = evt.target.result;
 
-        const contentState = editorState.getCurrentContent();
-        const contentStateWithEntity = contentState.createEntity(
-            'audio',
-            'MUTABLE',
-            {src: url}
-        );
+            const contentState = editorState.getCurrentContent();
+            const contentStateWithEntity = contentState.createEntity(
+                'audio',
+                'MUTABLE',
+                {src: url}
+            );
 
 
-        const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+            const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+        
+            const newEditorState = EditorState.set(
+                editorState,
+                {currentContent: contentStateWithEntity}
+            );
     
-        const newEditorState = EditorState.set(
-            editorState,
-            {currentContent: contentStateWithEntity}
-        );
-   
-        onChange(AtomicBlockUtils.insertAtomicBlock(
-            newEditorState,
-            entityKey,
-            ' '
-        ));
+            onChange(AtomicBlockUtils.insertAtomicBlock(
+                newEditorState,
+                entityKey,
+                ' '
+            ));
+
+        }, false);
+        reader.readAsDataURL(file);
       };
   
     render() {
       return (
         <>
             <label htmlFor='music__file'>
-                <div className="rdw-storybook-custom-option">Music</div>
+                <div className="rdw-option-wrapper rdw-music-custom-option">
+                    <img src={musicIcon} />
+                </div>
             </label>
             <input type="file" className='file-input' id='music__file' onChange={this.insertAudio}/>
         </>
@@ -505,12 +484,72 @@ class MusicToolbarButton extends Component {
     }
 }
 
+
 @inject('post')
 @observer
 class Audio extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = { 
+            fileID: 0 
+        };
+    }
+
+
+    loadFile = (file) => {           
+        const { post } = this.props; 
+        const reqBody = dataURLtoFile(file);
+        // this.setState({isDisabled: Input.startLoader()}, this.checkDisabledButtonStyle);
+        const data = new FormData();
+        data.append('image', reqBody, reqBody.name);
+        AjaxModule.doAxioPost(RouterStore.api.posts.file.new, data, 'multipart/form-data')
+            .then((response) => {
+                if (response.data?.status) {
+                    throw new Error(response.data?.message);
+                }
+
+                let filesIDS = post.file_ids;
+                filesIDS.push(response.data);
+
+                const obj = {
+                    file_ids: filesIDS,
+                };
+                post.update(obj);
+                this.setState({ fileID: response.data});
+
+                // this.setState((prevState => ({
+                //     fileIDs: [...prevState.fileIDs, response.data]
+                // })));
+                // this.setState({isDisabled: Input.finishLoader(true)}, this.checkDisabledButtonStyle);
+            })
+            .catch((error) => {
+                console.log(error);
+                // this.setState({
+                //     isDisabled: Input.finishLoader(),
+                //     errors: {
+                //         file: error.message,
+                //     }
+                // }, this.checkDisabledButtonStyle);
+            });
+    }
+
+
+    componentDidMount() {
+        this.loadFile(this.props.src);
+    }
+
+    componentWillUnmount() {
+        const { post } = this.props; 
+        const { fileID } = this.state; 
+
+        post.file_ids.remove(fileID);
+    }
+
     render () {    
         return (
-            <div className='rdw-audio-audiowrapper' id='music__control'>
+            <div className='rdw-audio-audiowrapper' className='music__control'>
+                <audio src={this.props.src} className='audio-player' controls/>
             </div>
         )   
     }

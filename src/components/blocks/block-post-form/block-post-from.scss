@@ -15,7 +15,6 @@
 #post_form iframe {
     width: 100%;
     height: 500px;
-    margin-left: -60px;
 }
 
 .form {
@@ -171,6 +170,12 @@
     width: 21px !important;
 }
 
+.rdw-music-custom-option img {
+    height: 26px !important;
+    width: 21px !important;
+    opacity: 0.8;
+}
+
 .rdw-editor-toolbar {
     margin-bottom: 0 !important;
     border-radius: 10px 10px 0 0;  
@@ -215,6 +220,17 @@ figure {
 
 .rdw-image-modal-size {
     display: none !important;
+}
+
+.music__control {
+    display: flex;
+    flex-direction: column;
+}
+
+.audio-player {
+    outline: none;
+    width: 100%;
+    padding: 16px 0;
 }
 
 

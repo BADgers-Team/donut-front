@@ -51,6 +51,17 @@ class BlockPostDynamic extends Component {
                         {/* </Carousel> */}
                     </div>
                 )}
+
+
+                {post.full_files && (
+                    <div className="post-dynamic__music">
+                        {post.full_files.map((audio, index) => {
+                            if (audio.mimetype === 'audio/mpeg')
+                                return <audio className="post-dynamic__audio" key={index} src={audio.link} controls />
+                        })} 
+                    </div>
+                )}
+
             </div>
         );
     }
