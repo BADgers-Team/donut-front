@@ -429,6 +429,7 @@ class BlockPostForm extends Component {
                     throw new Error(response.data?.message || 'Не удалось создать пост');
                 }
                 this.setState({ postID: response.data.id });
+                post.delete();
                 this.setState({ redirect: true });
             }).catch((error) => {
                 // TODO: нотифайку, что не удалось создать пост
