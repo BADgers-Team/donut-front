@@ -392,7 +392,9 @@ class BlockPostForm extends Component {
         const description = blocks.map(block => (!block.text.trim() && '\n') || block.text).join('\n');
 
         const form = this._form.current;
-        form.raw = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
+        let rawFull = convertToRaw(editorState.getCurrentContent()); 
+        Object.keys(rawFull.entityMap).filter(key => rawFull.entityMap[key].type === 'audio').forEach(key => rawFull.entityMap[key].data.src = '');
+        form.raw = JSON.stringify(rawFull);
         form.description = description;
         this.setState({
             errors: {
