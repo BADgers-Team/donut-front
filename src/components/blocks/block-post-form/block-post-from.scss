@@ -12,9 +12,18 @@
     }
 }
 
+#post_form iframe {
+    width: 100%;
+    height: 500px;
+    margin-left: -60px;
+}
+
 .form {
-    &__inputs, &__controls {
-        width: 50%;
+    &__inputs {
+        width: 65%;
+    }
+    &__controls {
+        width: 35%;
     }
     &-input, &-control {
         display: flex;
@@ -169,7 +178,7 @@
 }
 
 .rdw-editor-main {
-    overflow: hidden !important;
+    overflow: hidden;
 }
 
 .input-description__editor {
