@@ -104,7 +104,7 @@ class BlockPostForm extends Component {
                 && (entity.type === 'EMBEDDED_LINK')
                 ) {
                     return {
-                        component: Embedded, // Or whatever you like.
+                        component: Embedded,
                         editable: false
                     };
                 }
@@ -197,7 +197,7 @@ class BlockPostForm extends Component {
                                     uploadCallback: this.uploadImageCallBack, 
                                     previewImage: true,
                                     urlEnabled: false, 
-                                    inputAccept: 'image/gif,image/jpeg,image/jpg,image/png,image/svg,image/heic,image/heif,image/webp',   
+                                    inputAccept: 'image/gif,image/jpeg,image/jpg,image/png,image/svg',   
                                     defaultSize: {
                                         height: 'auto',
                                         width: '100%',

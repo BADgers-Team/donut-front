@@ -233,4 +233,13 @@ figure {
     padding: 16px 0;
 }
 
+.rdw-link-decorator-icon {
+    display: none;
+}
+
+.rdw-link-decorator-wrapper a {
+    cursor: pointer;
+    color: $color-pink;
+}
+
 
