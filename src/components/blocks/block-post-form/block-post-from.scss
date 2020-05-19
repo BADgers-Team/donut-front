@@ -168,6 +168,10 @@
     color: black;
 }
 
+.rdw-editor-main {
+    overflow: hidden !important;
+}
+
 .input-description__editor {
     background-color: white;
     padding: 10px 10px;
@@ -187,12 +191,21 @@
 }
 
 .rdw-image-imagewrapper {
-    overflow-x: auto;
+    overflow-x: hidden;
     overflow-y: hidden;    
+}
+
+.rdw-image-imagewrapper img {
+    height: auto;
+    width: 100%;  
 }
 
 figure {
     margin: 0;
+}
+
+.rdw-image-modal-size {
+    display: none !important;
 }
 
 

@@ -93,10 +93,25 @@ class BlockPostForm extends Component {
 
     mediaBlockRenderer = (block) => {
         if (block.getType() === 'atomic') {
-          return {
-            component: this.Media,
-            editable: false,
-          };
+
+            const contentState = this.state.editorState.getCurrentContent();
+            const entityKey = block.getEntityAt(0);
+            if (entityKey) {
+                const entity = contentState.getEntity(entityKey);
+                if (entity
+                && (entity.type === 'EMBEDDED_LINK')
+                ) {
+                    return {
+                        component: Embedded, // Or whatever you like.
+                        editable: false
+                    };
+                }
+            }
+
+            return {
+                component: this.Media,
+                editable: false,
+            };
         }
       
         return null;
@@ -115,9 +130,7 @@ class BlockPostForm extends Component {
           media = <Audio src={src} />;
         } else if (type === 'image') {
           media = <Image src={src} />;
-        } else if (type === 'video') {
-          media = <Video src={src} />;
-        }
+        } 
       
         return media;
     };
@@ -181,7 +194,11 @@ class BlockPostForm extends Component {
                                 image: { 
                                     uploadCallback: this.uploadImageCallBack, 
                                     previewImage: true,
-                                    urlEnabled: false,
+                                    urlEnabled: false,    
+                                    defaultSize: {
+                                        height: 'auto',
+                                        width: '100%',
+                                    },
                                 },
                                 link: {
                                     linkCallback: params => ({ ...params }),
@@ -498,6 +515,47 @@ class Audio extends Component {
         )   
     }
 }
+
+
+@inject('post')
+@observer
+class Embedded extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    checkLink = link => {
+        let embeddeLink = link;
+        
+        if (embeddeLink.match('https://vimeo.com/')) {
+            let videoID = embeddeLink.split('https://vimeo.com/');
+            videoID = videoID[1].split('#')[0];
+            return 'https://player.vimeo.com/video/' + videoID;
+        }
+
+        if (embeddeLink.indexOf("youtube") >= 0 || embeddeLink.indexOf("youtu.be") >= 0){
+            embeddeLink = embeddeLink.replace("watch?v=","embed/");
+            embeddeLink = embeddeLink.replace("/watch/", "/embed/");
+            embeddeLink = embeddeLink.replace("youtu.be/","youtube.com/embed/");
+            embeddeLink = embeddeLink.replace("&feature=youtu.be","");
+        }
+
+        return embeddeLink;
+    }
+
+    render () {    
+        const { block, contentState } = this.props;
+        const entity = contentState.getEntity(block.getEntityAt(0));
+        const { src, height, width } = entity.getData();
+
+        const embeddeSrc = this.checkLink(src);
+            
+        return (
+            <iframe height={height} width={width} src={embeddeSrc} frameBorder="0" allowFullScreen title="Embedded Content" />
+        )   
+    }
+}
+
 
 @inject('post')
 @observer
