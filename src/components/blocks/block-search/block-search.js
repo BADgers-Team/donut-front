@@ -115,7 +115,7 @@ class BlockSearch extends Component {
                             <Input type={Input.types.checkbox} name="freeCheckbox" label="Бесплатно" material={true} onAction={this.toggleFreeSubscritions}/>
                         </div>
                         <div className='bottom__subscrition'>
-                            <Input type={Input.types.checkbox} name="subscritionCheckbox" label='По подписке ' material={true} onAction={this.toggleSubscritionsPrices}/>
+                            <Input type={Input.types.checkbox} name="subscritionCheckbox" label='Платно ' material={true} onAction={this.toggleSubscritionsPrices}/>
                             {this.state.showSubscritionsPrices && <label>от</label>}
                             {this.state.showSubscritionsPrices && <Input type={Input.types.number} name="subscritionNumberMin" min={0} max={2147483647} label="₽"/>}
                             {this.state.showSubscritionsPrices && <label>до</label>}

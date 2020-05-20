@@ -34,6 +34,14 @@ export default class AjaxModule {
         return fetch(url, options).then((response) => response.json());
     }
 
+    static doAxioGet(path, params) {
+        const url = `${backendUrl}${getUrlWithParams(path, params)}`;
+        return axios(url, {
+            method: 'get',
+            withCredentials: true,
+        });
+    }
+
     static doAxioPost(path = '/', data) {
         return axios(`${backendUrl}${path}`, {
             method: 'post',

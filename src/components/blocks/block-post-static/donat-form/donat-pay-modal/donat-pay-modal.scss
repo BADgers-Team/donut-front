@@ -1,7 +1,10 @@
+@import 'components/app/consts';
+
 .donat-modal {
     &__title-text, 
     &__price-text {
-        font-size: 22px;
+        font-size: 20px;
+        margin-bottom: 8px;
     }
 
     &__title, 
@@ -20,5 +23,17 @@
         font-family: "Avenir-Next";
         width: 100%;
         padding: 10px;
+    }
+
+    &__subtitle {
+        color: $color-grey;
+        margin-bottom: 12px;
+        font-size: 18px;
+    }
+
+    &__warning {
+        opacity: 0.3;
+        font-size: 12px;
+        margin-bottom: 12px;
     }
 }

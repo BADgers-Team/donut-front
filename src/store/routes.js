@@ -25,7 +25,10 @@ export default {
         },
         visible_types: '/visible_types',
         search: '/search',
-        pay: '/pay',
+        payment: {
+            // '/pay'
+            authorize: '/oauth/money', // Ручка для авторизации через Яндекс.Деньги
+        },
         goals: '/goals',
         feed: '/feed',
     },
@@ -47,6 +50,7 @@ export default {
         },
         feed: '/feed',
         collections: '/collections',
-        search: '/search'
+        search: '/search',
+        pay: '/money/confirm',
     }
 };

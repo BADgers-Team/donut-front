@@ -21,6 +21,7 @@ import { models } from 'models/models';
 import './app.scss';
 import 'assets/fonts/Avenir-Next.ttf';
 import {LayoutCollections} from 'components/layouts/layout-collections/layout-collections';
+import {LayoutPayment} from 'components/layouts/layout-payment/layout-payment';
 
 class App extends Component {
     constructor(props) {
@@ -50,6 +51,7 @@ class App extends Component {
                             <Route path={pages.user.callback} render={(props) => <LayoutCallback {...props}/>}/>
                             <Route path={pages.feed} render={(props) => <LayoutFeed {...props}/>}/>
                             <Route path={pages.collections} render={(props) => <LayoutCollections {...props}/>}/>
+                            <Route path={pages.pay} render={(props) => <LayoutPayment {...props}/>}/>
                             <Route path="/posts/:id" render={(props) => <LayoutPost {...props} current={user}/>}/>
                             <Route path="/users/:login" render={(props) => <LayoutProfile {...props} current={user}/>}/>
                         </Switch>

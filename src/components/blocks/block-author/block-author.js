@@ -94,9 +94,7 @@ class BlockAuthor extends Component {
         const posts = current.number_of_posts || 0;
         const followers = current.number_of_followers || 0;
         const description = current.description || '';
-        console.log(description);
-        console.log(current.description);
-        const avatar = current.avatar || Avatar;
+        const avatar = current.login === user.login ? user.avatar : (current.avatar || Avatar);
         // TODO: сделать plural на слова в info
         return (
             <>
