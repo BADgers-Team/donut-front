@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { Redirect } from "react-router-dom";
 import RouterStore from 'store/routes';
 
 import AjaxModule from 'services/ajax';
 
 import { BlockModal } from 'components/blocks/block-modal/block-modal';
 import Button from 'components/fragments/button/button';
-import { getRouteWithID } from 'services/getRouteWithId';
 
 import './donat-pay-modal.scss';
 
@@ -26,25 +24,37 @@ class DonatPayModal extends Component {
     handlePay = (event) => {
         event.preventDefault();
 
-        const reqBody = {
-            payment_type: 'Донат',
-            post_id: this.props.id,
-            sum: this.props.price,
-        };
+        // const reqBody = {
+        //     payment_type: 'Донат',
+        //     post_id: this.props.id,
+        //     sum: this.props.price,
+        // };
 
         const { onSuccess } = this.props;
 
-        AjaxModule.post(RouterStore.api.pay, reqBody).then(() => {
-            console.log('Оплачено');
-            onSuccess && onSuccess();
-        }).catch((error) => {
-            console.error(error.message);
-        });
+        // AjaxModule.post(RouterStore.api.pay, reqBody).then(() => {
+        //     console.log('Оплачено');
+        //     onSuccess && onSuccess();
+        // }).catch((error) => {
+        //     console.error(error.message);
+        // });
+
+        AjaxModule.doAxioGet(RouterStore.api.payment.authorize)
+            .then((response) => {
+                if (response.status !== 200) {
+                    throw Error('Не удалось получить подключиться к авторизации Яндекс.Денег');
+                }
+                window.location.replace(response.data.url);
+                // onSuccess?.();
+            })
+            .catch((error) => {
+                console.error(error.message);
+            });
     };
 
     render() {
         const { open } = this.state;
-        const { onClose, title, price } = this.props;
+        const { onClose, title, price, author } = this.props;
 
         return (
             <BlockModal
@@ -53,11 +63,11 @@ class DonatPayModal extends Component {
                 onClose={onClose}
             >
                 <div className="donat-modal">
-                    <div className="donat-modal__title-text">Вы поддерживаете пост:</div>
-                    <div className="donat-modal__title">{title}</div>
-                    <div className="donat-modal__price-text">Стоимость поддержки:</div>
-                    <div className="donat-modal__price">{price}</div>
-                    <Button type={Button.types.submit} value="Поддержать пост" className="donat-modal__submit"  onAction={this.handlePay}/>
+                    <div className="donat-modal__subtitle">Подтвердите данные платежа</div>
+                    <div className="donat-modal__title-text">Вы поддерживаете автора: <b>{author.name}</b></div>
+                    <div className="donat-modal__price-text">Стоимость поддержки: <b>{price} ₽</b></div>
+                    <div className="donat-modal__warning">Оплата будет производиться через сервис Яндекс.Деньги. После подтверждения пройдите аутентификацию Яндекс для проведения платежа</div>
+                    <Button type={Button.types.submit} text="Подтверждаю" className="donat-modal__submit"  onAction={this.handlePay}/>
                 </div>
             </BlockModal>
         );

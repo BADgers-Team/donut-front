@@ -11,7 +11,7 @@ import { inject } from 'mobx-react';
 
 import './layout-post.scss';
 
-@inject('user')
+@inject('user', 'post')
 class LayoutPost extends Component {
     constructor(props) {
         super(props);
@@ -23,9 +23,11 @@ class LayoutPost extends Component {
 
     componentDidMount() {
         const id = this.props.match.params.id;
+        const { post } = this.props;
 
         const route = getRouteWithID(RouteStore.api.posts.id, id);
         AjaxModule.get(route).then((data) => {
+            post.update(data);
             this.setState({ post: data || null });
         }).catch((error) => {
             console.error(error.message);
@@ -34,7 +36,7 @@ class LayoutPost extends Component {
 
     getNewPost = (data) => {
         this.setState({ post: data });
-    }
+    };
 
     render() {
         const { post } = this.state;

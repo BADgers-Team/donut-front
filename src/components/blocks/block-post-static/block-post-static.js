@@ -136,7 +136,7 @@ class BlockPostStatic extends Component {
                                     </div>
                                 )}
                                 { user?.login !== post.author.login && (
-                                    <DonatForm author={login} post={post}/>
+                                    <DonatForm author={login} current={post}/>
                                 )}
                             </div>
                         )}
