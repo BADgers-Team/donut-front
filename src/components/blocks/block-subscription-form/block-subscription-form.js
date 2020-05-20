@@ -137,7 +137,7 @@ class BlockSubscriptionForm extends Component {
 
         form.title.value = '';
         form.description.value = '';
-        form.price.value = 16;
+        if (form.price) form.price.value = 16;
     }
 }
 

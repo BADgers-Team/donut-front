@@ -26,9 +26,6 @@ class PostModel {
 
     @action
     update(data) {
-        console.log('Приветики Новый постик');
-        console.log(data);
-        console.log('---------');
         const allowedFields = [
             'id',
             'title',
