@@ -7,10 +7,12 @@ import './donat-form.scss';
 import DonutPicture from 'assets/img/donut.png';
 import { PRICE } from 'store/const';
 import { FIELDS_TYPES, validate } from 'services/validation';
+import { inject } from 'mobx-react';
 
 const MSG_PLACEHOLDER = 'Напишите сообщение... (опционально)';
 const COUNTS = [1, 2, 5];
 
+@inject('user', 'post')
 class DonatForm extends Component {
     constructor(props) {
         super(props);
@@ -40,10 +42,12 @@ class DonatForm extends Component {
             error: validate(form.count?.value, FIELDS_TYPES.COUNT),
         }, () => {
             const { error } = this.state;
+            const { post } = this.props;
             if (!error) {
-                console.log('Отправляем пончик...');
-                console.log(form.message.value);
-                console.log(form.submit.value.split(' ')[1]);
+                const message = form.message.value;
+                const sum = form.submit.value.split(' ')[1];
+                // post.updateDonate(sum, message, 'Донат');
+                sessionStorage.setItem('donating_info', JSON.stringify({sum, message, payment_type: 'Донат', id: post.id}));
                 this.openModal();
             }
         });
@@ -67,7 +71,7 @@ class DonatForm extends Component {
     };
 
     render() {
-        const { author, post } = this.props;
+        const { author, current } = this.props;
         const { count, error } = this.state;
         const price = this.calculatePrice();
         const countsNodes = COUNTS.map((number, index) => {
@@ -83,8 +87,9 @@ class DonatForm extends Component {
             <>
                 {this.state.showModal && (
                     <DonatPayModal
-                        id={post.id}
-                        title={post.title}
+                        id={current.id}
+                        title={current.title}
+                        author={current.author}
                         price={price}
                         onClose={this.closeModal}
                         onSuccess={this.handleSuccessChange}

@@ -20,7 +20,10 @@ class PostModel {
     @observable created_at = null;
     @observable likes_count = 0;
     @observable views_count = 0;
-   
+    @observable payment_type = null;
+    @observable sum = 0;
+    @observable message = null;
+
     @action
     update(data) {
         const allowedFields = [
@@ -42,7 +45,10 @@ class PostModel {
             'liked',
             'created_at',
             'likes_count',
-            'views_count'
+            'views_count',
+            'payment_type',
+            'message',
+            'sum',
         ];
         const fields = Object.keys(data).filter((field) => allowedFields.includes(field));
         fields.forEach((field) => {
@@ -59,7 +65,9 @@ class PostModel {
             'activity',
             'author',
             'teaser',
-            'created_at'
+            'created_at',
+            'payment_type',
+            'message',
         ];
         allowedFields.forEach((field) => {
             this[field] = null;
@@ -69,7 +77,8 @@ class PostModel {
             'files_count',
             'user_id',
             'likes_count',
-            'views_count'
+            'views_count',
+            'sum',
         ];
         allowedFields.forEach((field) => {
             this[field] = 0;
@@ -90,6 +99,13 @@ class PostModel {
         allowedFields.forEach((field) => {
             this[field] = [];
         });
+    }
+
+    @action
+    updateDonate(sum, message, payment_type) {
+        this.sum = sum;
+        this.message = message;
+        this.payment_type = payment_type;
     }
 }
 

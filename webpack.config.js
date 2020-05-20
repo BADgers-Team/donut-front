@@ -84,6 +84,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './src/index.html',
             filename: path.join(__dirname, '/dist/index.html'),
+            favicon: path.join(__dirname, '/src/assets/img/favicon.png')
         }),
         new CleanWebpackPlugin(),
     ],

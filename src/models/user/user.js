@@ -12,7 +12,6 @@ class UserModel {
 
     @action
     update(data) {
-        console.log('====== Обновили ========');
         const allowedFields = [
             'login',
             'name',
