@@ -33,7 +33,7 @@ class PaySubcriptionModal extends Component {
         
         const { onSuccess } = this.props;
 
-        AjaxModule.post(RouterStore.api.pay, reqBody).then((data) => {
+        AjaxModule.post(RouterStore.api.payment.pay, reqBody).then((data) => {
             // const data = {"id":31,"title":"wwefwesdsgывывввввgwegehswrthfewf","description":"wfwef","description_length":0,"visible_type":"Только разовая оплата","activity":"Писательство","files":null,"file_ids":null,"files_count":0,"user_id":2,"author":{"id":2,"login":"AAAAAAAAAAAAAAAA","name":"AAAAAAAAAAAAAAA","email":"mock@user.com","number_of_followers":0,"number_of_subscriptions":0,"number_of_posts":0},"paid":true,"follows":false,"liked":false,"created_at":"2020-04-04 18:03:03 +0000","likes_count":0,"views_count":27};
             console.log('Оплачено');
             onSuccess && onSuccess(data);
@@ -56,7 +56,7 @@ class PaySubcriptionModal extends Component {
                     <div className="subscription-modal__title">{title}</div>
                     <div className="subscription-modal__price-text">Стоимость подписки:</div>
                     <div className="subscription-modal__price">{priceText}</div>
-                    <Button type={Button.types.submit} value="Приобрести подписку" className="subscription-modal__submit"  onAction={this.handlePay}/>
+                    <Button type={Button.types.submit} text="Приобрести подписку" className="subscription-modal__submit"  onAction={this.handlePay}/>
                 </div>
             </BlockModal>
         );

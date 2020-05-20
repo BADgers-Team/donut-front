@@ -26,7 +26,7 @@ export default {
         visible_types: '/visible_types',
         search: '/search',
         payment: {
-            // '/pay'
+            pay: '/pay',
             authorize: '/oauth/money', // Ручка для авторизации через Яндекс.Деньги
         },
         goals: '/goals',
