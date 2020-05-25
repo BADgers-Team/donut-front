@@ -1,4 +1,4 @@
-@import 'components/app/app.scss';
+@import 'components/app/consts.scss';
 
 .author-info {
   display: flex;
@@ -40,5 +40,10 @@
     text-decoration: underline;
     cursor: pointer;
     margin: 12px 0;
+  }
+
+  &__wallet {
+    color: $color-grey;
+    margin-top: 8px;
   }
 }
