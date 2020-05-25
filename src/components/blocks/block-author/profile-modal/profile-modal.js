@@ -21,10 +21,12 @@ export class ProfileModal extends Component {
                 name: null,
                 login: null,
                 description: null,
+                wallet: null,
             },
             name: user.name,
             login: user.login,
             description: user.description,
+            wallet: user.wallet,
         };
     }
 
@@ -43,9 +45,14 @@ export class ProfileModal extends Component {
         this.setState({ description: value });
     };
 
+    handleChangeWallet = (event) => {
+        const value = event.target.value;
+        this.setState({ wallet: value });
+    };
+
     handleSubmit = (event) => {
         event.preventDefault();
-        const { name, login, description } = this.state;
+        const { name, login, description, wallet } = this.state;
         // this.setState({
         //     errors: {
         //         title: validate(goal, FIELDS_TYPES.SHORT_CONTENT),
@@ -56,13 +63,13 @@ export class ProfileModal extends Component {
     };
 
     _makeRequest() {
-        const { name, login, description, errors } = this.state;
+        const { name, login, description, wallet, errors } = this.state;
         const { onSuccess } = this.props;
         // const isFormValid = Array.from(Object.values(errors)).filter(error => Boolean(error)).length === 0;
         const isFormValid = true;
         if (isFormValid) {
             AjaxModule.doAxioPatch(RouteStore.api.me, {
-                name, login, description
+                name, login, description, wallet
             }).then((response) => {
                 onSuccess && onSuccess(response.data);
             }).catch((error) => {
@@ -72,7 +79,7 @@ export class ProfileModal extends Component {
     }
 
     render() {
-        const { open, name, login, description, errors } = this.state;
+        const { open, name, login, description, wallet, errors } = this.state;
         const { onClose } = this.props;
 
         return (
@@ -93,6 +100,8 @@ export class ProfileModal extends Component {
                         <span style={{color: 'red'}}> *</span>
                     </label>
                     <input className="profile__input" type="text" name="login" value={login} onChange={this.handleChangeLogin}/>
+                    <label className="profile__label" htmlFor="wallet">Яндекс.Кошелек</label>
+                    <input className="profile__input" type="text" name="wallet" value={wallet} placeholder="Введите номер кошелька, пр. 521123011078044" onChange={this.handleChangeWallet}/>
                     <label className="profile__label" htmlFor="description">О себе</label>
                     <textarea className="profile__textarea" name="description" value={description} placeholder="Расскажите несколько слов о себе" onChange={this.handleChangeDescription}/>
                     {/*{errors.title && <span className="form-input__error modal-input__error">{errors.title}</span>}*/}

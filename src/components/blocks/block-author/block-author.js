@@ -95,6 +95,7 @@ class BlockAuthor extends Component {
         const followers = current.number_of_followers || 0;
         const description = current.description || '';
         const avatar = current.login === user.login ? user.avatar : (current.avatar || Avatar);
+        const wallet = current.wallet || 'не установлен';
         // TODO: сделать plural на слова в info
         return (
             <>
@@ -116,6 +117,7 @@ class BlockAuthor extends Component {
                         {`${posts} постов | ${subscriptions} подписок | ${followers} подписчиков`}
                     </div>
                     <div className="author-info__description">{description}</div>
+                    <div className="author-info__wallet">Яндекс.Кошелек: {wallet}</div>
                     {user.login === current?.login && (
                         <>
                             <Button
