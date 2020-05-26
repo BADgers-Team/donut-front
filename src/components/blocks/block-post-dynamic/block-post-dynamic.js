@@ -53,14 +53,14 @@ class BlockPostDynamic extends Component {
                 )}
 
 
-                {post.full_files && (
+                {/* {post.full_files && (
                     <div className="post-dynamic__music">
                         {post.full_files.map((audio, index) => {
                             if (audio.mimetype === 'audio/mpeg' && audio.link !== '')
                                 return <audio className="post-dynamic__audio" key={index} src={audio.link} controls />
                         })} 
                     </div>
-                )}
+                )} */}
 
             </div>
         );

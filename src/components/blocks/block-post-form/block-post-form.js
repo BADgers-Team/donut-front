@@ -57,7 +57,7 @@ class BlockPostForm extends Component {
     uploadImageCallBack = (file) => {
         return new Promise(
             (resolve, reject) => {
-              const reader = new FileReader(); // eslint-disable-line no-undef
+              const reader = new FileReader();
               reader.onload = e => resolve({ data: { link: e.target.result } });
               reader.onerror = e => reject(e);
               reader.readAsDataURL(file);
@@ -338,15 +338,14 @@ class BlockPostForm extends Component {
             const reqBody = form.file.files[0];
             this.setState({isDisabled: Input.startLoader()}, this.checkDisabledButtonStyle);
             const data = new FormData();
-            // TODO временно шлем ток картинки
             data.append('image', reqBody, reqBody.name);
             AjaxModule.doAxioPost(RouterStore.api.posts.file.new, data, 'multipart/form-data')
                 .then((response) => {
                     if (response.data?.status) {
                         throw new Error(response.data?.message);
                     }
-                    let filesIDS = post.file_ids;
-                    filesIDS.push(response.data);
+                    let filesIDS = post.file_ids === null ? [] : post.file_ids;
+                    filesIDS.push(response.data.id);
 
                     const obj = {
                         file_ids: filesIDS,
@@ -393,9 +392,10 @@ class BlockPostForm extends Component {
         const description = blocks.map(block => (!block.text.trim() && '\n') || block.text).join('\n');
 
         const form = this._form.current;
-        let rawFull = convertToRaw(editorState.getCurrentContent()); 
-        Object.keys(rawFull.entityMap).filter(key => rawFull.entityMap[key].type === 'audio').forEach(key => rawFull.entityMap[key].data.src = '');
-        form.raw = JSON.stringify(rawFull);
+        // let rawFull = convertToRaw(editorState.getCurrentContent()); 
+        // Object.keys(rawFull.entityMap).filter(key => rawFull.entityMap[key].type === 'audio').forEach(key => rawFull.entityMap[key].data.src = '');
+        debugger
+        form.raw = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
         form.description = description;
         this.setState({
             errors: {
@@ -496,7 +496,8 @@ class Audio extends Component {
         super(props);
 
         this.state = { 
-            fileID: 0 
+            fileID: 0, 
+            src: '', 
         };
     }
 
@@ -513,14 +514,15 @@ class Audio extends Component {
                     throw new Error(response.data?.message);
                 }
 
-                let filesIDS = post.file_ids;
-                filesIDS.push(response.data);
+                let filesIDS = post.file_ids === null ? [] : post.file_ids;
+                filesIDS.push(response.data.id);
 
                 const obj = {
                     file_ids: filesIDS,
                 };
                 post.update(obj);
-                this.setState({ fileID: response.data});
+                debugger
+                this.setState({ fileID: response.data, src: response.data.link });
 
                 // this.setState((prevState => ({
                 //     fileIDs: [...prevState.fileIDs, response.data]
@@ -553,7 +555,7 @@ class Audio extends Component {
     render () {    
         return (
             <div className='rdw-audio-audiowrapper' className='music__control'>
-                <audio src={this.props.src} className='audio-player' controls/>
+                <audio src={this.state.src} className='audio-player' controls/>
             </div>
         )   
     }
@@ -607,7 +609,8 @@ class Image extends Component {
         super(props);
 
         this.state = { 
-            fileID: 0 
+            fileID: 0,
+            src: '', 
         };
     }
 
@@ -624,14 +627,14 @@ class Image extends Component {
                     throw new Error(response.data?.message);
                 }
 
-                let filesIDS = post.file_ids;
-                filesIDS.push(response.data);
+                let filesIDS = post.file_ids === null ? [] : post.file_ids;
+                filesIDS.push(response.data.id);
 
                 const obj = {
                     file_ids: filesIDS,
                 };
                 post.update(obj);
-                this.setState({ fileID: response.data});
+                this.setState({ fileID: response.data.id, src: response.data.link });
 
                 // this.setState((prevState => ({
                 //     fileIDs: [...prevState.fileIDs, response.data]
@@ -664,7 +667,7 @@ class Image extends Component {
     render () {          
         return (
             <div className='rdw-image-imagewrapper'>
-                <img src={this.props.src} />
+                <img src={this.state.src} />
             </div>
         )   
     }  
