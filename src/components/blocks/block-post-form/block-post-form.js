@@ -120,13 +120,18 @@ class BlockPostForm extends Component {
             );
             const {src} = entity.getData();
       
-            this.setState({fileLoaded: true}, () => { FileHandler.loadFile(src)
-              .then((response) => {
+            this.setState({fileLoaded: true}, () => { const p = FileHandler.loadFile(src);
+              if (!p) return;
+              p.then((response) => {
                   if (response.data?.status) {
                       throw new Error(response.data?.message);
                   };
+
+                  const data = response.data;  
+                  debugger                
+                  contentState.replaceEntityData(entityKey, { src: data.link });
                   
-                  this.setState({fileContent: response.data});
+                  this.setState({fileContent: data, fileLoaded: false});
             })});
 
             return {
@@ -143,6 +148,10 @@ class BlockPostForm extends Component {
           props.block.getEntityAt(0)
         );
 
+        const {src} = entity.getData();
+
+        debugger
+
         const type = entity.getType().toLowerCase();
       
         let media = null;
@@ -153,7 +162,7 @@ class BlockPostForm extends Component {
             type="Oval"
             color="#FF6982"
             height={120}
-            width={120}/> : <Image src={this.state.fileContent.link} id={this.state.fileContent.id}/>
+            width={120}/> : <Image src={src} id={1}/>
             // const resp = this.props.file;
             // if (type === 'audio') {
             //     media = <Audio src={resp.link} id={resp.id}/>;
@@ -638,7 +647,9 @@ class Image extends Component {
 
 
 function dataURLtoFile(dataurl, filename) {
-    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+    var arr = dataurl.split(',');
+    if (!arr || !arr[0].match(/:(.*?);/)) return;
+    var mime = arr[0].match(/:(.*?);/)[1],
         bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
         while(n--){
             u8arr[n] = bstr.charCodeAt(n);
@@ -648,8 +659,8 @@ function dataURLtoFile(dataurl, filename) {
 
 class FileHandler {
     static loadFile(fileData) {  
-        let file = models().file;  
         const reqBody = dataURLtoFile(fileData);
+        if (!reqBody) return;
         // this.setState({isDisabled: Input.startLoader()}, this.checkDisabledButtonStyle);
         const data = new FormData();
         data.append('image', reqBody, reqBody.name);
