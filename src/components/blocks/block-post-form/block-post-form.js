@@ -127,8 +127,6 @@ class BlockPostForm extends Component {
                   };
                   
                   this.setState({fileContent: response.data});
-                  const entityKey = contentState.getLastCreatedEntityKey();
-                  contentState.replaceEntityData(entityKey, { src: response.data.link });
             })});
 
             return {
@@ -145,8 +143,6 @@ class BlockPostForm extends Component {
           props.block.getEntityAt(0)
         );
 
-    
-
         const type = entity.getType().toLowerCase();
       
         let media = null;
@@ -157,7 +153,7 @@ class BlockPostForm extends Component {
             type="Oval"
             color="#FF6982"
             height={120}
-            width={120}/> : <Image src={this.state.fileContent.link} id={this.state.fileContent.link.id}/>
+            width={120}/> : <Image src={this.state.fileContent.link} id={this.state.fileContent.id}/>
             // const resp = this.props.file;
             // if (type === 'audio') {
             //     media = <Audio src={resp.link} id={resp.id}/>;
