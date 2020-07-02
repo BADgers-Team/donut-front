@@ -242,6 +242,10 @@ figure {
     color: $color-pink;
 }
 
+.rdw-link-decorator-wrapper a span {
+    color: $color-pink !important;
+}
+
 // Убрала бесполезную область на превью загрузки картинок, пока не починим урлы
 .rdw-image-modal-header {
     display: none;
