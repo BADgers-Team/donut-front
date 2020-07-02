@@ -46,7 +46,7 @@ class MusicToolbarButton extends Component {
                     <img src={musicIcon} />
                 </div>
             </label>
-            <input type="file" className='file-input' id='music__file' onChange={this.insertAudio}/>
+            <input type="file" className='file-input' id='music__file' accept="audio/*" onChange={this.insertAudio}/>
         </>
       );
     }
