@@ -242,4 +242,9 @@ figure {
     color: $color-pink;
 }
 
+// Убрала бесполезную область на превью загрузки картинок, пока не починим урлы
+.rdw-image-modal-header {
+    display: none;
+}
+
 

@@ -142,7 +142,7 @@ class Audio extends Component {
     render () {    
         return (
             <div className='rdw-audio-audiowrapper' className='music__control'>
-                <audio src={this.props.src} id={this.props.id} className='audio-player' controls/>
+                <audio src={this.props.src} id={this.props.id} accept="audio/*" className='audio-player' controls/>
             </div>
         )   
     }
