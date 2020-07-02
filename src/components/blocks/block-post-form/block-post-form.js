@@ -231,7 +231,6 @@ class BlockPostForm extends Component {
                                 locale: 'ru',
                               }}
 
-                              //TODO доделать прогрузку содержимого аудио на сервер
                               toolbarCustomButtons={[<MusicToolbarButton onChange={this.setEditorState}/>]}
                             />                        
                     </div>

@@ -16,8 +16,17 @@ const BLUR_CLASS = 'post-dynamic__blur';
 
 class BlockPostDynamic extends Component {
     constructor(props) {
-        super(props);
-      
+        super(props);      
+    }
+
+    componentDidMount() {
+        // clean up empty HTML лапками after wysiwyg editor
+        const postDescription = document.querySelector('.post-dynamic__description');
+        const blocks = postDescription.querySelectorAll('[data-text]');
+
+        blocks.forEach(v => {
+            if (v.innerHTML.trim() === '') v.remove();
+        });
     }
 
 
@@ -28,7 +37,7 @@ class BlockPostDynamic extends Component {
             classes.push(BLUR_CLASS);
         }
 
-        const isAudios = post.full_files.findIndex(v => v.mimetype === 'audio/mpeg') !== -1;
+        const isAudios = post.full_files ? post.full_files.findIndex(v => v.mimetype === 'audio/mpeg') !== -1 : false;
 
         return (
             <div className={classes.join(' ')}>
