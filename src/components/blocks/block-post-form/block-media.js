@@ -18,8 +18,6 @@ class Content extends Component {
     componentDidMount() {
         const { editor } = this.props;
 
-        debugger
-
         const { contentState } = editor;
         const entityKey = editor.block.getEntityAt(0);
 
@@ -35,10 +33,8 @@ class Content extends Component {
                     throw new Error(response.data?.message);
                 };
 
-                const data = response.data;  
-                debugger                
-                contentState.replaceEntityData(entityKey, { src: data.link });
-                //contentState.replaceEntityData(entityKey, { id: data.id });
+                const data = response.data;           
+                contentState.replaceEntityData(entityKey, { src: data.link, id: data.id });
                 
                 this.setState({data: data, isLoaded: true});
           })});
@@ -82,7 +78,6 @@ class FileHandler {
     static loadFile(fileData) {  
         const reqBody = dataURLtoFile(fileData);
         if (!reqBody) return;
-        // this.setState({isDisabled: Input.startLoader()}, this.checkDisabledButtonStyle);
         const data = new FormData();
         data.append('image', reqBody, reqBody.name);
         return AjaxModule.doAxioPost(RouterStore.api.posts.file.new, data, 'multipart/form-data')
@@ -92,7 +87,6 @@ class FileHandler {
             //     }  
 
             //     file.update(response.data);
-            //     debugger   
             //     callback();
 
                 // this.setState((prevState => ({
@@ -122,12 +116,20 @@ class Audio extends Component {
 
         this.state = { 
             fileID: 0, 
-            src: '', 
         };
     }
 
     componentDidMount() {
-        //this.loadFile(this.props.src);
+        const { id, post } = this.props; 
+
+        let filesIDS = post.file_ids === null ? [] : post.file_ids;
+        filesIDS.push(id);
+
+        const obj = {
+            file_ids: filesIDS,
+        };
+        post.update(obj);
+        this.setState({ fileID: id });
     }
 
     componentWillUnmount() {
@@ -195,19 +197,20 @@ class Image extends Component {
 
         this.state = { 
             fileID: 0,
-            src: '', 
         };
     }
 
     componentDidMount() {
-        // let filesIDS = post.file_ids === null ? [] : post.file_ids;
-        // filesIDS.push(response.data.id);
+        const { id, post } = this.props; 
 
-        // const obj = {
-        //     file_ids: filesIDS,
-        // };
-        // post.update(obj);
-        // this.setState({ fileID: response.data.id, src: response.data.link });
+        let filesIDS = post.file_ids === null ? [] : post.file_ids;
+        filesIDS.push(id);
+
+        const obj = {
+            file_ids: filesIDS,
+        };
+        post.update(obj);
+        this.setState({ fileID: id });
     }
 
     componentWillUnmount() {
@@ -226,4 +229,4 @@ class Image extends Component {
     }  
 }
 
-export { Audio, Embedded, Image, Content};
+export { Embedded, Content};

@@ -112,27 +112,7 @@ class BlockPostForm extends Component {
                         editable: false
                     };
                 }
-            }
-
-            const entity = contentState.getEntity(
-                entityKey
-            );
-            const {src} = entity.getData();
-      
-            // this.setState({fileLoaded: false}, () => { const p = FileHandler.loadFile(src);
-            //   if (!p) return;
-            //   p.then((response) => {
-            //       if (response.data?.status) {
-            //           throw new Error(response.data?.message);
-            //       };
-
-            //       const data = response.data;  
-            //       debugger                
-            //       contentState.replaceEntityData(entityKey, { src: data.link });
-            //       contentState.replaceEntityData(entityKey, { id: data.id });
-                  
-            //       this.setState({fileContent: data, fileLoaded: true});
-            // })});
+            }    
 
             return {
                 component: this.Media,
@@ -147,19 +127,10 @@ class BlockPostForm extends Component {
         const entity = props.contentState.getEntity(
           props.block.getEntityAt(0)
         );
-
-        const {src} = entity.getData();
-
         const type = entity.getType().toLowerCase();
-        const data = {
-            link: src,
-            id: 0
-        };
     
         const media = <Content 
             editor={props}
-            isLoaded={this.state.fileLoaded} 
-            //data={data}
             type={type} />
       
         return media;
@@ -412,8 +383,6 @@ class BlockPostForm extends Component {
 
     handleCreatePostClick(event) {
         event.preventDefault();
-        debugger
-
         const editorState = this.state.editorState;
 
         // console.log(JSON.stringify(convertToRaw(editorState.getCurrentContent())));
@@ -424,10 +393,6 @@ class BlockPostForm extends Component {
         // let rawFull = convertToRaw(editorState.getCurrentContent()); 
         // Object.keys(rawFull.entityMap).filter(key => rawFull.entityMap[key].type === 'audio').forEach(key => rawFull.entityMap[key].data.src = '');
         form.raw = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
-
-        console.log(form.raw);
-        debugger
-
 
         form.description = description;
         this.setState({
