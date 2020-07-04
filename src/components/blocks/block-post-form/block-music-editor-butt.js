@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { EditorState, AtomicBlockUtils  } from 'draft-js';
 
-
 import musicIcon from 'assets/img/music.svg';
 
 class MusicToolbarButton extends Component {

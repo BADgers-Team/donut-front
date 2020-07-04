@@ -129,9 +129,11 @@ class BlockPostForm extends Component {
         );
         const type = entity.getType().toLowerCase();
     
-        const media = <Content 
+        const media = (
+            <Content 
             editor={props}
             type={type} />
+        );
       
         return media;
     };
@@ -343,7 +345,7 @@ class BlockPostForm extends Component {
                     if (response.data?.status) {
                         throw new Error(response.data?.message);
                     }
-                    let filesIDS = post.file_ids === null ? [] : post.file_ids;
+                    const filesIDS = post.file_ids && post.file_ids.length > 0 ? post.file_ids : [];
                     filesIDS.push(response.data.id);
 
                     const obj = {

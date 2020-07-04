@@ -108,7 +108,7 @@ class Audio extends Component {
     componentDidMount() {
         const { id, post } = this.props; 
 
-        const filesIDS = post.file_ids === null ? [] : post.file_ids;
+        const filesIDS = post.file_ids && post.file_ids.length > 0 ? post.file_ids : [];
         filesIDS.push(id);
 
         const obj = {
@@ -189,7 +189,7 @@ class Image extends Component {
     componentDidMount() {
         const { id, post } = this.props; 
 
-        let filesIDS = post.file_ids === null ? [] : post.file_ids;
+        const filesIDS = post.file_ids && post.file_ids.length > 0 ? post.file_ids : [];
         filesIDS.push(id);
 
         const obj = {
@@ -215,4 +215,4 @@ class Image extends Component {
     }  
 }
 
-export { Embedded, Content};
+export { Embedded, Content };
