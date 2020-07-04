@@ -20,7 +20,7 @@ class BlockPostDynamic extends Component {
     }
 
     componentDidMount() {
-        // clean up empty HTML лапками after wysiwyg editor
+        // wysiwyg editorы оставляют мусор в виде пустых дивов, поэтому чищу 
         const postDescription = document.querySelector('.post-dynamic__description');
         const blocks = postDescription.querySelectorAll('[data-text]');
 

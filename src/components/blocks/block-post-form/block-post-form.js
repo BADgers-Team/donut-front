@@ -12,7 +12,7 @@ import { validate, FIELDS_TYPES, FILES_TYPES, ERROR_TYPES } from 'services/valid
 import { getRouteWithID } from 'services/getRouteWithId';
 
 import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, convertToRaw, convertFromRaw, RichUtils, Modifier, ContentState, AtomicBlockUtils  } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import embed from "embed-video";
 import { inject, observer } from 'mobx-react';
