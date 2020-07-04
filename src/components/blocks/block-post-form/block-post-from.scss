@@ -60,7 +60,7 @@
 
         &__error {
             display: block;
-            color: red;
+            color: red !important;
             margin: 2px;
             animation: fadeOut .2s ease-in;
 

@@ -37,7 +37,7 @@ class BlockPostDynamic extends Component {
             classes.push(BLUR_CLASS);
         }
 
-        const isAudios = post.full_files ? post.full_files.findIndex(v => v.mimetype === 'audio/mpeg') !== -1 : false;
+        const isAudios = Boolean(post.full_files && post.full_files.find(file => file.mimetype === 'audio/mpeg'));
 
         return (
             <div className={classes.join(' ')}>
