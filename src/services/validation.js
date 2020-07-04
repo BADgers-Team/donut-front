@@ -19,7 +19,7 @@ export const FIELDS_TYPES = {
 };
 
 export const FILES_TYPES = [
-    '.jpg', '.png', '.gif', '.heic', '.pdf', '.rtf', '.mp4', '.gzip', 'zip'
+    '.jpg', '.png', '.gif', '.heic', '.pdf', '.rtf', '.mp4', '.mp3', '.gzip', 'zip', '.docx', '.doc'
     //'.jpg', '.png', '.gif'
 ];
 
