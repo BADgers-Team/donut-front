@@ -1,4 +1,4 @@
-const ERROR_TYPES = {
+export const ERROR_TYPES = {
     REQUIRED: 'Это обязательное поле',
     LENGTH: 'Длина поля должна быть от :min до :max символов',
     TYPE: 'Тип файла не допустим. ',
@@ -70,6 +70,7 @@ const checkTitle = (field) => {
  * @returns {string|null}
  */
 const checkContent = (field) => {
+    debugger
     if (!field || field.length === 0) {
         return ERROR_TYPES.REQUIRED;
     }

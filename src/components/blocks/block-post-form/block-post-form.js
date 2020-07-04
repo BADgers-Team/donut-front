@@ -8,7 +8,7 @@ import Input from 'components/fragments/input/input';
 import Select from 'components/fragments/select/select';
 
 import AjaxModule from 'services/ajax';
-import { validate, FIELDS_TYPES, FILES_TYPES } from 'services/validation';
+import { validate, FIELDS_TYPES, FILES_TYPES, ERROR_TYPES } from 'services/validation';
 import { getRouteWithID } from 'services/getRouteWithId';
 
 import { Editor } from 'react-draft-wysiwyg';
@@ -387,18 +387,20 @@ class BlockPostForm extends Component {
 
         // console.log(JSON.stringify(convertToRaw(editorState.getCurrentContent())));
         const blocks = convertToRaw(editorState.getCurrentContent()).blocks;
-        const description = blocks.map(block => (!block.text.trim() && '\n') || block.text).join('\n');
 
         const form = this._form.current;
         // let rawFull = convertToRaw(editorState.getCurrentContent()); 
         // Object.keys(rawFull.entityMap).filter(key => rawFull.entityMap[key].type === 'audio').forEach(key => rawFull.entityMap[key].data.src = '');
         form.raw = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
 
-        form.description = description.trim();
+        debugger
+
+        form.description = blocks.map(block => (!block.text.trim() && '\n') || block.text).join('\n');
         this.setState({
             errors: {
                 title: validate(form.title?.value, FIELDS_TYPES.TITLE),
-                description: validate(form.description, FIELDS_TYPES.CONTENT),
+                // description: validate(form.description, FIELDS_TYPES.CONTENT),
+                description: !validate(form.description.trim(), FIELDS_TYPES.CONTENT) || editorState.getCurrentContent().hasText() ? null : ERROR_TYPES.REQUIRED,
                 sum: form.price ? validate(form.price?.value, FIELDS_TYPES.SUM) : null,
             }
         }, this._makeRequest);
