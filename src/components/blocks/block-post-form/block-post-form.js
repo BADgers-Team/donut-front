@@ -186,7 +186,7 @@ class BlockPostForm extends Component {
                         <Editor
                             blockRendererFn={this.mediaBlockRenderer}
                             editorState={editorState}
-                            wrapperClassName="form-input input-description"
+                            wrapperClassName={`form-input input-description ${Boolean(errors.description) ? 'input-error' : ''}`}
                             editorClassName="input-description__editor"
                             onEditorStateChange={this.onEditorStateChange}
                             placeholder = 'Напишите что-нибудь...'
@@ -205,7 +205,7 @@ class BlockPostForm extends Component {
                                 link: {
                                     linkCallback: params => ({ ...params }),
                                     options: ['link'],
-                                  },
+                                },
                                 embedded: {
                                     icon: embeddedIcon,  
                                     embedCallback: link => {
@@ -226,14 +226,15 @@ class BlockPostForm extends Component {
                                     }
                                 }
                                 
-                              }}
-                              localization={{
+                            }}
+                            localization={{
                                 locale: 'ru',
-                              }}
+                            }}
 
-                              toolbarCustomButtons={[<MusicToolbarButton onChange={this.setEditorState}/>]}
-                            />                        
+                            toolbarCustomButtons={[<MusicToolbarButton onChange={this.setEditorState}/>]}
+                        /> 
                     </div>
+                    {errors && <span className="form-input__error">{errors.description}</span>}                      
                     <div className="form-input input-teaser">
                         <Input label="Тизер" type={Input.types.textarea} name="teaser" placeholder={teaserPlaceholder}/>
                     </div>
@@ -393,11 +394,11 @@ class BlockPostForm extends Component {
         // Object.keys(rawFull.entityMap).filter(key => rawFull.entityMap[key].type === 'audio').forEach(key => rawFull.entityMap[key].data.src = '');
         form.raw = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
 
-        form.description = description;
+        form.description = description.trim();
         this.setState({
             errors: {
                 title: validate(form.title?.value, FIELDS_TYPES.TITLE),
-                description: validate(description, FIELDS_TYPES.CONTENT),
+                description: validate(form.description, FIELDS_TYPES.CONTENT),
                 sum: form.price ? validate(form.price?.value, FIELDS_TYPES.SUM) : null,
             }
         }, this._makeRequest);
