@@ -6,6 +6,7 @@ import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, convertFromRaw, ContentState  } from 'draft-js';
+import { Link } from 'react-router-dom';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import embed from "embed-video";
 
@@ -50,7 +51,7 @@ class BlockPostDynamic extends Component {
                 />
                     {/* {post.description} */}
                 </div>
-                { post.full_files && isAudios && (
+                { post.full_files && post.full_files.length > 0 && isAudios && (
                     <div className="post-dynamic__music">
                         {post.full_files.map((audio, index) => {
                             if (audio.mimetype === 'audio/mpeg' && audio.link !== '')
@@ -58,12 +59,14 @@ class BlockPostDynamic extends Component {
                         })} 
                     </div>
                 ) }
-                {post.full_files && (
+                {post.full_files && post.full_files.length > 0 && (
                     <div className="post-dynamic__files">
                         {post.full_files.map((file, index) => {
-                            if (file.file_name === 'undefined') return;
+                            if (file.file_name === 'undefined') {
+                                return;
+                            }
                             if (file.mimetype !== 'audio/mpeg' && file.link !== '')
-                                return <a className="post-dynamic__image" target="_blank" rel="noopener noreferrer" key={index} href={file.link}>{file.file_name}</a>
+                                return <a className="post-dynamic__files-link" target="_blank" rel="noopener noreferrer" key={index} href={file.link}>{file.file_name}</a>
                         })} 
                     </div>
                 )}
