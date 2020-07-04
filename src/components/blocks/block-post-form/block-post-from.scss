@@ -264,4 +264,11 @@ figure {
     height: auto;
 }
 
+.editor {
+    &__loader {
+        display: flex;
+        justify-content: center;
+    }
+}
+
 

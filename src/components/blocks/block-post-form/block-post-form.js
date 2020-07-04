@@ -393,8 +393,6 @@ class BlockPostForm extends Component {
         // Object.keys(rawFull.entityMap).filter(key => rawFull.entityMap[key].type === 'audio').forEach(key => rawFull.entityMap[key].data.src = '');
         form.raw = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
 
-        debugger
-
         form.description = blocks.map(block => (!block.text.trim() && '\n') || block.text).join('\n');
         this.setState({
             errors: {

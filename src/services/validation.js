@@ -70,7 +70,6 @@ const checkTitle = (field) => {
  * @returns {string|null}
  */
 const checkContent = (field) => {
-    debugger
     if (!field || field.length === 0) {
         return ERROR_TYPES.REQUIRED;
     }

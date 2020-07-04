@@ -49,11 +49,15 @@ class Content extends Component {
             <>
                 { isLoaded ? type === 'audio' ? 
             <Audio src={data?.link} id={data?.id}/> : <Image src={data?.link} id={data?.id}/> 
-                : <Loader
-                    type="Oval"
-                    color="#FF6982"
-                    height={120}
-                    width={120}/>
+                : <>
+                    <div className="editor__loader">
+                        <Loader
+                            type="Oval"
+                            color="#FF6982"
+                            height={120}
+                            width={120}/>
+                    </div>
+                </>
                 }
             </>
         )   
