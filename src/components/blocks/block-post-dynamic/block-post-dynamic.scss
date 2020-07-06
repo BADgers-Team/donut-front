@@ -56,7 +56,8 @@
   height: 600px;
 }
 
-.post-dynamic > .public-DraftEditor-content span {
-  color: $color-dark-white;
+.post-dynamic span {
+  font-size: 18px;
+  color: $color-dark-white !important;
   background-color: transparent !important;
 }

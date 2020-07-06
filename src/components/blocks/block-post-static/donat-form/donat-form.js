@@ -47,7 +47,7 @@ class DonatForm extends Component {
                 const message = form.message.value;
                 const sum = form.submit.value.split(' ')[1];
                 // post.updateDonate(sum, message, 'Донат');
-                sessionStorage.setItem('donating_info', JSON.stringify({sum, message, payment_type: 'Донат', id: post.id}));
+                sessionStorage.setItem('payment_info', JSON.stringify({sum, message, payment_type: 'Донат', id: post.id}));
                 this.openModal();
             }
         });

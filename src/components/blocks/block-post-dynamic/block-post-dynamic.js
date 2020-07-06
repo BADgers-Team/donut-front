@@ -16,8 +16,17 @@ const BLUR_CLASS = 'post-dynamic__blur';
 
 class BlockPostDynamic extends Component {
     constructor(props) {
-        super(props);
-      
+        super(props);      
+    }
+
+    componentDidMount() {
+        // clean up empty HTML лапками after wysiwyg editor
+        const postDescription = document.querySelector('.post-dynamic__description');
+        const blocks = postDescription.querySelectorAll('[data-text]');
+
+        blocks.forEach(v => {
+            if (v.innerHTML.trim() === '') v.remove();
+        });
     }
 
 
@@ -27,6 +36,8 @@ class BlockPostDynamic extends Component {
         if (post.visible_type !== PRIVACY.OPEN && !post.paid && !post.follows && current?.login !== post.author.login) {
             classes.push(BLUR_CLASS);
         }
+
+        const isAudios = post.full_files ? post.full_files.findIndex(v => v.mimetype === 'audio/mpeg') !== -1 : false;
 
         return (
             <div className={classes.join(' ')}>
@@ -39,25 +50,20 @@ class BlockPostDynamic extends Component {
                 />
                     {/* {post.description} */}
                 </div>
-                {post.files && (
-                    <div className="post-dynamic__files">
-                        {/* <Carousel dynamicHeight={false} className="post-dynamic__carousel" showArrows={true} useKeyboardArrows={true} showIndicators={false} emulateTouch={true}> */}
-                            {post.files.map((imgSrc, index) => {
-                                const url = location.protocol + '//'+location.host + '/static/';
-                                const pathLenWithoutName = url.length + 14 + 10;
-                                if (imgSrc.substr(pathLenWithoutName) === 'undefined') return;
-                                return <a className="post-dynamic__image" target="_blank" rel="noopener noreferrer" key={index} href={imgSrc}>{imgSrc.substr(pathLenWithoutName)}</a>
-                            })} 
-                        {/* </Carousel> */}
-                    </div>
-                )}
-
-
-                {post.full_files && (
+                { post.full_files && isAudios && (
                     <div className="post-dynamic__music">
                         {post.full_files.map((audio, index) => {
                             if (audio.mimetype === 'audio/mpeg' && audio.link !== '')
                                 return <audio className="post-dynamic__audio" key={index} src={audio.link} controls />
+                        })} 
+                    </div>
+                ) }
+                {post.full_files && (
+                    <div className="post-dynamic__files">
+                        {post.full_files.map((file, index) => {
+                            if (file.file_name === 'undefined') return;
+                            if (file.mimetype !== 'audio/mpeg' && file.link !== '')
+                                return <a className="post-dynamic__image" target="_blank" rel="noopener noreferrer" key={index} href={file.link}>{file.file_name}</a>
                         })} 
                     </div>
                 )}

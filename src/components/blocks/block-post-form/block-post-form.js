@@ -19,7 +19,9 @@ import { inject, observer } from 'mobx-react';
 import { toJS } from 'mobx';
 
 import embeddedIcon from 'assets/img/video.svg';
-import musicIcon from 'assets/img/music.svg';
+
+import { Embedded, Content } from './block-media';
+import { MusicToolbarButton } from './block-music-editor-butt';
 
 import './block-post-from.scss';
 
@@ -47,6 +49,8 @@ class BlockPostForm extends Component {
                 sum: null,
             },
             editorState: EditorState.createEmpty(),
+            fileLoaded: null,
+            fileContent: null
         };
         this.handleSubscription = this.handleSubscription.bind(this);
         this.handleCreatePostClick = this.handleCreatePostClick.bind(this);
@@ -57,7 +61,7 @@ class BlockPostForm extends Component {
     uploadImageCallBack = (file) => {
         return new Promise(
             (resolve, reject) => {
-              const reader = new FileReader(); // eslint-disable-line no-undef
+              const reader = new FileReader();
               reader.onload = e => resolve({ data: { link: e.target.result } });
               reader.onerror = e => reject(e);
               reader.readAsDataURL(file);
@@ -108,7 +112,7 @@ class BlockPostForm extends Component {
                         editable: false
                     };
                 }
-            }
+            }    
 
             return {
                 component: this.Media,
@@ -119,26 +123,21 @@ class BlockPostForm extends Component {
         return null;
     }
 
-
     Media = (props) => {
         const entity = props.contentState.getEntity(
           props.block.getEntityAt(0)
         );
-        const {src} = entity.getData();
         const type = entity.getType().toLowerCase();
-      
-        let media = null;
-        if (type === 'audio') {
-          media = <Audio src={src} />;
-        } else if (type === 'image') {
-          media = <Image src={src} />;
-        } 
+    
+        const media = <Content 
+            editor={props}
+            type={type} />
       
         return media;
     };
          
     
-    render() {
+    render() {    
         const { activities, visibleTypes, subscriptions, redirect, errors, postID, editorState } = this.state;
 
         const visibleTypeSelect = visibleTypes.map((type) => {
@@ -232,7 +231,6 @@ class BlockPostForm extends Component {
                                 locale: 'ru',
                               }}
 
-                              //TODO доделать прогрузку содержимого аудио на сервер
                               toolbarCustomButtons={[<MusicToolbarButton onChange={this.setEditorState}/>]}
                             />                        
                     </div>
@@ -338,15 +336,14 @@ class BlockPostForm extends Component {
             const reqBody = form.file.files[0];
             this.setState({isDisabled: Input.startLoader()}, this.checkDisabledButtonStyle);
             const data = new FormData();
-            // TODO временно шлем ток картинки
             data.append('image', reqBody, reqBody.name);
             AjaxModule.doAxioPost(RouterStore.api.posts.file.new, data, 'multipart/form-data')
                 .then((response) => {
                     if (response.data?.status) {
                         throw new Error(response.data?.message);
                     }
-                    let filesIDS = post.file_ids;
-                    filesIDS.push(response.data);
+                    let filesIDS = post.file_ids === null ? [] : post.file_ids;
+                    filesIDS.push(response.data.id);
 
                     const obj = {
                         file_ids: filesIDS,
@@ -385,7 +382,6 @@ class BlockPostForm extends Component {
 
     handleCreatePostClick(event) {
         event.preventDefault();
-
         const editorState = this.state.editorState;
 
         // console.log(JSON.stringify(convertToRaw(editorState.getCurrentContent())));
@@ -393,9 +389,10 @@ class BlockPostForm extends Component {
         const description = blocks.map(block => (!block.text.trim() && '\n') || block.text).join('\n');
 
         const form = this._form.current;
-        let rawFull = convertToRaw(editorState.getCurrentContent()); 
-        Object.keys(rawFull.entityMap).filter(key => rawFull.entityMap[key].type === 'audio').forEach(key => rawFull.entityMap[key].data.src = '');
-        form.raw = JSON.stringify(rawFull);
+        // let rawFull = convertToRaw(editorState.getCurrentContent()); 
+        // Object.keys(rawFull.entityMap).filter(key => rawFull.entityMap[key].type === 'audio').forEach(key => rawFull.entityMap[key].data.src = '');
+        form.raw = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
+
         form.description = description;
         this.setState({
             errors: {
@@ -438,275 +435,6 @@ class BlockPostForm extends Component {
         }
     }
 }
-
-class MusicToolbarButton extends Component {
-    insertAudio = () => {
-        const { editorState, onChange } = this.props;
-
-        let url;
-        var file = document.querySelector("#music__file").files[0];
-        var reader = new FileReader();
-        reader.addEventListener('load', function(evt) {
-            url = evt.target.result;
-
-            const contentState = editorState.getCurrentContent();
-            const contentStateWithEntity = contentState.createEntity(
-                'audio',
-                'MUTABLE',
-                {src: url}
-            );
-
-
-            const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-        
-            const newEditorState = EditorState.set(
-                editorState,
-                {currentContent: contentStateWithEntity}
-            );
-    
-            onChange(AtomicBlockUtils.insertAtomicBlock(
-                newEditorState,
-                entityKey,
-                ' '
-            ));
-
-        }, false);
-        reader.readAsDataURL(file);
-      };
-  
-    render() {
-      return (
-        <>
-            <label htmlFor='music__file'>
-                <div className="rdw-option-wrapper rdw-music-custom-option">
-                    <img src={musicIcon} />
-                </div>
-            </label>
-            <input type="file" className='file-input' id='music__file' onChange={this.insertAudio}/>
-        </>
-      );
-    }
-}
-
-
-@inject('post')
-@observer
-class Audio extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = { 
-            fileID: 0 
-        };
-    }
-
-
-    loadFile = (file) => {           
-        const { post } = this.props; 
-        const reqBody = dataURLtoFile(file);
-        // this.setState({isDisabled: Input.startLoader()}, this.checkDisabledButtonStyle);
-        const data = new FormData();
-        data.append('image', reqBody, reqBody.name);
-        AjaxModule.doAxioPost(RouterStore.api.posts.file.new, data, 'multipart/form-data')
-            .then((response) => {
-                if (response.data?.status) {
-                    throw new Error(response.data?.message);
-                }
-
-                let filesIDS = post.file_ids;
-                filesIDS.push(response.data);
-
-                const obj = {
-                    file_ids: filesIDS,
-                };
-                post.update(obj);
-                this.setState({ fileID: response.data});
-
-                // this.setState((prevState => ({
-                //     fileIDs: [...prevState.fileIDs, response.data]
-                // })));
-                // this.setState({isDisabled: Input.finishLoader(true)}, this.checkDisabledButtonStyle);
-            })
-            .catch((error) => {
-                console.log(error);
-                // this.setState({
-                //     isDisabled: Input.finishLoader(),
-                //     errors: {
-                //         file: error.message,
-                //     }
-                // }, this.checkDisabledButtonStyle);
-            });
-    }
-
-
-    componentDidMount() {
-        this.loadFile(this.props.src);
-    }
-
-    componentWillUnmount() {
-        const { post } = this.props; 
-        const { fileID } = this.state; 
-
-        post.file_ids.remove(fileID);
-    }
-
-    render () {    
-        return (
-            <div className='rdw-audio-audiowrapper' className='music__control'>
-                <audio src={this.props.src} className='audio-player' controls/>
-            </div>
-        )   
-    }
-}
-
-
-@inject('post')
-@observer
-class Embedded extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    checkLink = link => {
-        let embeddeLink = link;
-        
-        if (embeddeLink.match('https://vimeo.com/')) {
-            let videoID = embeddeLink.split('https://vimeo.com/');
-            videoID = videoID[1].split('#')[0];
-            return 'https://player.vimeo.com/video/' + videoID;
-        }
-
-        if (embeddeLink.indexOf("youtube") >= 0 || embeddeLink.indexOf("youtu.be") >= 0){
-            embeddeLink = embeddeLink.replace("watch?v=","embed/");
-            embeddeLink = embeddeLink.replace("/watch/", "/embed/");
-            embeddeLink = embeddeLink.replace("youtu.be/","youtube.com/embed/");
-            embeddeLink = embeddeLink.replace("&feature=youtu.be","");
-        }
-
-        return embeddeLink;
-    }
-
-    render () {    
-        const { block, contentState } = this.props;
-        const entity = contentState.getEntity(block.getEntityAt(0));
-        const { src, height, width } = entity.getData();
-
-        const embeddeSrc = this.checkLink(src);
-            
-        return (
-            <iframe height={height} width={width} src={embeddeSrc} frameBorder="0" allowFullScreen title="Embedded Content" />
-        )   
-    }
-}
-
-
-@inject('post')
-@observer
-class Image extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = { 
-            fileID: 0 
-        };
-    }
-
-
-    loadFile = (file) => {           
-        const { post } = this.props; 
-        const reqBody = dataURLtoFile(file);
-        // this.setState({isDisabled: Input.startLoader()}, this.checkDisabledButtonStyle);
-        const data = new FormData();
-        data.append('image', reqBody, reqBody.name);
-        AjaxModule.doAxioPost(RouterStore.api.posts.file.new, data, 'multipart/form-data')
-            .then((response) => {
-                if (response.data?.status) {
-                    throw new Error(response.data?.message);
-                }
-
-                let filesIDS = post.file_ids;
-                filesIDS.push(response.data);
-
-                const obj = {
-                    file_ids: filesIDS,
-                };
-                post.update(obj);
-                this.setState({ fileID: response.data});
-
-                // this.setState((prevState => ({
-                //     fileIDs: [...prevState.fileIDs, response.data]
-                // })));
-                // this.setState({isDisabled: Input.finishLoader(true)}, this.checkDisabledButtonStyle);
-            })
-            .catch((error) => {
-                console.log(error);
-                // this.setState({
-                //     isDisabled: Input.finishLoader(),
-                //     errors: {
-                //         file: error.message,
-                //     }
-                // }, this.checkDisabledButtonStyle);
-            });
-    }
-
-
-    componentDidMount() {
-        this.loadFile(this.props.src);
-    }
-
-    componentWillUnmount() {
-        const { post } = this.props; 
-        const { fileID } = this.state; 
-
-        post.file_ids.remove(fileID);
-    }
-
-    render () {          
-        return (
-            <div className='rdw-image-imagewrapper'>
-                <img src={this.props.src} />
-            </div>
-        )   
-    }  
-}
-
-function dataURLtoFile(dataurl, filename) {
-    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-        while(n--){
-            u8arr[n] = bstr.charCodeAt(n);
-        }
-        return new File([u8arr], filename, {type:mime});
-}
-
-
-// const loadFile = (file) => {    
-//     // const reqBody = file.split(",")[1];
-//     const reqBody = dataURLtoFile(file);
-//     console.log(file);
-//         // this.setState({isDisabled: Input.startLoader()}, this.checkDisabledButtonStyle);
-//         const data = new FormData();
-//         data.append('image', reqBody, "some name");
-//         AjaxModule.doAxioPost(RouterStore.api.posts.file.new, data, 'multipart/form-data')
-//             .then((response) => {
-//                 if (response.data?.status) {
-//                     throw new Error(response.data?.message);
-//                 }
-//                 // this.setState((prevState => ({
-//                 //     fileIDs: [...prevState.fileIDs, response.data]
-//                 // })));
-//                 // this.setState({isDisabled: Input.finishLoader(true)}, this.checkDisabledButtonStyle);
-//             })
-//             .catch((error) => {
-//                 console.log(error);
-//                 // this.setState({
-//                 //     isDisabled: Input.finishLoader(),
-//                 //     errors: {
-//                 //         file: error.message,
-//                 //     }
-//                 // }, this.checkDisabledButtonStyle);
-//             });
-//     }
 
 
 export default BlockPostForm;
