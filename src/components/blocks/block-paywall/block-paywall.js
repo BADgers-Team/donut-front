@@ -55,16 +55,20 @@ class BlockPaywall extends Component {
     }
 
     openPostPayModal = () => {
-
-        const { user } = this.props;
-
-        if (!user.login) {
+        const { user, post } = this.props;
+        if (!user.login || !post) {
             this.setState({ redirect: true });
-            return
+            return;
         }
 
+        sessionStorage.setItem('payment_info', JSON.stringify({
+            sum: post.sum || 0,
+            payment_type: 'Пост',
+            id: post.id
+        }));
+
         this.setState({ showPostPay: true });
-    }
+    };
     
     closePostPayModal = () => {
         this.setState({ showPostPay: false });
