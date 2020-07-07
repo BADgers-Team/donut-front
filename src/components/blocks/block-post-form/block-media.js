@@ -25,16 +25,28 @@ class Content extends Component {
         this.setState({isLoaded: false}, () => { 
             const promise = FileHandler.loadFile(src);
             if (!promise) return;
-            promise.then((response) => {
-                if (response.data?.status) {
-                    throw new Error(response.data?.message);
+            promise
+            .then(response => {
+                if (response.status >= 400) {
+                    throw new Error(response.status);
+                };
+                return response.data
+              })
+            .then((response) => {
+                if (response.status >= 400) {
+                    throw new Error(response?.message);
                 };
 
-                const data = response.data;           
+                const data = response;           
                 contentState.replaceEntityData(entityKey, { src: data.link, id: data.id });
                 
                 this.setState({data: data, isLoaded: true});
-          })});
+            })
+            .catch((error) => {
+                // TODO добавить обработку норм на .catch
+                console.error(error.message);
+            });
+        });
     }
 
     render () { 
@@ -80,15 +92,6 @@ class FileHandler {
         const data = new FormData();
         data.append('image', reqBody, reqBody.name);
         return AjaxModule.doAxioPost(RouterStore.api.posts.file.new, data, 'multipart/form-data')
-            // .catch((error) => {
-            //     console.log(error);
-                // this.setState({
-                //     isDisabled: Input.finishLoader(),
-                //     errors: {
-                //         file: error.message,
-                //     }
-                // }, this.checkDisabledButtonStyle);
-            // });
     }
 }
 
