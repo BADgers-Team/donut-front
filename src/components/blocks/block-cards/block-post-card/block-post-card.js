@@ -5,7 +5,7 @@ import { getRouteWithID } from 'services/getRouteWithId';
 
 import './block-post-card.scss';
 
-//import CardImage from 'assets/img/card-image.png';
+import CardImage from 'assets/img/card-image.png';
 import CardApplication from 'assets/img/card-application.png';
 import CardDefault from 'assets/img/card-default.png';
 import CardVideo from 'assets/img/card-video.png';
@@ -75,7 +75,7 @@ class PostCard extends Component {
         } else {
             //потому что .heic на превью не отображается как пикча
             if (firstImage.mimetype === 'image/heic') {
-                return CardDefault;
+                return CardImage;
             }
             cardPreview = firstImage.link;
         }  

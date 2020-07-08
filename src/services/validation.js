@@ -98,7 +98,6 @@ const checkShortContent = (field) => {
  * @returns {string|null}
  */
 const checkFile = (field) => {
-    debugger
     const maxFileSize = 5 * 1024 * 1024; // 5 Мб
     const mimeTypes = [
         "image/jpeg",
