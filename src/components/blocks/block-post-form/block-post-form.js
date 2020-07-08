@@ -8,11 +8,11 @@ import Input from 'components/fragments/input/input';
 import Select from 'components/fragments/select/select';
 
 import AjaxModule from 'services/ajax';
-import { validate, FIELDS_TYPES, FILES_TYPES } from 'services/validation';
+import { validate, FIELDS_TYPES, FILES_TYPES, ERROR_TYPES } from 'services/validation';
 import { getRouteWithID } from 'services/getRouteWithId';
 
 import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, convertToRaw, convertFromRaw, RichUtils, Modifier, ContentState, AtomicBlockUtils  } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import embed from "embed-video";
 import { inject, observer } from 'mobx-react';
@@ -129,9 +129,11 @@ class BlockPostForm extends Component {
         );
         const type = entity.getType().toLowerCase();
     
-        const media = <Content 
+        const media = (
+            <Content 
             editor={props}
             type={type} />
+        );
       
         return media;
     };
@@ -186,7 +188,7 @@ class BlockPostForm extends Component {
                         <Editor
                             blockRendererFn={this.mediaBlockRenderer}
                             editorState={editorState}
-                            wrapperClassName="form-input input-description"
+                            wrapperClassName={`form-input input-description ${Boolean(errors.description) ? 'input-error' : ''}`}
                             editorClassName="input-description__editor"
                             onEditorStateChange={this.onEditorStateChange}
                             placeholder = 'Напишите что-нибудь...'
@@ -205,7 +207,7 @@ class BlockPostForm extends Component {
                                 link: {
                                     linkCallback: params => ({ ...params }),
                                     options: ['link'],
-                                  },
+                                },
                                 embedded: {
                                     icon: embeddedIcon,  
                                     embedCallback: link => {
@@ -226,14 +228,15 @@ class BlockPostForm extends Component {
                                     }
                                 }
                                 
-                              }}
-                              localization={{
+                            }}
+                            localization={{
                                 locale: 'ru',
-                              }}
+                            }}
 
-                              toolbarCustomButtons={[<MusicToolbarButton onChange={this.setEditorState}/>]}
-                            />                        
+                            toolbarCustomButtons={[<MusicToolbarButton onChange={this.setEditorState}/>]}
+                        /> 
                     </div>
+                    {errors && <span className="form-input__error">{errors.description}</span>}                      
                     <div className="form-input input-teaser">
                         <Input label="Тизер" type={Input.types.textarea} name="teaser" placeholder={teaserPlaceholder}/>
                     </div>
@@ -342,7 +345,7 @@ class BlockPostForm extends Component {
                     if (response.data?.status) {
                         throw new Error(response.data?.message);
                     }
-                    let filesIDS = post.file_ids === null ? [] : post.file_ids;
+                    const filesIDS = post.file_ids && post.file_ids.length > 0 ? post.file_ids : [];
                     filesIDS.push(response.data.id);
 
                     const obj = {
@@ -386,18 +389,18 @@ class BlockPostForm extends Component {
 
         // console.log(JSON.stringify(convertToRaw(editorState.getCurrentContent())));
         const blocks = convertToRaw(editorState.getCurrentContent()).blocks;
-        const description = blocks.map(block => (!block.text.trim() && '\n') || block.text).join('\n');
 
         const form = this._form.current;
         // let rawFull = convertToRaw(editorState.getCurrentContent()); 
         // Object.keys(rawFull.entityMap).filter(key => rawFull.entityMap[key].type === 'audio').forEach(key => rawFull.entityMap[key].data.src = '');
         form.raw = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
 
-        form.description = description;
+        form.description = blocks.map(block => (!block.text.trim() && '\n') || block.text).join('\n');
         this.setState({
             errors: {
                 title: validate(form.title?.value, FIELDS_TYPES.TITLE),
-                description: validate(description, FIELDS_TYPES.CONTENT),
+                // description: validate(form.description, FIELDS_TYPES.CONTENT),
+                description: !validate(form.description.trim(), FIELDS_TYPES.CONTENT) || editorState.getCurrentContent().hasText() ? null : ERROR_TYPES.REQUIRED,
                 sum: form.price ? validate(form.price?.value, FIELDS_TYPES.SUM) : null,
             }
         }, this._makeRequest);

@@ -4,7 +4,7 @@
   max-width: 60%;
   width: 60%;
   color: $color-dark-white;
-  padding: 40px;
+  padding: 25px 40px;
 
   &__blur {
     filter: blur(3px);
@@ -20,7 +20,7 @@
     max-width: 100%;
   }
 
-  &__image {
+  &__files-link {
     color: $color-dark-white;
   }
 

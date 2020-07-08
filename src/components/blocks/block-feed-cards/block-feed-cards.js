@@ -59,7 +59,7 @@ class BlockFeedCards extends Component {
                             </div>
                         ) : (
                             <BlockEmpty
-                                subtitle="После покупки поста или оформления подписки здесь появятся приобритенные посты :)"
+                                subtitle="После покупки поста или оформления подписки здесь появятся приобретенные посты :)"
                                 linkText="Перейти в подборки"
                                 link={RouteStore.pages.collections}
                             />

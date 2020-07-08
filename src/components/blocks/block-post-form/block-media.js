@@ -17,27 +17,36 @@ class Content extends Component {
 
     componentDidMount() {
         const { editor } = this.props;
-
         const { contentState } = editor;
         const entityKey = editor.block.getEntityAt(0);
+        const entity = contentState.getEntity(entityKey);
+        const { src } = entity.getData();
 
-        const entity = contentState.getEntity(
-            entityKey
-        );
-        const {src} = entity.getData();
-
-        this.setState({isLoaded: false}, () => { const p = FileHandler.loadFile(src);
-            if (!p) return;
-            p.then((response) => {
-                if (response.data?.status) {
-                    throw new Error(response.data?.message);
+        this.setState({isLoaded: false}, () => { 
+            const promise = FileHandler.loadFile(src);
+            if (!promise) return;
+            promise
+            .then(response => {
+                if (response.status >= 400) {
+                    throw new Error(response.status);
+                };
+                return response.data
+              })
+            .then((response) => {
+                if (response.status >= 400) {
+                    throw new Error(response?.message);
                 };
 
-                const data = response.data;           
+                const data = response;           
                 contentState.replaceEntityData(entityKey, { src: data.link, id: data.id });
                 
                 this.setState({data: data, isLoaded: true});
-          })});
+            })
+            .catch((error) => {
+                // TODO добавить обработку норм на .catch
+                console.error(error.message);
+            });
+        });
     }
 
     render () { 
@@ -48,30 +57,32 @@ class Content extends Component {
             
             <>
                 { isLoaded ? type === 'audio' ? 
-            <Audio src={data?.link} id={data?.id}/> : <Image src={data?.link} id={data?.id}/> 
-                : <Loader
-                    type="Oval"
-                    color="#FF6982"
-                    height={120}
-                    width={120}/>
+                <Audio src={data?.link} id={data?.id}/> : <Image src={data?.link} id={data?.id}/> 
+                : <>
+                    <div className="editor__loader">
+                        <Loader
+                            type="Oval"
+                            color="#FF6982"
+                            height={120}
+                            width={120}/>
+                    </div>
+                </>
                 }
             </>
         )   
     }
 }
 
-
-
 function dataURLtoFile(dataurl, filename) {
     if (!dataurl) return;
-    var arr = dataurl.split(',');
+    let arr = dataurl.split(',');
     if (!arr || !arr[0].match(/:(.*?);/)) return;
-    var mime = arr[0].match(/:(.*?);/)[1],
+    let mime = arr[0].match(/:(.*?);/)[1],
         bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-        while(n--){
-            u8arr[n] = bstr.charCodeAt(n);
-        }
-        return new File([u8arr], filename, {type:mime});
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, {type:mime});
 }
 
 class FileHandler {
@@ -81,28 +92,6 @@ class FileHandler {
         const data = new FormData();
         data.append('image', reqBody, reqBody.name);
         return AjaxModule.doAxioPost(RouterStore.api.posts.file.new, data, 'multipart/form-data')
-            // .then((response) => {
-            //     if (response.data?.status) {
-            //         throw new Error(response.data?.message);
-            //     }  
-
-            //     file.update(response.data);
-            //     callback();
-
-                // this.setState((prevState => ({
-                //     fileIDs: [...prevState.fileIDs, response.data]
-                // })));
-                // this.setState({isDisabled: Input.finishLoader(true)}, this.checkDisabledButtonStyle);
-            // })
-            // .catch((error) => {
-            //     console.log(error);
-                // this.setState({
-                //     isDisabled: Input.finishLoader(),
-                //     errors: {
-                //         file: error.message,
-                //     }
-                // }, this.checkDisabledButtonStyle);
-            // });
     }
 }
 
@@ -122,7 +111,7 @@ class Audio extends Component {
     componentDidMount() {
         const { id, post } = this.props; 
 
-        let filesIDS = post.file_ids === null ? [] : post.file_ids;
+        const filesIDS = post.file_ids && post.file_ids.length > 0 ? post.file_ids : [];
         filesIDS.push(id);
 
         const obj = {
@@ -203,7 +192,7 @@ class Image extends Component {
     componentDidMount() {
         const { id, post } = this.props; 
 
-        let filesIDS = post.file_ids === null ? [] : post.file_ids;
+        const filesIDS = post.file_ids && post.file_ids.length > 0 ? post.file_ids : [];
         filesIDS.push(id);
 
         const obj = {
@@ -229,4 +218,4 @@ class Image extends Component {
     }  
 }
 
-export { Embedded, Content};
+export { Embedded, Content };
