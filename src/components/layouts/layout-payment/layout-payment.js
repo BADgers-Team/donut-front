@@ -20,7 +20,7 @@ class LayoutPayment extends Component {
 
     componentDidMount() {
         const { pathname, search } = window.location;
-        const post = JSON.parse(sessionStorage.getItem('donating_info'));
+        const post = JSON.parse(sessionStorage.getItem('payment_info'));
 
         const body = {
             payment_type: post.payment_type,
@@ -35,7 +35,9 @@ class LayoutPayment extends Component {
                     if (status !== 200 && status !== 201) {
                         throw new Error(data.message);
                     }
-                    this.setState({ success: true });
+                    this.setState({ success: true }, () => {
+                        sessionStorage.removeItem('payment_info');
+                    });
                 })
                 .catch((error) => {
                     console.error(error.message);
@@ -54,8 +56,9 @@ class LayoutPayment extends Component {
         //     return <Redirect to={RouteStore.pages.user.login} />;
         // }
         const { success } = this.state;
+        debugger
 
-        const post = JSON.parse(sessionStorage.getItem('donating_info'));
+        const post = JSON.parse(sessionStorage.getItem('payment_info'));
         const path = getRouteWithID(RouteStore.pages.posts.id, post.id);
         if (success) {
             return <Redirect to={path}/>;

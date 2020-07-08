@@ -65,7 +65,7 @@ class DonatPayModal extends Component {
                 <div className="donat-modal">
                     <div className="donat-modal__subtitle">Подтвердите данные платежа</div>
                     <div className="donat-modal__title-text">Вы поддерживаете автора: <b>{author.name}</b></div>
-                    <div className="donat-modal__price-text">Стоимость поддержки: <b>{price} ₽</b></div>
+                    <div className="donat-modal__price-text">Сумма поддержки: <b>{price} ₽</b></div>
                     <div className="donat-modal__warning">Оплата будет производиться через сервис Яндекс.Деньги. После подтверждения пройдите аутентификацию Яндекс для проведения платежа</div>
                     <Button type={Button.types.submit} text="Подтверждаю" className="donat-modal__submit"  onAction={this.handlePay}/>
                 </div>

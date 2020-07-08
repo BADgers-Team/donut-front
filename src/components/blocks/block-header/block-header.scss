@@ -66,6 +66,7 @@
       margin: 8px 0;
       height: auto;
       padding: 0 5%;
+      white-space: nowrap;
 
       & > * {
         color: $color-pink;
@@ -77,6 +78,7 @@
       box-sizing: border-box;
       transition: .3s;
       cursor: pointer;
+      white-space: nowrap;
 
       & > * {
         color: $color-pink;
