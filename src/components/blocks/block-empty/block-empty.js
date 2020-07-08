@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import EmptyIcon from 'assets/img/upset-donut.webp';
+import EmptyIcon from 'assets/img/upset-donut.png';
 import Button from 'components/fragments/button/button';
 
 import './block-empty.scss';

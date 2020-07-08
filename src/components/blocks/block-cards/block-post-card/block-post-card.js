@@ -5,11 +5,11 @@ import { getRouteWithID } from 'services/getRouteWithId';
 
 import './block-post-card.scss';
 
-import CardImage from 'assets/img/card-image.png';
-import CardApplication from 'assets/img/card-application.png';
-import CardDefault from 'assets/img/card-default.png';
-import CardVideo from 'assets/img/card-video.png';
-import CardMusic from 'assets/img/card-music.png';
+// import CardImage from 'assets/img/card-image.png';
+import CardApplication from 'assets/img/card-application.jpg';
+import CardDefault from 'assets/img/card-default.jpg';
+import CardVideo from 'assets/img/card-video.jpg';
+import CardMusic from 'assets/img/card-music.jpg';
 
 import LockIcon from 'assets/img/lock.svg';
 import { Like } from 'components/blocks/block-like/block-like';
@@ -75,9 +75,9 @@ class PostCard extends Component {
         } else {
             //потому что .heic на превью не отображается как пикча
             if (firstImage.mimetype === 'image/heic') {
-                return CardImage;
+                return CardDefault;
             }
-            cardPreview = firstImage.link !== '' ? firstImage.link : CardImage;
+            cardPreview = firstImage.link !== '' ? firstImage.link : CardDefault;
         }  
 
         return cardPreview;
