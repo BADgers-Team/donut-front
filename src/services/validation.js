@@ -1,4 +1,4 @@
-const ERROR_TYPES = {
+export const ERROR_TYPES = {
     REQUIRED: 'Это обязательное поле',
     LENGTH: 'Длина поля должна быть от :min до :max символов',
     TYPE: 'Тип файла не допустим. ',
@@ -19,8 +19,7 @@ export const FIELDS_TYPES = {
 };
 
 export const FILES_TYPES = [
-    '.jpg', '.png', '.gif', '.heic', '.pdf', '.rtf', '.mp4', '.gzip', 'zip'
-    //'.jpg', '.png', '.gif'
+    '.jpg', '.png', '.gif', '.heic', '.heif', '.pdf', '.rtf', '.mp4', '.mp3', '.gzip', 'zip', '.docx', '.doc'
 ];
 
 /** Функция валидации вводимых данных
@@ -166,6 +165,15 @@ const checkFile = (field) => {
     if (field.size > maxFileSize) {
         return ERROR_TYPES.SIZE.replace(':max', '5 Мб');
     }
+
+    //т.к. у некоторых .heic почему нет type, я это закостылю
+    const fileName = field.name.toLowerCase().split('.')[1];
+    if (field.type === '' && (fileName === 'heic' || fileName === 'heif')) {
+        // имеем heic, значит ошибки типа файла нет
+        return null;
+    }
+    // конец костыля
+
     if (!mimeTypes.includes(field.type)) {
         const formats = FILES_TYPES.join(', ');
         return ERROR_TYPES.TYPE.concat(`Допустимые форматы: ${formats}`);

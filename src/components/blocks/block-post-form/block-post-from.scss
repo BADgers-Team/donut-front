@@ -60,7 +60,7 @@
 
         &__error {
             display: block;
-            color: red;
+            color: red !important;
             margin: 2px;
             animation: fadeOut .2s ease-in;
 
@@ -201,7 +201,8 @@
 }
 
 .rdw-editor-wrapper {
-    padding: 0 10px 0 0;
+    border-radius: 10px;
+    margin-right: 10px;
 }
 
 .rdw-image-imagewrapper {
@@ -240,6 +241,38 @@ figure {
 .rdw-link-decorator-wrapper a {
     cursor: pointer;
     color: $color-pink;
+}
+
+.rdw-link-decorator-wrapper a span {
+    color: $color-pink !important;
+}
+
+// Прячу неинформативные/некрасивые блоки из тулбара
+.rdw-image-modal-header, 
+.rdw-embedded-modal-header, 
+.rdw-embedded-modal-size {
+    display: none;
+}
+
+#post_form span {
+    font-size: 18px;
+    color: black;
+    background-color: transparent !important;
+}
+
+.rdw-embedded-modal {
+    height: auto;
+}
+
+.editor {
+    &__loader {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.rdw-link-modal-target-option span {
+    font-size: 15px !important;
 }
 
 
