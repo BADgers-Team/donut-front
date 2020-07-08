@@ -68,6 +68,19 @@ class BlockPostForm extends Component {
             });
     }
 
+    YouTubeGetID = (url) => {
+        let ID = '';
+        url = url.replace(/(>|<)/gi,'').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+        if(url[2] !== undefined) {
+          ID = url[2].split(/[^0-9a-z_\-]/i);
+          ID = ID[0];
+        }
+        else {
+          ID = url;
+        }
+          return ID;
+    }
+
     componentDidMount() {
         AjaxModule.get(RouterStore.api.activities).then((data) => {
             this.setState({ activities: data || [] });
@@ -218,10 +231,13 @@ class BlockPostForm extends Component {
                                         }
 
                                         if (link.indexOf("youtube") >= 0 || link.indexOf("youtu.be") >= 0){
-                                            link = link.replace("watch?v=","embed/");
-                                            link = link.replace("/watch/", "/embed/");
-                                            link = link.replace("youtu.be/","youtube.com/embed/");
-                                            link = link.replace("&feature=youtu.be","");
+                                            // link = link.replace("watch?v=","embed/");
+                                            // link = link.replace("/watch/", "/embed/");
+                                            // link = link.replace("youtu.be/","youtube.com/embed/");
+                                            // link = link.replace("&feature=youtu.be","");
+
+                                            let video_id = this.YouTubeGetID(link);
+                                            link = "https://www.youtube.com/embed/" + video_id;
                                         }
 
                                         return link;
