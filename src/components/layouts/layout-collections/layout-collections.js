@@ -44,7 +44,7 @@ class LayoutCollections extends Component {
             <div className="layout-collections">
                 <BlockActivities onChange={this.handleChangeActivity}/>
                 <BlockCards cards={posts}/>
-                {!user.login && (
+                {(!user.login && posts?.length > 0) && (
                     <div className="continue">
                         <div className="continue__title">Хотите увидеть больше? Присоединяйтесь!</div>
                         <Button
