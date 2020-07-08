@@ -77,7 +77,7 @@ class PostCard extends Component {
             if (firstImage.mimetype === 'image/heic') {
                 return CardImage;
             }
-            cardPreview = firstImage.link;
+            cardPreview = firstImage.link !== '' ? firstImage.link : CardImage;
         }  
 
         return cardPreview;
