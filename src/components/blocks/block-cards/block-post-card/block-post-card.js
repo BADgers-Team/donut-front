@@ -5,7 +5,12 @@ import { getRouteWithID } from 'services/getRouteWithId';
 
 import './block-post-card.scss';
 
-import CardImage from 'assets/img/card-image.png';
+//import CardImage from 'assets/img/card-image.png';
+import CardApplication from 'assets/img/card-application.png';
+import CardDefault from 'assets/img/card-default.png';
+import CardVideo from 'assets/img/card-video.png';
+import CardMusic from 'assets/img/card-music.png';
+
 import LockIcon from 'assets/img/lock.svg';
 import { Like } from 'components/blocks/block-like/block-like';
 import { Seen } from 'components/blocks/block-seen/block-seen';
@@ -39,14 +44,53 @@ class PostCard extends Component {
         return `${day} ${month} ${year} в ${hours}:${minutes}`;
     };
 
+    getPreview = (card) => {
+        let cardPreview; 
+
+        const firstImage = card.full_files?.find(v => v.mimetype.split('/')[0] === 'image');
+        if (!firstImage) {
+            if (!card.full_files) {
+                if (card.raw === '') {
+                    return CardDefault;
+                }
+                const raw = JSON.parse(card.raw);
+                const embedded = Object.values(raw.entityMap).find(file => file.type === "EMBEDDED_LINK");
+                if (!embedded) {
+                    cardPreview = CardDefault;
+                } else {
+                    cardPreview = CardVideo;
+                }
+                return cardPreview;
+            }
+            switch (card.full_files[0].mimetype.split('/')[0]) {
+                case 'application':
+                    cardPreview = CardApplication;
+                    break;
+                case 'audio':
+                    cardPreview = CardMusic;
+                    break;
+                default:
+                    cardPreview = CardDefault;
+            } 
+        } else {
+            //потому что .heic на превью не отображается как пикча
+            if (firstImage.mimetype === 'image/heic') {
+                return CardDefault;
+            }
+            cardPreview = firstImage.link;
+        }  
+
+        return cardPreview;
+    };
+
     render() {
         const { card, current } = this.props;
         const postId = card.id;
         const login = card.author.login;
         // const profileRoute = getRouteWithID(RouteStore.pages.user.profile, login);
         const cardRoute = getRouteWithID(RouteStore.api.posts.id, card.id);  
-        const cardDate = this.formatDate(card.created_at);
-        const cardPreview = card.files ? card.files[0] : CardImage;             
+        const cardDate = this.formatDate(card.created_at);   
+        const cardPreview = this.getPreview(card);  
         const likes = abbrNumber(card.likes_count);
         const currentUserLiked = card.liked;
         const seen = abbrNumber(card.views_count);
