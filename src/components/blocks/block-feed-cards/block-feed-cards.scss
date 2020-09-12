@@ -20,6 +20,13 @@
     grid-column-gap: 10px;
     grid-row-gap: 4em;
   }
+
+  &__loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+  }
 }
 
 .feed-tabs {
@@ -36,7 +43,7 @@
     color: $color-grey;
     background-color: $color-grey;
     margin: 0 0 30px 0;
-    border: none; 
+    border: none;
     height: 2px;
   }
 
