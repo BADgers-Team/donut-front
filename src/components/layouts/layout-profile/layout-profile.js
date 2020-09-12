@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Loader from 'react-loader-spinner';
 
 import {BlockAuthor} from 'components/blocks/block-author/block-author';
 import {BlockAuthorPosts} from 'components/blocks/block-author-posts/block-author-posts';
@@ -11,35 +12,45 @@ import { getRouteWithID } from 'services/getRouteWithId';
 import './layout-profile.scss';
 
 class LayoutProfile extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            current: null,
-        };
+    state = {
+        current: null,
+        isLoaded: false,
     }
 
     componentDidMount() {
         const login = this.props.match.params.login;
         const route = getRouteWithID(RouteStore.api.users.login, login);
+
         AjaxModule.get(route).then((data) => {
-            this.setState({ current: data || null });
+            this.setState({ current: data || null, isLoaded: true });
         }).catch((error) => {
             console.error(error.message);
         });
     }
 
     render() {
-        const { current } = this.state;
-        if (current) {
-            return (
-                <div className="profile">
-                    <BlockAuthor current={current}/>
-                    <BlockAuthorPosts current={current}/>
-                    <BlockSubscriptions current={current}/>
-                </div>
-            );
-        }
-        return <div className="profile">Лоадинг</div>;
+        const { current, isLoaded } = this.state;
+
+        return (
+            <div className="profile">
+                {isLoaded ? (
+                    <>
+                        <BlockAuthor current={current}/>
+                        <BlockAuthorPosts current={current}/>
+                        <BlockSubscriptions current={current}/>
+                    </>
+                ) : (
+                    <div className="profile__loader">
+                        <Loader
+                            type="Bars"
+                            color="#FF6982"
+                            height={120}
+                            width={120}
+                        />
+                    </div>
+                )}
+            </div>
+        );
     }
 }
 
