@@ -1,6 +1,15 @@
 @import 'components/app/consts';
 
 .search-container {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     background-color: $color-dark-purple;
+
+    &__loader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+    }
 }
