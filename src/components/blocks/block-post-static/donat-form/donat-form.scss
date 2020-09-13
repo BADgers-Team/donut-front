@@ -3,15 +3,17 @@
 .donat-form {
   border-radius: 10px;
   border: 2px solid $color-purple;
-  padding: 30px;
+  margin-top: 20px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: $font-title;
+  font-size: 16px;
 
   &__label {
     color: $color-dark-white;
-    font-size: 24px;
+    font-size: 22px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -50,7 +52,6 @@
     width: 50px;
     height: 40px;
     margin: 10px 0;
-    font-size: 20px;
     font-weight: bold;
     color: $color-dark-purple;
     text-align: center;
@@ -69,7 +70,6 @@
   &__count {
     color: $color-pink;
     font-weight: bold;
-    font-size: 20px;
     border-radius: 50px;
     border: 2px solid $color-pink;
     background-color: $color-dark-white;
@@ -92,7 +92,6 @@
   }
 
   &__message {
-    height: 100px;
     width: 100%;
     border: 2px solid $color-purple;
     border-radius: 10px;
@@ -114,7 +113,7 @@
     color: $color-dark-white;
     border-radius: 10px;
     border: none;
-    font-size: 20px;
+    font-size: 16px;
     cursor: pointer;
     font-family: $font-title;
     width: 100%;
