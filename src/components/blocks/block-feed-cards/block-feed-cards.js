@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { inject } from 'mobx-react';
+import Loader from 'react-loader-spinner';
 
 import { PostCard } from 'components/blocks/block-cards/block-post-card/block-post-card';
 import { SubscriptionCard } from 'components/blocks/block-cards/block-subscription-card/block-subscription-card';
@@ -15,14 +16,11 @@ export const FEED_TABS = {
 
 @inject('user')
 class BlockFeedCards extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectedTab: FEED_TABS.POSTS,
-        };
+    state = {
+        selectedTab: FEED_TABS.POSTS,
     }
 
-    handlePostTabClick = () => {           
+    handlePostTabClick = () => {
         this.setState({ selectedTab: FEED_TABS.POSTS});
     };
 
@@ -31,9 +29,9 @@ class BlockFeedCards extends Component {
     };
 
     render() {
-        const { posts, subscriptions, user } = this.props;
+        const { posts, subscriptions, user, isLoaded } = this.props;
         const { selectedTab } = this.state;
-      
+
         const postCards = posts ? posts : [];
         const postСardsNodes = postCards.length > 0 ?
                 postCards.map((card) => {
@@ -88,10 +86,10 @@ class BlockFeedCards extends Component {
 
         const activePostsTabClass = selectedTab === FEED_TABS.POSTS ? 'active-tab' : '';
         const activeSubscriptionTabClass = selectedTab === FEED_TABS.SUBSCRIPTIONS ? 'active-tab' : '';
-        
+
         const activePostsLineClass = selectedTab === FEED_TABS.POSTS ? 'active-line' : '';
         const activeSubscriptionLineClass = selectedTab === FEED_TABS.SUBSCRIPTIONS ? 'active-line' : '';
-        
+
         return (
             <div className="feed-cards">
                 <div className="feed-tabs">
@@ -104,7 +102,18 @@ class BlockFeedCards extends Component {
                         <hr className={`feed-tabs__line ${activeSubscriptionLineClass}`}/>
                     </div>
                 </div>
-                {cardsNodes}
+                {isLoaded ? (
+                    <>{cardsNodes}</>
+                ) : (
+                    <div className="feed-cards__loader">
+                        <Loader
+                            type="Bars"
+                            color="#FF6982"
+                            height={120}
+                            width={120}
+                        />
+                    </div>
+                )}
             </div>
         );
     }

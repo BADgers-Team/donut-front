@@ -1,8 +1,17 @@
 @import 'components/app/consts';
 
 .layout-collections {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     background-color: $color-dark-purple;
+
+    &__loader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+    }
 }
 
 .continue {
