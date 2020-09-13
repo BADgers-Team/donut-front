@@ -22,9 +22,6 @@
   &__progress {
     height: 20px;
     background-color: $color-purple;
-    border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px;
-    border: 1px solid $color-purple;
 
     &-bar {
       width: 100%;
@@ -33,6 +30,7 @@
       border-radius: 30px;
       border: 1px solid $color-purple;
       margin-bottom: 12px;
+      overflow: hidden;
     }
   }
 }
