@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { getUrlWithParams } from 'services/getUrlWithParams';
-const backendUrl = 'http://localhost:8080/api';
+const backendUrl = 'http://127.0.0.1:8080/api';
 // const backendUrl = 'http://donat.emdobro.ru/api';
 
 export default class AjaxModule {
