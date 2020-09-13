@@ -56,6 +56,23 @@ class PaySubcriptionModal extends Component {
                     <div className="subscription-modal__title">{title}</div>
                     <div className="subscription-modal__price-text">Стоимость подписки:</div>
                     <div className="subscription-modal__price">{priceText}</div>
+                    <div className="donat-modal__pay-method">
+                        <div className="pay-method__header">Выберите способ оплаты</div>
+                        <RadioGroup defaultValue={PAY_METHOD.WALLET} aria-label="gender" name="customized-radios">
+                            <div className="pay-method__wallet">
+                                <Input type={Input.types.radio} classValue="pay-method__input" value={PAY_METHOD.WALLET} name="freeCheckbox" label="Яндекс кошелёк" material={true} onAction={() => { this.setPayMethod(PAY_METHOD.WALLET) }}/>
+                            </div>
+                            <div className="pay-method__card">
+                                <Input type={Input.types.radio} classValue="pay-method__input" value={PAY_METHOD.CARD} name="freeCheckbox" label="Банковская карта" material={true} onAction={() => { this.setPayMethod(PAY_METHOD.CARD) }}/>
+                            </div>
+                        </RadioGroup>
+                    </div>
+                    { this.state.method === PAY_METHOD.WALLET && <div className="donat-modal__warning">
+                        Оплата будет производиться через сервис Яндекс.Деньги. После подтверждения пройдите аутентификацию Яндекс для проведения платежа
+                    </div> }
+                    { this.state.method === PAY_METHOD.CARD && <div className="donat-modal__warning">
+                        Оплата будет производиться через сервис Яндекс.Деньги. После подтверждения укажите реквизиты карты для проведения платежа
+                    </div> }
                     <Button type={Button.types.submit} text="Приобрести подписку" className="subscription-modal__submit"  onAction={this.handlePay}/>
                 </div>
             </BlockModal>
