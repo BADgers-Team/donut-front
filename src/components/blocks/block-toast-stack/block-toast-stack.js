@@ -4,7 +4,7 @@ import Toast, {TOAST_TYPES} from 'components/fragments/toast/toast';
 
 import './block-toast-stack.scss';
 
-const DEFAULT_ERROR_TEXT = 'Произошла неизвестная ошибка';
+const DEFAULT_ERROR_TEXT = 'Что-то пошло не так. Повторите позже';
 
 export default class BlockToastStack extends React.Component {
     state = {

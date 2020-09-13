@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import Loader from 'react-loader-spinner';
+
+import { TOAST_TYPES } from 'components/fragments/toast/toast';
 import AjaxModule from 'services/ajax';
+import { getRouteWithID } from 'services/getRouteWithId';
+import RouteStore from 'store/routes';
 
 import './layout-callback.scss';
-import RouteStore from 'store/routes';
-import { getRouteWithID } from 'services/getRouteWithId';
 
 @inject('user')
 @observer
@@ -16,7 +18,7 @@ class LayoutCallback extends Component {
     }
 
     componentDidMount() {
-        const { user } = this.props;
+        const { user, showToast } = this.props;
         const { pathname, search } = window.location;
         if (pathname && search) {
             AjaxModule.doAxioPost(`${pathname}${search}`)
@@ -27,6 +29,7 @@ class LayoutCallback extends Component {
                     user.update(data);
                 })
                 .catch((error) => {
+                    showToast({ type: TOAST_TYPES.ERROR });
                     console.error(error.message);
                 });
         }

@@ -4,9 +4,11 @@ import { inject, observer } from 'mobx-react';
 import Loader from 'react-loader-spinner';
 import AjaxModule from 'services/ajax';
 
-import './layout-payment.scss';
 import RouteStore from 'store/routes';
 import { getRouteWithID } from 'services/getRouteWithId';
+import { TOAST_TYPES } from 'components/fragments/toast/toast';
+
+import './layout-payment.scss';
 
 @inject('post')
 @observer
@@ -19,6 +21,7 @@ class LayoutPayment extends Component {
     }
 
     componentDidMount() {
+        const {showToast} = this.props;
         const { pathname, search } = window.location;
         const post = JSON.parse(sessionStorage.getItem('payment_info'));
 
@@ -36,10 +39,13 @@ class LayoutPayment extends Component {
                         throw new Error(data.message);
                     }
                     this.setState({ success: true }, () => {
+                        showToast({ type: TOAST_TYPES.SUCCESS, text: 'Оплата прошла успешно' });
+
                         sessionStorage.removeItem('payment_info');
                     });
                 })
                 .catch((error) => {
+                    showToast({ type: TOAST_TYPES.ERROR });
                     console.error(error.message);
                 });
         }

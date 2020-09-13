@@ -12,8 +12,6 @@ export default class Toast extends React.Component {
     onCloseClick = () => {
         const {id, onClose} = this.props;
 
-        console.log('onCloseClick fired', onClose);
-
         if (onClose) {
             onClose(id);
         }

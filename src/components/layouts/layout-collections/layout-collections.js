@@ -5,6 +5,7 @@ import Loader from 'react-loader-spinner';
 import BlockActivities from 'components/blocks/block-activities/block-activities';
 import BlockCards from 'components/blocks/block-cards/block-cards';
 import Button from 'components/fragments/button/button';
+import { TOAST_TYPES } from 'components/fragments/toast/toast';
 import AjaxModule from 'services/ajax';
 import RouteStore from 'store/routes';
 
@@ -19,20 +20,26 @@ class LayoutCollections extends Component {
     }
 
     componentDidMount() {
+        const {showToast} = this.props;
+
         AjaxModule.get(RouteStore.api.posts.all).then((data) => {
             this.setState({ posts: data || [], isLoaded: true });
         }).catch((error) => {
+            showToast({ type: TOAST_TYPES.ERROR });
             console.error(error.message);
         });
     }
 
     handleChangeActivity = (key) => {
+        const {showToast} = this.props;
+
         this.setState({ isLoaded: false }, () => {
             AjaxModule.get(RouteStore.api.posts.all, key !== 'Все' ? {activities: key} : {})
                 .then((data) => {
                     this.setState({ posts: data || [], isLoaded: true });
                 })
                 .catch((error) => {
+                    showToast({ type: TOAST_TYPES.ERROR });
                     console.error(error.message);
                 });
         });
@@ -40,10 +47,10 @@ class LayoutCollections extends Component {
 
     render() {
         const { posts, isLoaded } = this.state;
-        const { user } = this.props;
+        const { user, showToast } = this.props;
         return (
             <div className="layout-collections">
-                <BlockActivities onChange={this.handleChangeActivity}/>
+                <BlockActivities onChange={this.handleChangeActivity} showToast={showToast}/>
                 {isLoaded ? (
                     <>
                         <BlockCards cards={posts}/>

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import BlockPostStatic from 'components/blocks/block-post-static/block-post-static';
 import BlockPostDynamic from 'components/blocks/block-post-dynamic/block-post-dynamic';
 import { BlockPaywall } from 'components/blocks/block-paywall/block-paywall';
+import { TOAST_TYPES } from 'components/fragments/toast/toast';
 import AjaxModule from 'services/ajax';
 import RouteStore from 'store/routes';
 import { getRouteWithID } from 'services/getRouteWithId';
@@ -23,13 +24,14 @@ class LayoutPost extends Component {
 
     componentDidMount() {
         const id = this.props.match.params.id;
-        const { post } = this.props;
+        const { post, showToast } = this.props;
 
         const route = getRouteWithID(RouteStore.api.posts.id, id);
         AjaxModule.get(route).then((data) => {
             post.update(data);
             this.setState({ post: data || null });
         }).catch((error) => {
+            showToast({ type: TOAST_TYPES.ERROR });
             console.error(error.message);
         });
     }
