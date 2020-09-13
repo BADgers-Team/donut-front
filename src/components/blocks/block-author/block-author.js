@@ -114,7 +114,7 @@ class BlockAuthor extends Component {
                     <div className="author-info__login">{`@${current.login}`}</div>
                     <div className="author-info__name">{current.name}</div>
                     <div className="author-info__info">
-                        {`${posts} постов | ${subscriptions} подписок | ${followers} подписчиков`}
+                        {`${posts} постов | ${subscriptions} каналов | ${followers} подписчиков`}
                     </div>
                     <div className="author-info__description">{description}</div>
                     <div className="author-info__wallet">Яндекс.Кошелек: {wallet}</div>

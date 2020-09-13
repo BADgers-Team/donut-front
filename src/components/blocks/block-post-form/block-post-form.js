@@ -31,15 +31,15 @@ class BlockPostForm extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { 
-            fileIDs: [], 
-            postID: 0, 
+        this.state = {
+            fileIDs: [],
+            postID: 0,
             activities: [],
             subscriptions: [],
             visibleTypes: [],
-            showSubscriptions: true, 
-            showPrice: false, 
-            disabledButton: false, 
+            showSubscriptions: true,
+            showPrice: false,
+            disabledButton: false,
             redirect: false,
             errors: {
                 title: null,
@@ -125,14 +125,14 @@ class BlockPostForm extends Component {
                         editable: false
                     };
                 }
-            }    
+            }
 
             return {
                 component: this.Media,
                 editable: false,
             };
         }
-      
+
         return null;
     }
 
@@ -141,18 +141,18 @@ class BlockPostForm extends Component {
           props.block.getEntityAt(0)
         );
         const type = entity.getType().toLowerCase();
-    
+
         const media = (
-            <Content 
+            <Content
             editor={props}
             type={type} />
         );
-      
+
         return media;
     };
-         
-    
-    render() {    
+
+
+    render() {
         const { activities, visibleTypes, subscriptions, redirect, errors, postID, editorState } = this.state;
 
         const visibleTypeSelect = visibleTypes.map((type) => {
@@ -178,8 +178,8 @@ class BlockPostForm extends Component {
         });
 
         const teaserPlaceholder =  'Напишите тизер, чтобы пользователи, у которых ещё нет доступа к посту, могли понять о чём вы пишите. Используйте это краткое описание для привлечения новых подписчиков...(опционально)';
-        const postRoute = getRouteWithID(RouterStore.api.posts.id, postID);  
-        
+        const postRoute = getRouteWithID(RouterStore.api.posts.id, postID);
+
         if (redirect) {
             return <Redirect to={postRoute} />;
         }
@@ -207,11 +207,11 @@ class BlockPostForm extends Component {
                             placeholder = 'Напишите что-нибудь...'
                             toolbar={{
                                 options: ['emoji', 'link', 'embedded', 'image', 'history'],
-                                image: { 
-                                    uploadCallback: this.uploadImageCallBack, 
+                                image: {
+                                    uploadCallback: this.uploadImageCallBack,
                                     previewImage: true,
-                                    urlEnabled: false, 
-                                    inputAccept: 'image/gif,image/jpeg,image/jpg,image/png,image/svg',   
+                                    urlEnabled: false,
+                                    inputAccept: 'image/gif,image/jpeg,image/jpg,image/png,image/svg',
                                     defaultSize: {
                                         height: 'auto',
                                         width: '100%',
@@ -222,7 +222,7 @@ class BlockPostForm extends Component {
                                     options: ['link'],
                                 },
                                 embedded: {
-                                    icon: embeddedIcon,  
+                                    icon: embeddedIcon,
                                     embedCallback: link => {
                                         if (link.match('https://vimeo.com/')) {
                                             let videoID = link.split('https://vimeo.com/');
@@ -243,16 +243,16 @@ class BlockPostForm extends Component {
                                         return link;
                                     }
                                 }
-                                
+
                             }}
                             localization={{
                                 locale: 'ru',
                             }}
 
                             toolbarCustomButtons={[<MusicToolbarButton onChange={this.setEditorState}/>]}
-                        /> 
+                        />
                     </div>
-                    {errors && <span className="form-input__error">{errors.description}</span>}                      
+                    {errors && <span className="form-input__error">{errors.description}</span>}
                     <div className="form-input input-teaser">
                         <Input label="Тизер" type={Input.types.textarea} name="teaser" placeholder={teaserPlaceholder}/>
                     </div>
@@ -271,7 +271,7 @@ class BlockPostForm extends Component {
                 </div>
 
                 <div className="form__controls">
-                    <div className="form-control control-button">    
+                    <div className="form-control control-button">
                         <Button text="Опубликовать" type={Button.types.submit} name="createPost" isDisabled={this.state.isDisabled} onAction={this.handleCreatePostClick}/>
                     </div>
                     <div className="form-control control-select-visible">
@@ -309,7 +309,7 @@ class BlockPostForm extends Component {
         if ((visibleType === '2' || visibleType === '3') && subscriptions.length === 0) {
             this.setState({
                 errors: {
-                    subscription: 'У вас нет ни одной подписки. Выбранная приватность сброшена'
+                    subscription: 'У вас нет ни одной подписки на канал. Выбранная приватность сброшена'
                 },
                 showSubscriptions: true,
                 showPrice: false,
@@ -333,7 +333,7 @@ class BlockPostForm extends Component {
             this.setState({showPrice: true});
         } else {
             this.setState({showPrice: false});
-        } 
+        }
     };
 
     handleSendFile() {
@@ -344,7 +344,7 @@ class BlockPostForm extends Component {
             }
         }, this._makeFileRequest);
     }
-   
+
 
     _makeFileRequest() {
         const { post } = this.props;
@@ -368,7 +368,7 @@ class BlockPostForm extends Component {
                         file_ids: filesIDS,
                     };
                     post.update(obj);
-                    
+
                     this.setState((prevState => ({
                         fileIDs: [...prevState.fileIDs, response.data]
                     })));
@@ -407,7 +407,7 @@ class BlockPostForm extends Component {
         const blocks = convertToRaw(editorState.getCurrentContent()).blocks;
 
         const form = this._form.current;
-        // let rawFull = convertToRaw(editorState.getCurrentContent()); 
+        // let rawFull = convertToRaw(editorState.getCurrentContent());
         // Object.keys(rawFull.entityMap).filter(key => rawFull.entityMap[key].type === 'audio').forEach(key => rawFull.entityMap[key].data.src = '');
         form.raw = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
 

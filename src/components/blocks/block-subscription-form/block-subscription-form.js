@@ -16,8 +16,8 @@ import {FIELDS_TYPES, validate} from 'services/validation';
 class BlockSubscriptionForm extends Component {
     constructor(props) {
         super(props);
-      
-        this.state = { 
+
+        this.state = {
             isFree: false,
             subscriptions: [],
             errors: {
@@ -39,7 +39,7 @@ class BlockSubscriptionForm extends Component {
     handleFreeClick = () => {
         this.setState({ isFree: !this.state.isFree});
     };
-    
+
     render() {
         const { user } = this.props;
         const { subscriptions, errors } = this.state;
@@ -52,18 +52,18 @@ class BlockSubscriptionForm extends Component {
                 <div className="form__subscriptions">
                     {subscriptionsNodes.length !== 0 ? (
                         <>
-                            <div className="form__subscriptions-title">Мои подписки</div>
+                            <div className="form__subscriptions-title">Мои каналы</div>
                             <div className="form__subscriptions-items">
                                 {subscriptionsNodes}
                             </div>
                         </>
                     ) : (
-                        <div>Автор пока не добавил подписок</div>
+                        <div>Автор пока не добавил каналов</div>
                     )}
                 </div>
 
                 <div className="form__inputs">
-                    <div className="subscription-header">Создание новой подписки</div>
+                    <div className="subscription-header">Создание нового канала</div>
                     <div className="form-input input-title">
                         <Input
                             label="Заголовок"
@@ -79,7 +79,7 @@ class BlockSubscriptionForm extends Component {
                     </div>
                     <div className="form__controls-subscription">
                         <div className="form-control text-price">
-                            Вы можете создать платную или бесплатную подписку. Для платной подписки укажите стоимость в месяц. Минимальная стоимость платной подписки - 16 ₽.
+                            Вы можете создать платный или бесплатный канал. Для платного канала укажите стоимость в месяц. Минимальная стоимость платного канала - 16 ₽.
                         </div>
                         <div className="form-control control-price">
                             <div className='bottom__free-checkbox'>
@@ -90,8 +90,8 @@ class BlockSubscriptionForm extends Component {
                             </div>}
                         </div>
                         {errors.sum && <span className="form-input__error">{errors.sum}</span>}
-                        <div className="form-control control-button">    
-                            <Button text="Создать подписку" type={Button.types.submit} isDisabled={this.state.isDisabled} onAction={this.handleCreateSubscriptionClick}/>
+                        <div className="form-control control-button">
+                            <Button text="Создать канал" type={Button.types.submit} isDisabled={this.state.isDisabled} onAction={this.handleCreateSubscriptionClick}/>
                         </div>
                     </div>
                 </div>

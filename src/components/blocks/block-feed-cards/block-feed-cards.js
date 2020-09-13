@@ -11,7 +11,7 @@ import './block-feed-cards.scss';
 
 export const FEED_TABS = {
     'POSTS': 'Посты',
-    'SUBSCRIPTIONS': 'Подписки',
+    'SUBSCRIPTIONS': 'Каналы',
 };
 
 @inject('user')
@@ -57,7 +57,7 @@ class BlockFeedCards extends Component {
                             </div>
                         ) : (
                             <BlockEmpty
-                                subtitle="После покупки поста или оформления подписки здесь появятся приобретенные посты :)"
+                                subtitle="После покупки поста или оформления подписки на канал здесь появятся приобретенные посты :)"
                                 linkText="Перейти в подборки"
                                 link={RouteStore.pages.collections}
                             />
@@ -76,7 +76,7 @@ class BlockFeedCards extends Component {
                             </div>
                         ) : (
                             <BlockEmpty
-                                subtitle="После оформления подписки здесь будут хранится Ваши подписки :)"
+                                subtitle="После оформления подписки на канал здесь будут храниться ваши подписки :)"
                             />
                         )}
                     </>
