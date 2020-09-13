@@ -56,6 +56,10 @@ class DonatPayModal extends Component {
             });
     };
 
+    setPayMethod = (payMethod) => {
+        this.setState({ method: payMethod });
+    };
+      
     render() {
         const { open } = this.state;
         const { onClose, title, price, author } = this.props;
@@ -74,14 +78,19 @@ class DonatPayModal extends Component {
                         <div className="pay-method__header">Выберите способ оплаты</div>
                         <RadioGroup defaultValue={PAY_METHOD.WALLET} aria-label="gender" name="customized-radios">
                             <div className="pay-method__wallet">
-                                <Input type={Input.types.radio} classValue="pay-method__input" value={PAY_METHOD.WALLET} name="freeCheckbox" label="Яндекс кошелёк" material={true} onAction={this.setPayMethod}/>
+                                <Input type={Input.types.radio} classValue="pay-method__input" value={PAY_METHOD.WALLET} name="freeCheckbox" label="Яндекс кошелёк" material={true} onAction={() => { this.setPayMethod(PAY_METHOD.WALLET) }}/>
                             </div>
                             <div className="pay-method__card">
-                                <Input type={Input.types.radio} classValue="pay-method__input" value={PAY_METHOD.CARD} name="freeCheckbox" label="Банковская карта" material={true} onAction={this.setPayMethod}/>
+                                <Input type={Input.types.radio} classValue="pay-method__input" value={PAY_METHOD.CARD} name="freeCheckbox" label="Банковская карта" material={true} onAction={() => { this.setPayMethod(PAY_METHOD.CARD) }}/>
                             </div>
                         </RadioGroup>
                     </div>
-                    <div className="donat-modal__warning">Оплата будет производиться через сервис Яндекс.Деньги. После подтверждения пройдите аутентификацию Яндекс для проведения платежа</div>
+                    { this.state.method === PAY_METHOD.WALLET && <div className="donat-modal__warning">
+                        Оплата будет производиться через сервис Яндекс.Деньги. После подтверждения пройдите аутентификацию Яндекс для проведения платежа
+                    </div> }
+                    { this.state.method === PAY_METHOD.CARD && <div className="donat-modal__warning">
+                        Оплата будет производиться через сервис Яндекс.Деньги. После подтверждения укажите реквизиты карты для проведения платежа
+                    </div> }
                     <Button type={Button.types.submit} text="Подтверждаю" className="donat-modal__submit"  onAction={this.handlePay}/>
                 </div>
             </BlockModal>
