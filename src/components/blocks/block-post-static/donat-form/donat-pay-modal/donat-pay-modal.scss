@@ -14,7 +14,7 @@
     }
 
     &__submit {
-        background-color: #FF6982;
+        background-color: $color-pink;
         color: #F2F2F2;
         border-radius: 10px;
         border: none;
@@ -35,5 +35,18 @@
         opacity: 0.3;
         font-size: 12px;
         margin-bottom: 12px;
+    }
+}
+
+.pay-method {
+    &__header {
+        font-size: 20px;
+        margin-bottom: 8px;
+    }
+
+    &__input {
+        .MuiIconButton-label {
+            color: $color-pink;
+        }
     }
 }

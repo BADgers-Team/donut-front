@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Checkbox from '@material-ui/core/Checkbox';
+import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { classNames } from 'utils/class-names';
 
@@ -22,6 +23,7 @@ class Input extends Component {
             textarea: 'textarea',
             number: 'number',
             checkbox: 'checkbox',
+            radio: 'radio',
         };
     }
 
@@ -122,7 +124,36 @@ class Input extends Component {
                     </>
                 );
             }
-            break;     
+            break; 
+        case this._types.radio:
+            if (material) { 
+                node = (
+                    <>
+                        <FormControlLabel
+                        control={<Radio 
+                            style={{color:'white'}}
+                            size='medium'
+                            name={name} 
+                            onChange={onAction}
+                            className={classValue}
+                            id={`${id}`}
+                            value={value}
+                            checked = {checked}
+                        />}
+                        label={label}
+                        labelPlacement="end"
+                        />
+                    </>
+                );
+            } else {
+                node = (
+                    <>
+                        <input ref={this._input} type="radio" name={name} defaultValue={defaultValue} value={value} className={classes}/>
+                        {!label ? '' : <label className="radio-label">{label}</label>}
+                    </>
+                );
+            }
+            break;         
         default:
             node = (
                 <>
