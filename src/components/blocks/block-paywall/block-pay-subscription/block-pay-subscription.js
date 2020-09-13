@@ -6,6 +6,9 @@ import AjaxModule from 'services/ajax';
 import { BlockModal } from 'components/blocks/block-modal/block-modal';
 import Button from 'components/fragments/button/button';
 import { getRouteWithID } from 'services/getRouteWithId';
+import { PAY_METHOD } from 'store/const';
+import Input from 'components/fragments/input/input';
+import RadioGroup from '@material-ui/core/RadioGroup';
 
 import './block-pay-subscription.scss';
 
@@ -18,6 +21,7 @@ class PaySubcriptionModal extends Component {
         this.state = {
             open: props.open || true,
             sum: 16,
+            method: PAY_METHOD.WALLET,
         };
     }
 
@@ -40,6 +44,10 @@ class PaySubcriptionModal extends Component {
         }).catch((error) => {
             console.error(error.message);
         });
+    };
+
+    setPayMethod = (payMethod) => {
+        this.setState({ method: payMethod });
     };
 
     render() {

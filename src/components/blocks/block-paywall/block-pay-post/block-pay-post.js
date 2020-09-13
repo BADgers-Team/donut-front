@@ -7,6 +7,9 @@ import Button from 'components/fragments/button/button';
 import RouterStore from 'store/routes';
 import AjaxModule from 'services/ajax';
 import { getRouteWithID } from 'services/getRouteWithId';
+import { PAY_METHOD } from 'store/const';
+import Input from 'components/fragments/input/input';
+import RadioGroup from '@material-ui/core/RadioGroup';
 
 import './block-pay-post.scss';
 
@@ -20,6 +23,7 @@ class PostPayModal extends Component {
             open: props.open || true,
             sum: 16,
             redirect: false,
+            method: PAY_METHOD.WALLET,
         };
     }
 
@@ -38,6 +42,10 @@ class PostPayModal extends Component {
             .catch((error) => {
                 console.error(error.message);
             });
+    };
+
+    setPayMethod = (payMethod) => {
+        this.setState({ method: payMethod });
     };
 
     render() {
