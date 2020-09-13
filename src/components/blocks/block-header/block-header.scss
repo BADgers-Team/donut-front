@@ -21,6 +21,8 @@
 
   &-right {
     display: flex;
+    flex-grow: 1;
+    justify-content: flex-end;
     padding-right: 20px;
 
     & > * {
@@ -59,6 +61,7 @@
     border-bottom: 4px solid transparent;
     transition: .3s;
     text-decoration: none;
+    white-space: nowrap;
 
     &__main {
       border-radius: 10px;
@@ -78,7 +81,6 @@
       box-sizing: border-box;
       transition: .3s;
       cursor: pointer;
-      white-space: nowrap;
 
       & > * {
         color: $color-pink;
