@@ -28,6 +28,7 @@ export default {
         payment: {
             pay: '/pay',
             authorize: '/oauth/money', // Ручка для авторизации через Яндекс.Деньги
+            card: '/pay/card',
         },
         goals: '/goals',
         feed: '/feed',
