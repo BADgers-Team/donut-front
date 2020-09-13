@@ -16,7 +16,7 @@ export default class BlockFooter extends React.Component {
                     <Link to={'/'} className="block-footer__link">Контакты и обратная связь</Link>
                     <Link to={'/'} href="" className="block-footer__link">О компании</Link>
                     <Link to={'/'} className="block-footer__link">Партнерам</Link>
-                    <div className="block-footer__copyright">Команда Badgers, 2020. Все права не защищены ©</div>
+                    <div className="block-footer__copyright">Команда Badgers, 2020. Все права защищены ©</div>
                 </div>
             </div>
         );
