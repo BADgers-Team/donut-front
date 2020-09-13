@@ -17,7 +17,7 @@ class LayoutProfile extends Component {
         isLoaded: false,
     }
 
-    componentDidMount() {
+    fetchUser = () => {
         const login = this.props.match.params.login;
         const route = getRouteWithID(RouteStore.api.users.login, login);
 
@@ -26,6 +26,18 @@ class LayoutProfile extends Component {
         }).catch((error) => {
             console.error(error.message);
         });
+    }
+
+    componentDidMount() {
+        this.fetchUser();
+    }
+
+    componentDidUpdate(prevProps) {
+        const login = this.props.match.params.login;
+        const prevLogin = prevProps.match.params.login;
+        if (login !== prevLogin) {
+            this.fetchUser();
+        }
     }
 
     render() {
