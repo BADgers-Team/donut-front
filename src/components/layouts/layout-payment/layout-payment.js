@@ -22,6 +22,8 @@ class LayoutPayment extends Component {
         const { pathname, search } = window.location;
         const post = JSON.parse(sessionStorage.getItem('payment_info'));
 
+        debugger
+
         const body = {
             payment_type: post.payment_type,
             post_id: post.id,
@@ -58,6 +60,9 @@ class LayoutPayment extends Component {
         const { success } = this.state;
 
         const post = JSON.parse(sessionStorage.getItem('payment_info'));
+
+        if (!post) return null;
+
         const path = getRouteWithID(RouteStore.pages.posts.id, post.id);
         if (success) {
             return <Redirect to={path}/>;

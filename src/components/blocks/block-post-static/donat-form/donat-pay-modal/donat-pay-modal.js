@@ -51,7 +51,8 @@ class DonatPayModal extends Component {
                     sum: this.props.price,
                 };
 
-                AjaxModule.post(RouterStore.api.payment.card, reqBody).then((response) => {
+                AjaxModule.doAxioPost(RouterStore.api.payment.card, reqBody)
+                .then((response) => {
                     window.location.replace(response.data.url);
                 }).catch((error) => {
                     console.error(error.message);
