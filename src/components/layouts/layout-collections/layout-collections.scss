@@ -5,6 +5,8 @@
     flex-direction: column;
     width: 100%;
     background-color: $color-dark-purple;
+    display: flex;
+    flex-direction: column;
 
     &__loader {
         display: flex;

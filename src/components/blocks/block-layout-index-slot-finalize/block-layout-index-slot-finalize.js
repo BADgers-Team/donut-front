@@ -13,7 +13,7 @@ export default class BlockLayoutIndexSlotFinalize extends React.Component {
         return (
             <div className="block-layout-index-slot-finalize">
                 <div className="block-layout-index-slot-finalize__title">
-                    Твои фанаты ждут тебя
+                    Ваши фанаты ждут вас
                 </div>
                 <div className="block-layout-index-slot-finalize__cta-button">
                     <Button

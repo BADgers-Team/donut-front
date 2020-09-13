@@ -73,7 +73,7 @@
       }
     }
 
-    &__active, &:hover {
+    &.active, &:hover {
       border-bottom: 4px solid $color-pink;
       box-sizing: border-box;
       transition: .3s;
