@@ -30,6 +30,8 @@ class DonatPayModal extends Component {
         const payMethod = this.state.method;
         const { onSuccess } = this.props;
 
+        const post = JSON.parse(sessionStorage.getItem('payment_info'));
+
         switch (payMethod) {
             case PAY_METHOD.WALLET:
                 AjaxModule.doAxioGet(RouterStore.api.payment.authorize)
@@ -37,6 +39,7 @@ class DonatPayModal extends Component {
                     if (response.status !== 200) {
                         throw Error('Не удалось получить подключиться к авторизации Яндекс.Денег');
                     }
+                    sessionStorage.setItem('payment_info', JSON.stringify({...post, payment_method: PAY_METHOD.WALLET}));
                     window.location.replace(response.data.url);
                     // onSuccess?.();
                 })
@@ -49,10 +52,12 @@ class DonatPayModal extends Component {
                     payment_type: 'Донат',
                     post_id: this.props.id,
                     sum: this.props.price,
+                    method: PAY_METHOD.CARD,
                 };
 
                 AjaxModule.doAxioPost(RouterStore.api.payment.card, reqBody)
                 .then((response) => {
+                    sessionStorage.setItem('payment_info', JSON.stringify({...post, payment_method: PAY_METHOD.CARD}));
                     window.location.replace(response.data.url);
                 }).catch((error) => {
                     console.error(error.message);

@@ -7,6 +7,7 @@ import AjaxModule from 'services/ajax';
 import './layout-payment.scss';
 import RouteStore from 'store/routes';
 import { getRouteWithID } from 'services/getRouteWithId';
+import { PAY_METHOD } from 'store/const';
 
 @inject('post')
 @observer
@@ -22,16 +23,15 @@ class LayoutPayment extends Component {
         const { pathname, search } = window.location;
         const post = JSON.parse(sessionStorage.getItem('payment_info'));
 
-        debugger
-
         const body = {
             payment_type: post.payment_type,
             post_id: post.id,
             sum: +post.sum,
             message: post.message,
+            method: post.payment_method
         };
 
-        if (pathname && search) {
+        if ((pathname && search) || post.payment_method === PAY_METHOD.CARD) {
             AjaxModule.doAxioPost(`${pathname}${search}`, body)
                 .then(({ data, status}) => {
                     if (status !== 200 && status !== 201) {
