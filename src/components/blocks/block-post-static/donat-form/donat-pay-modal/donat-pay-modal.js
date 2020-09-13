@@ -27,33 +27,37 @@ class DonatPayModal extends Component {
 
     handlePay = (event) => {
         event.preventDefault();
-
-        // const reqBody = {
-        //     payment_type: 'Донат',
-        //     post_id: this.props.id,
-        //     sum: this.props.price,
-        // };
-
+        const payMethod = this.state.method;
         const { onSuccess } = this.props;
 
-        // AjaxModule.post(RouterStore.api.pay, reqBody).then(() => {
-        //     console.log('Оплачено');
-        //     onSuccess && onSuccess();
-        // }).catch((error) => {
-        //     console.error(error.message);
-        // });
+        switch (payMethod) {
+            case PAY_METHOD.WALLET:
+                AjaxModule.doAxioGet(RouterStore.api.payment.authorize)
+                .then((response) => {
+                    if (response.status !== 200) {
+                        throw Error('Не удалось получить подключиться к авторизации Яндекс.Денег');
+                    }
+                    window.location.replace(response.data.url);
+                    // onSuccess?.();
+                })
+                .catch((error) => {
+                    console.error(error.message);
+                });
+                break;
+            case PAY_METHOD.CARD:
+                const reqBody = {
+                    payment_type: 'Донат',
+                    post_id: this.props.id,
+                    sum: this.props.price,
+                };
 
-        AjaxModule.doAxioGet(RouterStore.api.payment.authorize)
-            .then((response) => {
-                if (response.status !== 200) {
-                    throw Error('Не удалось получить подключиться к авторизации Яндекс.Денег');
-                }
-                window.location.replace(response.data.url);
-                // onSuccess?.();
-            })
-            .catch((error) => {
-                console.error(error.message);
-            });
+                AjaxModule.post(RouterStore.api.payment.card, reqBody).then((response) => {
+                    window.location.replace(response.data.url);
+                }).catch((error) => {
+                    console.error(error.message);
+                });
+                break;
+        }
     };
 
     setPayMethod = (payMethod) => {
