@@ -30,17 +30,21 @@ class LayoutCreatePost extends Component {
         });
     }
 
+    get isModeEditing() {
+        return this.props.history.location.state?.editing;
+    }
+
     render() {
+        const { isModeEditing } = this;
         const { isModalOpen } = this.state;
-        const { history, showToast } = this.props;
-      
-        const editingPost = history.location.state?.editing;
-        const title = editingPost ? 'Редактирование поста' : 'Создание нового поста';
+        const { showToast } = this.props;
+
+        const title = isModeEditing ? 'Редактирование поста' : 'Создание нового поста';
         return (
             <div className="post-container">
                 <div className="post-header">{title}</div>
-                <BlockPostForm editingPost={editingPost} showToast={showToast}/>
-                {isModalOpen && <BlockNoWalletModal open={isModalOpen} onClose={this.onModalClose}/>}
+                <BlockPostForm editingPost={isModeEditing} showToast={showToast}/>
+                {!isModeEditing && isModalOpen && <BlockNoWalletModal open={isModalOpen} onClose={this.onModalClose}/>}
             </div>
         );
     }
