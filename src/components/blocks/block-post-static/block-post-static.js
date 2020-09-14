@@ -183,7 +183,7 @@ class BlockPostStatic extends Component {
                                         <Button text="Подписаться" type={Button.types.link}/>
                                     </div>
                                 )}
-                                { user?.login !== post.author.login && (
+                                { user?.login !== post.author.login && post.author.is_wallet && (
                                     <DonatForm author={login} current={post} showToast={showToast}/>
                                 )}
                             </div>
