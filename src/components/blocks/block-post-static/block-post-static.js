@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
+import { inject } from 'mobx-react';
 
-import './block-post-static.scss';
-import Avatar from 'assets/img/michael.png';
-import ActivityIcon from 'assets/img/activity.svg';
-import SubscriptionIcon from 'assets/img/subscription.svg';
-import CalendarIcon from 'assets/img/calendar.svg';
 import Button from 'components/fragments/button/button';
 import { PaySubcriptionModal } from 'components/blocks/block-paywall/block-pay-subscription/block-pay-subscription';
 import { Like } from 'components/blocks/block-like/block-like';
 import { Seen } from 'components/blocks/block-seen/block-seen';
 import { DonatForm } from 'components/blocks/block-post-static/donat-form/donat-form';
+
 import { PRIVACY } from 'store/const';
 import RouteStore from 'store/routes';
-import { getRouteWithID } from 'services/getRouteWithId';
-import { inject } from 'mobx-react';
-import { Redirect } from "react-router-dom";
 
+import { getRouteWithID } from 'services/getRouteWithId';
+
+import Avatar from 'assets/img/michael.png';
+import ActivityIcon from 'assets/img/activity.svg';
+import SubscriptionIcon from 'assets/img/subscription.svg';
+import CalendarIcon from 'assets/img/calendar.svg';
+
+import './block-post-static.scss';
+import AjaxModule from 'services/ajax';
 
 @inject('user')
 class BlockPostStatic extends Component {
@@ -25,49 +28,56 @@ class BlockPostStatic extends Component {
 
         this.state = {
             showModal: false,
-            showSubcriptionPay: false,
+            showSubscriptionPay: false,
             redirect: false,
         };
     }
 
-    openModal = () => {
-        this.setState({ showModal: true });
-    }
-    
-    closeModal = () => {
-        this.setState({ showModal: false });
-    }
-
-    handleSuccessChange = (data) => {
-        this.closeModal();
-
-        this.setState({ posts: data });
-    };
-
-    openSubcriptionPayModal = () => {
+    openSubscriptionPayModal = () => {
         const { user } = this.props;
 
         if (!user.login) {
             this.setState({ redirect: true });
-            return
+            return;
         }
 
-        this.setState({ showSubcriptionPay: true });
-    }
+        this.setState({ showSubscriptionPay: true });
+    };
     
-    closeSubcriptionPayModal = () => {
-        this.setState({ showSubcriptionPay: false });
-    }
+    closeSubscriptionPayModal = () => {
+        this.setState({ showSubscriptionPay: false });
+    };
 
-    handleSuccessChangeSubcription = (data) => {
-        this.closeSubcriptionPayModal();
+    handleSuccessChangeSubscription = (data) => {
+        this.closeSubscriptionPayModal();
 
         this.setState({post: data}, () => {
             const { onChange } = this.props;
             onChange && onChange(this.state.post);
         });
-    }
+    };
 
+    handlePatchClick = () => {
+        const { history, post } = this.props;
+        const path = getRouteWithID(RouteStore.pages.posts.edit, post.id);
+        history.push(path, { editing: post });
+    };
+
+    handleDeleteClick = () => {
+        const { post } = this.props;
+        const path = getRouteWithID(RouteStore.api.posts.id, post.id);
+        AjaxModule.doAxioDelete(path)
+            .then((response) => {
+                if (response.status !== 200 || response.data.status) {
+                    throw new Error(response.data?.message || 'Не удалось удалить пост');
+                }
+                window.location.replace(RouteStore.pages.collections);
+                // TODO: нотифайка об успешном удалении
+            }).catch((error) => {
+                console.log(error);
+                // TODO: нотифайка об ошибке
+            });
+    };
 
     render() {
         const { redirect } = this.state;
@@ -82,20 +92,26 @@ class BlockPostStatic extends Component {
         const seen = post.views_count || 1;
         const price = post.sum ? `${post.sum} ₽` : 'Бесплатно';
         const avatar = post.author.avatar || Avatar;
+        const isMyPost = user?.login === post.author.login;
 
         if (redirect) {
-            return <Redirect to={RouterStore.pages.user.login} />
+            return <Redirect to={RouteStore.pages.user.login} />;
         }
+
         return (
             <>
-                {this.state.showSubcriptionPay && <PaySubcriptionModal   
-                postId={post.id}
-                subscriptionId={post.subscription_id}
-                title={post.subscription}   
-                priceText={price}   
-                price={post.sum}                     
-                onClose={this.closeSubcriptionPayModal} onSuccess={this.handleSuccessChangeSubcription}
-                showToast={showToast}/>}
+                {this.state.showSubscriptionPay && (
+                    <PaySubcriptionModal
+                        postId={post.id}
+                        subscriptionId={post.subscription_id}
+                        title={post.subscription}
+                        priceText={price}
+                        price={post.sum}
+                        onClose={this.closeSubscriptionPayModal}
+                        onSuccess={this.handleSuccessChangeSubscription}
+                        showToast={showToast}
+                    />
+                )}
 
                 <div className="post-static">
                     <div className="post-static__inner">
@@ -120,25 +136,56 @@ class BlockPostStatic extends Component {
                             <div>{visibility}</div>
                         </div>
                         <div className="post-static__info">
-                            <Like likesCount={likes} currentUserLiked={currentUserLiked} postId={postId}
-                            likedClass="post-static__info__icon" 
-                            dislikedClass="post-static__info__icon post-static__info-disliked__icon" 
-                            textClass="post-static__info__text"/>
-                            <Seen seen={seen} 
-                            iconClass="post-static__info__icon" 
-                            textClass="post-static__info__text"/>
+                            <Like
+                                likesCount={likes}
+                                currentUserLiked={currentUserLiked}
+                                postId={postId}
+                                likedClass="post-static__info__icon"
+                                dislikedClass="post-static__info__icon post-static__info-disliked__icon"
+                                textClass="post-static__info__text"
+                            />
+                            <Seen
+                                seen={seen}
+                                iconClass="post-static__info__icon"
+                                textClass="post-static__info__text"
+                            />
                         </div>
 
-                        {(post.visible_type === PRIVACY.OPEN || post.paid || post.follows || user?.login === post.author.login) && (
+                        {(post.visible_type === PRIVACY.OPEN || post.paid || post.follows) && !isMyPost && (
                             <div className="post-static__controls">
-                                {(!post.follows && post.visible_type !== PRIVACY.PRICE && post.subscription && user?.login !== post.author.login) && (
-                                    <div className="post-static__control" onClick={this.openSubcriptionPayModal}>
+                                {(!post.follows && post.visible_type !== PRIVACY.PRICE && post.subscription) && (
+                                    <div className="post-static__control" onClick={this.openSubscriptionPayModal}>
                                         <Button text="Подписаться" type={Button.types.link}/>
                                     </div>
                                 )}
                                 { user?.login !== post.author.login && (
                                     <DonatForm author={login} current={post} showToast={showToast}/>
                                 )}
+                            </div>
+                        )}
+
+                        {isMyPost && (
+                            <div>
+                                <div className="post-static__action">
+                                    <Button
+                                        text="Редактировать пост"
+                                        type={Button.types.block}
+                                        onAction={this.handlePatchClick}
+                                        primary
+                                        outline
+                                        wide
+                                    />
+                                </div>
+                                <div className="post-static__action">
+                                    <Button
+                                        text="Удалить пост"
+                                        type={Button.types.block}
+                                        onAction={this.handleDeleteClick}
+                                        primary
+                                        outline
+                                        wide
+                                    />
+                                </div>
                             </div>
                         )}
                     </div>
@@ -148,4 +195,4 @@ class BlockPostStatic extends Component {
     }
 }
 
-export default BlockPostStatic;
+export default withRouter(BlockPostStatic);
