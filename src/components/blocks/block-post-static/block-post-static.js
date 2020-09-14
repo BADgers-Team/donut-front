@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import AjaxModule from 'services/ajax';
+
 import './block-post-static.scss';
 import Avatar from 'assets/img/michael.png';
 import ActivityIcon from 'assets/img/activity.svg';
@@ -54,6 +56,28 @@ class BlockPostStatic extends Component {
 
         this.setState({ showSubcriptionPay: true });
     }
+
+    handleFreeSubscription = () => {
+        const { user, post } = this.props;
+
+        if (!user.login) {
+            this.setState({ redirect: true });
+            return
+        }
+
+        const reqBody = {
+            payment_type: 'Подписка',
+            post_id: post.id,
+            subscription_id: post.subscription_id,
+        };
+
+        AjaxModule.doAxioPost(RouteStore.api.payment.pay, reqBody)
+        .then(() => {
+            window.location.reload();
+        }).catch((error) => {
+            console.error(error.message);
+        });
+    }
     
     closeSubcriptionPayModal = () => {
         this.setState({ showSubcriptionPay: false });
@@ -84,7 +108,7 @@ class BlockPostStatic extends Component {
         const avatar = post.author.avatar || Avatar;
 
         if (redirect) {
-            return <Redirect to={RouterStore.pages.user.login} />
+            return <Redirect to={RouteStore.pages.user.login} />
         }
         return (
             <>
@@ -128,10 +152,10 @@ class BlockPostStatic extends Component {
                             textClass="post-static__info__text"/>
                         </div>
 
-                        {(post.visible_type === PRIVACY.OPEN || post.paid || post.follows || user?.login === post.author.login) && (
+                        {(post.visible_type === PRIVACY.OPEN || post.visible_type === PRIVACY.SUBSCRIPTION || post.paid || post.follows || user?.login === post.author.login) && (
                             <div className="post-static__controls">
                                 {(!post.follows && post.visible_type !== PRIVACY.PRICE && post.subscription && user?.login !== post.author.login) && (
-                                    <div className="post-static__control" onClick={this.openSubcriptionPayModal}>
+                                    <div className="post-static__control" onClick={this.handleFreeSubscription}>
                                         <Button text="Подписаться" type={Button.types.link}/>
                                     </div>
                                 )}
