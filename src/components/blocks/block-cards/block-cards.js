@@ -12,7 +12,7 @@ import RouteStore from 'store/routes';
 @inject('user')
 class BlockCards extends Component {
     render() {
-        const { cards, user } = this.props;
+        const { cards, user, showToast } = this.props;
 
         //TODO проверить проверку, если карточки приходят null
         if (!cards) return;
@@ -24,7 +24,7 @@ class BlockCards extends Component {
 
         const subscriptionCards = cards.subscriptions;
         const subscriptionCardsNodes = subscriptionCards?.length > 0 ?
-            subscriptionCards.map((card) => <SubscriptionCard key={card.id} subscription={card} current={user}/>) : null;
+            subscriptionCards.map((card) => <SubscriptionCard key={card.id} subscription={card} current={user} showToast={showToast}/>) : null;
 
         const userCards = cards.users;
         const userCardsNodes = userCards?.length > 0 ?

@@ -5,6 +5,8 @@ import AjaxModule from 'services/ajax';
 
 import { BlockModal } from 'components/blocks/block-modal/block-modal';
 import Button from 'components/fragments/button/button';
+import { TOAST_TYPES } from 'components/fragments/toast/toast';
+
 
 import './donat-pay-modal.scss';
 
@@ -30,7 +32,7 @@ class DonatPayModal extends Component {
         //     sum: this.props.price,
         // };
 
-        const { onSuccess } = this.props;
+        const { onSuccess, showToast } = this.props;
 
         // AjaxModule.post(RouterStore.api.pay, reqBody).then(() => {
         //     console.log('Оплачено');
@@ -48,6 +50,7 @@ class DonatPayModal extends Component {
                 // onSuccess?.();
             })
             .catch((error) => {
+                showToast({ type: TOAST_TYPES.ERROR });
                 console.error(error.message);
             });
     };

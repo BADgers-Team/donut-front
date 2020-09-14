@@ -22,13 +22,13 @@ class BlockSubscriptions extends Component {
     };
 
     render() {
-        const { user, current } = this.props;
+        const { user, current, showToast } = this.props;
         const subscriptions = current.subscriptions;
         const { showAll } = this.state;
         const subscriptionsNodes = subscriptions && showAll ? (
             subscriptions.map((subscription) => {
-                return <SubscriptionCard key={subscription.id} current={user} subscription={subscription} type={SubscriptionCard.types.profile}/>;
-            })) : subscriptions ? <SubscriptionCard current={user} subscription={subscriptions[0]} type={SubscriptionCard.types.profile}/> : null;
+                return <SubscriptionCard key={subscription.id} current={user} subscription={subscription} type={SubscriptionCard.types.profile} showToast={showToast}/>;
+            })) : subscriptions ? <SubscriptionCard current={user} subscription={subscriptions[0]} type={SubscriptionCard.types.profile} showToast={showToast}/> : null;
 
         // TODO: сделать plural на кол-во подписок
 

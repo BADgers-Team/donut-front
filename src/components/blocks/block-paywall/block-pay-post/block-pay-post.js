@@ -7,6 +7,7 @@ import Button from 'components/fragments/button/button';
 import RouterStore from 'store/routes';
 import AjaxModule from 'services/ajax';
 import { getRouteWithID } from 'services/getRouteWithId';
+import { TOAST_TYPES } from 'components/fragments/toast/toast';
 
 import './block-pay-post.scss';
 
@@ -26,6 +27,7 @@ class PostPayModal extends Component {
     handlePayPost = (event) => {
         event.preventDefault();
         // const { onSuccess } = this.props;
+        const { showToast } = this.props;
 
         AjaxModule.doAxioGet(RouterStore.api.payment.authorize)
             .then((response) => {
@@ -36,6 +38,7 @@ class PostPayModal extends Component {
                 // onSuccess?.();
             })
             .catch((error) => {
+                showToast({ type: TOAST_TYPES.ERROR });
                 console.error(error.message);
             });
     };

@@ -8,6 +8,7 @@ import { SubscriptionCard } from 'components/blocks/block-cards/block-subscripti
 import Button from 'components/fragments/button/button';
 import Input from 'components/fragments/input/input';
 
+import { TOAST_TYPES } from 'components/fragments/toast/toast';
 
 import './block-subscription-form.scss';
 import {FIELDS_TYPES, validate} from 'services/validation';
@@ -29,9 +30,12 @@ class BlockSubscriptionForm extends Component {
     }
 
     componentDidMount() {
+        const { showToast } = this.props;
+        
         AjaxModule.get(RouterStore.api.subscriptions.my).then((data) => {
             this.setState({ subscriptions: data.reverse() || [] });
         }).catch((error) => {
+            showToast({ type: TOAST_TYPES.ERROR });
             console.error(error.message);
         });
     }
@@ -41,10 +45,10 @@ class BlockSubscriptionForm extends Component {
     };
 
     render() {
-        const { user } = this.props;
+        const { user, showToast } = this.props;
         const { subscriptions, errors } = this.state;
         const subscriptionsNodes = subscriptions && subscriptions.map((card, index) => {
-            return <SubscriptionCard key={index} subscription={card} current={user} type={SubscriptionCard.types.profile}/>;
+            return <SubscriptionCard key={index} subscription={card} current={user} type={SubscriptionCard.types.profile} showToast={showToast}/>;
         });
 
         return (
@@ -113,6 +117,7 @@ class BlockSubscriptionForm extends Component {
 
     _makeRequest() {
         const { errors } = this.state;
+        const { showToast } = this.props;
 
         const form = this._form.current;
         const isFormValid = Array.from(Object.values(errors)).filter(error => Boolean(error)).length === 0;
@@ -125,6 +130,7 @@ class BlockSubscriptionForm extends Component {
             AjaxModule.post(RouterStore.api.subscriptions.new, body).then((data) => {
                 this.setState({ subscriptions: data.reverse() }, this.clearInputs);
             }).catch((error) => {
+                showToast({ type: TOAST_TYPES.ERROR });
                 console.error(error.message);
             });
         }

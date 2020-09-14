@@ -9,6 +9,7 @@ import Button from 'components/fragments/button/button';
 import Input from 'components/fragments/input/input';
 import Select from 'components/fragments/select/select';
 
+import { TOAST_TYPES } from 'components/fragments/toast/toast';
 
 import './block-search.scss';
 
@@ -148,9 +149,11 @@ class ActivitiesSelect extends Component {
     }
 
     componentDidMount() {
+        const { showToast } = this.props;
         AjaxModule.get(RouteStore.api.activities).then((data) => {
             this.setState({ activities: data || [] });
         }).catch((error) => {
+            showToast({ type: TOAST_TYPES.ERROR });
             console.error(error.message);
         });
         document.addEventListener('click', this.handleClickActivitiesOutside, true);
