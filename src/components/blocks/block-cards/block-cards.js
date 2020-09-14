@@ -16,7 +16,7 @@ class BlockCards extends Component {
 
         //TODO проверить проверку, если карточки приходят null
         if (!cards) return;
-      
+
         //TODO пофиксить переиспользуемость карточек для поиска и главной
         const postCards = Array.isArray(cards) ? cards : cards.posts;
         const postCardsNodes = postCards?.length > 0 ?
@@ -55,7 +55,7 @@ class BlockCards extends Component {
                         </div>}
 
                         {subscriptionCards?.length > 0 && <div className="cards__items cards-posts">
-                            <div className="cards__title">Подписки</div>
+                            <div className="cards__title">Каналы</div>
                             <div className="cards__content">
                                 {subscriptionCardsNodes}
                             </div>

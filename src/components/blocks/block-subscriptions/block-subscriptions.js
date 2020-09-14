@@ -34,23 +34,23 @@ class BlockSubscriptions extends Component {
 
         return (
             <div className="author-subscriptions">
-                <div className="author-subscriptions__title">Подписки</div>
+                <div className="author-subscriptions__title">Каналы</div>
                 {user.login === current?.login && (
                     <Button
                         className="author-subscriptions__add"
-                        text="Добавить подписку"
+                        text="Добавить канал"
                         type={Button.types.link}
                         to={RouteStore.pages.subscriptions.new}
                     />)}
                 <div className="author-subscriptions__body">
                     {subscriptionsNodes ? subscriptionsNodes : (
-                        <div>Автор пока не добавил подписок</div>
+                        <div>Автор пока не добавил каналов</div>
                     )}
                 </div>
                 {(!showAll && subscriptions?.length > 1) && (
                     <Button
                         className="author-subscriptions__show"
-                        text={`Показать все ${subscriptions?.length || 0} подписок`}
+                        text={`Показать все ${subscriptions?.length || 0} каналов`}
                         type={Button.types.block}
                         onAction={this.handleClickShowAll}
                     />
