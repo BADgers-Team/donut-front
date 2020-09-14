@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import './block-donations-sum.scss';
-import DonationsIcon from 'assets/img/ruble.svg';
+import DonationsIcon from 'assets/img/mini-donut.svg';
 
 class DonationsSum extends Component {
     constructor(props) {
@@ -13,7 +13,7 @@ class DonationsSum extends Component {
         return (
             <>
                 <img className={iconClass} src={DonationsIcon} alt="donations" />
-                <div className={textClass}>{sum}</div>
+                <div className={textClass}>{sum} ₽</div>
             </>
         );
     }
