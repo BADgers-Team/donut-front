@@ -4,17 +4,14 @@ import './block-goal.scss';
 
 class BlockGoal extends Component {
     render() {
-        const { goal } = this.props;
-        const wantedSum = goal?.sum_wanted;
-        const getSum = goal?.sum_total;
-        const percent = Math.min((getSum * 100 / wantedSum), 100).toFixed(2);
+        const { total, wanted } = this.props;
+        const percent = Math.min((total * 100 / wanted), 100).toFixed(2);
         return (
             <div className="author-goal">
-                <div className="author-goal__statistics">{`${getSum} из ${wantedSum} ₽ собрано`}</div>
+                <div className="author-goal__statistics">{`Собрано ${total} из ${wanted} ₽`}</div>
                 <div className="author-goal__progress-bar">
                     { percent > 0 && <div className="author-goal__progress" style={{width: `${percent}%`}}/> }
                 </div>
-                <div className="author-goal__info">{goal?.title || ''}</div>
             </div>
         );
     }

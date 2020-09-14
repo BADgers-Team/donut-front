@@ -1,14 +1,11 @@
 @import 'components/app/app.scss';
 
 .author-goal {
-  border-radius: 10px;
-  border: 2px solid $color-purple;
-  margin-bottom: 12px;
-  padding: 15px 20px;
+  margin-top: 16px;
 
   &__statistics {
-    color: $color-pink;
-    font-size: 22px;
+    color: $color-dark-white;
+    font-size: 18px;
     font-weight: bold;
     margin-bottom: 8px;
   }

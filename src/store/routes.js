@@ -29,7 +29,10 @@ export default {
             pay: '/pay',
             authorize: '/oauth/money', // Ручка для авторизации через Яндекс.Деньги
         },
-        goals: '/goals',
+        goals: {
+            all: '/goals',
+            id: '/goals/:id',
+        },
         feed: '/feed',
     },
     pages: {
