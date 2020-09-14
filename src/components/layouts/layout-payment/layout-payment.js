@@ -62,7 +62,6 @@ class LayoutPayment extends Component {
         //     return <Redirect to={RouteStore.pages.user.login} />;
         // }
         const { success } = this.state;
-        debugger
 
         const post = JSON.parse(sessionStorage.getItem('payment_info'));
         const path = getRouteWithID(RouteStore.pages.posts.id, post.id);
