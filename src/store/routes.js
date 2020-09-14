@@ -9,6 +9,7 @@ export default {
             like: '/posts/:id/like',
             file: {
                 new: '/posts/file',
+                patch: '/posts/:id/file',
             },
         },
         subscriptions: {
@@ -28,6 +29,7 @@ export default {
         payment: {
             pay: '/pay',
             authorize: '/oauth/money', // Ручка для авторизации через Яндекс.Деньги
+            card: '/pay/card',
         },
         goals: '/goals',
         feed: '/feed',
@@ -44,6 +46,7 @@ export default {
             new: '/posts/new',
             my: '/posts/my',
             id: '/posts/:id',
+            edit: '/posts/:id/edit'
         },
         subscriptions: {
             new: '/subscriptions'

@@ -5,3 +5,8 @@ export const PRIVACY = {
     'SUBSCRIPTION_PRICE': 'Для подписчиков и разовая оплата',
     'PRICE': 'Только разовая оплата',
 };
+export const PAY_METHOD = {
+    'CARD': 'card',
+    'WALLET': 'wallet',
+    'TOKEN': 'token',
+}

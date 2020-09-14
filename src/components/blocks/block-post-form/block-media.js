@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-
 import Loader from 'react-loader-spinner';
+
 import AjaxModule from 'services/ajax';
+import { getRouteWithID } from 'services/getRouteWithId';
 import RouterStore from 'store/routes';
 import { TOAST_TYPES } from 'components/fragments/toast/toast';
-
 
 class Content extends Component {
     constructor(props) {
@@ -18,14 +18,25 @@ class Content extends Component {
     }
 
     componentDidMount() {
-        const { editor, showToast } = this.props;
+        const { editor, postId, showToast } = this.props;
         const { contentState } = editor;
         const entityKey = editor.block.getEntityAt(0);
         const entity = contentState.getEntity(entityKey);
         const { src } = entity.getData();
 
-        this.setState({isLoaded: false}, () => { 
-            const promise = FileHandler.loadFile(src);
+        this.setState({isLoaded: false}, () => {
+            if (src.indexOf('localhost') !== -1 || src.indexOf('127.0.0.1') !== -1) {
+                contentState.replaceEntityData(entityKey, { src: src });
+
+                const data = {
+                    id: 0,
+                    link: src,
+                }
+                
+                this.setState({data: data, isLoaded: true});
+                return;
+            }
+            const promise = FileHandler.loadFile(src, postId);
             if (!promise) return;
             promise
             .then(response => {
@@ -88,16 +99,17 @@ function dataURLtoFile(dataurl, filename) {
 }
 
 class FileHandler {
-    static loadFile(fileData) {  
+    static loadFile(fileData, postId) {
         const reqBody = dataURLtoFile(fileData);
         if (!reqBody) return;
         const data = new FormData();
         data.append('image', reqBody, reqBody.name);
-        return AjaxModule.doAxioPost(RouterStore.api.posts.file.new, data, 'multipart/form-data')
+        const path = postId
+            ? getRouteWithID(RouterStore.api.posts.file.patch, postId)
+            : RouterStore.api.posts.file.new;
+        return AjaxModule.doAxioPost(path, data, 'multipart/form-data');
     }
 }
-
-
 
 @inject('post')
 @observer

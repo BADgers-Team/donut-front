@@ -1,28 +1,24 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
-import ReactDOM from 'react-dom'
-import RouterStore from 'store/routes';
+import { Redirect, withRouter } from 'react-router-dom';
+import { Editor } from 'react-draft-wysiwyg';
+import {EditorState, convertToRaw, convertFromRaw} from 'draft-js';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { inject, observer } from 'mobx-react';
+import { toJS } from 'mobx';
 
 import Button from 'components/fragments/button/button';
 import Input from 'components/fragments/input/input';
 import Select from 'components/fragments/select/select';
+import { TOAST_TYPES } from 'components/fragments/toast/toast';
+import { Embedded, Content } from './block-media';
+import { MusicToolbarButton } from './block-music-editor-butt';
 
 import AjaxModule from 'services/ajax';
 import { validate, FIELDS_TYPES, FILES_TYPES, ERROR_TYPES } from 'services/validation';
 import { getRouteWithID } from 'services/getRouteWithId';
-
-import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, convertToRaw } from 'draft-js';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import embed from "embed-video";
-import { inject, observer } from 'mobx-react';
-import { toJS } from 'mobx';
+import RouterStore from 'store/routes';
 
 import embeddedIcon from 'assets/img/video.svg';
-
-import { Embedded, Content } from './block-media';
-import { MusicToolbarButton } from './block-music-editor-butt';
-import { TOAST_TYPES } from 'components/fragments/toast/toast';
 
 import './block-post-from.scss';
 
@@ -31,6 +27,10 @@ import './block-post-from.scss';
 class BlockPostForm extends Component {
     constructor(props) {
         super(props);
+
+        const editorState = props.editingPost && props.editingPost.raw
+            ? EditorState.createWithContent(convertFromRaw(JSON.parse(props.editingPost.raw)))
+            : EditorState.createEmpty();
 
         this.state = { 
             fileIDs: [], 
@@ -49,7 +49,7 @@ class BlockPostForm extends Component {
                 subscription: null,
                 sum: null,
             },
-            editorState: EditorState.createEmpty(),
+            editorState,
             fileLoaded: null,
             fileContent: null
         };
@@ -62,28 +62,31 @@ class BlockPostForm extends Component {
     uploadImageCallBack = (file) => {
         return new Promise(
             (resolve, reject) => {
-              const reader = new FileReader();
-              reader.onload = e => resolve({ data: { link: e.target.result } });
-              reader.onerror = e => reject(e);
-              reader.readAsDataURL(file);
+                const reader = new FileReader();
+                reader.onload = e => resolve({ data: { link: e.target.result } });
+                reader.onerror = e => reject(e);
+                reader.readAsDataURL(file);
             });
-    }
+    };
 
     YouTubeGetID = (url) => {
         let ID = '';
         url = url.replace(/(>|<)/gi,'').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+
         if(url[2] !== undefined) {
-          ID = url[2].split(/[^0-9a-z_\-]/i);
-          ID = ID[0];
+            ID = url[2].split(/[^0-9a-z_]/i);
+            ID = ID[0];
         }
         else {
-          ID = url;
+            ID = url;
         }
-          return ID;
-    }
+
+        return ID;
+    };
 
     componentDidMount() {
-        const { showToast } = this.props;
+        const { history, showToast } = this.props;
+        const editingPost = history.location.state?.editing;
 
         AjaxModule.get(RouterStore.api.activities).then((data) => {
             this.setState({ activities: data || [] });
@@ -92,24 +95,26 @@ class BlockPostForm extends Component {
             console.error(error.message);
         });
 
-        AjaxModule.get(RouterStore.api.visible_types).then((data) => {
-            this.setState({ visibleTypes: data || [] });
-        }).catch((error) => {
-            showToast({ type: TOAST_TYPES.ERROR });
-            console.error(error.message);
-        });
+        if (!editingPost) {
+            AjaxModule.get(RouterStore.api.visible_types).then((data) => {
+                this.setState({ visibleTypes: data || [] });
+            }).catch((error) => {
+                showToast({ type: TOAST_TYPES.ERROR });
+                console.error(error.message);
+            });
 
-        AjaxModule.get(RouterStore.api.subscriptions.my).then((data) => {
-            let tempData = data || [];
-            const defaultItem = {
-                id: 0, value:'0', title:'Без подписки'
-            };
-            tempData.splice(0, 0, defaultItem);
-            this.setState({ subscriptions: tempData });
-        }).catch((error) => {
-            showToast({ type: TOAST_TYPES.ERROR });
-            console.error(error.message);
-        });
+            AjaxModule.get(RouterStore.api.subscriptions.my).then((data) => {
+                let tempData = data || [];
+                const defaultItem = {
+                    id: 0, value:'0', title:'Без подписки'
+                };
+                tempData.splice(0, 0, defaultItem);
+                this.setState({ subscriptions: tempData });
+            }).catch((error) => {
+                showToast({ type: TOAST_TYPES.ERROR });
+                console.error(error.message);
+            });
+        }
     }
 
     onEditorStateChange = (editorState) => {
@@ -140,27 +145,30 @@ class BlockPostForm extends Component {
         }
       
         return null;
-    }
+    };
 
     Media = (props) => {
         const entity = props.contentState.getEntity(
-          props.block.getEntityAt(0)
+            props.block.getEntityAt(0)
         );
         const type = entity.getType().toLowerCase();
-    
-        const media = (
-            <Content 
-            editor={props}
-            type={type}
-            showToast={props.showToast} />
+        const { editingPost, match: { params } } = this.props;
+        const postId = editingPost ? params.id : null;
+
+        return (
+            <Content
+                editor={props}
+                postId={postId}
+                type={type}
+                showToast={props.showToast}
+            />
         );
-      
-        return media;
     };
-         
     
     render() {    
         const { activities, visibleTypes, subscriptions, redirect, errors, postID, editorState } = this.state;
+
+        const { editingPost } = this.props;
 
         const visibleTypeSelect = visibleTypes.map((type) => {
             return {
@@ -185,8 +193,8 @@ class BlockPostForm extends Component {
         });
 
         const teaserPlaceholder =  'Напишите тизер, чтобы пользователи, у которых ещё нет доступа к посту, могли понять о чём вы пишите. Используйте это краткое описание для привлечения новых подписчиков...(опционально)';
-        const postRoute = getRouteWithID(RouterStore.api.posts.id, postID);  
-        
+        const postRoute = getRouteWithID(RouterStore.api.posts.id, postID);
+        const buttonText = editingPost ? 'Сохранить' : 'Опубликовать';
         if (redirect) {
             return <Redirect to={postRoute} />;
         }
@@ -200,6 +208,7 @@ class BlockPostForm extends Component {
                             name="title"
                             placeholder="Добавьте заголовок"
                             error={errors.title}
+                            defaultValue={editingPost?.title || ''}
                             isRequired={true}
                         />
                     </div>
@@ -237,14 +246,14 @@ class BlockPostForm extends Component {
                                             return 'https://player.vimeo.com/video/' + videoID;
                                         }
 
-                                        if (link.indexOf("youtube") >= 0 || link.indexOf("youtu.be") >= 0){
-                                            // link = link.replace("watch?v=","embed/");
-                                            // link = link.replace("/watch/", "/embed/");
-                                            // link = link.replace("youtu.be/","youtube.com/embed/");
-                                            // link = link.replace("&feature=youtu.be","");
+                                        if (link.indexOf('youtube') >= 0 || link.indexOf('youtu.be') >= 0){
+                                            // link = link.replace('watch?v=','embed/');
+                                            // link = link.replace('/watch/', '/embed/');
+                                            // link = link.replace('youtu.be/','youtube.com/embed/');
+                                            // link = link.replace('&feature=youtu.be','');
 
                                             let video_id = this.YouTubeGetID(link);
-                                            link = "https://www.youtube.com/embed/" + video_id;
+                                            link = 'https://www.youtube.com/embed/' + video_id;
                                         }
 
                                         return link;
@@ -261,7 +270,13 @@ class BlockPostForm extends Component {
                     </div>
                     {errors && <span className="form-input__error">{errors.description}</span>}                      
                     <div className="form-input input-teaser">
-                        <Input label="Тизер" type={Input.types.textarea} name="teaser" placeholder={teaserPlaceholder}/>
+                        <Input
+                            label="Тизер"
+                            type={Input.types.textarea}
+                            name="teaser"
+                            placeholder={teaserPlaceholder}
+                            defaultValue={editingPost?.teaser || ''}
+                        />
                     </div>
                     <div className="form-input input-file">
                         <Input
@@ -279,11 +294,20 @@ class BlockPostForm extends Component {
 
                 <div className="form__controls">
                     <div className="form-control control-button">    
-                        <Button text="Опубликовать" type={Button.types.submit} name="createPost" isDisabled={this.state.isDisabled} onAction={this.handleCreatePostClick}/>
+                        <Button text={buttonText} type={Button.types.submit} name="createPost" isDisabled={this.state.isDisabled} onAction={this.handleCreatePostClick}/>
                     </div>
-                    <div className="form-control control-select-visible">
-                        <Select classValue='form-control__select' label="Уровень приватности поста" name="visibleTypes" actionType={Select.events.change} onAction={this.handleSubscription} values={visibleTypeSelect}/>
-                    </div>
+                    {visibleTypeSelect.length > 0 && (
+                        <div className="form-control control-select-visible">
+                            <Select
+                                classValue='form-control__select'
+                                label="Уровень приватности поста"
+                                name="visibleTypes"
+                                actionType={Select.events.change}
+                                onAction={this.handleSubscription}
+                                values={visibleTypeSelect}
+                            />
+                        </div>
+                    )}
                     {errors.subscription && <span className="form-input__error no-subscriptions">{errors.subscription}</span>}
                     {this.state.showPrice && <div className="form-control control-price">
                         <label className='price-label'>Стоимость разовой оплаты поста</label>
@@ -299,11 +323,13 @@ class BlockPostForm extends Component {
                         </div>
                         {errors.sum && <span className="form-input__error sum-error">{errors.sum}</span>}
                     </div>}
-                    {this.state.showSubscriptions && <div className="form-control control-subscription">
-                        <Select classValue='form-control__select' label="Выберите подпискy" name="subscription" values={subscriptionSelect}/>
-                    </div>}
+                    {this.state.showSubscriptions && subscriptionSelect.length > 0 && (
+                        <div className="form-control control-subscription">
+                            <Select classValue='form-control__select' label="Выберите канал" name="subscription" values={subscriptionSelect}/>
+                        </div>
+                    )}
                     <div className="form-control control-select-activity">
-                        <Select classValue='form-control__select' label="Категория деятельности" name="activity" values={activitySelect}/>
+                        <Select classValue='form-control__select' label="Категория деятельности" name="activity" values={activitySelect} selected={editingPost?.activity}/>
                     </div>
                 </div>
             </form>
@@ -404,13 +430,14 @@ class BlockPostForm extends Component {
 
     setEditorState = (state) => {
         this.setState({ editorState: state });
-    }
+    };
 
     handleCreatePostClick(event) {
         event.preventDefault();
         const editorState = this.state.editorState;
+        const { history } = this.props;
+        const editingPost = history.location.state?.editing;
 
-        // console.log(JSON.stringify(convertToRaw(editorState.getCurrentContent())));
         const blocks = convertToRaw(editorState.getCurrentContent()).blocks;
 
         const form = this._form.current;
@@ -426,10 +453,10 @@ class BlockPostForm extends Component {
                 description: !validate(form.description.trim(), FIELDS_TYPES.CONTENT) || editorState.getCurrentContent().hasText() ? null : ERROR_TYPES.REQUIRED,
                 sum: form.price ? validate(form.price?.value, FIELDS_TYPES.SUM) : null,
             }
-        }, this._makeRequest);
+        }, editingPost ? this._makePatchRequest : this._makeCreateRequest);
     }
 
-    _makeRequest() {
+    _makeCreateRequest() {
         const { errors } = this.state;
         const { post, showToast } = this.props;
         const form = this._form.current;
@@ -460,7 +487,37 @@ class BlockPostForm extends Component {
             });
         }
     }
+
+    _makePatchRequest() {
+        const { errors } = this.state;
+        const { post, showToast } = this.props;
+        const form = this._form.current;
+        const isFormValid = Array.from(Object.values(errors)).filter(error => Boolean(error)).length === 0;
+        if (isFormValid) {
+            const body = {
+                title: form.title.value,
+                description: form.description,
+                teaser: form.teaser.value,
+                file_ids: toJS(post.file_ids),
+                activity_id: +form.activity.options[form.activity.selectedIndex]?.id,
+                raw: form.raw,
+            };
+
+            const { id } = this.props.match.params;
+            const path = getRouteWithID(RouterStore.api.posts.id, id);
+            AjaxModule.doAxioPatch(path, body).then((response) => {
+                if (response.status !== 200) {
+                    throw new Error(response.data?.message || 'Не удалось сохранить пост');
+                }
+                this.setState({ postID: response.data.id });
+                this.setState({ redirect: true });
+            }).catch((error) => {
+                showToast({ type: TOAST_TYPES.ERROR });
+                console.error(error.message);
+            });
+        }
+    }
 }
 
 
-export default BlockPostForm;
+export default withRouter(BlockPostForm);

@@ -6,6 +6,11 @@ import AjaxModule from 'services/ajax';
 import { BlockModal } from 'components/blocks/block-modal/block-modal';
 import Button from 'components/fragments/button/button';
 import { getRouteWithID } from 'services/getRouteWithId';
+import { PAY_METHOD } from 'store/const';
+import Input from 'components/fragments/input/input';
+import RadioGroup from '@material-ui/core/RadioGroup';
+
+import Loader from 'react-loader-spinner';
 import { TOAST_TYPES } from 'components/fragments/toast/toast';
 
 import './block-pay-subscription.scss';
@@ -19,6 +24,8 @@ class PaySubcriptionModal extends Component {
         this.state = {
             open: props.open || true,
             sum: 16,
+            method: PAY_METHOD.WALLET,
+            showLoader: false,
         };
     }
 
@@ -30,18 +37,30 @@ class PaySubcriptionModal extends Component {
             post_id: this.props.postId,
             subscription_id: this.props.subscriptionId,
             sum: this.props.price,
+            method: PAY_METHOD.CARD,
         };
         
         const { onSuccess, showToast } = this.props;
+        const post = JSON.parse(sessionStorage.getItem('payment_info'));
 
-        AjaxModule.post(RouterStore.api.payment.pay, reqBody).then((data) => {
-            // const data = {"id":31,"title":"wwefwesdsgывывввввgwegehswrthfewf","description":"wfwef","description_length":0,"visible_type":"Только разовая оплата","activity":"Писательство","files":null,"file_ids":null,"files_count":0,"user_id":2,"author":{"id":2,"login":"AAAAAAAAAAAAAAAA","name":"AAAAAAAAAAAAAAA","email":"mock@user.com","number_of_followers":0,"number_of_subscriptions":0,"number_of_posts":0},"paid":true,"follows":false,"liked":false,"created_at":"2020-04-04 18:03:03 +0000","likes_count":0,"views_count":27};
-            console.log('Оплачено');
-            onSuccess && onSuccess(data);
+        this.setState({ showLoader: true });
+
+        AjaxModule.doAxioPost(RouterStore.api.payment.card, reqBody)
+        .then((response) => {
+            sessionStorage.setItem('payment_info', JSON.stringify({...post, payment_method: PAY_METHOD.CARD}));
+            
+            this.setState({ showLoader: false });
+
+            window.location.replace(response.data.url);
         }).catch((error) => {
             showToast({ type: TOAST_TYPES.ERROR });
             console.error(error.message);
+            this.setState({ showLoader: false });
         });
+    };
+
+    setPayMethod = (payMethod) => {
+        this.setState({ method: payMethod });
     };
 
     render() {
@@ -58,7 +77,19 @@ class PaySubcriptionModal extends Component {
                     <div className="subscription-modal__title">{title}</div>
                     <div className="subscription-modal__price-text">Стоимость подписки:</div>
                     <div className="subscription-modal__price">{priceText}</div>
-                    <Button type={Button.types.submit} text="Приобрести подписку" className="subscription-modal__submit"  onAction={this.handlePay}/>
+                    <div className="donat-modal__warning">
+                        Оплата будет производиться через сервис Яндекс.Деньги. После подтверждения укажите реквизиты карты для проведения первого платежа. Следующие платежи будут ежемесячно проведены автоматически 
+                    </div>
+                    { !this.state.showLoader && <Button type={Button.types.submit} text="Приобрести подписку" className="subscription-modal__submit"  onAction={this.handlePay}/> }
+                    { this.state.showLoader && 
+                        <div className="donat-modal__loader">
+                            <Loader
+                                type="Oval"
+                                color="#ffffff"
+                                height={35}
+                                width={35}/>
+                        </div>
+                    }
                 </div>
             </BlockModal>
         );

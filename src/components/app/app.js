@@ -56,8 +56,9 @@ class App extends Component {
                             <Route path={pages.feed} render={(props) => <LayoutFeed {...props} showToast={this.showToast}/>}/>
                             <Route path={pages.collections} render={(props) => <LayoutCollections {...props} showToast={this.showToast}/>}/>
                             <Route path={pages.pay} render={(props) => <LayoutPayment {...props} showToast={this.showToast}/>}/>
-                            <Route path="/posts/:id" render={(props) => <LayoutPost {...props} current={user} showToast={this.showToast}/>}/>
+                            <Route exact path="/posts/:id" render={(props) => <LayoutPost {...props} current={user} showToast={this.showToast}/>}/>
                             <Route path="/users/:login" render={(props) => <LayoutProfile {...props} current={user} showToast={this.showToast}/>}/>
+                            <Route path={pages.posts.edit} render={(props) => <LayoutCreatePost {...props}/>}/>
                         </Switch>
                     </div>
                 </BrowserRouter>

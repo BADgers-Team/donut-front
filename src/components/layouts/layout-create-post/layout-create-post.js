@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { inject } from 'mobx-react';
-
+import { withRouter } from 'react-router-dom';
 import BlockPostForm from 'components/blocks/block-post-form/block-post-form';
 import BlockNoWalletModal from 'components/blocks/block-no-wallet-modal/block-no-wallet-modal';
 
@@ -31,17 +31,19 @@ class LayoutCreatePost extends Component {
     }
 
     render() {
-        const { showToast } = this.props;
         const { isModalOpen } = this.state;
-
+        const { history, showToast } = this.props;
+      
+        const editingPost = history.location.state?.editing;
+        const title = editingPost ? 'Редактирование поста' : 'Создание нового поста';
         return (
             <div className="post-container">
-                <div className="post-header">Создание нового поста</div>
-                <BlockPostForm showToast={showToast}/>
+                <div className="post-header">{title}</div>
+                <BlockPostForm editingPost={editingPost} showToast={showToast}/>
                 {isModalOpen && <BlockNoWalletModal open={isModalOpen} onClose={this.onModalClose}/>}
             </div>
         );
     }
 }
 
-export default LayoutCreatePost;
+export default withRouter(LayoutCreatePost);

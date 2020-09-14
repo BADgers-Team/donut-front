@@ -93,7 +93,7 @@ class BlockSearch extends Component {
         const postTypes = [
             {id: 1, value:'all', text:'Везде'},
             {id: 2, value:'posts', text: 'По постам'},
-            {id: 3, value:'subscriptions', text: 'По подпискам'},
+            {id: 3, value:'subscriptions', text: 'По каналам'},
             {id: 4, value:'authors', text: 'По авторам'},
         ]; 
 

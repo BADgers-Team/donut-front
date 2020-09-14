@@ -21,16 +21,23 @@ class Select extends Component {
     }
 
     render() {
-        const { label, values, name, material, id, classValue } = this.props;
+        const { label, values, name, material, id, classValue, selected } = this.props;
 
-         
-        let selectItems = values.map((item) => {
-            return (
-                <option id={item.id} key={item.value} value={item.value}>
-                    {item.text}
-                </option>
-            );
-        })
+        const selectItems = values.map((item) => {
+            if (selected && item.text === selected) {
+                return (
+                    <option id={item.id} key={item.value} value={item.value} selected>
+                        {item.text}
+                    </option>
+                );
+            } else {
+                return (
+                    <option id={item.id} key={item.value} value={item.value}>
+                        {item.text}
+                    </option>
+                );
+            }
+        });
 
 
         let node;
