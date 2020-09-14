@@ -109,6 +109,9 @@ class BlockPostStatic extends Component {
         const price = post.sum ? `${post.sum} ₽` : 'Бесплатно';
         const avatar = post.author.avatar || Avatar;
 
+        console.log((post.visible_type === PRIVACY.OPEN || post.visible_type === PRIVACY.SUBSCRIPTION || post.paid || post.follows || user?.login === post.author.login));
+        console.log((!post.follows && post.visible_type !== PRIVACY.PRICE && post.subscription && user?.login !== post.author.login));
+
         if (redirect) {
             return <Redirect to={RouteStore.pages.user.login} />
         }
@@ -157,7 +160,7 @@ class BlockPostStatic extends Component {
                             textClass="post-static__info__text"/>
                         </div>
 
-                        {(post.visible_type === PRIVACY.OPEN || post.visible_type === PRIVACY.SUBSCRIPTION || post.paid || post.follows || user?.login === post.author.login) && (
+                        {(post.visible_type === PRIVACY.OPEN || (post.visible_type === PRIVACY.SUBSCRIPTION && post.subscription_sum === 0) || post.paid || post.follows || user?.login === post.author.login) && (
                             <div className="post-static__controls">
                                 {(!post.follows && post.visible_type !== PRIVACY.PRICE && post.subscription && user?.login !== post.author.login) && (
                                     <div className="post-static__control" onClick={this.handleFreeSubscription}>
