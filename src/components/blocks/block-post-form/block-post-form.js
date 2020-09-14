@@ -152,7 +152,7 @@ class BlockPostForm extends Component {
             <Content 
             editor={props}
             type={type}
-            showToast={showToast} />
+            showToast={props.showToast} />
         );
       
         return media;
@@ -456,7 +456,6 @@ class BlockPostForm extends Component {
                 this.setState({ redirect: true });
             }).catch((error) => {
                 showToast({ type: TOAST_TYPES.ERROR });
-                // TODO: нотифайку, что не удалось создать пост
                 console.error(error.message);
             });
         }

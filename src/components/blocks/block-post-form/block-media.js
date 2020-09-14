@@ -46,7 +46,6 @@ class Content extends Component {
             })
             .catch((error) => {
                 showToast({ type: TOAST_TYPES.ERROR });
-                // TODO добавить обработку норм на .catch
                 console.error(error.message);
             });
         });
