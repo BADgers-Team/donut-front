@@ -29,19 +29,43 @@ class PostPayModal extends Component {
 
     handlePayPost = (event) => {
         event.preventDefault();
-        // const { onSuccess } = this.props;
+        const payMethod = this.state.method;
+        const { onSuccess } = this.props;
 
-        AjaxModule.doAxioGet(RouterStore.api.payment.authorize)
-            .then((response) => {
-                if (response.status !== 200) {
-                    throw Error('Не удалось получить подключиться к авторизации Яндекс.Денег');
-                }
-                window.location.replace(response.data.url);
-                // onSuccess?.();
-            })
-            .catch((error) => {
-                console.error(error.message);
-            });
+        const post = JSON.parse(sessionStorage.getItem('payment_info'));
+
+        switch (payMethod) {
+            case PAY_METHOD.WALLET:
+                AjaxModule.doAxioGet(RouterStore.api.payment.authorize)
+                .then((response) => {
+                    if (response.status !== 200) {
+                        throw Error('Не удалось получить подключиться к авторизации Яндекс.Денег');
+                    }
+                    sessionStorage.setItem('payment_info', JSON.stringify({...post, payment_method: PAY_METHOD.WALLET}));
+                    window.location.replace(response.data.url);
+                    // onSuccess?.();
+                })
+                .catch((error) => {
+                    console.error(error.message);
+                });
+                break;
+            case PAY_METHOD.CARD:
+                const reqBody = {
+                    payment_type: 'Пост',
+                    post_id: this.props.postId,
+                    sum: this.props.price,
+                    method: PAY_METHOD.CARD,
+                };
+
+                AjaxModule.doAxioPost(RouterStore.api.payment.card, reqBody)
+                .then((response) => {
+                    sessionStorage.setItem('payment_info', JSON.stringify({...post, payment_method: PAY_METHOD.CARD}));
+                    window.location.replace(response.data.url);
+                }).catch((error) => {
+                    console.error(error.message);
+                });
+                break;
+        }
     };
 
     setPayMethod = (payMethod) => {

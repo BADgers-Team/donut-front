@@ -40,12 +40,18 @@ class BlockPaywall extends Component {
 
     openSubcriptionPayModal = () => {
 
-        const { user } = this.props;
+        const { user, post } = this.props;
 
         if (!user.login) {
             this.setState({ redirect: true });
             return
         }
+
+        sessionStorage.setItem('payment_info', JSON.stringify({
+            sum: post.subscription_sum || 0,
+            payment_type: 'Подписка',
+            id: post.id
+        }));
 
         this.setState({ showSubcriptionPay: true });
     }
