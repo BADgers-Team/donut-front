@@ -29,7 +29,7 @@ class BlockFeedCards extends Component {
     };
 
     render() {
-        const { posts, subscriptions, user, isLoaded } = this.props;
+        const { posts, subscriptions, user, isLoaded, showToast } = this.props;
         const { selectedTab } = this.state;
 
         const postCards = posts ? posts : [];
@@ -41,7 +41,7 @@ class BlockFeedCards extends Component {
         const subscriptionCards = subscriptions ? subscriptions : [];
         const subscriptionСardsNodes = subscriptionCards.length !== 0 ?
                 subscriptionCards.map((card, index) => {
-                    return <SubscriptionCard key={index} subscription={card} current={user}/>;
+                    return <SubscriptionCard key={index} subscription={card} current={user} showToast={showToast}/>;
                 }) : null;
 
         let cardsNodes;

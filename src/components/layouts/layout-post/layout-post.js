@@ -42,13 +42,13 @@ class LayoutPost extends Component {
 
     render() {
         const { post } = this.state;
-        const { user } = this.props;
+        const { user, showToast } = this.props;
 
         const content = post ? (
             <>
-                <BlockPostStatic post={post} current={user}  onChange={this.getNewPost}/>
+                <BlockPostStatic post={post} current={user}  onChange={this.getNewPost} showToast={showToast}/>
                 <BlockPostDynamic post={post} current={user} />
-                {post.visible_type !== PRIVACY.OPEN && !post.paid && !post.follows && user?.login !== post.author.login && <BlockPaywall post={post} onChange={this.getNewPost}/>}
+                {post.visible_type !== PRIVACY.OPEN && !post.paid && !post.follows && user?.login !== post.author.login && <BlockPaywall post={post} onChange={this.getNewPost} showToast={showToast}/>}
             </>
         ) : <div>Пост не найден</div>;
 

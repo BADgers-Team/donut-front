@@ -4,6 +4,8 @@ import { inject, observer } from 'mobx-react';
 import Loader from 'react-loader-spinner';
 import AjaxModule from 'services/ajax';
 import RouterStore from 'store/routes';
+import { TOAST_TYPES } from 'components/fragments/toast/toast';
+
 
 class Content extends Component {
     constructor(props) {
@@ -16,7 +18,7 @@ class Content extends Component {
     }
 
     componentDidMount() {
-        const { editor } = this.props;
+        const { editor, showToast } = this.props;
         const { contentState } = editor;
         const entityKey = editor.block.getEntityAt(0);
         const entity = contentState.getEntity(entityKey);
@@ -43,6 +45,7 @@ class Content extends Component {
                 this.setState({data: data, isLoaded: true});
             })
             .catch((error) => {
+                showToast({ type: TOAST_TYPES.ERROR });
                 // TODO добавить обработку норм на .catch
                 console.error(error.message);
             });

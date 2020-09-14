@@ -22,6 +22,7 @@ import embeddedIcon from 'assets/img/video.svg';
 
 import { Embedded, Content } from './block-media';
 import { MusicToolbarButton } from './block-music-editor-butt';
+import { TOAST_TYPES } from 'components/fragments/toast/toast';
 
 import './block-post-from.scss';
 
@@ -82,15 +83,19 @@ class BlockPostForm extends Component {
     }
 
     componentDidMount() {
+        const { showToast } = this.props;
+
         AjaxModule.get(RouterStore.api.activities).then((data) => {
             this.setState({ activities: data || [] });
         }).catch((error) => {
+            showToast({ type: TOAST_TYPES.ERROR });
             console.error(error.message);
         });
 
         AjaxModule.get(RouterStore.api.visible_types).then((data) => {
             this.setState({ visibleTypes: data || [] });
         }).catch((error) => {
+            showToast({ type: TOAST_TYPES.ERROR });
             console.error(error.message);
         });
 
@@ -102,6 +107,7 @@ class BlockPostForm extends Component {
             tempData.splice(0, 0, defaultItem);
             this.setState({ subscriptions: tempData });
         }).catch((error) => {
+            showToast({ type: TOAST_TYPES.ERROR });
             console.error(error.message);
         });
     }
@@ -145,7 +151,8 @@ class BlockPostForm extends Component {
         const media = (
             <Content 
             editor={props}
-            type={type} />
+            type={type}
+            showToast={showToast} />
         );
       
         return media;
@@ -424,7 +431,7 @@ class BlockPostForm extends Component {
 
     _makeRequest() {
         const { errors } = this.state;
-        const { post } = this.props;
+        const { post, showToast } = this.props;
         const form = this._form.current;
         const isFormValid = Array.from(Object.values(errors)).filter(error => Boolean(error)).length === 0;
         if (isFormValid) {
@@ -448,6 +455,7 @@ class BlockPostForm extends Component {
                 post.delete();
                 this.setState({ redirect: true });
             }).catch((error) => {
+                showToast({ type: TOAST_TYPES.ERROR });
                 // TODO: нотифайку, что не удалось создать пост
                 console.error(error.message);
             });

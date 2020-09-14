@@ -4,6 +4,7 @@ import Select from 'components/fragments/select/select';
 import { PRIVACY } from 'store/const';
 import RouteStore from 'store/routes';
 import AjaxModule from 'services/ajax';
+import { TOAST_TYPES } from 'components/fragments/toast/toast';
 
 import './block-author-posts.scss';
 import Avatar from 'assets/img/michael.png';
@@ -22,7 +23,7 @@ class BlockAuthorPosts extends Component {
     }
 
     handleSelectChange = (event) => {
-        const { current } = this.props;
+        const { current, showToast } = this.props;
         const selectedPrivacy = event.target[event.target.selectedIndex].value;
         AjaxModule.get(RouteStore.api.search, {
             login: current.login,
@@ -31,6 +32,7 @@ class BlockAuthorPosts extends Component {
         }).then((data) => {
             this.setState({ posts: data.posts });
         }).catch((error) => {
+            showToast({ type: TOAST_TYPES.ERROR });
             console.error(error.message);
         });
     };

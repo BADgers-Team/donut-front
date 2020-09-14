@@ -29,12 +29,13 @@ class LayoutFeed extends Component {
 
     render() {
         const { data, isLoaded } = this.state;
+        const {showToast} = this.props;
         const posts = data.posts ? data.posts : [];
         const subscriptions = data.subscriptions ? data.subscriptions : [];
         return (
             <>
                 <div className="feed-container">
-                    <BlockFeedCards posts={posts} subscriptions={subscriptions} isLoaded={isLoaded}/>
+                    <BlockFeedCards posts={posts} subscriptions={subscriptions} isLoaded={isLoaded} showToast={showToast}/>
                 </div>
             </>
         );

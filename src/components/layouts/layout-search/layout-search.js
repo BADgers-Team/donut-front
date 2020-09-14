@@ -47,12 +47,13 @@ class LayoutSearch extends Component {
 
     render() {
         const { posts, isLoaded } = this.state;
+        const { showToast } = this.props;
         return (
             <>
                 <div className="search-container">
-                    <BlockSearch onClick={this.handleSubmitSearch}/>
+                    <BlockSearch onClick={this.handleSubmitSearch} showToast={showToast}/>
                     { isLoaded ? (
-                        <BlockCards cards={posts}/>
+                        <BlockCards cards={posts} showToast={showToast}/>
                     ) : (
                         <div className="search-container__loader">
                             <Loader

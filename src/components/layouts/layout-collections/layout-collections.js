@@ -53,7 +53,7 @@ class LayoutCollections extends Component {
                 <BlockActivities onChange={this.handleChangeActivity} showToast={showToast}/>
                 {isLoaded ? (
                     <>
-                        <BlockCards cards={posts}/>
+                        <BlockCards cards={posts} showToast={showToast}/>
                         {(!user.login && posts?.length > 0) && (
                             <div className="continue">
                                 <div className="continue__title">Хотите увидеть больше? Присоединяйтесь!</div>

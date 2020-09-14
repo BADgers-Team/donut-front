@@ -40,8 +40,8 @@ class LayoutProfile extends Component {
                 {isLoaded ? (
                     <>
                         <BlockAuthor current={current} showToast={showToast}/>
-                        <BlockAuthorPosts current={current}/>
-                        <BlockSubscriptions current={current}/>
+                        <BlockAuthorPosts current={current} showToast={showToast}/>
+                        <BlockSubscriptions current={current} showToast={showToast}/>
                     </>
                 ) : (
                     <div className="profile__loader">
