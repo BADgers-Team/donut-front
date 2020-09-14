@@ -9,6 +9,7 @@ class UserModel {
     @observable number_of_subscriptions = 0;
     @observable number_of_posts = 0;
     @observable description = null;
+    @observable is_wallet = null;
 
     @action
     update(data) {
@@ -20,7 +21,8 @@ class UserModel {
             'number_of_followers',
             'number_of_subscriptions',
             'number_of_posts',
-            'description'
+            'description',
+            'is_wallet',
         ];
         const fields = Object.keys(data).filter((field) => allowedFields.includes(field));
         fields.forEach((field) => {

@@ -1,0 +1,25 @@
+.block-no-wallet-modal {
+  &__content {
+    margin-top: 15px;
+  }
+
+  &__control-list {
+    display: flex;
+    align-items: center;
+    margin-top: 25px;
+  }
+
+  &__control {
+    cursor: pointer;
+    font-size: 18px;
+
+    &:not(:last-child) {
+      margin-right: 15px;
+    }
+
+    // :(
+    .button {
+      font-size: 18px;
+    }
+  }
+}
