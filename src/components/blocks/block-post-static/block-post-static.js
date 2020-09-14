@@ -20,14 +20,6 @@ import { PRIVACY } from 'store/const';
 import RouteStore from 'store/routes';
 
 import { getRouteWithID } from 'services/getRouteWithId';
-
-import Avatar from 'assets/img/michael.png';
-import ActivityIcon from 'assets/img/activity.svg';
-import SubscriptionIcon from 'assets/img/subscription.svg';
-import CalendarIcon from 'assets/img/calendar.svg';
-
-import './block-post-static.scss';
-import AjaxModule from 'services/ajax';
 import {TOAST_TYPES} from 'components/fragments/toast/toast';
 
 @inject('user')
