@@ -6,9 +6,12 @@ import AjaxModule from 'services/ajax';
 
 import RouteStore from 'store/routes';
 import { getRouteWithID } from 'services/getRouteWithId';
+
+import { PAY_METHOD } from 'store/const';
 import { TOAST_TYPES } from 'components/fragments/toast/toast';
 
 import './layout-payment.scss';
+
 
 @inject('post')
 @observer
@@ -30,9 +33,11 @@ class LayoutPayment extends Component {
             post_id: post.id,
             sum: +post.sum,
             message: post.message,
+            subscription_id: post.subscription_id,
+            method: post.payment_method
         };
 
-        if (pathname && search) {
+        if ((pathname && search) || post.payment_method === PAY_METHOD.CARD) {
             AjaxModule.doAxioPost(`${pathname}${search}`, body)
                 .then(({ data, status}) => {
                     if (status !== 200 && status !== 201) {
@@ -64,6 +69,9 @@ class LayoutPayment extends Component {
         const { success } = this.state;
 
         const post = JSON.parse(sessionStorage.getItem('payment_info'));
+
+        if (!post) return null;
+
         const path = getRouteWithID(RouteStore.pages.posts.id, post.id);
         if (success) {
             return <Redirect to={path}/>;

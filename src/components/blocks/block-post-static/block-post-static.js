@@ -2,10 +2,18 @@ import React, { Component } from 'react';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import { inject } from 'mobx-react';
 
+import AjaxModule from 'services/ajax';
+
+import './block-post-static.scss';
+import Avatar from 'assets/img/michael.png';
+import ActivityIcon from 'assets/img/activity.svg';
+import SubscriptionIcon from 'assets/img/subscription.svg';
+import CalendarIcon from 'assets/img/calendar.svg';
 import Button from 'components/fragments/button/button';
 import { PaySubcriptionModal } from 'components/blocks/block-paywall/block-pay-subscription/block-pay-subscription';
 import { Like } from 'components/blocks/block-like/block-like';
 import { Seen } from 'components/blocks/block-seen/block-seen';
+import { DonationsSum } from 'components/blocks/block-donations-sum/block-donations-sum';
 import { DonatForm } from 'components/blocks/block-post-static/donat-form/donat-form';
 
 import { PRIVACY } from 'store/const';
@@ -42,8 +50,31 @@ class BlockPostStatic extends Component {
             return;
         }
 
-        this.setState({ showSubscriptionPay: true });
-    };
+        this.setState({ showSubcriptionPay: true });
+    }
+
+    handleFreeSubscription = () => {
+        const { user, post } = this.props;
+
+        if (!user.login) {
+            this.setState({ redirect: true });
+            return
+        }
+
+        const reqBody = {
+            payment_type: 'Подписка',
+            post_id: post.id,
+            subscription_id: post.subscription_id,
+        };
+
+        AjaxModule.doAxioPost(RouteStore.api.payment.pay, reqBody)
+        .then(() => {
+            window.location.reload();
+        }).catch((error) => {
+            console.error(error.message);
+        });
+    }
+
     
     closeSubscriptionPayModal = () => {
         this.setState({ showSubscriptionPay: false });
@@ -91,12 +122,16 @@ class BlockPostStatic extends Component {
         const likes = post.likes_count || 0;
         const currentUserLiked = post.liked;
         const seen = post.views_count || 1;
+        const donationsSum = post.donated_sum || 0;
         const price = post.sum ? `${post.sum} ₽` : 'Бесплатно';
         const avatar = post.author.avatar || Avatar;
         const isMyPost = user?.login === post.author.login;
 
+        console.log((post.visible_type === PRIVACY.OPEN || post.visible_type === PRIVACY.SUBSCRIPTION || post.paid || post.follows || user?.login === post.author.login));
+        console.log((!post.follows && post.visible_type !== PRIVACY.PRICE && post.subscription && user?.login !== post.author.login));
+
         if (redirect) {
-            return <Redirect to={RouteStore.pages.user.login} />;
+            return <Redirect to={RouteStore.pages.user.login} />
         }
 
         return (
@@ -137,25 +172,22 @@ class BlockPostStatic extends Component {
                             <div>{visibility}</div>
                         </div>
                         <div className="post-static__info">
-                            <Like
-                                likesCount={likes}
-                                currentUserLiked={currentUserLiked}
-                                postId={postId}
-                                likedClass="post-static__info__icon"
-                                dislikedClass="post-static__info__icon post-static__info-disliked__icon"
-                                textClass="post-static__info__text"
-                            />
-                            <Seen
-                                seen={seen}
-                                iconClass="post-static__info__icon"
-                                textClass="post-static__info__text"
-                            />
+                            <Like likesCount={likes} currentUserLiked={currentUserLiked} postId={postId}
+                            likedClass="post-static__info__icon" 
+                            dislikedClass="post-static__info__icon post-static__info-disliked__icon" 
+                            textClass="post-static__info__text"/>
+                            <Seen seen={seen} 
+                            iconClass="post-static__info__icon" 
+                            textClass="post-static__info__text"/>
+                            <DonationsSum sum={donationsSum} 
+                            iconClass="post-static__info__icon" 
+                            textClass="post-static__info__text"/>
                         </div>
 
-                        {(post.visible_type === PRIVACY.OPEN || post.paid || post.follows) && !isMyPost && (
+                        {(post.visible_type === PRIVACY.OPEN || (post.visible_type === PRIVACY.SUBSCRIPTION && post.subscription_sum === 0) || post.paid || post.follows || user?.login === post.author.login) && (
                             <div className="post-static__controls">
-                                {(!post.follows && post.visible_type !== PRIVACY.PRICE && post.subscription) && (
-                                    <div className="post-static__control" onClick={this.openSubscriptionPayModal}>
+                                {(!post.follows && post.visible_type !== PRIVACY.PRICE && post.subscription && user?.login !== post.author.login) && (
+                                    <div className="post-static__control" onClick={this.handleFreeSubscription}>
                                         <Button text="Подписаться" type={Button.types.link}/>
                                     </div>
                                 )}
