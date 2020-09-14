@@ -325,7 +325,7 @@ class BlockPostForm extends Component {
                     </div>}
                     {this.state.showSubscriptions && subscriptionSelect.length > 0 && (
                         <div className="form-control control-subscription">
-                            <Select classValue='form-control__select' label="Выберите подпискy" name="subscription" values={subscriptionSelect}/>
+                            <Select classValue='form-control__select' label="Выберите канал" name="subscription" values={subscriptionSelect}/>
                         </div>
                     )}
                     <div className="form-control control-select-activity">
