@@ -67,6 +67,7 @@ class PostPayModal extends Component {
                     post_id: this.props.postId,
                     sum: this.props.price,
                     method: PAY_METHOD.CARD,
+                    message: post.message
                 };
 
                 AjaxModule.doAxioPost(RouterStore.api.payment.card, reqBody)
