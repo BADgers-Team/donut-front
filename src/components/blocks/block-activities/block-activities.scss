@@ -5,6 +5,7 @@
   flex-direction: row;
   padding: 40px 120px 30px 120px;
   background-color: $color-dark-white;
+  flex-wrap: wrap;
 
   & > *:not(*:last-child) {
     margin-right: 2%;
@@ -16,6 +17,7 @@
   border-radius: 30px;
   border: 2px solid $color-grey;
   padding: 10px 2%;
+  margin: 15px 0;
 
   &__active {
     border: 2px solid $color-pink;
