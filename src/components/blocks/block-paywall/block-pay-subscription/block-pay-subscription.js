@@ -10,6 +10,8 @@ import { PAY_METHOD } from 'store/const';
 import Input from 'components/fragments/input/input';
 import RadioGroup from '@material-ui/core/RadioGroup';
 
+import Loader from 'react-loader-spinner';
+
 import './block-pay-subscription.scss';
 
 const MODAL_TITLE = 'Приобретение подписки';
@@ -22,6 +24,7 @@ class PaySubcriptionModal extends Component {
             open: props.open || true,
             sum: 16,
             method: PAY_METHOD.WALLET,
+            showLoader: false,
         };
     }
 
@@ -39,12 +42,20 @@ class PaySubcriptionModal extends Component {
         const { onSuccess } = this.props;
         const post = JSON.parse(sessionStorage.getItem('payment_info'));
 
+        this.setState({ showLoader: true });
+
+        debugger
+
         AjaxModule.doAxioPost(RouterStore.api.payment.card, reqBody)
         .then((response) => {
             sessionStorage.setItem('payment_info', JSON.stringify({...post, payment_method: PAY_METHOD.CARD}));
+            
+            this.setState({ showLoader: false });
+
             window.location.replace(response.data.url);
         }).catch((error) => {
             console.error(error.message);
+            this.setState({ showLoader: false });
         });
     };
 
@@ -69,7 +80,16 @@ class PaySubcriptionModal extends Component {
                     <div className="donat-modal__warning">
                         Оплата будет производиться через сервис Яндекс.Деньги. После подтверждения укажите реквизиты карты для проведения первого платежа. Следующие платежи будут ежемесячно проведены автоматически 
                     </div>
-                    <Button type={Button.types.submit} text="Приобрести подписку" className="subscription-modal__submit"  onAction={this.handlePay}/>
+                    { !this.state.showLoader && <Button type={Button.types.submit} text="Приобрести подписку" className="subscription-modal__submit"  onAction={this.handlePay}/> }
+                    { this.state.showLoader && 
+                        <div className="donat-modal__loader">
+                            <Loader
+                                type="Oval"
+                                color="#ffffff"
+                                height={35}
+                                width={35}/>
+                        </div>
+                    }
                 </div>
             </BlockModal>
         );
