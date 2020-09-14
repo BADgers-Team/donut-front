@@ -9,6 +9,8 @@ import { PAY_METHOD } from 'store/const';
 import Input from 'components/fragments/input/input';
 import RadioGroup from '@material-ui/core/RadioGroup';
 
+import Loader from 'react-loader-spinner';
+
 import './donat-pay-modal.scss';
 
 const MODAL_TITLE = 'Платеж';
@@ -22,6 +24,8 @@ class DonatPayModal extends Component {
             sum: 16,
             redirect: false,
             method: PAY_METHOD.WALLET,
+            showLoader: false,
+            radioDisabled: false,
         };
     }
 
@@ -32,19 +36,27 @@ class DonatPayModal extends Component {
 
         const post = JSON.parse(sessionStorage.getItem('payment_info'));
 
+        this.setState({ showLoader: true });
+        this.setState({ radioDisabled: true });
         switch (payMethod) {
             case PAY_METHOD.WALLET:
+
                 AjaxModule.doAxioGet(RouterStore.api.payment.authorize)
                 .then((response) => {
                     if (response.status !== 200) {
                         throw Error('Не удалось получить подключиться к авторизации Яндекс.Денег');
                     }
                     sessionStorage.setItem('payment_info', JSON.stringify({...post, payment_method: PAY_METHOD.WALLET}));
+                    
+                    this.setState({ showLoader: false });
+                    this.setState({ radioDisabled: false });
+                    
                     window.location.replace(response.data.url);
-                    // onSuccess?.();
                 })
                 .catch((error) => {
                     console.error(error.message);
+                    this.setState({ showLoader: false });
+                    this.setState({ radioDisabled: false });
                 });
                 break;
             case PAY_METHOD.CARD:
@@ -53,14 +65,21 @@ class DonatPayModal extends Component {
                     post_id: this.props.id,
                     sum: this.props.price,
                     method: PAY_METHOD.CARD,
+                    message: post.message
                 };
 
                 AjaxModule.doAxioPost(RouterStore.api.payment.card, reqBody)
                 .then((response) => {
                     sessionStorage.setItem('payment_info', JSON.stringify({...post, payment_method: PAY_METHOD.CARD}));
+
+                    this.setState({ showLoader: false });
+                    this.setState({ radioDisabled: false });
+
                     window.location.replace(response.data.url);
                 }).catch((error) => {
                     console.error(error.message);
+                    this.setState({ showLoader: false });
+                    this.setState({ radioDisabled: false });
                 });
                 break;
         }
@@ -88,10 +107,10 @@ class DonatPayModal extends Component {
                         <div className="pay-method__header">Выберите способ оплаты</div>
                         <RadioGroup defaultValue={PAY_METHOD.WALLET} aria-label="gender" name="customized-radios">
                             <div className="pay-method__wallet">
-                                <Input type={Input.types.radio} classValue="pay-method__input" value={PAY_METHOD.WALLET} name="freeCheckbox" label="Яндекс кошелёк" material={true} onAction={() => { this.setPayMethod(PAY_METHOD.WALLET) }}/>
+                                <Input type={Input.types.radio} classValue="pay-method__input" value={PAY_METHOD.WALLET} name="freeCheckbox" label="Яндекс кошелёк" disabled={this.state.radioDisabled} material={true} onAction={() => { this.setPayMethod(PAY_METHOD.WALLET) }}/>
                             </div>
                             <div className="pay-method__card">
-                                <Input type={Input.types.radio} classValue="pay-method__input" value={PAY_METHOD.CARD} name="freeCheckbox" label="Банковская карта" material={true} onAction={() => { this.setPayMethod(PAY_METHOD.CARD) }}/>
+                                <Input type={Input.types.radio} classValue="pay-method__input" value={PAY_METHOD.CARD} name="freeCheckbox" label="Банковская карта" disabled={this.state.radioDisabled} material={true} onAction={() => { this.setPayMethod(PAY_METHOD.CARD) }}/>
                             </div>
                         </RadioGroup>
                     </div>
@@ -101,7 +120,17 @@ class DonatPayModal extends Component {
                     { this.state.method === PAY_METHOD.CARD && <div className="donat-modal__warning">
                         Оплата будет производиться через сервис Яндекс.Деньги. После подтверждения укажите реквизиты карты для проведения платежа
                     </div> }
-                    <Button type={Button.types.submit} text="Подтверждаю" className="donat-modal__submit"  onAction={this.handlePay}/>
+                    { !this.state.showLoader && <Button type={Button.types.submit} text="Подтверждаю" className="donat-modal__submit" onAction={this.handlePay}/>}
+                    
+                    { this.state.showLoader && 
+                        <div className="donat-modal__loader">
+                            <Loader
+                                type="Oval"
+                                color="#ffffff"
+                                height={35}
+                                width={35}/>
+                        </div>
+                    }
                 </div>
             </BlockModal>
         );

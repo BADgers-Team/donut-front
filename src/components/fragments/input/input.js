@@ -39,7 +39,7 @@ class Input extends Component {
     };
 
     render() {
-        const { name, type, placeholder, label, id, onAction, text, min, max, classValue, material, value, fileTypes, custom, defaultValue, error, isRequired, checked } = this.props;
+        const { name, type, placeholder, label, id, onAction, text, min, max, classValue, material, value, fileTypes, custom, defaultValue, error, isRequired, checked, disabled } = this.props;
         const classes = classNames([
             'input',
             custom,
@@ -139,6 +139,7 @@ class Input extends Component {
                             id={`${id}`}
                             value={value}
                             checked = {checked}
+                            disabled = {disabled}
                         />}
                         label={label}
                         labelPlacement="end"

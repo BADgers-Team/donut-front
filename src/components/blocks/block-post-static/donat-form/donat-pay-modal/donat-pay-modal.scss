@@ -36,6 +36,17 @@
         font-size: 12px;
         margin-bottom: 12px;
     }
+
+    &__loader {
+        background-color: #FF6982;
+        border-radius: 10px;
+        border: none;
+        padding: 10px 0 5px 0;
+        height: 31px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 .pay-method {

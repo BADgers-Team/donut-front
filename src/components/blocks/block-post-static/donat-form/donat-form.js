@@ -91,6 +91,7 @@ class DonatForm extends Component {
                         title={current.title}
                         author={current.author}
                         price={price}
+                        message={current.message}
                         onClose={this.closeModal}
                         onSuccess={this.handleSuccessChange}
                     />
