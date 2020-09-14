@@ -12,11 +12,11 @@ import RouteStore from 'store/routes';
 @inject('user')
 class BlockCards extends Component {
     render() {
-        const { cards, user } = this.props;
+        const { cards, user, showToast } = this.props;
 
         //TODO проверить проверку, если карточки приходят null
         if (!cards) return;
-      
+
         //TODO пофиксить переиспользуемость карточек для поиска и главной
         const postCards = Array.isArray(cards) ? cards : cards.posts;
         const postCardsNodes = postCards?.length > 0 ?
@@ -24,7 +24,7 @@ class BlockCards extends Component {
 
         const subscriptionCards = cards.subscriptions;
         const subscriptionCardsNodes = subscriptionCards?.length > 0 ?
-            subscriptionCards.map((card) => <SubscriptionCard key={card.id} subscription={card} current={user}/>) : null;
+            subscriptionCards.map((card) => <SubscriptionCard key={card.id} subscription={card} current={user} showToast={showToast}/>) : null;
 
         const userCards = cards.users;
         const userCardsNodes = userCards?.length > 0 ?
@@ -55,7 +55,7 @@ class BlockCards extends Component {
                         </div>}
 
                         {subscriptionCards?.length > 0 && <div className="cards__items cards-posts">
-                            <div className="cards__title">Подписки</div>
+                            <div className="cards__title">Каналы</div>
                             <div className="cards__content">
                                 {subscriptionCardsNodes}
                             </div>

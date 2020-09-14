@@ -22,35 +22,35 @@ class BlockSubscriptions extends Component {
     };
 
     render() {
-        const { user, current } = this.props;
+        const { user, current, showToast } = this.props;
         const subscriptions = current.subscriptions;
         const { showAll } = this.state;
         const subscriptionsNodes = subscriptions && showAll ? (
             subscriptions.map((subscription) => {
-                return <SubscriptionCard key={subscription.id} current={user} subscription={subscription} type={SubscriptionCard.types.profile}/>;
-            })) : subscriptions ? <SubscriptionCard current={user} subscription={subscriptions[0]} type={SubscriptionCard.types.profile}/> : null;
+                return <SubscriptionCard key={subscription.id} current={user} subscription={subscription} type={SubscriptionCard.types.profile} showToast={showToast}/>;
+            })) : subscriptions ? <SubscriptionCard current={user} subscription={subscriptions[0]} type={SubscriptionCard.types.profile} showToast={showToast}/> : null;
 
         // TODO: сделать plural на кол-во подписок
 
         return (
             <div className="author-subscriptions">
-                <div className="author-subscriptions__title">Подписки</div>
+                <div className="author-subscriptions__title">Каналы</div>
                 {user.login === current?.login && (
                     <Button
                         className="author-subscriptions__add"
-                        text="Добавить подписку"
+                        text="Добавить канал"
                         type={Button.types.link}
                         to={RouteStore.pages.subscriptions.new}
                     />)}
                 <div className="author-subscriptions__body">
                     {subscriptionsNodes ? subscriptionsNodes : (
-                        <div>Автор пока не добавил подписок</div>
+                        <div>Автор пока не добавил каналов</div>
                     )}
                 </div>
                 {(!showAll && subscriptions?.length > 1) && (
                     <Button
                         className="author-subscriptions__show"
-                        text={`Показать все ${subscriptions?.length || 0} подписок`}
+                        text={`Показать все ${subscriptions?.length || 0} каналов`}
                         type={Button.types.block}
                         onAction={this.handleClickShowAll}
                     />

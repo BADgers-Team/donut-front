@@ -5,11 +5,13 @@ import AjaxModule from 'services/ajax';
 
 import { BlockModal } from 'components/blocks/block-modal/block-modal';
 import Button from 'components/fragments/button/button';
+
 import { PAY_METHOD } from 'store/const';
 import Input from 'components/fragments/input/input';
 import RadioGroup from '@material-ui/core/RadioGroup';
 
 import Loader from 'react-loader-spinner';
+import { TOAST_TYPES } from 'components/fragments/toast/toast';
 
 import './donat-pay-modal.scss';
 
@@ -32,10 +34,10 @@ class DonatPayModal extends Component {
     handlePay = (event) => {
         event.preventDefault();
         const payMethod = this.state.method;
-        const { onSuccess } = this.props;
-
+        const { onSuccess, showToast } = this.props;
+      
         const post = JSON.parse(sessionStorage.getItem('payment_info'));
-
+      
         this.setState({ showLoader: true });
         this.setState({ radioDisabled: true });
         switch (payMethod) {
@@ -54,6 +56,7 @@ class DonatPayModal extends Component {
                     window.location.replace(response.data.url);
                 })
                 .catch((error) => {
+                    showToast({ type: TOAST_TYPES.ERROR });
                     console.error(error.message);
                     this.setState({ showLoader: false });
                     this.setState({ radioDisabled: false });
@@ -77,6 +80,7 @@ class DonatPayModal extends Component {
 
                     window.location.replace(response.data.url);
                 }).catch((error) => {
+                    showToast({ type: TOAST_TYPES.ERROR });
                     console.error(error.message);
                     this.setState({ showLoader: false });
                     this.setState({ radioDisabled: false });

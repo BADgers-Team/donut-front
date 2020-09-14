@@ -1,0 +1,33 @@
+@import 'components/app/consts';
+
+.toast {
+  display: flex;
+  max-width: 250px;
+
+  padding: 10px 15px;
+  border-radius: 5px;
+
+  border: 1px solid $color-dark-purple;
+  background: rgba(255, 255, 255, .8);
+  color: $color-dark-purple;
+
+  &__text {
+    flex-grow: 1;
+  }
+
+  &__close {
+    cursor: pointer;
+    color: transparentize($color-dark-purple, .75);
+    padding-left: 10px;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid rgba(26, 8, 44, .25);
+    font-size: 20px;
+    padding-right: 14px;
+    margin-right: 10px;
+  }
+}

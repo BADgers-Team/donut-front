@@ -30,7 +30,7 @@ class BlockGoals extends Component {
     };
 
     render() {
-        const { user, current } = this.props;
+        const { user, current, showToast } = this.props;
         const { isModalOpen, goals } = this.state;
         const goalsNodes = goals.map((goal) => {
             return <BlockGoal goal={goal} key={goal.id}/>;
@@ -53,7 +53,7 @@ class BlockGoals extends Component {
                 ) : (
                     <div className="author-goals__body">Автор пока не добавил целей</div>
                 )}
-                { isModalOpen && <GoalModal onClose={this.handleCloseModal} onSuccess={this.handleSuccessChange}/> }
+                { isModalOpen && <GoalModal onClose={this.handleCloseModal} onSuccess={this.handleSuccessChange} showToast={showToast}/> }
             </div>
         );
     }

@@ -87,7 +87,7 @@ class BlockAuthor extends Component {
 
 
     render() {
-        const { current, user } = this.props;
+        const { current, user, showToast } = this.props;
         const { isModalOpen } = this.state;
 
         const subscriptions = current.number_of_subscriptions || 0;
@@ -114,7 +114,7 @@ class BlockAuthor extends Component {
                     <div className="author-info__login">{`@${current.login}`}</div>
                     <div className="author-info__name">{current.name}</div>
                     <div className="author-info__info">
-                        {`${posts} постов | ${subscriptions} подписок | ${followers} подписчиков`}
+                        {`${posts} постов | ${subscriptions} каналов | ${followers} подписчиков`}
                     </div>
                     <div className="author-info__description">{description}</div>
                     <div className="author-info__wallet">Яндекс.Кошелек: {wallet}</div>
@@ -129,7 +129,7 @@ class BlockAuthor extends Component {
                             { isModalOpen && <ProfileModal user={current} onClose={this.handleCloseModal} onSuccess={this.handleSuccessChange}/> }
                         </>
                     )}
-                    <BlockGoals {...this.props} />
+                    <BlockGoals {...this.props} showToast={showToast} />
                 </div>
             </>
         );

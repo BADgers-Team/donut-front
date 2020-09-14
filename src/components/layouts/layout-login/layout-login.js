@@ -4,34 +4,36 @@ import { inject, observer } from 'mobx-react';
 import { redirectToOauthServer } from 'services/oauth';
 import Input from 'components/fragments/input/input';
 import Button from 'components/fragments/button/button';
+import { TOAST_TYPES } from 'components/fragments/toast/toast';
 import AjaxModule from 'services/ajax';
+import {getRouteWithID} from 'services/getRouteWithId';
 import RouteStore from 'store/routes';
 
 import GoogleIcon from 'assets/img/google.svg';
 import VkIcon from 'assets/img/vk.svg';
 import YandexIcon from 'assets/img/yandex.svg';
+
 import './layout-login.scss';
-import {getRouteWithID} from 'services/getRouteWithId';
 
 @inject('user')
 @observer
 class LayoutLogin extends Component {
     handleGoogleClick = () => {
-        redirectToOauthServer('google');
+        redirectToOauthServer('google', this.props.showToast);
     };
 
     handleVKClick = () => {
-        redirectToOauthServer('vk');
+        redirectToOauthServer('vk', this.props.showToast);
     };
 
     handleYandexClick = () => {
-        redirectToOauthServer('yandex');
+        redirectToOauthServer('yandex', this.props.showToast);
     };
 
     handleSubmit = (event) => {
         event.preventDefault();
         const form = event.target;
-        const { user } = this.props;
+        const { user, showToast } = this.props;
 
         AjaxModule.post(RouteStore.api.users.confirm, {
             login: form.login?.value,
@@ -40,6 +42,7 @@ class LayoutLogin extends Component {
         }).then((data) => {
             user.update(data);
         }).catch((error) => {
+            showToast({ type: TOAST_TYPES.ERROR });
             console.error(error.message);
         });
     };

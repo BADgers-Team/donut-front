@@ -71,7 +71,7 @@ class DonatForm extends Component {
     };
 
     render() {
-        const { author, current } = this.props;
+        const { author, current, showToast } = this.props;
         const { count, error } = this.state;
         const price = this.calculatePrice();
         const countsNodes = COUNTS.map((number, index) => {
@@ -94,6 +94,7 @@ class DonatForm extends Component {
                         message={current.message}
                         onClose={this.closeModal}
                         onSuccess={this.handleSuccessChange}
+                        showToast={showToast}
                     />
                 )}
 

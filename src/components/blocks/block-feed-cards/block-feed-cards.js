@@ -11,7 +11,7 @@ import './block-feed-cards.scss';
 
 export const FEED_TABS = {
     'POSTS': 'Посты',
-    'SUBSCRIPTIONS': 'Подписки',
+    'SUBSCRIPTIONS': 'Каналы',
 };
 
 @inject('user')
@@ -29,7 +29,7 @@ class BlockFeedCards extends Component {
     };
 
     render() {
-        const { posts, subscriptions, user, isLoaded } = this.props;
+        const { posts, subscriptions, user, isLoaded, showToast } = this.props;
         const { selectedTab } = this.state;
 
         const postCards = posts ? posts : [];
@@ -41,7 +41,7 @@ class BlockFeedCards extends Component {
         const subscriptionCards = subscriptions ? subscriptions : [];
         const subscriptionСardsNodes = subscriptionCards.length !== 0 ?
                 subscriptionCards.map((card, index) => {
-                    return <SubscriptionCard key={index} subscription={card} current={user}/>;
+                    return <SubscriptionCard key={index} subscription={card} current={user} showToast={showToast}/>;
                 }) : null;
 
         let cardsNodes;
@@ -57,7 +57,7 @@ class BlockFeedCards extends Component {
                             </div>
                         ) : (
                             <BlockEmpty
-                                subtitle="После покупки поста или оформления подписки здесь появятся приобретенные посты :)"
+                                subtitle="После покупки поста или оформления подписки на канал здесь появятся приобретенные посты :)"
                                 linkText="Перейти в подборки"
                                 link={RouteStore.pages.collections}
                             />
@@ -76,7 +76,7 @@ class BlockFeedCards extends Component {
                             </div>
                         ) : (
                             <BlockEmpty
-                                subtitle="После оформления подписки здесь будут хранится Ваши подписки :)"
+                                subtitle="После оформления подписки на канал здесь будут храниться ваши подписки :)"
                             />
                         )}
                     </>

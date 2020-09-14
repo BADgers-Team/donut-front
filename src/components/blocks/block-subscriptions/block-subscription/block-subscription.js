@@ -48,7 +48,7 @@ class BlockSubscription extends Component {
 
     render() {
         const { redirect } = this.state;
-        const { subscription, current, user } = this.props;
+        const { subscription, current, user, showToast } = this.props;
         const price = subscription.sum ? `${subscription.sum} ₽ в месяц` : 'Бесплатно';
         
         if (redirect) {
@@ -61,7 +61,8 @@ class BlockSubscription extends Component {
                 title={subscription.title}   
                 priceText={price}     
                 price={subscription.sum}                        
-                onClose={this.closeSubcriptionPayModal} onSuccess={this.handleSuccessChangeSubcription}/>} 
+                onClose={this.closeSubcriptionPayModal} onSuccess={this.handleSuccessChangeSubcription}
+                showToast={showToast}/>} 
 
                 <div className="author-subscription">
                     <div className="author-subscription__title">{subscription.title}</div>

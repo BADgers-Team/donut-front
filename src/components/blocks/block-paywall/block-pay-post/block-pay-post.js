@@ -12,6 +12,7 @@ import Input from 'components/fragments/input/input';
 import RadioGroup from '@material-ui/core/RadioGroup';
 
 import Loader from 'react-loader-spinner';
+import { TOAST_TYPES } from 'components/fragments/toast/toast';
 
 import './block-pay-post.scss';
 
@@ -33,8 +34,9 @@ class PostPayModal extends Component {
 
     handlePayPost = (event) => {
         event.preventDefault();
+
         const payMethod = this.state.method;
-        const { onSuccess } = this.props;
+        const { onSuccess, showToast } = this.props;
 
         const post = JSON.parse(sessionStorage.getItem('payment_info'));
 
@@ -56,6 +58,7 @@ class PostPayModal extends Component {
                     // onSuccess?.();
                 })
                 .catch((error) => {
+                    showToast({ type: TOAST_TYPES.ERROR });
                     console.error(error.message);
                     this.setState({ showLoader: false });
                     this.setState({ radioDisabled: false });
@@ -79,6 +82,7 @@ class PostPayModal extends Component {
 
                     window.location.replace(response.data.url);
                 }).catch((error) => {
+                    showToast({ type: TOAST_TYPES.ERROR });
                     console.error(error.message);
                     this.setState({ showLoader: false });
                     this.setState({ radioDisabled: false });
