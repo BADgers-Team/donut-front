@@ -22,15 +22,19 @@ import './app.scss';
 import 'assets/fonts/Avenir-Next.ttf';
 import {LayoutCollections} from 'components/layouts/layout-collections/layout-collections';
 import {LayoutPayment} from 'components/layouts/layout-payment/layout-payment';
+import BlockToastStack from 'components/blocks/block-toast-stack/block-toast-stack';
 
 class App extends Component {
-    constructor(props) {
-        super(props);
+    state = {
+        user: null,
+    };
 
-        this.state = {
-            user: null,
-        };
-    }
+    toastStackRef = React.createRef();
+
+    showToast = (data) => {
+        const { current: toastStack } = this.toastStackRef;
+        toastStack.add(data);
+    };
 
     render() {
         const pages = RouterStore.pages;
@@ -43,20 +47,21 @@ class App extends Component {
                     <BlockHeader/>
                     <div className="content">
                         <Switch>
-                            <Route path={pages.main} exact render={(props) => <LayoutIndex {...props}/>}/>
-                            <Route path={pages.posts.new} render={(props) => <LayoutCreatePost {...props}/>}/>
-                            <Route path={pages.subscriptions.new} render={(props) => <LayoutCreateSubscription {...props}/>}/>
-                            <Route path={pages.search} render={(props) => <LayoutSearch {...props}/>}/>
-                            <Route path={pages.user.login} render={(props) => <LayoutLogin {...props}/>}/>
-                            <Route path={pages.user.callback} render={(props) => <LayoutCallback {...props}/>}/>
-                            <Route path={pages.feed} render={(props) => <LayoutFeed {...props}/>}/>
-                            <Route path={pages.collections} render={(props) => <LayoutCollections {...props}/>}/>
-                            <Route path={pages.pay} render={(props) => <LayoutPayment {...props}/>}/>
-                            <Route path="/posts/:id" render={(props) => <LayoutPost {...props} current={user}/>}/>
-                            <Route path="/users/:login" render={(props) => <LayoutProfile {...props} current={user}/>}/>
+                            <Route path={pages.main} exact render={(props) => <LayoutIndex {...props} showToast={this.showToast} />}/>
+                            <Route path={pages.posts.new} render={(props) => <LayoutCreatePost {...props} showToast={this.showToast} />}/>
+                            <Route path={pages.subscriptions.new} render={(props) => <LayoutCreateSubscription {...props} showToast={this.showToast} />}/>
+                            <Route path={pages.search} render={(props) => <LayoutSearch {...props} showToast={this.showToast}/>}/>
+                            <Route path={pages.user.login} render={(props) => <LayoutLogin {...props} showToast={this.showToast}/>}/>
+                            <Route path={pages.user.callback} render={(props) => <LayoutCallback {...props} showToast={this.showToast}/>}/>
+                            <Route path={pages.feed} render={(props) => <LayoutFeed {...props} showToast={this.showToast}/>}/>
+                            <Route path={pages.collections} render={(props) => <LayoutCollections {...props} showToast={this.showToast}/>}/>
+                            <Route path={pages.pay} render={(props) => <LayoutPayment {...props} showToast={this.showToast}/>}/>
+                            <Route path="/posts/:id" render={(props) => <LayoutPost {...props} current={user} showToast={this.showToast}/>}/>
+                            <Route path="/users/:login" render={(props) => <LayoutProfile {...props} current={user} showToast={this.showToast}/>}/>
                         </Switch>
                     </div>
                 </BrowserRouter>
+                <BlockToastStack ref={this.toastStackRef}/>
             </Provider>
         );
     }

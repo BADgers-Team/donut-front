@@ -15,6 +15,7 @@ import BlockLayoutIndexSlotAdvantages
 import BlockLayoutIndexSlotFinalize
     from 'components/blocks/block-layout-index-slot-finalize/block-layout-index-slot-finalize';
 import BlockFooter from 'components/blocks/block-footer/block-footer';
+import { TOAST_TYPES } from 'components/fragments/toast/toast';
 
 class LayoutIndex extends Component {
     constructor(props) {
@@ -26,9 +27,12 @@ class LayoutIndex extends Component {
     }
 
     componentDidMount() {
+        const {showToast} = this.props;
+
         AjaxModule.get(RouteStore.api.posts.all).then((data) => {
             this.setState({ posts: data || [] });
         }).catch((error) => {
+            showToast({ type: TOAST_TYPES.ERROR });
             console.error(error.message);
         });
     }

@@ -71,7 +71,7 @@ class BlockPostStatic extends Component {
 
     render() {
         const { redirect } = this.state;
-        const { post, user } = this.props;
+        const { post, user, showToast } = this.props;
         const login = post.author.login || 'cool_user';
         const profileRoute = getRouteWithID(RouteStore.pages.user.profile, login);
         const visibility = post.subscription ? post.subscription : 'Без подписки';
@@ -94,7 +94,8 @@ class BlockPostStatic extends Component {
                 title={post.subscription}   
                 priceText={price}   
                 price={post.sum}                     
-                onClose={this.closeSubcriptionPayModal} onSuccess={this.handleSuccessChangeSubcription}/>}
+                onClose={this.closeSubcriptionPayModal} onSuccess={this.handleSuccessChangeSubcription}
+                showToast={showToast}/>}
 
                 <div className="post-static">
                     <div className="post-static__inner">
@@ -136,7 +137,7 @@ class BlockPostStatic extends Component {
                                     </div>
                                 )}
                                 { user?.login !== post.author.login && (
-                                    <DonatForm author={login} current={post}/>
+                                    <DonatForm author={login} current={post} showToast={showToast}/>
                                 )}
                             </div>
                         )}

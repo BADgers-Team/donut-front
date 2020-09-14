@@ -8,11 +8,13 @@ class LayoutCreatePost extends Component {
         super(props);
     }
     
-    render() {    
+    render() {
+        const { showToast } = this.props;
+
         return (
             <div className="post-container">
                 <div className="post-header">Создание нового поста</div>
-                <BlockPostForm />
+                <BlockPostForm showToast={showToast}/>
             </div>
         );
     }
