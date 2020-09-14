@@ -50,7 +50,8 @@ class BlockPaywall extends Component {
         sessionStorage.setItem('payment_info', JSON.stringify({
             sum: post.subscription_sum || 0,
             payment_type: 'Подписка',
-            id: post.id
+            id: post.id,
+            subscription_id: post.subscription_id,
         }));
 
         this.setState({ showSubcriptionPay: true });

@@ -28,6 +28,7 @@ class LayoutPayment extends Component {
             post_id: post.id,
             sum: +post.sum,
             message: post.message,
+            subscription_id: post.subscription_id,
             method: post.payment_method
         };
 

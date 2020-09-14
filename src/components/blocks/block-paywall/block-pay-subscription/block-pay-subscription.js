@@ -44,8 +44,6 @@ class PaySubcriptionModal extends Component {
 
         this.setState({ showLoader: true });
 
-        debugger
-
         AjaxModule.doAxioPost(RouterStore.api.payment.card, reqBody)
         .then((response) => {
             sessionStorage.setItem('payment_info', JSON.stringify({...post, payment_method: PAY_METHOD.CARD}));
