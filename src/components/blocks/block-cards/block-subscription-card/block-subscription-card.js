@@ -62,7 +62,7 @@ class SubscriptionCard extends Component {
 
     render() {
         const { redirect } = this.state;
-        const { subscription, current, type } = this.props;
+        const { subscription, current, type, showToast } = this.props;
 
         const login = subscription.user_login;
         const profileRoute = getRouteWithID(RouterStore.pages.user.profile, login);
@@ -83,7 +83,8 @@ class SubscriptionCard extends Component {
                     title={subscription.title}   
                     priceText={price}     
                     price={subscription.sum}                        
-                    onClose={this.closeSubcriptionPayModal} onSuccess={this.handleSuccessChangeSubcription}/>} 
+                    onClose={this.closeSubcriptionPayModal} onSuccess={this.handleSuccessChangeSubcription}
+                    showToast={showToast}/>} 
 
                 <div className={`subscription-card ${cardBackgroundClass}`}>
                     <div className="subscription-card__title">{subscription.title}</div>

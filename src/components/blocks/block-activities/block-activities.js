@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AjaxModule from 'services/ajax';
 import RouteStore from 'store/routes';
+import { TOAST_TYPES } from 'components/fragments/toast/toast';
 
 import './block-activities.scss';
 
@@ -14,9 +15,11 @@ class BlockActivities extends Component {
         };
     }
     componentDidMount() {
+        const {showToast} = this.props;
         AjaxModule.get(RouteStore.api.activities).then((data) => {
             this.setState({ activities: data || [] });
         }).catch((error) => {
+            showToast({ type: TOAST_TYPES.ERROR });
             console.error(error.message);
         });
     }

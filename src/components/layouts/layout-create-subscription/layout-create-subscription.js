@@ -9,9 +9,10 @@ class LayoutCreateSubscription extends Component {
     }
     
     render() {    
+        const { showToast } = this.props;
         return (
             <div className="subscription-container">
-                <BlockSubscriptionForm />
+                <BlockSubscriptionForm showToast={showToast}/>
             </div>
         );
     }

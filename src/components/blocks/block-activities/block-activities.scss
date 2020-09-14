@@ -3,11 +3,12 @@
 .activities {
   display: flex;
   flex-direction: row;
-  padding: 40px 120px 30px 120px;
+  padding: 40px 120px 15px 120px;
   background-color: $color-dark-white;
+  flex-wrap: wrap;
 
   & > *:not(*:last-child) {
-    margin-right: 2%;
+    margin-right: 8px;
   }
 }
 
@@ -16,6 +17,7 @@
   border-radius: 30px;
   border: 2px solid $color-grey;
   padding: 10px 2%;
+  margin: 4px 0;
 
   &__active {
     border: 2px solid $color-pink;
