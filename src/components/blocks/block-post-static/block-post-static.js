@@ -20,6 +20,7 @@ import CalendarIcon from 'assets/img/calendar.svg';
 
 import './block-post-static.scss';
 import AjaxModule from 'services/ajax';
+import {TOAST_TYPES} from 'components/fragments/toast/toast';
 
 @inject('user')
 class BlockPostStatic extends Component {
@@ -64,18 +65,18 @@ class BlockPostStatic extends Component {
     };
 
     handleDeleteClick = () => {
-        const { post } = this.props;
+        const { history, post, showToast } = this.props;
         const path = getRouteWithID(RouteStore.api.posts.id, post.id);
         AjaxModule.doAxioDelete(path)
             .then((response) => {
                 if (response.status !== 200 || response.data.status) {
                     throw new Error(response.data?.message || 'Не удалось удалить пост');
                 }
-                window.location.replace(RouteStore.pages.collections);
-                // TODO: нотифайка об успешном удалении
+                history.replace(RouteStore.pages.collections);
+                showToast({ type: TOAST_TYPES.SUCCESS, text: 'Пост успешно удален!' });
             }).catch((error) => {
                 console.log(error);
-                // TODO: нотифайка об ошибке
+                showToast({ type: TOAST_TYPES.ERROR });
             });
     };
 

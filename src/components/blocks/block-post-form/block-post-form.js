@@ -490,7 +490,7 @@ class BlockPostForm extends Component {
 
     _makePatchRequest() {
         const { errors } = this.state;
-        const { post } = this.props;
+        const { post, showToast } = this.props;
         const form = this._form.current;
         const isFormValid = Array.from(Object.values(errors)).filter(error => Boolean(error)).length === 0;
         if (isFormValid) {
@@ -499,7 +499,7 @@ class BlockPostForm extends Component {
                 description: form.description,
                 teaser: form.teaser.value,
                 file_ids: toJS(post.file_ids),
-                activity_id: +form.activity.options[form.activity.selectedIndex].id,
+                activity_id: +form.activity.options[form.activity.selectedIndex]?.id,
                 raw: form.raw,
             };
 
@@ -512,7 +512,7 @@ class BlockPostForm extends Component {
                 this.setState({ postID: response.data.id });
                 this.setState({ redirect: true });
             }).catch((error) => {
-                // TODO: нотифайку, что не удалось создать пост
+                showToast({ type: TOAST_TYPES.ERROR });
                 console.error(error.message);
             });
         }
