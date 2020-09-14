@@ -12,6 +12,7 @@ import Button from 'components/fragments/button/button';
 import { PaySubcriptionModal } from 'components/blocks/block-paywall/block-pay-subscription/block-pay-subscription';
 import { Like } from 'components/blocks/block-like/block-like';
 import { Seen } from 'components/blocks/block-seen/block-seen';
+import { DonationsSum } from 'components/blocks/block-donations-sum/block-donations-sum';
 import { DonatForm } from 'components/blocks/block-post-static/donat-form/donat-form';
 import { PRIVACY } from 'store/const';
 import RouteStore from 'store/routes';
@@ -104,6 +105,7 @@ class BlockPostStatic extends Component {
         const likes = post.likes_count || 0;
         const currentUserLiked = post.liked;
         const seen = post.views_count || 1;
+        const donationsSum = post.donated_sum || 0;
         const price = post.sum ? `${post.sum} ₽` : 'Бесплатно';
         const avatar = post.author.avatar || Avatar;
 
@@ -148,6 +150,9 @@ class BlockPostStatic extends Component {
                             dislikedClass="post-static__info__icon post-static__info-disliked__icon" 
                             textClass="post-static__info__text"/>
                             <Seen seen={seen} 
+                            iconClass="post-static__info__icon" 
+                            textClass="post-static__info__text"/>
+                            <DonationsSum sum={donationsSum} 
                             iconClass="post-static__info__icon" 
                             textClass="post-static__info__text"/>
                         </div>
