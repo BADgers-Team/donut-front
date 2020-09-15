@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { inject } from 'mobx-react';
+import Loader from 'react-loader-spinner';
 
 import { PostCard } from 'components/blocks/block-cards/block-post-card/block-post-card';
 import { SubscriptionCard } from 'components/blocks/block-cards/block-subscription-card/block-subscription-card';
@@ -10,19 +11,16 @@ import './block-feed-cards.scss';
 
 export const FEED_TABS = {
     'POSTS': 'Посты',
-    'SUBSCRIPTIONS': 'Подписки',
+    'SUBSCRIPTIONS': 'Каналы',
 };
 
 @inject('user')
 class BlockFeedCards extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectedTab: FEED_TABS.POSTS,
-        };
+    state = {
+        selectedTab: FEED_TABS.POSTS,
     }
 
-    handlePostTabClick = () => {           
+    handlePostTabClick = () => {
         this.setState({ selectedTab: FEED_TABS.POSTS});
     };
 
@@ -31,9 +29,9 @@ class BlockFeedCards extends Component {
     };
 
     render() {
-        const { posts, subscriptions, user } = this.props;
+        const { posts, subscriptions, user, isLoaded, showToast } = this.props;
         const { selectedTab } = this.state;
-      
+
         const postCards = posts ? posts : [];
         const postСardsNodes = postCards.length > 0 ?
                 postCards.map((card) => {
@@ -43,7 +41,7 @@ class BlockFeedCards extends Component {
         const subscriptionCards = subscriptions ? subscriptions : [];
         const subscriptionСardsNodes = subscriptionCards.length !== 0 ?
                 subscriptionCards.map((card, index) => {
-                    return <SubscriptionCard key={index} subscription={card} current={user}/>;
+                    return <SubscriptionCard key={index} subscription={card} current={user} showToast={showToast}/>;
                 }) : null;
 
         let cardsNodes;
@@ -59,7 +57,7 @@ class BlockFeedCards extends Component {
                             </div>
                         ) : (
                             <BlockEmpty
-                                subtitle="После покупки поста или оформления подписки здесь появятся приобретенные посты :)"
+                                subtitle="После покупки поста или оформления подписки на канал здесь появятся приобретенные посты :)"
                                 linkText="Перейти в подборки"
                                 link={RouteStore.pages.collections}
                             />
@@ -78,7 +76,7 @@ class BlockFeedCards extends Component {
                             </div>
                         ) : (
                             <BlockEmpty
-                                subtitle="После оформления подписки здесь будут хранится Ваши подписки :)"
+                                subtitle="После оформления подписки на канал здесь будут храниться ваши подписки :)"
                             />
                         )}
                     </>
@@ -88,10 +86,10 @@ class BlockFeedCards extends Component {
 
         const activePostsTabClass = selectedTab === FEED_TABS.POSTS ? 'active-tab' : '';
         const activeSubscriptionTabClass = selectedTab === FEED_TABS.SUBSCRIPTIONS ? 'active-tab' : '';
-        
+
         const activePostsLineClass = selectedTab === FEED_TABS.POSTS ? 'active-line' : '';
         const activeSubscriptionLineClass = selectedTab === FEED_TABS.SUBSCRIPTIONS ? 'active-line' : '';
-        
+
         return (
             <div className="feed-cards">
                 <div className="feed-tabs">
@@ -104,7 +102,18 @@ class BlockFeedCards extends Component {
                         <hr className={`feed-tabs__line ${activeSubscriptionLineClass}`}/>
                     </div>
                 </div>
-                {cardsNodes}
+                {isLoaded ? (
+                    <>{cardsNodes}</>
+                ) : (
+                    <div className="feed-cards__loader">
+                        <Loader
+                            type="Bars"
+                            color="#FF6982"
+                            height={120}
+                            width={120}
+                        />
+                    </div>
+                )}
             </div>
         );
     }

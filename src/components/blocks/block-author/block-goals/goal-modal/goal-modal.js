@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+
+import { TOAST_TYPES } from 'components/fragments/toast/toast';
 import { BlockModal } from 'components/blocks/block-modal/block-modal';
 import Button from 'components/fragments/button/button';
 import RouteStore from 'store/routes';
 import AjaxModule from 'services/ajax';
+import {FIELDS_TYPES, validate} from 'services/validation';
 
 import './goal-modal.scss';
-import {FIELDS_TYPES, validate} from 'services/validation';
 
 const MODAL_TITLE = 'Новая цель';
 
@@ -48,15 +50,16 @@ export class GoalModal extends Component {
 
     _makeRequest() {
         const { goal, sum, errors } = this.state;
-        const { onSuccess } = this.props;
+        const { onSuccess, showToast } = this.props;
         const isFormValid = Array.from(Object.values(errors)).filter(error => Boolean(error)).length === 0;
         if (isFormValid) {
-            AjaxModule.post(RouteStore.api.goals, {
+            AjaxModule.post(RouteStore.api.goals.all, {
                 title: goal,
                 sum_wanted: +sum,
             }).then((data) => {
                 onSuccess && onSuccess(data);
             }).catch((error) => {
+                showToast({ type: TOAST_TYPES.ERROR });
                 console.log(error.message);
             });
         }

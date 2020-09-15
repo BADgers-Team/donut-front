@@ -40,12 +40,19 @@ class BlockPaywall extends Component {
 
     openSubcriptionPayModal = () => {
 
-        const { user } = this.props;
+        const { user, post } = this.props;
 
         if (!user.login) {
             this.setState({ redirect: true });
             return
         }
+
+        sessionStorage.setItem('payment_info', JSON.stringify({
+            sum: post.subscription_sum || 0,
+            payment_type: 'Подписка',
+            id: post.id,
+            subscription_id: post.subscription_id,
+        }));
 
         this.setState({ showSubcriptionPay: true });
     }
@@ -94,7 +101,7 @@ class BlockPaywall extends Component {
 
     render() {
         const { redirect } = this.state;
-        const { post } = this.props;
+        const { post, showToast } = this.props;
         const teaser = post.teaser || 'Автор не добавил тизер :(';
         
         const pricePost = post.sum ? `${post.sum} ₽` : 'бесплатно';
@@ -113,6 +120,7 @@ class BlockPaywall extends Component {
                         price={post.sum}
                         priceText={pricePost}
                         onClose={this.closePostPayModal} onSuccess={this.handleSuccessChangePost}
+                        showToast={showToast}
                     />
                 )}
 
@@ -122,7 +130,8 @@ class BlockPaywall extends Component {
                 title={post.subscription}   
                 price={post.subscription_sum}    
                 priceText={priceSubcription}                         
-                onClose={this.closeSubcriptionPayModal} onSuccess={this.handleSuccessChangeSubcription}/>}
+                onClose={this.closeSubcriptionPayModal} onSuccess={this.handleSuccessChangeSubcription}
+                showToast={showToast}/>}
 
                 <div className="paywall">
                     <div className="paywall__info">{teaser}</div>

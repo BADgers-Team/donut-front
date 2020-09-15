@@ -3,7 +3,7 @@
 .search {
   display: flex;
   flex-direction: column;
-  padding: 25px 40px 20px;
+  padding: 25px 40px 35px 40px;
   background-color: $color-upper-purple;
   color: $color-dark-white;
   min-width: 1090px;
@@ -90,7 +90,7 @@
   &__subscrition {
     display: flex;
     align-items: center;
-    width: 40%;
+    width: 35%;
     input {  
       padding: 0 10px;
       height: 40px;
@@ -140,6 +140,12 @@
     align-items: center;
     padding: 0 10px;
     font-size: 18px;
+    flex-wrap: wrap;
+    min-height: 44px;
+  }
+
+  &__list-title {
+    height: auto;
   }
 
   &__default {
@@ -181,7 +187,3 @@
       font-size: 20px;
   }
 }
-
-
-
-

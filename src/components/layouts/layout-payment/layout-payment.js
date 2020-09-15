@@ -4,9 +4,14 @@ import { inject, observer } from 'mobx-react';
 import Loader from 'react-loader-spinner';
 import AjaxModule from 'services/ajax';
 
-import './layout-payment.scss';
 import RouteStore from 'store/routes';
 import { getRouteWithID } from 'services/getRouteWithId';
+
+import { PAY_METHOD } from 'store/const';
+import { TOAST_TYPES } from 'components/fragments/toast/toast';
+
+import './layout-payment.scss';
+
 
 @inject('post')
 @observer
@@ -19,6 +24,7 @@ class LayoutPayment extends Component {
     }
 
     componentDidMount() {
+        const {showToast} = this.props;
         const { pathname, search } = window.location;
         const post = JSON.parse(sessionStorage.getItem('payment_info'));
 
@@ -27,19 +33,24 @@ class LayoutPayment extends Component {
             post_id: post.id,
             sum: +post.sum,
             message: post.message,
+            subscription_id: post.subscription_id,
+            method: post.payment_method
         };
 
-        if (pathname && search) {
+        if ((pathname && search) || post.payment_method === PAY_METHOD.CARD) {
             AjaxModule.doAxioPost(`${pathname}${search}`, body)
                 .then(({ data, status}) => {
                     if (status !== 200 && status !== 201) {
                         throw new Error(data.message);
                     }
                     this.setState({ success: true }, () => {
+                        showToast({ type: TOAST_TYPES.SUCCESS, text: 'Оплата прошла успешно' });
+
                         sessionStorage.removeItem('payment_info');
                     });
                 })
                 .catch((error) => {
+                    showToast({ type: TOAST_TYPES.ERROR });
                     console.error(error.message);
                 });
         }
@@ -56,9 +67,11 @@ class LayoutPayment extends Component {
         //     return <Redirect to={RouteStore.pages.user.login} />;
         // }
         const { success } = this.state;
-        debugger
 
         const post = JSON.parse(sessionStorage.getItem('payment_info'));
+
+        if (!post) return null;
+
         const path = getRouteWithID(RouteStore.pages.posts.id, post.id);
         if (success) {
             return <Redirect to={path}/>;
