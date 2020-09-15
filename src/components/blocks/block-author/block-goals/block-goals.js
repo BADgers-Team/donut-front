@@ -39,6 +39,8 @@ class BlockGoals extends Component {
         const { user, current, showToast } = this.props;
         const { isModalOpen, goals: { sum_total, sum_wanted, goals } } = this.state;
 
+        const isCurrentUser = user.login === current?.login;
+
         return (
             <div className="author-goals">
                 <div className="author-goals__title">Цели</div>
@@ -46,13 +48,13 @@ class BlockGoals extends Component {
                     <div className="author-goals__body">
                         <BlockGoal total={sum_total} wanted={sum_wanted}/>
                         {goals.map((goal) => (
-                            <GoalListItem key={goal.id} {...goal} />
+                            <GoalListItem key={goal.id} isCurrentUser={isCurrentUser} {...goal} />
                         ))}
                     </div>
                 ) : (
                     <div className="author-goals__body">Автор пока не добавил целей</div>
                 )}
-                {user.login === current?.login && (
+                {isCurrentUser && (
                     <Button
                         className="author-goals__add"
                         text="Добавить цель"

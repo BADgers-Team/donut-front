@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { GoalDeleteModal } from 'components/blocks/block-author/block-goals/goal-delete-modal/goal-modal';
+
 import './goal-list-item.scss';
 
 class GoalListItem extends React.Component {
@@ -17,7 +18,7 @@ class GoalListItem extends React.Component {
     };
 
     render() {
-        const { id, title, sum_wanted } = this.props;
+        const { id, title, sum_wanted, isCurrentUser } = this.props;
         const { isModalOpen } = this.state;
 
         return (
@@ -30,9 +31,11 @@ class GoalListItem extends React.Component {
                         {sum_wanted} ₽
                     </div>
                 </div>
-                <div className="goal-list-item__cross" onClick={this.handleDeleteClick}>
-                    <i className="fas fa-times" />
-                </div>
+                {isCurrentUser && (
+                    <div className="goal-list-item__cross" onClick={this.handleDeleteClick}>
+                        <i className="fas fa-times" />
+                    </div>
+                )}
 
                 { isModalOpen && (
                     <GoalDeleteModal id={id} title={title} onClose={this.handleCloseModal}/>
