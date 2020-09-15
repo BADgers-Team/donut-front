@@ -41,7 +41,7 @@ class LayoutCreatePost extends Component {
 
         const title = isModeEditing ? 'Редактирование поста' : 'Создание нового поста';
         return (
-            <div className="post-container">
+            <div key={isModeEditing} className="post-container">
                 <div className="post-header">{title}</div>
                 <BlockPostForm editingPost={isModeEditing} showToast={showToast}/>
                 {!isModeEditing && isModalOpen && <BlockNoWalletModal open={isModalOpen} onClose={this.onModalClose}/>}
