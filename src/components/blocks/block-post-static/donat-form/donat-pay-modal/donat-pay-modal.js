@@ -44,7 +44,7 @@ class DonatPayModal extends Component {
             case PAY_METHOD.WALLET:
                 AjaxModule.doAxioGet(RouterStore.api.payment.authorize)
                 .then((response) => {
-                    if (response.status !== 200) {
+                    if (response.status !== 200 || (!response.data?.url && response.data.status !== 200)) {
                         throw Error('Не удалось получить подключиться к авторизации Яндекс.Денег');
                     }
                     sessionStorage.setItem('payment_info', JSON.stringify({...post, payment_method: PAY_METHOD.WALLET}));
