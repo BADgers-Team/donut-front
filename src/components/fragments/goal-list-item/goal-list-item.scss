@@ -1,0 +1,43 @@
+@import 'components/app/consts';
+
+.goal-list-item {
+  $root: &;
+
+  display: flex;
+  border-radius: 8px;
+  border: 1px solid $color-purple;
+  background: lighten($color-dark-purple, 5%);
+  padding: 10px 15px;
+
+  &:not(:last-child) {
+    margin-bottom: 12px;
+  }
+
+  &:hover {
+    #{$root}__cross {
+      opacity: 1;
+    }
+  }
+
+  &__content {
+    flex-grow: 1;
+  }
+
+  &__title {
+    display: inline;
+  }
+
+  &__sum {
+    display: inline;
+    border-radius: 4px;
+    background: $color-purple;
+    padding: 2px 5px;
+    margin-left: 5px;
+  }
+
+  &__cross {
+    opacity: 0;
+    color: rgba(255, 255, 255, .5);
+    cursor: pointer;
+  }
+}

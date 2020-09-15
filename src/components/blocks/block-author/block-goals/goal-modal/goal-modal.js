@@ -53,7 +53,7 @@ export class GoalModal extends Component {
         const { onSuccess, showToast } = this.props;
         const isFormValid = Array.from(Object.values(errors)).filter(error => Boolean(error)).length === 0;
         if (isFormValid) {
-            AjaxModule.post(RouteStore.api.goals, {
+            AjaxModule.post(RouteStore.api.goals.all, {
                 title: goal,
                 sum_wanted: +sum,
             }).then((data) => {
