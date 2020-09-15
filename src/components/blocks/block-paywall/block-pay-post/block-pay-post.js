@@ -75,7 +75,7 @@ class PostPayModal extends Component {
 
                 AjaxModule.doAxioPost(RouterStore.api.payment.card, reqBody)
                 .then((response) => {
-                    if (response.status !== 200 || response.data.status !== 200) {
+                    if (response.status !== 200 || (!response.data?.url && response.data.status !== 200)) {
                         throw Error('Не удалось получить подключиться к оплате Яндекс.Денег');
                     }
                     sessionStorage.setItem('payment_info', JSON.stringify({...post, payment_method: PAY_METHOD.CARD}));
