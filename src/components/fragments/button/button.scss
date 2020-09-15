@@ -3,6 +3,7 @@
 .button {
   color: $color-dark-white;
   text-decoration: none;
+  outline: none;
 
   &_primary {
     display: inline-block;
