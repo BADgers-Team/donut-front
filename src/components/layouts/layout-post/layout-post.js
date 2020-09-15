@@ -50,7 +50,7 @@ class LayoutPost extends Component {
                 <BlockPostDynamic post={post} current={user} />
 
                 {(post.visible_type === PRIVACY.PRICE || post.visible_type === PRIVACY.SUBSCRIPTION_PRICE || (post.visible_type === PRIVACY.SUBSCRIPTION && post.subscription_sum && post.subscription_sum > 0)) && !post.paid && !post.follows && user?.login !== post.author.login 
-                    && <BlockPaywall post={post} onChange={this.getNewPost}/>}
+                    && <BlockPaywall post={post} onChange={this.getNewPost} showToast={showToast}/>}
             </>
         ) : <div>Пост не найден</div>;
 

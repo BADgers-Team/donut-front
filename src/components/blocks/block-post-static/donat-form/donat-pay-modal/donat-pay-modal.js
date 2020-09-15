@@ -42,7 +42,6 @@ class DonatPayModal extends Component {
         this.setState({ radioDisabled: true });
         switch (payMethod) {
             case PAY_METHOD.WALLET:
-
                 AjaxModule.doAxioGet(RouterStore.api.payment.authorize)
                 .then((response) => {
                     if (response.status !== 200) {
@@ -73,6 +72,9 @@ class DonatPayModal extends Component {
 
                 AjaxModule.doAxioPost(RouterStore.api.payment.card, reqBody)
                 .then((response) => {
+                    if (response.status !== 200 || response.data.status !== 200) {
+                        throw Error('Не удалось получить подключиться к оплате Яндекс.Денег');
+                    }
                     sessionStorage.setItem('payment_info', JSON.stringify({...post, payment_method: PAY_METHOD.CARD}));
 
                     this.setState({ showLoader: false });
